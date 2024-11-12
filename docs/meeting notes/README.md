@@ -1,0 +1,1 @@
+You are required to make notes of at least your weekly TA meetings, although keeping more notes could be very useful for yourself
