@@ -11,6 +11,8 @@ pylint-gitlab = "*"
 pytest = "*"
 pytest-cov = "*"
 coverage = "*"
+requests = "*"
+numpy = "*"
 
 [dev-packages]
 
