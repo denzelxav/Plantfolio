@@ -4,64 +4,94 @@ import pwinput
 import pymysql.cursors
 from pymysql.err import MySQLError
 import os
+import json
 
-def get_db_information() -> tuple[str, str] | None:
+
+def get_db_information() -> tuple[str, str]:
     try:
-        database = str(input("Enter the name of your MySQL database:\n"))
-        password = str(pwinput.pwinput("Enter the password for your MySQL:\n"))
+        database = input("Enter the name of your MySQL database:\n").strip()
+        password = pwinput.pwinput("Enter the password for your MySQL:\n").strip()
         return database, password
     except Exception as e:
-        sys.exit(f"Invalid input : {e}.")
+        sys.exit(f"Invalid input: {e}")
 
-    
-def create_connection(database: str, password: str) -> pymysql.connections.Connection | None:
+
+def create_connection(database: str, password: str) -> pymysql.connections.Connection:
     try:
         connection = pymysql.connect(
             host="localhost",
             user="root",
             password=password,
-            database=database)
-        return connection        
+            database=database
+        )
+        return connection
     except MySQLError as e:
-        sys.exit(f"Database connection failed: {e}.")
+        sys.exit(f"Database connection failed: {e}")
 
 
-def create_cursor(connection: pymysql.connections.Connection) -> pymysql.cursors.Cursor | None:
-    try:
-        cursor = connection.cursor()
-        return cursor
-    except MySQLError as e:
-        sys,exit(f"Error creating cursor: {e}.")
-
-def close_cursor_and_connection(cursor: pymysql.cursors.Cursor, connection: pymysql.connections.Connection) -> None:
-    try:
-        cursor.close()
-        connection.close()
-    except MySQLError as e:
-        sys.exit(f"Error closing connection: {e}.")
-
-def execute_sql_file(cursor: pymysql.cursors.Cursor, sql_file_path: str) -> None:
+def execute_sql_file(connection: pymysql.connections.Connection, sql_file_path: str) -> None:
     try:
         if not os.path.exists(sql_file_path):
-            sys.exit(f"SQL file not found: {sql_file_path}")
+            raise FileNotFoundError(f"SQL file not found: {sql_file_path}")
 
-        with open(sql_file_path) as file:
-            query = file.read()
+        with open(sql_file_path, "r") as file:
+            queries = file.read()
 
-        for statement in query.split(";"):
-            if statement.strip():
-                cursor.execute(statement)
+        with connection.cursor() as cursor:
+            for statement in queries.split(";"):
+                if statement.strip():
+                    cursor.execute(statement)
+            connection.commit()
+
         print("SQL file executed successfully.")
+
     except MySQLError as e:
         sys.exit(f"Error executing query: {e}")
     except Exception as e:
         sys.exit(f"Error reading file: {e}")
 
 
+def insert_json_into_table(connection: pymysql.connections.Connection, json_path: str, table_name: str) -> None:
+    try:
+        if not os.path.exists(json_path):
+            raise FileNotFoundError(f"File not found: {json_path}")
+
+        with open(json_path, "r") as file:
+            json_data = json.load(file)
+
+        with connection.cursor() as cursor:
+            for item in json_data:
+                cursor.execute(
+                    f"INSERT INTO {table_name} (json_data) VALUES (%s)",
+                    (json.dumps(item),)
+                )
+            connection.commit()
+
+        print(f"JSON data inserted into table `{table_name}` successfully.")
+    except FileNotFoundError as e:
+        sys.exit(f"{e}")
+    except MySQLError as e:
+        sys.exit(f"Database error: {e}")
+    except Exception as e:
+        sys.exit(f"Error processing JSON file: {e}")
+
+
+def main():
+    try:
+        database, password = get_db_information()
+        connection = create_connection(database, password)
+        try:
+            sql_file_path = os.path.join("project", "database", "create tables", "create_staging_table.sql")
+            execute_sql_file(connection, sql_file_path)
+
+            json_file_path = os.path.join("project", "database", "indoor_plants.json")
+            insert_json_into_table(connection, json_file_path, "staging")
+        finally:
+            connection.close()
+            print("Connection closed.")
+    except Exception as e:
+        sys.exit(f"Error: {e}")
+
+
 if __name__ == "__main__":
-    db, pw = get_db_information()
-    connection = create_connection(db, pw)
-    cursor = create_cursor(connection)
-    sql_file = os.path.join("project", "database", "create tables", "create_staging_table.sql")
-    execute_sql_file(cursor, sql_file)
-    close_cursor_and_connection(cursor, connection)
+    main()

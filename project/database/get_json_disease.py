@@ -2,11 +2,11 @@ import requests
 import json
 
 
-def get_json_plant_disseases() -> None:
+def get_json_plant_diseases() -> None:
     url_template = "https://perenual.com/api/pest-disease-list?key=sk-JONz674589ab578437782&page={}"
 
     try:
-        with open('plants_disseases.json', 'r') as file:
+        with open('plants_diseases.json', 'r') as file:
             existing_data = json.load(file)
     except FileNotFoundError:
         existing_data = []
@@ -23,10 +23,10 @@ def get_json_plant_disseases() -> None:
             break
 
     # Save all the JSON responses to a file
-    with open('plants_disseases.json', 'w') as file:
+    with open('plants_diseases.json', 'w') as file:
         json.dump(existing_data, file, indent=4)
 
     print("All pages saved to plant_details.json")
 
 if __name__ == '__main__':
-    get_json_plant_disseases()
+    get_json_plant_diseases()
