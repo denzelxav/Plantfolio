@@ -3,6 +3,7 @@ import sys
 import pwinput
 import pymysql.cursors
 from pymysql.err import MySQLError
+import os
 
 def get_db_information() -> tuple[str, str] | None:
     try:
@@ -39,13 +40,28 @@ def close_cursor_and_connection(cursor: pymysql.cursors.Cursor, connection: pymy
     except MySQLError as e:
         sys.exit(f"Error closing connection: {e}.")
 
+def execute_sql_file(cursor: pymysql.cursors.Cursor, sql_file_path: str) -> None:
+    try:
+        if not os.path.exists(sql_file_path):
+            sys.exit(f"SQL file not found: {sql_file_path}")
+
+        with open(sql_file_path) as file:
+            query = file.read()
+
+        for statement in query.split(";"):
+            if statement.strip():
+                cursor.execute(statement)
+        print("SQL file executed successfully.")
+    except MySQLError as e:
+        sys.exit(f"Error executing query: {e}")
+    except Exception as e:
+        sys.exit(f"Error reading file: {e}")
+
 
 if __name__ == "__main__":
     db, pw = get_db_information()
     connection = create_connection(db, pw)
     cursor = create_cursor(connection)
-    cursor.execute("""CREATE TABLE IF NOT EXISTS project(
-                id INT,
-                age INT
-                )""")
+    sql_file = os.path.join("project", "database", "create tables", "create_staging_table.sql")
+    execute_sql_file(cursor, sql_file)
     close_cursor_and_connection(cursor, connection)
