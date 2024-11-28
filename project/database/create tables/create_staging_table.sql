@@ -1,0 +1,6 @@
+DROP TABLE IF EXISTS staging;
+CREATE TABLE staging (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    json_data JSON
+);
+
