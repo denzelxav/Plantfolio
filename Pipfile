@@ -14,6 +14,7 @@ coverage = "*"
 numpy = "*"
 requests = "*"
 pymysql = "*"
+pwinput = "*"
 
 [dev-packages]
 
