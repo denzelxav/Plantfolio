@@ -1,5 +1,10 @@
 import datetime
 from enum import Enum
+from typing import Type
+
+class Spot:
+    """Placeholder Spot class"""
+    pass
 
 class Health(Enum):
     DEAD = 0
@@ -29,7 +34,7 @@ class Plant:
     def __init__(self,
                  core_id: int,
                  personal_id: int,
-                 plant_name: str,
+                 core_name: str,
                  icon_type: str,
                  watering_frequency: int,
                  preff_sunlight: int) -> None:
@@ -37,9 +42,9 @@ class Plant:
         self.core_id = core_id
         self.personal_id = personal_id
         self.personal_name: None | str = None
-        self.plant_name = plant_name
+        self.core_name = core_name
         self.icon_type = icon_type
-        self.spot: None | "Spot" = None
+        self.spot: None | Spot = None
         self.health: Health = Health.HEALTHY
         self.watering_frequency = watering_frequency
         self.preff_sunlight = preff_sunlight
@@ -52,7 +57,7 @@ class Plant:
         """Sets time when plant last received nutrition to the current date and time"""
         self.nutrition = datetime.datetime.now()
 
-    def change_spot(self, spot: "Spot") -> None:
+    def change_spot(self, spot: Spot) -> None:
         """Changes spot of the plant"""
         self.spot = spot
 
@@ -62,8 +67,9 @@ class Plant:
 
 
     def __repr__(self) -> str:
-        return (f"Plant({self.core_id}, {self.personal_id}, {self.plant_name}, {self.icon_type}, "
+        return (f"Plant({self.core_id}, {self.personal_id}, {self.core_name}, {self.icon_type}, "
                 f"{self.watering_frequency}, {self.preff_sunlight})")
 
     def __str__(self) -> str:
-        return f"{self.personal_id}: {self.plant_name}"
+        return f"{self.personal_id}: {self.core_name}"
+
