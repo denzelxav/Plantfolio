@@ -1,3 +1,9 @@
+class Plant:
+    ...
+
+class Spot:
+    ...
+
 class UserData:
 
     '''Userdata stores all the current data of the user. 
@@ -9,8 +15,8 @@ class UserData:
     '''
 
     def __init__(self) -> None:
-        self.plants: set['Plant']= set()
-        self.rooms: dict[str, list['Spot']] = {}
+        self.plants: set[Plant]= set()
+        self.rooms: dict[str, list[Spot]] = {}
         self.preferences: dict[str, bool|str] = {}
 
     def water_all(self) -> None:
@@ -23,11 +29,11 @@ class UserData:
         for plant in self.plants:
             plant.determine_health()
 
-    def add_plant(self, new_plant: 'Plant') -> None:
+    def add_plant(self, new_plant: Plant) -> None:
         '''Adds a plant'''
         self.plants.add(new_plant)
 
-    def add_spot(self, new_spot: 'Spot', room: str) -> None:
+    def add_spot(self, new_spot: Spot, room: str) -> None:
         '''Adds a spot to an existing room'''
         self.rooms[room].add(new_spot)
 
@@ -36,11 +42,11 @@ class UserData:
         if new_room not in self.rooms:
             self.rooms[new_room] = []
 
-    def delete_plant(self, bad_plant: 'Plant') -> None:
+    def delete_plant(self, bad_plant: Plant) -> None:
         '''Removes a plant based on the name'''
         self.plants.remove(bad_plant)
 
-    def delete_spot(self, bad_spot: 'Spot') -> None:
+    def delete_spot(self, bad_spot: Spot) -> None:
         '''Removes a spot, but only if it is empty'''
         if bad_spot.assigned_plant is None:
             for room in self.rooms:
