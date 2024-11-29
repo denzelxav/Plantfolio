@@ -14,13 +14,13 @@ stages:
 
 mypy:
   stage: Static Analysis
-  allow_failure: true # Warnings are ignored by the pipeline. Consider changing this everywhere
+  allow_failure: false # Warnings are ignored by the pipeline. Consider changing this everywhere
   script:
     - pipenv run mypy .
 
 pylint:
   stage: Static Analysis
-  allow_failure: true
+  allow_failure: false
   script:
     #  Runs pylint in a way that always succeeds but generates a code quality report in a format accepted by gitlab so it displays in MRs.
     - pipenv run pylint --exit-zero --output-format=text -d C0116 project/ | tee /tmp/pylint.txt
@@ -32,7 +32,7 @@ pylint:
 
 tests:
   stage: Test
-  allow_failure: true
+  allow_failure: false
   script:
     - pipenv run coverage run
     - pipenv run coverage report
