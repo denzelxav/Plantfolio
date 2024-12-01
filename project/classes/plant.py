@@ -45,7 +45,7 @@ class Plant:
                  core_name: str,
                  icon_type: str,
                  watering_frequency: datetime.timedelta,
-                 preff_sunlight: list[Sunlight]) -> None:
+                 preff_sunlight: list[Sunlight | str]) -> None:
 
         self.core_id = core_id
         self.personal_id = personal_id
@@ -55,23 +55,23 @@ class Plant:
         self.spot: None | Spot = None
         self.health: Health = Health.HEALTHY
         self.watering_frequency = watering_frequency
-        self.preff_sunlight = preff_sunlight
+        self.preff_sunlight = preff_sunlight # type: ignore
         self.watered: list[datetime.datetime] = []
         self.nutrition: list[datetime.datetime] = []
         self.repotted: None | datetime.datetime = None
         self.notes: None | str = None
         self.manual_health: bool = False
-        self.max_log_size: int = 20
-        self._water_score: None | int = None
-        self._sunlight_score: None | int = None
-        self._nutrition_score: None | int = None
+        self.max_log_size: int = 4
+        self.water_score: None | int = None # type: ignore
+        self.sunlight_score: int = 0 # type: ignore
+        self.nutrition_score: None | int = None # type: ignore
 
     def give_nutrition(self) -> None:
         """Sets time when plant last received nutrition to the current date and time"""
         self.nutrition.append(datetime.datetime.now())
         if len(self.nutrition) > self.max_log_size:
             del self.nutrition[0]
-        self._nutrition_score = None
+        self._nutrition_score: int | None = None
 
     def change_spot(self, spot: Spot) -> None:
         """Changes spot of the plant"""
@@ -85,7 +85,7 @@ class Plant:
         self.watered.append(datetime.datetime.now())
         if len(self.watered) > self.max_log_size:
             del self.watered[0]
-        self._water_score = None
+        self._water_score: int | None = None
 
     def get_water_score(self) -> int:
         """Calculates the water score based on time between watering sessions."""
@@ -96,7 +96,7 @@ class Plant:
             time_sum += self.watered[i] - self.watered[i - 1]
         time_avg = time_sum / (len(self.watered) - 1)
 
-        max_deviation = self.watering_frequency * 3
+        max_deviation = self.watering_frequency * 2
 
         if not self.watering_frequency - max_deviation <= time_avg <=  self.watering_frequency + max_deviation:
             return 0
@@ -108,7 +108,7 @@ class Plant:
     def time_to_water_score(self) -> int:
         """Returns score based on time between now and last watering session"""
         time_diff = datetime.datetime.now() - self.watered[-1]
-        max_deviation = self.watering_frequency * 3
+        max_deviation = self.watering_frequency * 2
         if time_diff < self.watering_frequency:
             return 100
         if time_diff > self.watering_frequency + max_deviation:
@@ -126,7 +126,7 @@ class Plant:
         time_avg = time_sum / (len(self.nutrition) - 1)
 
         nutrition_frequency = datetime.timedelta(days=30)
-        max_deviation = nutrition_frequency * 3
+        max_deviation = nutrition_frequency * 2
 
         if time_avg < nutrition_frequency:
             return 100
@@ -140,7 +140,7 @@ class Plant:
     def time_to_feed_score(self) -> int:
         time_diff = datetime.datetime.now() - self.nutrition[-1]
         nutrition_frequency = datetime.timedelta(days=30)
-        max_deviation = nutrition_frequency * 3
+        max_deviation = nutrition_frequency * 2
         if time_diff < nutrition_frequency:
             return 100
         if time_diff > nutrition_frequency + max_deviation:
@@ -151,7 +151,7 @@ class Plant:
 
 
     def get_sunlight_score(self) -> int:
-        """returns score based on how close the current sunlight is to that which is preffered by the plant"""
+        """returns score based on how close the current sunlight is to that which is preferred by the plant"""
         if self.spot:
             diff_to_preff = min([abs(self.spot.sunlight.value - preff.value) for preff in self.preff_sunlight])
             return int(100 - diff_to_preff*33.33)
@@ -159,23 +159,47 @@ class Plant:
             return 0
 
 
-    def determine_health(self):
+    def get_health_score(self) -> int:
+        """Returns a health score ranging from 0 to 100, based on nutrition, water and sunlight."""
         if self.manual_health:
-            return  self.health
-        if self.health == Health.DEAD:
-            return self.health
+            return  -1
+        if self._health == Health.DEAD:
+            return -1
         time_to_water_score = self.time_to_water_score()
         time_to_feed_score = self.time_to_feed_score()
         health_score = 0.25 * self.water_score + 0.20 * time_to_water_score + 0.45 * self.sunlight_score + 0.05 * self.nutrition_score + 0.05 * time_to_feed_score
-        return health_score
+        return int(health_score)
+
+    @property
+    def health(self) -> Health:
+        health_score = self.get_health_score()
+        if health_score == -1:
+            return self._health
+        elif health_score <= 33:
+            new_health = Health.UNHEALTHY
+        elif health_score <= 66:
+            new_health = Health.SLIGHTLY_UNHEALTHY
+        else:
+            new_health = Health.HEALTHY
+        self._health: Health = new_health
+        return new_health
+
+    @health.setter
+    def health(self, value: Health) -> None:
+        self._health = value
+
 
     @property
     def water_score(self) -> int:
         if len(self.watered) < 2:
             return 0
-        if self._water_score is None:
-            self._water_score = self.get_water_score()
-        return self._water_score
+
+        if self._water_score:
+            return self._water_score
+
+        new_score = self.get_water_score()
+        self._water_score = new_score
+        return new_score
 
     @water_score.setter
     def water_score(self, value: int | None) -> None:
@@ -185,7 +209,7 @@ class Plant:
     def nutrition_score(self) -> int:
         if len(self.nutrition) < 2:
             return 0
-        if self.nutrition_score is None:
+        if self._nutrition_score is None:
             self._nutrition_score = self.get_nutrition_score()
         assert self._nutrition_score is not None
         return self._nutrition_score
