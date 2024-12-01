@@ -2,18 +2,25 @@ import datetime
 from enum import Enum
 
 class Sunlight(Enum):
+    """
+    Enum for all possible sunlight conditions
+    """
     FULL_SHADE = 0
     PART_SHADE = 1
     PART_SUN = 2
     FULL_SUN = 3
 
 class Spot:
-    """Placeholder Spot class"""
+    """
+    Placeholder Spot class
+    """
     def __init__(self, sunlight: Sunlight):
         self.sunlight = sunlight
-    pass
 
 class Health(Enum):
+    """
+    Enum for all possible health conditions
+    """
     DEAD = 0
     UNHEALTHY = 1
     SLIGHTLY_UNHEALTHY = 2
@@ -22,7 +29,8 @@ class Health(Enum):
 
 
 class Plant:
-    """Plant object that holds information about a specific plant the user has.
+    """
+    Plant object that holds information about a specific plant the user has.
         attributes:
         - core_id(int): the id the plant has in the core database
         - personal_id(int): the id the plant has in the user database
@@ -37,7 +45,6 @@ class Plant:
         - nutrition(list[datetime.datetime]): Log of the last few times the plant received nutrition
         - repotted(datetime.datetime): the moment the plant was last repotted
         - notes(str): users notes about the plant
-        - max_log_size(int): the maximum amount of entries in the watering and nutrition logs
     """
     def __init__(self,
                  core_id: int,
@@ -67,19 +74,25 @@ class Plant:
         self.nutrition_score: None | int = None # type: ignore
 
     def give_nutrition(self) -> None:
-        """Sets time when plant last received nutrition to the current date and time"""
+        """
+        Sets time when plant last received nutrition to the current date and time
+        """
         self.nutrition.append(datetime.datetime.now())
         if len(self.nutrition) > self.max_log_size:
             del self.nutrition[0]
         self._nutrition_score: int | None = None
 
     def change_spot(self, spot: Spot) -> None:
-        """Changes spot of the plant"""
+        """
+        Changes spot of the plant and calculates new sunlight score
+        """
         self.spot = spot
         self.sunlight_score = self.get_sunlight_score()
 
     def water_plant(self) -> None:
-        """Sets time when plant was last watered to current moment."""
+        """
+        Sets time when plant was last watered to current moment. and deletes water_score cache
+        """
         if datetime.datetime.now() < self.watered[-1]:
             raise ValueError(f"Last watering entry is in the future. ({self.watered[-1]})")
         self.watered.append(datetime.datetime.now())
@@ -88,40 +101,56 @@ class Plant:
         self._water_score: int | None = None
 
     def get_water_score(self) -> int:
-        """Calculates the water score based on time between watering sessions."""
+        """
+        Calculates the water score based on time between watering sessions.
+        """
         time_sum = datetime.timedelta()
         for i in range(len(self.watered) -1, 0 , -1):
             if self.watered[i] < self.watered[i - 1]:
-                raise ValueError(f"Entry {i - 1} is before entry {i}. ({i-1}: {self.watered[i-1]}. {i}: {self.watered[i]})")
+                raise ValueError(
+                    f"Entry {i - 1} is before entry {i}. "
+                    f"({i-1}: {self.watered[i-1]}. {i}: {self.watered[i]})"
+                )
             time_sum += self.watered[i] - self.watered[i - 1]
         time_avg = time_sum / (len(self.watered) - 1)
 
         max_deviation = self.watering_frequency * 2
 
-        if not self.watering_frequency - max_deviation <= time_avg <=  self.watering_frequency + max_deviation:
+        if not (self.watering_frequency - max_deviation
+                <= time_avg <=
+                self.watering_frequency + max_deviation):
             return 0
 
-        water_score = (-(time_avg.days - self.watering_frequency.days)**2 + max_deviation.days**2) / (max_deviation.days**2)
+        water_score = ((-(time_avg.days - self.watering_frequency.days)**2 + max_deviation.days**2)/
+                       (max_deviation.days**2))
 
         return int(water_score * 100)
 
     def time_to_water_score(self) -> int:
-        """Returns score based on time between now and last watering session"""
+        """
+        Returns score based on time between now and last watering session
+        """
         time_diff = datetime.datetime.now() - self.watered[-1]
         max_deviation = self.watering_frequency * 2
         if time_diff < self.watering_frequency:
             return 100
         if time_diff > self.watering_frequency + max_deviation:
             return 0
-        score = (-(time_diff.days - self.watering_frequency.days) ** 2 + max_deviation.days ** 2) / (max_deviation.days ** 2)
+        score = ((-(time_diff.days - self.watering_frequency.days) ** 2 + max_deviation.days ** 2)/
+                 (max_deviation.days ** 2))
         return int(score * 100)
 
     def get_nutrition_score(self) -> int:
+        """
+        Calculates the nutrition score based on time between nutrition entries
+        """
         time_sum = datetime.timedelta()
         for i in range(len(self.nutrition) - 1, 0, -1):
             if self.nutrition[i] < self.nutrition[i - 1]:
                 raise ValueError(
-                    f"Entry {i - 1} is before entry {i}. ({i - 1}: {self.nutrition[i - 1]}. {i}: {self.nutrition[i]})")
+                    f"Entry {i - 1} is before entry {i}. "
+                    f"({i - 1}: {self.nutrition[i - 1]}. {i}: {self.nutrition[i]})"
+                )
             time_sum += self.nutrition[i] - self.nutrition[i - 1]
         time_avg = time_sum / (len(self.nutrition) - 1)
 
@@ -133,11 +162,15 @@ class Plant:
         if time_avg > nutrition_frequency + max_deviation:
             return 0
 
-        nutrition_score = (-(time_avg.days - nutrition_frequency.days) ** 2 + max_deviation.days ** 2) / (
-                    max_deviation.days ** 2)
+        nutrition_score = \
+            ((-(time_avg.days - nutrition_frequency.days) ** 2 + max_deviation.days ** 2) /
+             (max_deviation.days ** 2))
         return int(nutrition_score * 100)
 
     def time_to_feed_score(self) -> int:
+        """
+        Returns score based on time between now and last time the plant received nutrition
+        """
         time_diff = datetime.datetime.now() - self.nutrition[-1]
         nutrition_frequency = datetime.timedelta(days=30)
         max_deviation = nutrition_frequency * 2
@@ -151,31 +184,44 @@ class Plant:
 
 
     def get_sunlight_score(self) -> int:
-        """returns score based on how close the current sunlight is to that which is preferred by the plant"""
+        """
+        returns score based on how close the current sunlight is to that preferred by the plant
+        """
         if self.spot:
-            diff_to_preff = min([abs(self.spot.sunlight.value - preff.value) for preff in self.preff_sunlight])
+            diff_to_preff = min(abs(self.spot.sunlight.value - preff.value)
+                                for preff in self.preff_sunlight)
             return int(100 - diff_to_preff*33.33)
-        else:
-            return 0
+        return 0
 
 
     def get_health_score(self) -> int:
-        """Returns a health score ranging from 0 to 100, based on nutrition, water and sunlight."""
+        """
+        Returns a health score ranging from 0 to 100, based on nutrition, water and sunlight.
+        Returns -1 when health score was not calculated
+        """
         if self.manual_health:
             return  -1
         if self._health == Health.DEAD:
             return -1
         time_to_water_score = self.time_to_water_score()
         time_to_feed_score = self.time_to_feed_score()
-        health_score = 0.25 * self.water_score + 0.20 * time_to_water_score + 0.45 * self.sunlight_score + 0.05 * self.nutrition_score + 0.05 * time_to_feed_score
+        health_score = (0.25 * self.water_score +
+                        0.20 * time_to_water_score +
+                        0.45 * self.sunlight_score +
+                        0.05 * self.nutrition_score +
+                        0.05 * time_to_feed_score)
         return int(health_score)
 
     @property
     def health(self) -> Health:
+        """
+        returns health status and calculates it from health score if needed.
+        """
         health_score = self.get_health_score()
         if health_score == -1:
             return self._health
-        elif health_score <= 33:
+
+        if health_score <= 33:
             new_health = Health.UNHEALTHY
         elif health_score <= 66:
             new_health = Health.SLIGHTLY_UNHEALTHY
@@ -191,6 +237,9 @@ class Plant:
 
     @property
     def water_score(self) -> int:
+        """
+        returns cached water score if available and calculates new one otherwise
+        """
         if len(self.watered) < 2:
             return 0
 
@@ -207,6 +256,9 @@ class Plant:
 
     @property
     def nutrition_score(self) -> int:
+        """
+        returns cached nutrition score if available and calculates new one otherwise
+        """
         if len(self.nutrition) < 2:
             return 0
         if self._nutrition_score is None:
@@ -220,13 +272,19 @@ class Plant:
 
     @property
     def preff_sunlight(self) -> list[Sunlight]:
+        """
+        returns list of preferred sunlight conditions
+        """
         return self._preff_sunlight
 
     @preff_sunlight.setter
     def preff_sunlight(self, values: list[str | Sunlight]) -> None:
+        """
+        Sets preferred sunlight and converts string values to Sunlight enum values
+        """
         res: list[Sunlight] = []
-        for i in range(len(values)):
-            match values[i]:
+        for value in values:
+            match value:
                 case "full shade":
                     res.append(Sunlight.FULL_SHADE)
                 case "part sun/part shade":
@@ -235,10 +293,10 @@ class Plant:
                     res.append(Sunlight.PART_SHADE)
                 case "full sun":
                     res.append(Sunlight.FULL_SUN)
-                case value if isinstance(value, Sunlight):
-                    res.append(value)
-                case value:
-                    raise ValueError(f"Unexpected preff_sunlight value {value}")
+                case sunlight if isinstance(sunlight, Sunlight):
+                    res.append(sunlight)
+                case unexpected_value:
+                    raise ValueError(f"Unexpected preff_sunlight value {unexpected_value}")
         self._preff_sunlight: list[Sunlight] = res
         if self.spot:
             self.sunlight_score = self.get_sunlight_score()
@@ -249,4 +307,3 @@ class Plant:
 
     def __str__(self) -> str:
         return f"{self.personal_id}: {self.core_name}"
-
