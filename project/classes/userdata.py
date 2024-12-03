@@ -23,13 +23,15 @@ class UserData:
         for plant in self.plants:
             plant.water_plant()
 
-    def add_plant(self, new_plant: Plant) -> None:
+    def add_plant(self, new_plant: Plant, assigned_spot: Spot) -> None:
         '''Adds a plant'''
-        self.plants.add(new_plant)
+        if assigned_spot in [spot for room in self.rooms.values() for spot in room]:
+            new_plant.change_spot(assigned_spot)
+            self.plants.add(new_plant)
 
     def add_spot(self, new_spot: Spot, room: str) -> None:
         '''Adds a spot to an existing room'''
-        self.rooms[room].add(new_spot)
+        self.rooms[room].append(new_spot)
 
     def add_room(self, new_room: str) -> None:
         '''Adds a new room'''
@@ -38,6 +40,8 @@ class UserData:
 
     def delete_plant(self, bad_plant: Plant) -> None:
         '''Removes a plant based on the name'''
+        if bad_plant.spot:
+            bad_plant.spot.assigned_plant = None
         self.plants.remove(bad_plant)
 
     def delete_spot(self, bad_spot: Spot) -> None:
