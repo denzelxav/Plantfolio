@@ -1,14 +1,14 @@
 import requests
 import json
 import os
-from get_ids import get_ids
+from get_ids import get_indoor_ids
 
 
 def get_json_plant_details() -> None:
     """Retrieves JSON data from the Perenual plant details API and saves it to a json file."""
 
     url_template = "https://perenual.com/api/species/details/{}?key=sk-JONz674589ab578437782"
-    ids = get_ids()
+    ids = get_indoor_ids()
 
     try:
         # Load existing data from the file
