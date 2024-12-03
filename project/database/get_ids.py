@@ -1,10 +1,13 @@
 import json
+import os
+
 
 def get_ids() -> list:
     """Returns a list of ids of all indoor plants in indoor_plants.json."""
 
     res = []
-    with open('indoor_plants.json', 'r') as file:
+    file_path = os.path.join('project', 'database', 'indoor_plants.json')
+    with open(file_path, 'r') as file:
         data = json.load(file)
         for dict in data:
             for key, value in dict.items():

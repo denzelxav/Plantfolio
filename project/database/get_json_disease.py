@@ -1,5 +1,6 @@
 import requests
 import json
+import os
 
 
 def get_json_plant_disseases() -> None:
@@ -9,7 +10,8 @@ def get_json_plant_disseases() -> None:
 
     try:
         # Load existing data from the file
-        with open('plants_disseases.json', 'r') as file:
+        file_path_disease = os.path.join('project', 'database', 'plants_disseases.json')
+        with open(file_path_disease, 'r') as file:
             existing_data = json.load(file)
     except FileNotFoundError:
         existing_data = []
@@ -27,7 +29,8 @@ def get_json_plant_disseases() -> None:
             break
 
     # Save existing data to a json file
-    with open('plants_disseases.json', 'w') as file:
+    file_path_json = os.path.join('project', 'database', 'plants_disseases.json')
+    with open(file_path_json, 'w') as file:
         json.dump(existing_data, file, indent=4)
 
     print("All pages saved to plant_details.json")

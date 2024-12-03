@@ -1,5 +1,6 @@
 import requests
 import json
+import os
 from get_ids import get_ids
 
 
@@ -11,7 +12,8 @@ def get_json_plant_details() -> None:
 
     try:
         # Load existing data from the file
-        with open('plant_details.json', 'r') as file:
+        file_path_details = os.path.join('project', 'database', 'plant_details.json')
+        with open(file_path_details, 'r') as file:
             existing_data = json.load(file)
     except FileNotFoundError:
         existing_data = []
@@ -29,7 +31,8 @@ def get_json_plant_details() -> None:
             break
 
     # Save all the JSON responses to a file
-    with open('plant_details.json', 'w') as file:
+    file_path_json = os.path.join('project', 'database', 'plant_details.json')
+    with open(file_path_json, 'w') as file:
         json.dump(existing_data, file, indent=4)
 
     print("All ids saved to plant_details.json")
