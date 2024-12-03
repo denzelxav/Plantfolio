@@ -1,6 +1,7 @@
 import requests
 import json
-from get_ids import get_ids
+from database.get_ids import get_ids
+import os
 
 
 def get_json_plant_details() -> None:
@@ -8,7 +9,8 @@ def get_json_plant_details() -> None:
     ids = get_ids()
 
     try:
-        with open('plant_details.json', 'r') as file:
+        file_path = os.path.join('database', 'plant_details.json')
+        with open(file_path, 'r') as file:
             existing_data = json.load(file)
     except FileNotFoundError:
         existing_data = []

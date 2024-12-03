@@ -1,8 +1,11 @@
 import json
+import os
+
 
 def get_ids() -> list:
     res = []
-    with open('indoor_plants.json', 'r') as file:
+    file_path = os.path.join('database', 'indoor_plants.json')
+    with open(file_path, 'r') as file:
         data = json.load(file)
         for dict in data:
             for key, value in dict.items():
