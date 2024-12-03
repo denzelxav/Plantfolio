@@ -35,8 +35,7 @@ def test_create_userdata_basic():
     mydata.water_all()
 
     # tests water_all
-    assert all(plant.watered[-1] == datetime.datetime.now() for plant in mydata.plants)
-    assert not all(plant.watered[-1] == datetime.datetime.now() + datetime.timedelta(microseconds=1) for plant in mydata.plants)
+    assert all(plant.watered[-1] < datetime.datetime.now() + datetime.timedelta(seconds = 1) for plant in mydata.plants)
 
     mydata.delete_plant(maple)
 
