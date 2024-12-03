@@ -1,7 +1,7 @@
 import requests
 import json
 import os
-from get_ids import get_indoor_ids
+from database.get_ids import get_indoor_ids
 
 
 def get_json_plant_details() -> None:
