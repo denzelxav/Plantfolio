@@ -12,9 +12,11 @@ pytest = "*"
 pytest-cov = "*"
 coverage = "*"
 numpy = "*"
-requests = "*"
 pymysql = "*"
 pwinput = "*"
+cryptography = "*"
+requests = "*"
+types-requests = "*"
 
 [dev-packages]
 
