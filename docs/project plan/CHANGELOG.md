@@ -1,3 +1,4 @@
 # Changelog
 
-Please document any changes you make to your project plan after getting approval from course staff.
+-removed humidty and temperature attributes for spot from must-have requirements (requirement 2).
+-added could-have requirement for humidity and temperature attributes for spot class.
