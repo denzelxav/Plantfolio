@@ -24,11 +24,6 @@ class UserData:
         for plant in self.plants:
             plant.water_plant()
 
-    def refresh_health(self) -> None:
-        '''Updates the health level of each plant based on current timestamps'''
-        for plant in self.plants:
-            plant.determine_health()
-
     def add_plant(self, new_plant: Plant) -> None:
         '''Adds a plant'''
         self.plants.add(new_plant)
