@@ -4,15 +4,19 @@ from get_ids import get_ids
 
 
 def get_json_plant_details() -> None:
+    """Retrieves JSON data from the Perenual plant details API and saves it to a json file."""
+
     url_template = "https://perenual.com/api/species/details/{}?key=sk-JONz674589ab578437782"
     ids = get_ids()
 
     try:
+        # Load existing data from the file
         with open('plant_details.json', 'r') as file:
             existing_data = json.load(file)
     except FileNotFoundError:
         existing_data = []
 
+    # Iterate over all the ids from get_ids and append the json response to existing data
     for id in ids:
         url = url_template.format(id)
         response = requests.get(url)
