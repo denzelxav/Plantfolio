@@ -21,7 +21,7 @@ class Notification:
     the importance(weight), the type and the time 
     of the notification for a certain plant.
     '''
-    weight: str
+    weight: int
     time_sent: datetime
     name: str
     type: str
