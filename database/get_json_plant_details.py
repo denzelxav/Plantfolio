@@ -1,18 +1,24 @@
 import requests
 import json
-from get_ids import get_ids
+import os
+from database.get_ids import get_indoor_ids
 
 
 def get_json_plant_details() -> None:
+    """Retrieves JSON data from the Perenual plant details API and saves it to a json file."""
+
     url_template = "https://perenual.com/api/species/details/{}?key=sk-JONz674589ab578437782"
-    ids = get_ids()
+    ids = get_indoor_ids()
 
     try:
-        with open('plant_details.json', 'r') as file:
+        # Load existing data from the file
+        file_path_details = os.path.join('project', 'database', 'plant_details.json')
+        with open(file_path_details, 'r') as file:
             existing_data = json.load(file)
     except FileNotFoundError:
         existing_data = []
 
+    # Iterate over all the ids from get_ids and append the json response to existing data
     for id in ids:
         url = url_template.format(id)
         response = requests.get(url)
@@ -25,7 +31,8 @@ def get_json_plant_details() -> None:
             break
 
     # Save all the JSON responses to a file
-    with open('plant_details.json', 'w') as file:
+    file_path_json = os.path.join('project', 'database', 'plant_details.json')
+    with open(file_path_json, 'w') as file:
         json.dump(existing_data, file, indent=4)
 
     print("All ids saved to plant_details.json")
