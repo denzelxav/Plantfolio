@@ -70,7 +70,7 @@ class Plant:
         """
         Sets time when plant was last watered to current moment. and deletes water_score cache
         """
-        if datetime.datetime.now() < self.watered[-1]:
+        if len(self.watered) > 1 and datetime.datetime.now() < self.watered[-1]:
             raise ValueError(f"Last watering entry is in the future. ({self.watered[-1]})")
         self.watered.append(datetime.datetime.now())
         if len(self.watered) > self.max_log_size:

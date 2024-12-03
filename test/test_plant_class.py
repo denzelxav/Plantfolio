@@ -1,4 +1,5 @@
-from project.classes.plant import Plant, Sunlight, Health
+from project.classes.plant import Plant
+from project.classes.enums import Sunlight, Health
 from project.classes.spot_notification import Spot
 import datetime
 
