@@ -10,7 +10,7 @@ class Spot:
     with the properties lightlevel, humidity, temperature and 
     setting a plant to a spot.'''
     spot_id: str
-    ligthlevel: str
+    light_level: str
     humidity: str
     assigned_plant: Plant | None
     temperature: int
@@ -24,7 +24,7 @@ class Notification:
     weight: int
     time_sent: datetime
     name: str
-    type: str
+    notification_type: str
     plant_notification: Plant
 
 
