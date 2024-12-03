@@ -1,30 +1,6 @@
 import datetime
-from enum import Enum
-
-class Sunlight(Enum):
-    """
-    Enum for all possible sunlight conditions
-    """
-    FULL_SHADE = 0
-    PART_SHADE = 1
-    PART_SUN = 2
-    FULL_SUN = 3
-
-class Spot:
-    """
-    Placeholder Spot class
-    """
-    def __init__(self, sunlight: Sunlight):
-        self.sunlight = sunlight
-
-class Health(Enum):
-    """
-    Enum for all possible health conditions
-    """
-    DEAD = 0
-    UNHEALTHY = 1
-    SLIGHTLY_UNHEALTHY = 2
-    HEALTHY = 3
+from project.classes.spot_notification import Spot
+from project.classes.enums import Health, Sunlight
 
 
 
@@ -87,6 +63,7 @@ class Plant:
         Changes spot of the plant and calculates new sunlight score
         """
         self.spot = spot
+        self.spot.assigned_plant = self
         self.sunlight_score = self.get_sunlight_score()
 
     def water_plant(self) -> None:
@@ -188,7 +165,7 @@ class Plant:
         returns score based on how close the current sunlight is to that preferred by the plant
         """
         if self.spot:
-            diff_to_preff = min(abs(self.spot.sunlight.value - preff.value)
+            diff_to_preff = min(abs(self.spot.light_level.value - preff.value)
                                 for preff in self.preff_sunlight)
             return int(100 - diff_to_preff*33.33)
         return 0

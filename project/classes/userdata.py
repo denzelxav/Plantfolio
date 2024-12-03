@@ -1,8 +1,7 @@
-class Plant:
-    ...
+from project.classes.plant import Plant
+from project.classes.spot_notification import Spot
 
-class Spot:
-    ...
+
 
 class UserData:
 
