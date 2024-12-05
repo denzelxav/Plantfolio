@@ -1,83 +1,158 @@
-+----------+---------------------------------------------------+-------------------------+-----------------+---------------------+----------------------+----------+--------------------+----------------+-----------------+-------------+---------------+---------------------------------------------------------------+---------------------+
-| plant_id |                  scientific_name                  |       common_name       |  plant_family   |     plant_type      |        cycle         | watering | watering_frequency | watering_depth | watering_period | maintenance | toxic_to_pets |                        all_other_names                        |      sunlight       |
-+----------+---------------------------------------------------+-------------------------+-----------------+---------------------+----------------------+----------+--------------------+----------------+-----------------+-------------+---------------+---------------------------------------------------------------+---------------------+
-|   543    |             Adiantum capillus-veneris             |     maidenhair fern     |   Pteridaceae   |        Fern         |      Perennial       | Average  |      2-3 days      |                |                 |     Low     |       0       | ["Southern Maidenhair","Venus' Hair Fern","Venus' Hair Fern"] | part sun/part shade |
-|   549    |                 Aechmea fasciata                  |        urn plant        |  Bromeliaceae   |      Epiphyte       |      Perennial       | Average  |      1-2 days      |                |                 |  Moderate   |       0       |                        ["silver vase"]                        | part sun/part shade |
-|   627    |               Aglaonema 'Red Gold'                |    Chinese evergreen    |     Araceae     |        Shrub        | Herbaceous Perennial | Average  |     7-10 days      |                |                 |     Low     |       0       |                              []                               | part sun/part shade |
-|   710    |                Alocasia amazonica                 |     elephant's ear      |     Araceae     |        Bulb         |      Perennial       | Average  |     7-10 days      |                |                 |  Moderate   |       1       |                              []                               | part sun/part shade |
-|   718    |                 Alocasia 'Sarian'                 |     elephant's ear      |     Araceae     |        Bulb         |      Perennial       | Average  |      5-7 days      |                |                 |  Moderate   |       1       |                              []                               | part sun/part shade |
-|   721    |                   Aloe harlana                    |          aloe           |  Asphodelaceae  |                     | Herbaceous Perennial | Minimum  |     7-10 days      |                |                 |     Low     |       0       |                              []                               | part sun/part shade |
-|   727    |                   Aloe suzannae                   |          aloe           |  Asphodelaceae  |        Tree         |      Perennial       | Minimum  |     7-10 days      |                |     morning     |     Low     |       0       |                              []                               | part sun/part shade |
-|   855    |               Anthurium andraeanum                |        anthurium        |     Araceae     |       Flower        | Herbaceous Perennial | Average  |     7-10 days      |                |                 |  Moderate   |       0       |                              []                               | part sun/part shade |
-|   1130   |          Athyrium niponicum var. pictum           |  Japanese painted fern  |   Athyriaceae   |        Fern         |      Perennial       | Average  |      3-4 days      |                |                 |     Low     |       0       |                              []                               | part sun/part shade |
-|   1133   |    Athyrium niponicum var. pictum 'Metallicum'    |  Japanese painted fern  |   Athyriaceae   |        Fern         |      Perennial       | Average  |                    |                |                 |     Low     |       0       |                              []                               | part sun/part shade |
-|   1149   |          Aucuba japonica 'Suruga Benten'          |     spotted laurel      |   Garryaceae    | Broadleaf evergreen |      Perennial       | Average  |     7-10 days      |    2 inches    |                 |     Low     |       0       |                              []                               | part sun/part shade |
-|   1192   |               Beaucarnea recurvata                |      ponytail palm      |  Asparagaceae   | Broadleaf evergreen |      Perennial       | Average  |     7-10 days      |                |                 |     Low     |       0       |                              []                               | part sun/part shade |
-|   1197   |        Begonia boliviensis BOSSA NOVA RED         |         begonia         |   Begoniaceae   |       Begonia       | Herbaceous Perennial | Average  |      2-3 days      |                |                 |  Moderate   |       0       |                              []                               | part sun/part shade |
-|   1199   |                 Begonia 'Casper'                  |         begonia         |   Begoniaceae   |       Begonia       | Herbaceous Perennial | Average  |                    |                |                 |  Moderate   |       0       |                              []                               | part sun/part shade |
-|   1201   |             Begonia 'Dangling Pearls'             |         begonia         |   Begoniaceae   |       Begonia       | Herbaceous Perennial | Average  |      2-3 days      |                |                 |  Moderate   |       0       |                              []                               | part sun/part shade |
-|   1203   |                Begonia FUNKY PINK                 | hybrid tuberous begonia |   Begoniaceae   |        Herb         | Herbaceous Perennial | Average  |      2-3 days      |    2 inches    |                 |    High     |       0       |                              []                               | part sun/part shade |
-|   1208   |               Begonia 'Green Gold'                |         begonia         |   Begoniaceae   |       Begonia       | Herbaceous Perennial | Average  |                    |                |                 |  Moderate   |       0       |                              []                               | part sun/part shade |
-|   1209   |                 Begonia 'Gryphon'                 |         begonia         |   Begoniaceae   |       Begonia       | Herbaceous Perennial | Average  |      5-7 days      |                |                 |  Moderate   |       0       |                              []                               | part sun/part shade |
-|   1210   |               Begonia 'Lime Royale'               |         begonia         |   Begoniaceae   |       Begonia       | Herbaceous Perennial | Average  |      3-4 days      |                |                 |  Moderate   |       0       |                              []                               | part sun/part shade |
-|   1211   |             Begonia 'Martha Stewart'              |         begonia         |   Begoniaceae   |       Begonia       | Herbaceous Perennial | Average  |      3-4 days      |                |                 |  Moderate   |       0       |                              []                               | part sun/part shade |
-|   1212   |                 Begonia masoniana                 |   iron cross begonia    |   Begoniaceae   |        Herb         | Herbaceous Perennial | Average  |     7-10 days      |    2 inches    |                 |  Moderate   |       0       |                              []                               | part sun/part shade |
-|   1214   |               Begonia rex-cultorum                |       rex begonia       |   Begoniaceae   |        Shrub        | Herbaceous Perennial | Average  |     7-10 days      |                |                 |    High     |       0       |                              []                               | part sun/part shade |
-|   1215   |         Begonia rex-cultorum 'Super Curl'         |       rex begonia       |   Begoniaceae   |       Begonia       | Herbaceous Perennial | Average  |     7-10 days      |                |                 |  Moderate   |       0       |                              []                               | part sun/part shade |
-|   1216   |               Begonia 'River Nile'                |         begonia         |   Begoniaceae   |       Begonia       | Herbaceous Perennial | Average  |      3-4 days      |                |                 |  Moderate   |       0       |                              []                               | part sun/part shade |
-|   1217   |      Begonia (Semperflorens Cultorum Group)       |         begonia         |   Begoniaceae   |       Flower        | Herbaceous Perennial | Average  |      2-3 days      |    3 inches    |                 |     Low     |       0       |                              []                               | part sun/part shade |
-|   1218   |     Begonia semperflorens 'Senator Deep Rose'     |         begonia         |   Begoniaceae   |       Begonia       | Herbaceous Perennial | Average  |                    |                |                 |  Moderate   |       0       |                              []                               | part sun/part shade |
-|   1220   |                 Begonia 'Sinbad'                  |    angelwing begonia    |   Begoniaceae   |       Begonia       | Herbaceous Perennial | Frequent |      3-4 days      |                |                 |  Moderate   |       0       |                              []                               | part sun/part shade |
-|   1221   |               Begonia 'Solar Flare'               |         begonia         |   Begoniaceae   |       Begonia       | Herbaceous Perennial | Average  |     7-10 days      |                |                 |  Moderate   |       0       |                              []                               | part sun/part shade |
-|   1222   |                 Begonia 'Sophia'                  |    angelwing begonia    |   Begoniaceae   |       Begonia       | Herbaceous Perennial | Average  |      3-4 days      |                |                 |  Moderate   |       0       |                              []                               | part sun/part shade |
-|   1224   |   Begonia tuberhybrida 'Jurassic Silver Swirl'    | hybrid tuberous begonia |   Begoniaceae   |       Begonia       | Herbaceous Perennial | Average  |      2-3 days      |     1 inch     |                 |  Moderate   |       0       |                              []                               | part sun/part shade |
-|   1225   |      Begonia tuberosa 'Fortune Peach Shades'      |         begonia         |   Begoniaceae   |       Begonia       | Herbaceous Perennial | Average  |      3-4 days      |                |                 |  Moderate   |       0       |                              []                               | part sun/part shade |
-|   1226   |             Begonia (Tuberosa Group)              | hybrid tuberous begonia |   Begoniaceae   |        Bulb         |      Perennial       | Average  |      2-3 days      |      5 cm      |                 |    High     |       0       |                              []                               | part sun/part shade |
-|   1272   |                Bertolonia maculata                |       jewel plant       | Melastomataceae |       Creeper       | Herbaceous Perennial | Frequent |     7-10 days      |                |                 |  Moderate   |       0       |                              []                               | part sun/part shade |
-|   1416   |     Buxus microphylla 'Peergold' GOLDEN DREAM     |         boxwood         |    Buxaceae     | Broadleaf evergreen |      Perennial       | Average  |                    |                |                 |  Moderate   |       0       |                      ["Korean boxwood"]                       | part sun/part shade |
-|   1457   |                 Caladium bicolor                  |       angel wings       |     Araceae     |        Bulb         |      Perennial       | Average  |      3-4 days      |    2 inches    |     morning     |  Moderate   |       0       |                        ["angel wings"]                        | part sun/part shade |
-|   1468   |               Calanthe 'Kozu Spice'               |         orchid          |   Orchidaceae   |       Orchid        |      Perennial       | Frequent |      5-7 days      |    2 inches    |                 |  Moderate   |       0       |                              []                               | part sun/part shade |
-|   1469   |                Calathea lancifolia                |    rattlesnake plant    |   Marantaceae   |        Herb         | Herbaceous Perennial | Average  |                    |                |                 |  Moderate   |       0       |                              []                               | part sun/part shade |
-|   1470   |                 Calathea makoyana                 |      peacock plant      |   Marantaceae   |        Herb         | Herbaceous Perennial | Average  |     7-10 days      |                |                 |  Moderate   |       0       |                              []                               | part sun/part shade |
-|   1471   |                 Calathea zebrina                  |       zebra plant       |   Marantaceae   |        Herb         | Herbaceous Perennial | Average  |     7-10 days      |                |                 |  Moderate   |       0       |                              []                               | part sun/part shade |
-|   1598   |       Capsicum annuum 'Chinese Five Color'        |    ornamental pepper    |   Solanaceae    |        Fruit        | Herbaceous Perennial | Frequent |      2-3 days      |                |                 |     Low     |       0       |                              []                               | part sun/part shade |
-|   1716   |                 Cattleya (group)                  |         orchid          |   Orchidaceae   |       Orchid        |      Perennial       | Average  |      5-7 days      |                |                 |  Moderate   |       0       |                              []                               | part sun/part shade |
-|   1845   |              Chlorophytum amaniense               |   St. Bernard's lily    |  Asparagaceae   |        Herb         | Herbaceous Perennial | Minimum  |                    |                |                 |     Low     |       0       |                              []                               | part sun/part shade |
-|   2030   |                Columnea microcalyx                |        columnea         |  Gesneriaceae   |        Vine         |      Perennial       | Average  |     7-10 days      |     1 inch     |                 |  Moderate   |       0       |                              []                               | part sun/part shade |
-|   2242   |           Crossandra infundibuliformis            |   firecracker flower    |   Acanthaceae   | Broadleaf evergreen |      Perennial       | Average  |      2-3 days      |                |                 |  Moderate   |       0       |                              []                               | part sun/part shade |
-|   2244   |                Cryptanthus (group)                |       cryptanthus       |  Bromeliaceae   | Broadleaf evergreen |      Perennial       | Average  |     7-10 days      |                |                 |  Moderate   |       0       |                              []                               | part sun/part shade |
-|   2263   |               Cuphea VERMILLIONAIRE               |         cuphea          |   Lythraceae    |        Shrub        |        Annual        | Frequent |                    |                |                 |     Low     |       0       |                              []                               | part sun/part shade |
-|   2274   |               Cyclamen hederifolium               |     Persian violet      |   Primulaceae   |        Herb         | Herbaceous Perennial | Average  |     7-10 days      |                |                 |  Moderate   |       1       |                              []                               | part sun/part shade |
-|   2275   |                 Cyclamen persicum                 |        cyclamen         |   Primulaceae   |        Bulb         |      Perennial       | Average  |     7-10 days      |                |                 |  Moderate   |       0       |                              []                               | part sun/part shade |
-|   2277   |              Cymbalaria aequitriloba              |       cymbalaria        | Plantaginaceae  |        Herb         | Herbaceous Perennial | Average  |                    |                |                 |  Moderate   |       0       |                              []                               | part sun/part shade |
-|   2287   |        Cyperus alternifolius 'Variegatus'         |     umbrella plant      |   Cyperaceae    |    Rush or Sedge    |      Perennial       | Average  |     7-10 days      |                |                 |  Moderate   |       0       |                              []                               | part sun/part shade |
-|   2289   |          Cyperus involucratus 'Baby Tut'          |     umbrella plant      |   Cyperaceae    |    Rush or Sedge    |      Perennial       | Minimum  |     7-10 days      |                |                 |  Moderate   |       0       |                              []                               | part sun/part shade |
-|   2290   |          Cyperus involucratus 'Gracilis'          |     umbrella plant      |   Cyperaceae    |    Rush or Sedge    |      Perennial       | Average  |     7-10 days      |                |                 |  Moderate   |       0       |                              []                               | part sun/part shade |
-|   2294   |                Cyrtomium falcatum                 |   Japanese holly fern   | Dryopteridaceae |        Fern         |      Perennial       | Frequent |                    |                |                 |  Moderate   |       0       |                              []                               | part sun/part shade |
-|   2322   |                Davallia fejeensis                 |   rabbit's foot fern    |  Davalliaceae   |        Fern         |      Perennial       | Average  |                    |                |                 |  Moderate   |       0       |                              []                               | part sun/part shade |
-|   2323   |         Davallia fejeensis 'Dwarf Ripple'         |   rabbit's foot fern    |  Davalliaceae   |        Fern         |      Perennial       | Average  |                    |                |                 |  Moderate   |       0       |                              []                               | part sun/part shade |
-|   2354   |                Dendrobium (group)                 |         orchid          |   Orchidaceae   |       Orchid        |      Perennial       | Average  |      5-7 days      |                |     morning     |    High     |       0       |                              []                               | part sun/part shade |
-|   2468   |               Dieffenbachia seguine               |        dumb cane        |     Araceae     |        Herb         | Herbaceous Perennial | Average  |                    |    2 inches    |                 |  Moderate   |       1       |                              []                               | part sun/part shade |
-|   2498   |                 Dionaea muscipula                 |     Venus fly trap      |   Droseraceae   |     Carnivorous     | Herbaceous Perennial | Average  |      2-3 days      |                |                 |    High     |       0       |                              []                               | part sun/part shade |
-|   2528   |                 Dracaena fragrans                 |    fragrant dracaena    |  Asparagaceae   | Broadleaf evergreen |      Perennial       | Average  |     7-10 days      |                |                 |     Low     |       0       |           ["cornstalk dracaena","striped dracaena"]           | part sun/part shade |
-|   2529   | Dracaena fragrans (Deremensis Group) 'Lemon Lime' |    striped dracaena     |  Asparagaceae   | Broadleaf evergreen |      Perennial       | Average  |     7-10 days      |                |                 |     Low     |       0       |                              []                               | part sun/part shade |
-|   2530   | Dracaena fragrans (Deremensis Group) 'Limelight'  |    striped dracaena     |  Asparagaceae   | Broadleaf evergreen |      Perennial       | Minimum  |     7-10 days      |                |                 |     Low     |       0       |                              []                               | part sun/part shade |
-|   2531   |                Dracaena marginata                 |       dragontree        |  Asparagaceae   | Broadleaf evergreen |      Perennial       | Average  |     7-10 days      |     1 inch     |                 |     Low     |       0       |                   ["red margined dracaena"]                   | part sun/part shade |
-|   2532   |           Dracaena reflexa 'Variegata'            |      song of India      |  Asparagaceae   | Broadleaf evergreen |      Perennial       | Minimum  |     7-10 days      |                |                 |     Low     |       0       |                              []                               | part sun/part shade |
-|   2533   |                Dracaena sanderiana                |        dracaena         |  Asparagaceae   |        Shrub        | Herbaceous Perennial | Average  |     7-10 days      |                |                 |     Low     |       0       |                              []                               | part sun/part shade |
-|   2568   |                 Dypsis lutescens                  |       bamboo palm       |    Arecaceae    |    Palm or Cycad    |      Perennial       | Average  |     7-10 days      |    2 inches    |                 |     Low     |       0       |                              []                               | part sun/part shade |
-|   2773   |                 Epipremnum aureum                 |      golden pothos      |     Araceae     |        Vine         |      Perennial       | Average  |     7-10 days      |                |                 |     Low     |       1       |                       ["golden pothos"]                       | part sun/part shade |
-|   2774   |             Epipremnum aureum 'Neon'              |         pothos          |     Araceae     |        Vine         |      Perennial       | Average  |     7-10 days      |                |                 |     Low     |       1       |                              []                               | part sun/part shade |
-|   2775   |                 Episcia cupreata                  |      flame violet       |  Gesneriaceae   |        Herb         | Herbaceous Perennial | Average  |      3-4 days      |                |                 |    High     |       0       |                              []                               | part sun/part shade |
-|   2829   |                Eucharis amazonica                 |       Amazon lily       | Amaryllidaceae  |        Bulb         |      Perennial       | Average  |     7-10 days      |                |                 |     Low     |       0       |                              []                               | part sun/part shade |
-|   2885   |                  Euphorbia milii                  |       christplant       |  Euphorbiaceae  | Broadleaf evergreen |      Perennial       | Average  |     7-10 days      |                |                 |  Moderate   |       0       |                              []                               | part sun/part shade |
-|   2891   |               Euphorbia pulcherrima               |       poinsettia        |  Euphorbiaceae  |   Deciduous shrub   |      Perennial       | Average  |      3-4 days      |    4 inches    |                 |    High     |       0       |                              []                               | part sun/part shade |
-|   2915   |                   Exacum affine                   |     Persian violet      |  Gentianaceae   |        Herb         |        Annual        | Average  |     7-10 days      |                |                 |     Low     |       0       |                              []                               | part sun/part shade |
-|   2954   |                  Ficus benjamina                  |       weeping fig       |    Moraceae     | Broadleaf evergreen |      Perennial       | Average  |     7-10 days      |    2 inches    |                 |     Low     |       0       |                        ["weeping fig"]                        | part sun/part shade |
-|   2955   |            Ficus benjamina 'Variegata'            |       weeping fig       |    Moraceae     | Broadleaf evergreen |      Perennial       | Average  |     7-10 days      |                |                 |     Low     |       0       |                        ["weeping fig"]                        | part sun/part shade |
-|   2961   |                  Ficus elastica                   |   Indian rubberplant    |    Moraceae     | Broadleaf evergreen |      Perennial       | Average  |     7-10 days      |                |                 |     Low     |       0       |             ["India rubber plant","rubber tree"]              | part sun/part shade |
-|   2962   |             Ficus elastica 'Burgundy'             |   India rubber plant    |    Moraceae     | Broadleaf evergreen |      Perennial       | Average  |     7-10 days      |                |                 |     Low     |       0       |                              []                               | part sun/part shade |
-|   2963   |                   Ficus lyrata                    |     fiddle-leaf fig     |    Moraceae     | Broadleaf evergreen |      Perennial       | Average  |     7-10 days      |                |                 |     Low     |       0       |                              []                               | part sun/part shade |
-|   2965   |                   Ficus pumila                    |      climbing fig       |    Moraceae     |        Vine         |      Perennial       | Frequent |                    |    2 inches    |                 |     Low     |       0       |                              []                               | part sun/part shade |
-|   2976   |      Fittonia albivenis (Argyroneura Group)       |       Nerve Plant       |   Acanthaceae   |        Herb         | Herbaceous Perennial | Average  |      1-2 days      |                |                 |     Low     |       0       |                              []                               | part sun/part shade |
-+----------+---------------------------------------------------+-------------------------+-----------------+---------------------+----------------------+----------+--------------------+----------------+-----------------+-------------+---------------+---------------------------------------------------------------+---------------------+
++----------+---------------------------------------------------+-------------+------------+
+| plant_id |                  scientific_name                  | maintenance | percentage |
++----------+---------------------------------------------------+-------------+------------+
+|   1038   |            Asplenium nidus 'Antiquum'             |             |   0.65 %   |
+|   546    |                Adiantum raddianum                 |    High     |   7.14 %   |
+|   1203   |                Begonia FUNKY PINK                 |    High     |   7.14 %   |
+|   1214   |               Begonia rex-cultorum                |    High     |   7.14 %   |
+|   1226   |             Begonia (Tuberosa Group)              |    High     |   7.14 %   |
+|   2354   |                Dendrobium (group)                 |    High     |   7.14 %   |
+|   2498   |                 Dionaea muscipula                 |    High     |   7.14 %   |
+|   2499   |           Dionaea muscipula 'Akai Ryu'            |    High     |   7.14 %   |
+|   2500   |          Dionaea muscipula 'Cup-shaped'           |    High     |   7.14 %   |
+|   2501   |          Dionaea muscipula 'King Henry'           |    High     |   7.14 %   |
+|   2775   |                 Episcia cupreata                  |    High     |   7.14 %   |
+|   2891   |               Euphorbia pulcherrima               |    High     |   7.14 %   |
+|   425    |                 Abutilon hybridum                 |     Low     |   46.1 %   |
+|   426    |           Abutilon hybridum 'Bella Red'           |     Low     |   46.1 %   |
+|   427    |               Abutilon 'Moonchimes'               |     Low     |   46.1 %   |
+|   434    |                Acalypha wilkesiana                |     Low     |   46.1 %   |
+|   540    |                  Adenium obesum                   |     Low     |   46.1 %   |
+|   543    |             Adiantum capillus-veneris             |     Low     |   46.1 %   |
+|   552    |              Aeschynanthus radicans               |     Low     |   46.1 %   |
+|   625    |               Aglaonema commutatum                |     Low     |   46.1 %   |
+|   626    |                Aglaonema 'Cutlass'                |     Low     |   46.1 %   |
+|   627    |               Aglaonema 'Red Gold'                |     Low     |   46.1 %   |
+|   628    |             Aglaonema 'Silver Queen'              |     Low     |   46.1 %   |
+|   713    |                 Alocasia (group)                  |     Low     |   46.1 %   |
+|   721    |                   Aloe harlana                    |     Low     |   46.1 %   |
+|   727    |                   Aloe suzannae                   |     Low     |   46.1 %   |
+|   728    |                     Aloe vera                     |     Low     |   46.1 %   |
+|   747    |              Alternanthera ficoidea               |     Low     |   46.1 %   |
+|   748    |       Alternanthera ficoidea (yellow form)        |     Low     |   46.1 %   |
+|   1001   |                Asarina procumbens                 |     Low     |   46.1 %   |
+|   1023   |               Asparagus densiflorus               |     Low     |   46.1 %   |
+|   1024   |          Asparagus densiflorus 'Myersii'          |     Low     |   46.1 %   |
+|   1025   |         Asparagus densiflorus 'Sprengeri'         |     Low     |   46.1 %   |
+|   1031   |                Asparagus setaceus                 |     Low     |   46.1 %   |
+|   1036   |                Aspidistra elatior                 |     Low     |   46.1 %   |
+|   1130   |          Athyrium niponicum var. pictum           |     Low     |   46.1 %   |
+|   1133   |    Athyrium niponicum var. pictum 'Metallicum'    |     Low     |   46.1 %   |
+|   1147   |         Aucuba japonica 'Mr. Goldstrike'          |     Low     |   46.1 %   |
+|   1149   |          Aucuba japonica 'Suruga Benten'          |     Low     |   46.1 %   |
+|   1150   |            Aucuba japonica 'Variegata'            |     Low     |   46.1 %   |
+|   1192   |               Beaucarnea recurvata                |     Low     |   46.1 %   |
+|   1195   |          Begonia benariensis BIG SERIES           |     Low     |   46.1 %   |
+|   1196   |         Begonia 'Bepared' DRAGON WING RED         |     Low     |   46.1 %   |
+|   1217   |      Begonia (Semperflorens Cultorum Group)       |     Low     |   46.1 %   |
+|   1597   |           Capsicum annuum 'Black Pearl'           |     Low     |   46.1 %   |
+|   1598   |       Capsicum annuum 'Chinese Five Color'        |     Low     |   46.1 %   |
+|   1601   |            Capsicum annuum 'Onyx Red'             |     Low     |   46.1 %   |
+|   1603   |          Capsicum annuum 'Purple Flash'           |     Low     |   46.1 %   |
+|   1820   |                Chamaedorea elegans                |     Low     |   46.1 %   |
+|   1821   |              Chamaedorea microspadix              |     Low     |   46.1 %   |
+|   1822   |               Chamaedorea seifrizii               |     Low     |   46.1 %   |
+|   1845   |              Chlorophytum amaniense               |     Low     |   46.1 %   |
+|   1846   |               Chlorophytum 'Bonnie'               |     Low     |   46.1 %   |
+|   1847   |          Chlorophytum comosum 'Vittatum'          |     Low     |   46.1 %   |
+|   1848   |             Chlorophytum 'Fire Flash'             |     Low     |   46.1 %   |
+|   1855   |          Chrysanthemum 'Fireworks Igloo'          |     Low     |   46.1 %   |
+|   1864   |           Chrysanthemum 'Radiant Igloo'           |     Low     |   46.1 %   |
+|   1868   |            Chrysanthemum 'Yobra' BRAVO            |     Low     |   46.1 %   |
+|   1870   |           Chrysanthemum 'Yogin' GINGER            |     Low     |   46.1 %   |
+|   1871   |         Chrysanthemum 'Yogrena' GRENADINE         |     Low     |   46.1 %   |
+|   1873   |          Chrysanthemum 'Yoraquel' RAQUEL          |     Low     |   46.1 %   |
+|   1993   |                  Clivia miniata                   |     Low     |   46.1 %   |
+|   2193   |                  Crassula ovata                   |     Low     |   46.1 %   |
+|   2263   |               Cuphea VERMILLIONAIRE               |     Low     |   46.1 %   |
+|   2272   |                  Cycas revoluta                   |     Low     |   46.1 %   |
+|   2528   |                 Dracaena fragrans                 |     Low     |   46.1 %   |
+|   2529   | Dracaena fragrans (Deremensis Group) 'Lemon Lime' |     Low     |   46.1 %   |
+|   2530   | Dracaena fragrans (Deremensis Group) 'Limelight'  |     Low     |   46.1 %   |
+|   2531   |                Dracaena marginata                 |     Low     |   46.1 %   |
+|   2532   |           Dracaena reflexa 'Variegata'            |     Low     |   46.1 %   |
+|   2533   |                Dracaena sanderiana                |     Low     |   46.1 %   |
+|   2568   |                 Dypsis lutescens                  |     Low     |   46.1 %   |
+|   2773   |                 Epipremnum aureum                 |     Low     |   46.1 %   |
+|   2774   |             Epipremnum aureum 'Neon'              |     Low     |   46.1 %   |
+|   2829   |                Eucharis amazonica                 |     Low     |   46.1 %   |
+|   2915   |                   Exacum affine                   |     Low     |   46.1 %   |
+|   2954   |                  Ficus benjamina                  |     Low     |   46.1 %   |
+|   2955   |            Ficus benjamina 'Variegata'            |     Low     |   46.1 %   |
+|   2961   |                  Ficus elastica                   |     Low     |   46.1 %   |
+|   2962   |             Ficus elastica 'Burgundy'             |     Low     |   46.1 %   |
+|   2963   |                   Ficus lyrata                    |     Low     |   46.1 %   |
+|   2965   |                   Ficus pumila                    |     Low     |   46.1 %   |
+|   2976   |      Fittonia albivenis (Argyroneura Group)       |     Low     |   46.1 %   |
+|   428    |            Abutilon pictum 'Gold Dust'            |  Moderate   |   46.1 %   |
+|   502    |                 Achimenes (group)                 |  Moderate   |   46.1 %   |
+|   549    |                 Aechmea fasciata                  |  Moderate   |   46.1 %   |
+|   551    |                 Aeonium undulatum                 |  Moderate   |   46.1 %   |
+|   667    |                    Allium cepa                    |  Moderate   |   46.1 %   |
+|   710    |                Alocasia amazonica                 |  Moderate   |   46.1 %   |
+|   711    |            Alocasia amazonica 'Polly'             |  Moderate   |   46.1 %   |
+|   712    |                 Alocasia 'Frydek'                 |  Moderate   |   46.1 %   |
+|   714    |                Alocasia LOW RIDER                 |  Moderate   |   46.1 %   |
+|   715    |               Alocasia macrorrhizos               |  Moderate   |   46.1 %   |
+|   716    |               Alocasia 'Metalhead'                |  Moderate   |   46.1 %   |
+|   717    |                Alocasia 'Portora'                 |  Moderate   |   46.1 %   |
+|   718    |                 Alocasia 'Sarian'                 |  Moderate   |   46.1 %   |
+|   855    |               Anthurium andraeanum                |  Moderate   |   46.1 %   |
+|   856    |              Anthurium crassinervium              |  Moderate   |   46.1 %   |
+|   861    |               Aphelandra squarrosa                |  Moderate   |   46.1 %   |
+|   1194   |                Begonia 'Art Hodes'                |  Moderate   |   46.1 %   |
+|   1197   |        Begonia boliviensis BOSSA NOVA RED         |  Moderate   |   46.1 %   |
+|   1198   |               Begonia 'Canary Wing'               |  Moderate   |   46.1 %   |
+|   1199   |                 Begonia 'Casper'                  |  Moderate   |   46.1 %   |
+|   1200   |             Begonia 'Curly Fireflush'             |  Moderate   |   46.1 %   |
+|   1201   |             Begonia 'Dangling Pearls'             |  Moderate   |   46.1 %   |
+|   1202   |              Begonia 'Emerald Glow'               |  Moderate   |   46.1 %   |
+|   1208   |               Begonia 'Green Gold'                |  Moderate   |   46.1 %   |
+|   1209   |                 Begonia 'Gryphon'                 |  Moderate   |   46.1 %   |
+|   1210   |               Begonia 'Lime Royale'               |  Moderate   |   46.1 %   |
+|   1211   |             Begonia 'Martha Stewart'              |  Moderate   |   46.1 %   |
+|   1212   |                 Begonia masoniana                 |  Moderate   |   46.1 %   |
+|   1213   |               Begonia 'Penny Lahn'                |  Moderate   |   46.1 %   |
+|   1215   |         Begonia rex-cultorum 'Super Curl'         |  Moderate   |   46.1 %   |
+|   1216   |               Begonia 'River Nile'                |  Moderate   |   46.1 %   |
+|   1218   |     Begonia semperflorens 'Senator Deep Rose'     |  Moderate   |   46.1 %   |
+|   1219   | Begonia semperflorens-cultorum 'Harmony Scarlet'  |  Moderate   |   46.1 %   |
+|   1220   |                 Begonia 'Sinbad'                  |  Moderate   |   46.1 %   |
+|   1221   |               Begonia 'Solar Flare'               |  Moderate   |   46.1 %   |
+|   1222   |                 Begonia 'Sophia'                  |  Moderate   |   46.1 %   |
+|   1223   |    Begonia tuberhybrida 'Jurassic Pink Splash'    |  Moderate   |   46.1 %   |
+|   1224   |   Begonia tuberhybrida 'Jurassic Silver Swirl'    |  Moderate   |   46.1 %   |
+|   1225   |      Begonia tuberosa 'Fortune Peach Shades'      |  Moderate   |   46.1 %   |
+|   1272   |                Bertolonia maculata                |  Moderate   |   46.1 %   |
+|   1416   |     Buxus microphylla 'Peergold' GOLDEN DREAM     |  Moderate   |   46.1 %   |
+|   1457   |                 Caladium bicolor                  |  Moderate   |   46.1 %   |
+|   1468   |               Calanthe 'Kozu Spice'               |  Moderate   |   46.1 %   |
+|   1469   |                Calathea lancifolia                |  Moderate   |   46.1 %   |
+|   1470   |                 Calathea makoyana                 |  Moderate   |   46.1 %   |
+|   1471   |                 Calathea zebrina                  |  Moderate   |   46.1 %   |
+|   1716   |                 Cattleya (group)                  |  Moderate   |   46.1 %   |
+|   1891   |                   Citrus meyeri                   |  Moderate   |   46.1 %   |
+|   1971   |              Clerodendrum thomsoniae              |  Moderate   |   46.1 %   |
+|   1999   |                Codiaeum variegatum                |  Moderate   |   46.1 %   |
+|   2000   |          Codiaeum variegatum var. pictum          |  Moderate   |   46.1 %   |
+|   2030   |                Columnea microcalyx                |  Moderate   |   46.1 %   |
+|   2242   |           Crossandra infundibuliformis            |  Moderate   |   46.1 %   |
+|   2244   |                Cryptanthus (group)                |  Moderate   |   46.1 %   |
+|   2274   |               Cyclamen hederifolium               |  Moderate   |   46.1 %   |
+|   2275   |                 Cyclamen persicum                 |  Moderate   |   46.1 %   |
+|   2277   |              Cymbalaria aequitriloba              |  Moderate   |   46.1 %   |
+|   2287   |        Cyperus alternifolius 'Variegatus'         |  Moderate   |   46.1 %   |
+|   2288   |               Cyperus involucratus                |  Moderate   |   46.1 %   |
+|   2289   |          Cyperus involucratus 'Baby Tut'          |  Moderate   |   46.1 %   |
+|   2290   |          Cyperus involucratus 'Gracilis'          |  Moderate   |   46.1 %   |
+|   2294   |                Cyrtomium falcatum                 |  Moderate   |   46.1 %   |
+|   2295   |                Cyrtomium fortunei                 |  Moderate   |   46.1 %   |
+|   2322   |                Davallia fejeensis                 |  Moderate   |   46.1 %   |
+|   2323   |         Davallia fejeensis 'Dwarf Ripple'         |  Moderate   |   46.1 %   |
+|   2468   |               Dieffenbachia seguine               |  Moderate   |   46.1 %   |
+|   2885   |                  Euphorbia milii                  |  Moderate   |   46.1 %   |
+|   2956   |            Ficus carica 'Brown Turkey'            |  Moderate   |   46.1 %   |
+|   2957   |              Ficus carica 'Celeste'               |  Moderate   |   46.1 %   |
+|   2958   |           Ficus carica 'Chicago Hardy'            |  Moderate   |   46.1 %   |
+|   2959   |      Ficus carica 'MAJOAM' LITTLE MISS FIGGY      |  Moderate   |   46.1 %   |
++----------+---------------------------------------------------+-------------+------------+

@@ -162,7 +162,7 @@ def query_from_database(query: str) -> None:
         conn.close()
 
     try:
-        output_path = os.path.join('database', 'create_db_tables', 'database_output.txt')
+        output_path = os.path.join('database', 'database_output.txt')
         with open(output_path, 'w', encoding='utf-8') as file:
             table = tabulate(result, headers=column_names, tablefmt='pretty', numalign='center')
             file.write(str(table))
@@ -172,7 +172,7 @@ def query_from_database(query: str) -> None:
 if __name__ == '__main__':
     create_database()
     # query_from_database("""
-    # SELECT pd.*
+    # SELECT pd.*, po.origin
     # FROM plant_details pd
     # JOIN plant_origins po ON pd.plant_id = po.plant_id
     # WHERE po.origin LIKE '%islands%'
@@ -180,12 +180,12 @@ if __name__ == '__main__':
 
     # query_from_database("""SELECT * FROM plant_origins""")
 
-    query_from_database("""
-    SELECT pd.*, ps.sunlight
-    FROM plant_details pd
-    JOIN plant_sunlight ps ON pd.plant_id = ps.plant_id
-    WHERE ps.sunlight = 'part sun/part shade'
-    """)
+    # query_from_database("""
+    # SELECT pd.*, ps.sunlight
+    # FROM plant_details pd
+    # JOIN plant_sunlight ps ON pd.plant_id = ps.plant_id
+    # WHERE ps.sunlight = 'part sun/part shade'
+    # """)
 
     # query_from_database("""SELECT sunlight, plant_id
     #                     FROM plant_sunlight
@@ -193,3 +193,40 @@ if __name__ == '__main__':
     #                     """)
 
     # query_from_database("""SELECT * FROM plant_details""")
+
+    # query_from_database("""
+    #                     SELECT count(DISTINCT n.other_name), pd.scientific_name FROM plant_details pd
+    #                     INNER JOIN plant_other_names n ON pd.plant_id = n.plant_id
+    #                     GROUP BY pd.scientific_name
+    #                     HAVING count(DISTINCT n.other_name) > 1
+    #                     """)
+
+    # query_from_database("""
+    #                     SELECT count(DISTINCT po.origin), pd.scientific_name, pd.plant_id FROM plant_details pd
+    #                     LEFT JOIN plant_origins po ON pd.plant_id = po.plant_id
+    #                     GROUP BY pd.scientific_name, pd.plant_id
+    #                     HAVING count(DISTINCT po.origin) > 3
+    #                     """)
+    
+    # query_from_database("""
+    #                     SELECT p.plant_id, p.scientific_name, p.maintenance, po.origin
+    #                     FROM plant_details p
+    #                     INNER JOIN plant_origins po ON p.plant_id = po.plant_id
+    #                     WHERE p.plant_id IN (
+    #                     SELECT pd.plant_id FROM plant_details pd
+    #                     INNER JOIN plant_origins po ON pd.plant_id = po.plant_id
+    #                     WHERE po.origin = 'Brazil'
+    #                     )
+    #                     ORDER BY p.scientific_name, po.origin
+    #                     """)
+    
+    query_from_database("""
+                        SELECT DISTINCT p.plant_id, p.scientific_name, p.maintenance, ROUND(CAST(counter AS FLOAT)/CAST(counter2 AS FLOAT) * 100, 2) || " " || "%" as percentage FROM (
+                        SELECT p.plant_id
+                            , p.plant_id
+                            , p.scientific_name
+                            , p.maintenance
+                            , count(*) OVER (PARTITION BY p.maintenance) as counter, count(*) OVER (PARTITION BY 1) as counter2
+                        FROM plant_details p
+                        ) p
+                        """)
