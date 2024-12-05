@@ -17,6 +17,7 @@ pwinput = "*"
 cryptography = "*"
 requests = "*"
 types-requests = "*"
+tabulate = "*"
 
 [dev-packages]
 
