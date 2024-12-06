@@ -86,10 +86,10 @@ class UserData:
             for room in sorted(self.rooms.keys(), reverse=reverse):
                 result.extend([plant for plant in self.plants if plant.spot in self.rooms[room]])
             return result
-        if attribute == 'current_task':       
+        if attribute == 'current_task':
             return sorted(list(self.plants), key=self.tasks_to_string, reverse=reverse)
         return None
-        
+
     def tasks_to_string(self, plant: Plant) -> str:
         '''Converts the tasks of a plant to a sorted string of the first letter of each task'''
         result = ''
