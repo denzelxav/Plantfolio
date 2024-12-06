@@ -1,7 +1,6 @@
 import sqlite3
 import os
 import json
-from tabulate import tabulate
 
 
 def create_database():
@@ -188,7 +187,7 @@ def create_database():
     except Exception as e:
         print(f"An error occured: {e}")
 
-    
+
     finally:
         # Close the connection
         conn.close()
