@@ -5,7 +5,7 @@ import datetime
 
 def create_plant(sunlight: Sunlight = Sunlight.FULL_SHADE):
     spot = Spot("spot", sunlight, "humid", None, 20)
-    return Plant(425, 1, "flowering-maple",
+    return Plant(425, 1, "flowerus_mapelus", "flowering-maple",
                  "default", datetime.timedelta(days=7),
                  ["full sun", "part shade"]
                  ), spot

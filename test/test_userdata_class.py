@@ -4,7 +4,7 @@ from project.classes.spot_notification import Spot, Notification
 from project.classes.enums import *
 
 def create_plant(sunlight: Sunlight = Sunlight.FULL_SHADE):
-    return Plant(425, 1, "flowering-maple",
+    return Plant(425, 1, "flowerus_mapelus", "flowering-maple",
                  "default", datetime.timedelta(days=7),
                  ["full sun", "part shade"]
                  )
