@@ -3,6 +3,17 @@ from project.classes.spot_notification import Spot
 from project.classes.enums import Health, Sunlight
 
 
+def time_average(events: list[datetime.datetime]) -> datetime.timedelta:
+    time_sum = datetime.timedelta()
+    for i in range(len(events) - 1, 0, -1):
+        if events[i] < events[i - 1]:
+            raise ValueError(
+                f"Entry {i - 1} is before entry {i}. "
+                f"({i - 1}: {events[i - 1]}. {i}: {events[i]})"
+            )
+        time_sum += events[i] - events[i - 1]
+    time_avg = time_sum / (len(events) - 1)
+    return time_avg
 
 class Plant:
     """
@@ -20,6 +31,9 @@ class Plant:
         - watered(list[datetime.datetime]): Log of the last few times the plant received water
         - nutrition(list[datetime.datetime]): Log of the last few times the plant received nutrition
         - repotted(datetime.datetime): the moment the plant was last repotted
+        - manual_health(bool): Signifies if health should be refreshed by the get_health_score function or
+                               from manually set health attribute
+        - max_log_size(int): the number of entries before that log sizes deletes the oldest value.
         - notes(str): users notes about the plant
     """
     def __init__(self,
@@ -81,15 +95,7 @@ class Plant:
         """
         Calculates the water score based on time between watering sessions.
         """
-        time_sum = datetime.timedelta()
-        for i in range(len(self.watered) -1, 0 , -1):
-            if self.watered[i] < self.watered[i - 1]:
-                raise ValueError(
-                    f"Entry {i - 1} is before entry {i}. "
-                    f"({i-1}: {self.watered[i-1]}. {i}: {self.watered[i]})"
-                )
-            time_sum += self.watered[i] - self.watered[i - 1]
-        time_avg = time_sum / (len(self.watered) - 1)
+        time_avg = time_average(self.watered)
 
         max_deviation = self.watering_frequency * 2
 
@@ -121,15 +127,8 @@ class Plant:
         """
         Calculates the nutrition score based on time between nutrition entries
         """
-        time_sum = datetime.timedelta()
-        for i in range(len(self.nutrition) - 1, 0, -1):
-            if self.nutrition[i] < self.nutrition[i - 1]:
-                raise ValueError(
-                    f"Entry {i - 1} is before entry {i}. "
-                    f"({i - 1}: {self.nutrition[i - 1]}. {i}: {self.nutrition[i]})"
-                )
-            time_sum += self.nutrition[i] - self.nutrition[i - 1]
-        time_avg = time_sum / (len(self.nutrition) - 1)
+
+        time_avg = time_average(self.nutrition)
 
         nutrition_frequency = datetime.timedelta(days=30)
         max_deviation = nutrition_frequency * 2
