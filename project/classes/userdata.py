@@ -70,7 +70,7 @@ class UserData:
                 if bad_spot in spots:
                     self.rooms[room].remove(bad_spot)
 
-    def delete_room(self, room_name):
+    def delete_room(self, room_name: str) -> None:
         """
         Removes a room 
         """
