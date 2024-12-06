@@ -40,18 +40,6 @@ def query_from_database(query: str, output_to_file: bool=False) -> list[tuple[st
 
 if __name__ == '__main__':
     test_query = """
-    SELECT pd.plant_id, ppm.pruning_month
-    FROM plant_details pd
-    INNER JOIN plant_pruning_months ppm ON pd.plant_id = ppm.plant_id
-    WHERE ppm.pruning_month IN ("June", "July", "August")
-    """
-
-    test2 = """
-    SELECT pd.plant_id, po.origin, ppm.pruning_month
-    FROM plant_details pd
-    INNER JOIN plant_origins po ON pd.plant_id = po.plant_id
-    INNER JOIN plant_pruning_months ppm ON pd.plant_id = ppm.plant_id
-    WHERE po.origin = 'Brazil'
-    AND ppm.pruning_month = 'July'
-    """
-    query_from_database(test2, output_to_file=True)
+SELECT * FROM all_names
+"""
+    query_from_database(test_query, output_to_file=True)

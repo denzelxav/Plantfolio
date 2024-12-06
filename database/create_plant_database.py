@@ -20,6 +20,7 @@ def create_database():
         cursor.execute("""DROP TABLE IF EXISTS plant_origins""")
         cursor.execute("""DROP TABLE IF EXISTS plant_sunlight""")
         cursor.execute("""DROP TABLE IF EXISTS plant_pruning_months""")
+        cursor.execute("""DROP TABLE IF EXISTS all_names""")
 
         # Create all tables
         cursor.execute("""
@@ -75,6 +76,13 @@ def create_database():
             pruning_month TEXT,
             plant_id INTEGER,
             FOREIGN KEY(plant_id) REFERENCES plant_details(plant_id)
+        )
+        """)
+
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS all_names (
+            name TEXT,
+            plant_id INTEGER
         )
         """)
 
@@ -148,6 +156,32 @@ def create_database():
                        json_each(json_extract(json_data, '$.pruning_month'))
                     WHERE json_type(json_extract(json_data, '$.pruning_month')) = 'array'
                     """)
+
+        cursor.execute("""
+                    INSERT INTO all_names (name, plant_id)
+                    SELECT
+                        json_each.value as name,
+                        json_extract(json_data, '$.id') as plant_id
+                    FROM staging,
+                       json_each(json_extract(json_data, '$.other_name'))
+                    WHERE json_type(json_extract(json_data, '$.other_name')) = 'array'
+                       """)
+
+        cursor.execute("""
+                    INSERT INTO all_names (name, plant_id)
+                       SELECT
+                        json_extract(json_data, '$.scientific_name[0]') as name,
+                        json_extract(json_data, '$.id') as plant_id
+                       FROM staging
+                       """)
+
+        cursor.execute("""
+                    INSERT INTO all_names (name, plant_id)
+                       SELECT
+                        json_extract(json_data, '$.common_name') as name,
+                        json_extract(json_data, '$.id') as plant_id
+                       FROM staging
+                       """)
 
         conn.commit()
 
