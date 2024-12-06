@@ -88,6 +88,7 @@ class UserData:
             return result
         if attribute == 'current_task':       
             return sorted(list(self.plants), key=self.tasks_to_string, reverse=reverse)
+        return None
         
     def tasks_to_string(self, plant: Plant) -> str:
         '''Converts the tasks of a plant to a sorted string of the first letter of each task'''
