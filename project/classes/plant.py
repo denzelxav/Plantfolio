@@ -8,8 +8,8 @@ def time_average(events: list[datetime.datetime]) -> datetime.timedelta:
     for i in range(len(events) - 1, 0, -1):
         if events[i] < events[i - 1]:
             raise ValueError(
-                f"Entry {i - 1} is before entry {i}. "
-                f"({i - 1}: {events[i - 1]}. {i}: {events[i]})"
+                f"Entry {i} is before entry {i - 1}. "
+                f"({i}: {events[i]}. {i - 1}: {events[i - 1]})"
             )
         time_sum += events[i] - events[i - 1]
     time_avg = time_sum / (len(events) - 1)
