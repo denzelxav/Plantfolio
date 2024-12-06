@@ -1,6 +1,5 @@
 import os
-from database.query_function import query_from_database
-from database.create_plant_database import create_database
+from project.query_function import query_from_database
 
 def test_query_plant_details():
     """
