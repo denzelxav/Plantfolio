@@ -22,7 +22,8 @@ class Plant:
         - core_id(int): the id the plant has in the core database
         - personal_id(int): the id the plant has in the user database
         - personal_name(str): the name of the plant in the user database
-        - plant_name(str): the name of the plant in the core database
+        - scientific_name(str): the scientific name of the plant in the core database
+        - core_name(str): the name of the plant in the core database
         - icon_type(str): the type of icon the plant will show in the interface
         - spot(Spot): the spot where the plant is located
         - health(Health): indication how healthy the plant is based
@@ -39,6 +40,7 @@ class Plant:
     def __init__(self,
                  core_id: int,
                  personal_id: int,
+                 scientific_name: str,
                  core_name: str,
                  icon_type: str,
                  watering_frequency: datetime.timedelta,
@@ -47,6 +49,7 @@ class Plant:
         self.core_id = core_id
         self.personal_id = personal_id
         self.personal_name: None | str = None
+        self.scientific_name: str = scientific_name
         self.core_name = core_name
         self.icon_type = icon_type
         self.spot: None | Spot = None
