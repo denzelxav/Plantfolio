@@ -18,6 +18,7 @@ cryptography = "*"
 requests = "*"
 types-requests = "*"
 tabulate = "*"
+types-tabulate = "*"
 
 [dev-packages]
 

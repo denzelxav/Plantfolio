@@ -19,6 +19,7 @@ def create_database():
         cursor.execute("""DROP TABLE IF EXISTS plant_other_names""")
         cursor.execute("""DROP TABLE IF EXISTS plant_origins""")
         cursor.execute("""DROP TABLE IF EXISTS plant_sunlight""")
+        cursor.execute("""DROP TABLE IF EXISTS plant_pruning_months""")
 
         # Create all tables
         cursor.execute("""
@@ -35,12 +36,9 @@ def create_database():
             plant_type TEXT,
             cycle TEXT,
             watering TEXT,
-            watering_frequency TEXT,
-            watering_depth TEXT,
-            watering_period TEXT,
             maintenance TEXT,
-            toxic_to_pets INTEGER,
-            all_other_names TEXT
+            pruning_frequency TEXT,
+            toxic_to_pets INTEGER
         )
         """)
 
@@ -71,6 +69,15 @@ def create_database():
         )
         """)
 
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS plant_pruning_months (
+            pruning_month_id INTEGER PRIMARY KEY,
+            pruning_month TEXT,
+            plant_id INTEGER,
+            FOREIGN KEY(plant_id) REFERENCES plant_details(plant_id)
+        )
+        """)
+
         # Fill staging table with data from plant_details.json
         json_details_path = os.path.join('database', 'plant_details.json')
         with open(json_details_path, 'r', encoding='utf-8') as file:
@@ -83,7 +90,7 @@ def create_database():
 
         # Fill plant_details table with data from staging table
         cursor.execute("""
-                    INSERT INTO plant_details (plant_id, scientific_name, common_name, plant_family, plant_type, cycle, watering, watering_frequency, watering_depth, watering_period, maintenance, toxic_to_pets, all_other_names)
+                    INSERT INTO plant_details (plant_id, scientific_name, common_name, plant_family, plant_type, cycle, watering, pruning_frequency, maintenance, toxic_to_pets)
                     SELECT 
                         json_extract(json_data, '$.id') as plant_id,
                         json_extract(json_data, '$.scientific_name[0]') as scientific_name,
@@ -92,15 +99,12 @@ def create_database():
                         json_extract(json_data, '$.type') as plant_type,
                         json_extract(json_data, '$.cycle') as cycle,
                         json_extract(json_data, '$.watering') as watering,
-                        json_extract(json_data, '$.watering_general_benchmark.value') || ' ' || json_extract(json_data, '$.watering_general_benchmark.unit') as watering_frequency,
-                        json_extract(json_data, '$.depth_water_requirement.value') || ' ' || json_extract(json_data, '$.depth_water_requirement.unit') as watering_depth,
-                        json_extract(json_data, '$.watering_period') as watering_period,
+                        json_extract(json_data, '$.pruning_count.amount') || ' '|| 'time per year' as pruning_frequency,
                         json_extract(json_data, '$.maintenance') as maintenance,
-                        json_extract(json_data, '$.poisonous_to_pets') as toxic_to_pets,
-                        json_extract(json_data, '$.other_name') as all_other_names
+                        json_extract(json_data, '$.poisonous_to_pets') as toxic_to_pets
                     FROM staging
                     """)
-        
+
         # Fill plant_other_names table with data from staging table
         cursor.execute("""
                     INSERT INTO plant_other_names (other_name, plant_id)
@@ -111,7 +115,7 @@ def create_database():
                        json_each(json_extract(json_data, '$.other_name'))
                     WHERE json_type(json_extract(json_data, '$.other_name')) = 'array'
                     """)
-        
+
         # Fill plant_origins table with data from staging table
         cursor.execute("""
                     INSERT INTO plant_origins (origin, plant_id)
@@ -122,8 +126,8 @@ def create_database():
                        json_each(json_extract(json_data, '$.origin'))
                     WHERE json_type(json_extract(json_data, '$.origin')) = 'array'
                     """)
-        
-        # Fill plant_origins table with data from staging table
+
+        # Fill plant_sunlight table with data from staging table
         cursor.execute("""
                     INSERT INTO plant_sunlight (sunlight, plant_id)
                     SELECT 
@@ -134,99 +138,23 @@ def create_database():
                     WHERE json_type(json_extract(json_data, '$.sunlight')) = 'array'
                     """)
 
+        # Fill plant_pruning_months table with data from staging table
+        cursor.execute("""
+                    INSERT INTO plant_pruning_months (pruning_month, plant_id)
+                    SELECT 
+                        json_each.value as pruning_month,
+                        json_extract(json_data, '$.id') as plant_id
+                    FROM staging,
+                       json_each(json_extract(json_data, '$.pruning_month'))
+                    WHERE json_type(json_extract(json_data, '$.pruning_month')) = 'array'
+                    """)
+
         conn.commit()
-    except Exception as e:
-        print(f"An error occured: {e}")
-
-    finally:
-        conn.close()
-
-def query_from_database(query: str) -> None:
-    """
-    Queries the database and returns the result in a txt file, database_output.txt
-    """
-    try:
-        db_file = os.path.join('project', 'plant_database.db')
-        conn = sqlite3.connect(db_file)
-        cursor = conn.cursor()
-
-        cursor.execute(query)
-
-        column_names = [description[0] for description in cursor.description]
-        result = cursor.fetchall()
 
     except Exception as e:
         print(f"An error occured: {e}")
 
-    finally:
-        conn.close()
-
-    try:
-        output_path = os.path.join('database', 'database_output.txt')
-        with open(output_path, 'w', encoding='utf-8') as file:
-            table = tabulate(result, headers=column_names, tablefmt='pretty', numalign='center')
-            file.write(str(table))
-    except Exception as e:
-        print(f"An error occured: {e}")
-
-if __name__ == '__main__':
-    create_database()
-    # query_from_database("""
-    # SELECT pd.*, po.origin
-    # FROM plant_details pd
-    # JOIN plant_origins po ON pd.plant_id = po.plant_id
-    # WHERE po.origin LIKE '%islands%'
-    # """)
-
-    # query_from_database("""SELECT * FROM plant_origins""")
-
-    # query_from_database("""
-    # SELECT pd.*, ps.sunlight
-    # FROM plant_details pd
-    # JOIN plant_sunlight ps ON pd.plant_id = ps.plant_id
-    # WHERE ps.sunlight = 'part sun/part shade'
-    # """)
-
-    # query_from_database("""SELECT sunlight, plant_id
-    #                     FROM plant_sunlight
-    #                     GROUP BY sunlight, plant_id
-    #                     """)
-
-    # query_from_database("""SELECT * FROM plant_details""")
-
-    # query_from_database("""
-    #                     SELECT count(DISTINCT n.other_name), pd.scientific_name FROM plant_details pd
-    #                     INNER JOIN plant_other_names n ON pd.plant_id = n.plant_id
-    #                     GROUP BY pd.scientific_name
-    #                     HAVING count(DISTINCT n.other_name) > 1
-    #                     """)
-
-    # query_from_database("""
-    #                     SELECT count(DISTINCT po.origin), pd.scientific_name, pd.plant_id FROM plant_details pd
-    #                     LEFT JOIN plant_origins po ON pd.plant_id = po.plant_id
-    #                     GROUP BY pd.scientific_name, pd.plant_id
-    #                     HAVING count(DISTINCT po.origin) > 3
-    #                     """)
     
-    # query_from_database("""
-    #                     SELECT p.plant_id, p.scientific_name, p.maintenance, po.origin
-    #                     FROM plant_details p
-    #                     INNER JOIN plant_origins po ON p.plant_id = po.plant_id
-    #                     WHERE p.plant_id IN (
-    #                     SELECT pd.plant_id FROM plant_details pd
-    #                     INNER JOIN plant_origins po ON pd.plant_id = po.plant_id
-    #                     WHERE po.origin = 'Brazil'
-    #                     )
-    #                     ORDER BY p.scientific_name, po.origin
-    #                     """)
-    
-    query_from_database("""
-                        SELECT DISTINCT p.plant_id, p.scientific_name, p.maintenance, ROUND(CAST(counter AS FLOAT)/CAST(counter2 AS FLOAT) * 100, 2) || " " || "%" as percentage FROM (
-                        SELECT p.plant_id
-                            , p.plant_id
-                            , p.scientific_name
-                            , p.maintenance
-                            , count(*) OVER (PARTITION BY p.maintenance) as counter, count(*) OVER (PARTITION BY 1) as counter2
-                        FROM plant_details p
-                        ) p
-                        """)
+    finally:
+        # Close the connection
+        conn.close()

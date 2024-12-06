@@ -1,4 +1,4 @@
-from database.get_json_plant_details import get_json_plant_details
+from database.create_plant_database import create_database
 
 if __name__ == '__main__':
-    get_json_plant_details()
+    create_database()
