@@ -46,3 +46,7 @@ def test_create_userdata_basic():
 
     # tests delete_spot
     assert mydata.rooms == {'bedroom': [], 'living room': []}
+
+    mydata.delete_room('bedroom')
+
+    assert mydata.rooms == {'living room': []}
