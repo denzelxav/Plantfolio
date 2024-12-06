@@ -76,3 +76,23 @@ class UserData:
         """
         if self.rooms[room_name] == []:
             del self.rooms[room_name]
+
+    def sort_plants(self, attribute: str, reverse: bool) -> list[Plant]:
+        '''Sorts the plants based on the prompted attribute'''
+        if attribute[-4:] == 'name':
+            return sorted(list(self.plants), key=lambda plant: getattr(plant, attribute), reverse=reverse)
+        if attribute == 'room':
+            result = []
+            for room in sorted(self.rooms.keys(), reverse=reverse):
+                result.extend([plant for plant in self.plants if plant.spot in self.rooms[room]])
+            return result
+        if attribute == 'current_task':       
+            return sorted(list(self.plants), key=self.tasks_to_string, reverse=reverse)
+        
+    def tasks_to_string(self, plant: Plant) -> str:
+        '''Converts the tasks of a plant to a sorted string of the first letter of each task'''
+        result = ''
+        sorted_tasks = sorted(list(plant.current_tasks))
+        for task in sorted_tasks:
+            result += task[0]
+        return result
