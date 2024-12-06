@@ -47,6 +47,6 @@ class UserData:
     def delete_spot(self, bad_spot: Spot) -> None:
         '''Removes a spot, but only if it is empty'''
         if bad_spot.assigned_plant is None:
-            for room in self.rooms.items():
-                if bad_spot in self.rooms[room]:
+            for room, spots in self.rooms.items():
+                if bad_spot in spots:
                     self.rooms[room].remove(bad_spot)
