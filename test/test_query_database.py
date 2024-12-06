@@ -1,5 +1,12 @@
 import os
 from project.query_function import query_from_database
+from database.create_plant_database import create_database
+
+
+def test_create_plant_database():
+    create_database()
+    assert os.path.exists('project/plant_database.db')
+
 
 def test_query_plant_details():
     """
