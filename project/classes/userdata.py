@@ -79,7 +79,7 @@ class UserData:
 
     def sort_plants(self, attribute: str, reverse: bool) -> list[Plant] | None:
         '''Sorts the plants based on the prompted attribute'''
-        if attribute[-4:] == 'name':
+        if attribute in ['core_name', 'scientific_name', 'personal_name']:
             return sorted(list(self.plants), key=lambda plant: getattr(plant, attribute), reverse=reverse)
         if attribute == 'room':
             result = []

@@ -95,3 +95,6 @@ def test_sort_plants():
 
     sortedoncurrent_tasks = mydata.sort_plants('current_task', False)
     assert sortedoncurrent_tasks == [strelitzia, sansevieria, maple]
+
+    sortedonnothing = mydata.sort_plants('blabla', True)
+    assert sortedonnothing == None
