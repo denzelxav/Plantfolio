@@ -77,7 +77,7 @@ class UserData:
         if self.rooms[room_name] == []:
             del self.rooms[room_name]
 
-    def sort_plants(self, attribute: str, reverse: bool) -> list[Plant] | None:
+    def sort_plants(self, attribute: str, reverse: bool) -> list[Plant | None] | None:
         '''Sorts the plants based on the prompted attribute'''
         if attribute[-4:] == 'name':
             return sorted(list(self.plants), key=lambda plant: getattr(plant, attribute), reverse=reverse)
