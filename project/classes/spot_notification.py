@@ -1,8 +1,8 @@
 from __future__ import annotations
 from dataclasses import dataclass
 from datetime import datetime
-from project.classes.enums import Sunlight
 from typing import TYPE_CHECKING
+from project.classes.enums import Sunlight
 if TYPE_CHECKING:
     from project.classes.plant import Plant
 
@@ -29,7 +29,3 @@ class Notification:
     name: str
     notification_type: str
     plant_notification: Plant
-
-
-
-
