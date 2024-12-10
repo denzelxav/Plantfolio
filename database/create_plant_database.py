@@ -7,9 +7,9 @@ def create_database():
     """"
     Creates a relational database with multiple tables using SQLite and saves the file
     """
-    try:
-        db_file = os.path.join('project', 'plant_database.db')
-        conn = sqlite3.connect(db_file)
+    
+    db_file = os.path.join('project', 'plant_database.db')
+    with sqlite3.connect(db_file) as conn:
         cursor = conn.cursor()
 
         # Make sure all tables are deleted so we dont run into issues with creating tables
@@ -183,11 +183,3 @@ def create_database():
                        """)
 
         conn.commit()
-
-    except Exception as e:
-        print(f"An error occured: {e}")
-
-
-    finally:
-        # Close the connection
-        conn.close()
