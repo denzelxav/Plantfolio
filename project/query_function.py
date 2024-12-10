@@ -26,16 +26,3 @@ def query_from_database(query: str, output_to_file: bool=False) -> list[tuple[st
             file.write(str(table))
 
     return result
-
-
-if __name__ == '__main__':
-    search_name = 'Aloe'
-    test_query = f"""
-    SELECT * FROM plant_details
-    WHERE plant_id IN (
-    SELECT plant_id
-    FROM all_names
-    WHERE name LIKE '%{search_name}%'
-    )
-    """
-    query_from_database(test_query, output_to_file=True)
