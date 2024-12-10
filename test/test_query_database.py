@@ -24,6 +24,7 @@ def test_query_plant_details():
                           "flowering-maple",
                           "Malvaceae",
                           "Broadleaf evergreen",
+                          '["full sun","part shade"]',
                           "Perennial",
                           "Frequent",
                           "Low",
