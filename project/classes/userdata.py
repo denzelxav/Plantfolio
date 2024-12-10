@@ -66,13 +66,34 @@ class UserData:
         Removes a spot, but only if it is empty
         """
         if bad_spot.assigned_plant is None:
-            for room, spots in self.rooms.items():
+            for spots in self.rooms.values():
                 if bad_spot in spots:
-                    self.rooms[room].remove(bad_spot)
+                    spots.remove(bad_spot)
 
-    def delete_room(self, room_name):
+    def delete_room(self, room_name: str) -> None:
         """
         Removes a room 
         """
         if self.rooms[room_name] == []:
             del self.rooms[room_name]
+
+    def sort_plants(self, attribute: str, reverse: bool) -> list[Plant] | None:
+        '''Sorts the plants based on the prompted attribute'''
+        if attribute in ['core_name', 'scientific_name', 'personal_name']:
+            return sorted(list(self.plants), key=lambda plant: getattr(plant, attribute), reverse=reverse)
+        if attribute == 'room':
+            result = []
+            for room in sorted(self.rooms.keys(), reverse=reverse):
+                result.extend([plant for plant in self.plants if plant.spot in self.rooms[room]])
+            return result
+        if attribute == 'current_task':
+            return sorted(list(self.plants), key=self.tasks_to_string, reverse=reverse)
+        return None
+
+    def tasks_to_string(self, plant: Plant) -> str:
+        '''Converts the tasks of a plant to a sorted string of the first letter of each task'''
+        result = ''
+        sorted_tasks = sorted(list(plant.current_tasks))
+        for task in sorted_tasks:
+            result += task[0]
+        return result

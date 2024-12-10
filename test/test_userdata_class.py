@@ -3,14 +3,26 @@ from project.classes.userdata import UserData
 from project.classes.spot_notification import Spot, Notification
 from project.classes.enums import *
 
-def create_plant(sunlight: Sunlight = Sunlight.FULL_SHADE):
+def create_plant1(sunlight: Sunlight = Sunlight.FULL_SHADE):
     return Plant(425, 1, "flowerus_mapelus", "flowering-maple",
                  "default", datetime.timedelta(days=7),
                  ["full sun", "part shade"]
                  )
 
+def create_plant2(sunlight: Sunlight = Sunlight.FULL_SUN):
+    return Plant(435, 2, "sansevieria", "sansevieria",
+                 "default", datetime.timedelta(days=10),
+                 ["full sun", "part shade"]
+                 )
+
+def create_plant3(sunlight: Sunlight = Sunlight.FULL_SHADE):
+    return Plant(498, 2, "strelitzia", "bird of paradise flower",
+                 "default", datetime.timedelta(days=14),
+                 ["full shade", "part shade"]
+                 )
+
 def test_create_userdata_basic():
-    maple  = create_plant()
+    maple  = create_plant1()
     mydata = UserData()
 
     mydata.add_room('bedroom')
@@ -50,3 +62,39 @@ def test_create_userdata_basic():
     mydata.delete_room('bedroom')
 
     assert mydata.rooms == {'living room': []}
+
+def test_sort_plants():
+    maple  = create_plant1()
+    maple.current_tasks.add('water')
+    sansevieria = create_plant2()
+    sansevieria.current_tasks.update(['water', 'repot'])
+    strelitzia = create_plant3()
+    mydata = UserData()
+
+    mydata.add_room('bedroom')
+    mydata.add_room('living room')
+    table = Spot('table', Sunlight.PART_SHADE, 'high humidity', maple, 21) 
+    ledge1 = Spot('ledge1', Sunlight.FULL_SUN, 'low humidity', sansevieria, 22)
+    ledge2 = Spot('ledge2', Sunlight.FULL_SUN, 'low humidity', strelitzia, 22)
+
+    mydata.add_spot(table, 'bedroom')
+    mydata.add_spot(ledge1, 'living room')
+    mydata.add_spot(ledge2, 'living room')
+    mydata.add_plant(maple, table)
+    mydata.add_plant(sansevieria, ledge1)
+    mydata.add_plant(strelitzia, ledge2)
+
+    sortedonname = mydata.sort_plants('core_name', False)
+    assert sortedonname == [strelitzia, maple, sansevieria]
+
+    sortedonscientificname = mydata.sort_plants('scientific_name', False)
+    assert sortedonscientificname == [maple, sansevieria, strelitzia]
+
+    sortedonroom = mydata.sort_plants('room', False)
+    assert sortedonroom[0] == maple
+
+    sortedoncurrent_tasks = mydata.sort_plants('current_task', False)
+    assert sortedoncurrent_tasks == [strelitzia, sansevieria, maple]
+
+    sortedonnothing = mydata.sort_plants('blabla', True)
+    assert sortedonnothing == None

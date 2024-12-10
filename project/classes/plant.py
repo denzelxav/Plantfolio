@@ -1,9 +1,17 @@
+"""
+Module containing the Plant class which handles the data from a single plant.
+The time_average public method is also included for easy calculation of averages
+between datetime entries in a sequence.
+"""
+
 import datetime
+from collections.abc import Sequence
 from project.classes.spot_notification import Spot
 from project.classes.enums import Health, Sunlight
 
 
-def time_average(events: list[datetime.datetime]) -> datetime.timedelta:
+def time_average(events: Sequence[datetime.datetime]) -> datetime.timedelta:
+    """Takes a sequence of datetimes and returns a timedelta average of time between them"""
     time_sum = datetime.timedelta()
     for i in range(len(events) - 1, 0, -1):
         if events[i] < events[i - 1]:
@@ -32,8 +40,8 @@ class Plant:
         - watered(list[datetime.datetime]): Log of the last few times the plant received water
         - nutrition(list[datetime.datetime]): Log of the last few times the plant received nutrition
         - repotted(datetime.datetime): the moment the plant was last repotted
-        - manual_health(bool): Signifies if health should be refreshed by the get_health_score function or
-                               from manually set health attribute
+        - manual_health(bool): Signifies if health should be refreshed by the get_health_score
+                               function or from manually set health attribute
         - max_log_size(int): the number of entries before that log sizes deletes the oldest value.
         - notes(str): users notes about the plant
     """
@@ -65,6 +73,7 @@ class Plant:
         self.water_score: None | int = None # type: ignore
         self.sunlight_score: int = 0 # type: ignore
         self.nutrition_score: None | int = None # type: ignore
+        self.current_tasks: set[str] = set() # choose from repot, water, nutrition
 
     def give_nutrition(self) -> None:
         """

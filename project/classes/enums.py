@@ -1,3 +1,8 @@
+"""
+This file contains the enumerations that are used in the program.
+"""
+
+
 from enum import Enum
 
 class Sunlight(Enum):
