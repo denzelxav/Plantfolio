@@ -66,9 +66,9 @@ class UserData:
         Removes a spot, but only if it is empty
         """
         if bad_spot.assigned_plant is None:
-            for room, spots in self.rooms.items():
+            for spots in self.rooms.values():
                 if bad_spot in spots:
-                    self.rooms[room].remove(bad_spot)
+                    spots.remove(bad_spot)
 
     def delete_room(self, room_name: str) -> None:
         """
