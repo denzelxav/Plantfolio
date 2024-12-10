@@ -3,7 +3,7 @@ import sqlite3
 from tabulate import tabulate
 
 
-def query_from_database(query: str, output_to_file: bool=False) -> list[tuple[str | int]]:
+def query_from_database(query: str, output_to_file: bool=False) -> list[tuple[str | int, ...]]:
     """
     Queries the database and returns the result in a txt file, database_output.txt
     """
