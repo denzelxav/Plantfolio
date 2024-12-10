@@ -8,7 +8,7 @@ class UserData:
     """
     Userdata stores all the current data of the user. 
     It has thee attributes: 
-    
+
     Plants, which keeps track of all the plants the user currently owns, 
     this is a set of Plant objects.
 
@@ -23,7 +23,7 @@ class UserData:
     def __init__(self) -> None:
         self.plants: set[Plant]= set()
         self.rooms: dict[str, list[Spot]] = {}
-        self.preferences: dict[str, bool|str] = {}
+        self.pet_toxicity = False
 
     def water_all(self) -> None:
         """
@@ -84,7 +84,8 @@ class UserData:
     def sort_plants(self, attribute: str, reverse: bool) -> list[Plant] | None:
         '''Sorts the plants based on the prompted attribute'''
         if attribute in ['core_name', 'scientific_name', 'personal_name']:
-            return sorted(list(self.plants), key=lambda plant: getattr(plant, attribute), reverse=reverse)
+            return sorted(list(self.plants),
+                          key=lambda plant: getattr(plant, attribute), reverse=reverse)
         if attribute == 'room':
             result = []
             for room in sorted(self.rooms.keys(), reverse=reverse):

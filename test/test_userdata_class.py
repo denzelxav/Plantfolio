@@ -6,19 +6,19 @@ from project.classes.enums import *
 def create_plant1(sunlight: Sunlight = Sunlight.FULL_SHADE):
     return Plant(425, 1, "flowerus_mapelus", "flowering-maple",
                  "default", datetime.timedelta(days=7),
-                 ["full sun", "part shade"]
+                 [Sunlight.FULL_SUN]
                  )
 
 def create_plant2(sunlight: Sunlight = Sunlight.FULL_SUN):
     return Plant(435, 2, "sansevieria", "sansevieria",
                  "default", datetime.timedelta(days=10),
-                 ["full sun", "part shade"]
+                 [Sunlight.FULL_SUN]
                  )
 
 def create_plant3(sunlight: Sunlight = Sunlight.FULL_SHADE):
     return Plant(498, 2, "strelitzia", "bird of paradise flower",
                  "default", datetime.timedelta(days=14),
-                 ["full shade", "part shade"]
+                 [Sunlight.FULL_SUN]
                  )
 
 def test_create_userdata_basic():

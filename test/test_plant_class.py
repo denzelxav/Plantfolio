@@ -7,7 +7,7 @@ def create_plant(sunlight: Sunlight = Sunlight.FULL_SHADE):
     spot = Spot("spot", sunlight, "humid", None, 20, "room1")
     return Plant(425, 1, "flowerus_mapelus", "flowering-maple",
                  "default", datetime.timedelta(days=7),
-                 ["full sun", "part shade"]
+                 [Sunlight.FULL_SUN]
                  ), spot
 
 def test_sunlight():
@@ -15,7 +15,7 @@ def test_sunlight():
     assert maple.sunlight_score == 0
     maple.change_spot(dark_spot)
     assert maple.sunlight_score == 66, "sunlight score was not calculated or calculated incorrectly"
-    sunny_spot = Spot("spot", Sunlight.FULL_SUN, "humid", None, 20, 'room2')
+    sunny_spot = Spot("spot", Sunlight.FULL_SUN, "humid", None, 20)
     maple.change_spot(sunny_spot)
     assert maple.sunlight_score == 100, "sunlight score cache was not updated"
 

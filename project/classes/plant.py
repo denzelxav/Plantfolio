@@ -2,16 +2,30 @@
 Module containing the Plant class which handles the data from a single plant.
 The time_average public method is also included for easy calculation of averages
 between datetime entries in a sequence.
+
+It also contains the plant_from_database function
+that creates a plant class based on the database data.
 """
 
 import datetime
 from collections.abc import Sequence
+
+from project.classes.public_methods import string_to_water_frequency, string_to_sunlight
 from project.classes.spot_notification import Spot
 from project.classes.enums import Health, Sunlight
+from project.query_function import query_from_database
 
 
 def time_average(events: Sequence[datetime.datetime]) -> datetime.timedelta:
-    """Takes a sequence of datetimes and returns a timedelta average of time between them"""
+    """
+    Calculates the average time inbetween datetime events in a list of datetime objects.
+
+    Arguments:
+        events(list[datetime.datetime]): list of datetime objects to calculate the average time for.
+
+    Returns:
+        datetime.timedelta: average time between events
+    """
     time_sum = datetime.timedelta()
     for i in range(len(events) - 1, 0, -1):
         if events[i] < events[i - 1]:
@@ -36,7 +50,7 @@ class Plant:
         - spot(Spot): the spot where the plant is located
         - health(Health): indication how healthy the plant is based
         - watering_frequency(datetime.timedelta): the optimal time between watering entries
-        - preff_sunlight(list[str]): List containing the best sunlight options for the plant
+        - preff_sunlight(list[Sunlight]): Best sunlight options for the plant
         - watered(list[datetime.datetime]): Log of the last few times the plant received water
         - nutrition(list[datetime.datetime]): Log of the last few times the plant received nutrition
         - repotted(datetime.datetime): the moment the plant was last repotted
@@ -53,7 +67,7 @@ class Plant:
                  core_name: str,
                  icon_type: str,
                  watering_frequency: datetime.timedelta,
-                 preff_sunlight: list[Sunlight | str]) -> None:
+                 preff_sunlight: list[Sunlight]) -> None:
 
         self.core_id = core_id
         self.personal_id = personal_id
@@ -64,7 +78,7 @@ class Plant:
         self.spot: None | Spot = None
         self.health: Health = Health.HEALTHY
         self.watering_frequency = watering_frequency
-        self.preff_sunlight = preff_sunlight # type: ignore
+        self.preff_sunlight = preff_sunlight
         self.watered: list[datetime.datetime] = []
         self.nutrition: list[datetime.datetime] = []
         self.repotted: None | datetime.datetime = None
@@ -181,9 +195,9 @@ class Plant:
         returns score based on how close the current sunlight is to that preferred by the plant
         """
         if self.spot:
-            diff_to_preff = min(abs(self.spot.light_level.value - preff.value)
-                                for preff in self.preff_sunlight)
-            return int(100 - diff_to_preff*33.33)
+            diff_to_preff = min(abs(self.spot.light_level.value - pref.value)
+                                for pref in self.preff_sunlight)
+            return int(100 - diff_to_preff*25)
         return 0
 
 
@@ -271,26 +285,12 @@ class Plant:
         return self._preff_sunlight
 
     @preff_sunlight.setter
-    def preff_sunlight(self, values: list[str | Sunlight]) -> None:
+    def preff_sunlight(self, value: list[Sunlight]) -> None:
         """
-        Sets preferred sunlight and converts string values to Sunlight enum values
+        Sets preferred sunlight and recalculates cached sunlight score if a spot has been set.
         """
-        res: list[Sunlight] = []
-        for value in values:
-            match value:
-                case "full shade":
-                    res.append(Sunlight.FULL_SHADE)
-                case "part sun/part shade":
-                    res.append(Sunlight.PART_SUN)
-                case "part shade":
-                    res.append(Sunlight.PART_SHADE)
-                case "full sun":
-                    res.append(Sunlight.FULL_SUN)
-                case sunlight if isinstance(sunlight, Sunlight):
-                    res.append(sunlight)
-                case unexpected_value:
-                    raise ValueError(f"Unexpected preff_sunlight value {unexpected_value}")
-        self._preff_sunlight: list[Sunlight] = res
+
+        self._preff_sunlight = value
         if self.spot:
             self.sunlight_score = self.get_sunlight_score()
 
@@ -320,3 +320,37 @@ class Plant:
 
     def __str__(self) -> str:
         return f"{self.personal_id}: {self.core_name}"
+
+
+def plant_from_database(plant_id: int) -> Plant:
+    """Returns Plant object with given id from core database."""
+    query = ("SELECT scientific_name, common_name, watering, sunlight_list "
+             "FROM plant_details "
+             f"WHERE plant_id = '{plant_id}'")
+
+    query_res = query_from_database(query)[0]
+
+    if isinstance(query_res[0], str):
+        scientific_name = query_res[0]
+    else:
+        raise TypeError(f"scientific_name must be str, "
+                        f"got {type(query_res[0])}. Value: {query_res[0]}")
+    if isinstance(query_res[1], str):
+        common_name = query_res[1]
+    else:
+        raise TypeError(f"common_name must be str, got {type(query_res[1])}. Value: {query_res[1]}")
+    if isinstance(query_res[2], str):
+        watering = string_to_water_frequency(query_res[2])
+    else:
+        raise TypeError(f"watering must be str, got {type(query_res[2])}. Value: {query_res[2]}")
+    if isinstance(query_res[3], str):
+        sunlight_list = [string_to_sunlight(sunlight)
+                         for sunlight in  query_res[3].strip("[").strip("]")\
+                             .replace('"',"").split(",")]
+    else:
+        raise TypeError(f"sunlight must be string, got {type(query_res[3])}. Value: {query_res[3]}")
+    plant = Plant(plant_id, 1, scientific_name, common_name,
+                 "default", watering,
+                 sunlight_list
+                 )
+    return plant
