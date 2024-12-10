@@ -20,14 +20,10 @@ def query_from_database(query: str, output_to_file: bool=False) -> list[tuple[st
 
 
     if output_to_file:
-        try:
-            # Open output file and write the result to it
-            output_path = os.path.join('database', 'database_output.txt')
-            with open(output_path, 'w', encoding='utf-8') as file:
-                table = tabulate(result, headers=column_names, tablefmt='pretty', numalign='center')
-                file.write(str(table))
-        except Exception as e:
-            print(f"An error occured: {e}")
+        output_path = os.path.join('database', 'database_output.txt')
+        with open(output_path, 'w', encoding='utf-8') as file:
+            table = tabulate(result, headers=column_names, tablefmt='pretty', numalign='center')
+            file.write(str(table))
 
     return result
 
