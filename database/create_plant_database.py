@@ -34,6 +34,7 @@ def create_database():
             common_name TEXT,
             plant_family TEXT,
             plant_type TEXT,
+            sunlight_list TEXT,
             cycle TEXT,
             watering TEXT,
             maintenance TEXT,
@@ -97,13 +98,14 @@ def create_database():
 
         # Fill plant_details table with data from staging table
         cursor.execute("""
-                    INSERT INTO plant_details (plant_id, scientific_name, common_name, plant_family, plant_type, cycle, watering, pruning_frequency, maintenance, toxic_to_pets)
+                    INSERT INTO plant_details (plant_id, scientific_name, common_name, plant_family, plant_type, sunlight_list, cycle, watering, pruning_frequency, maintenance, toxic_to_pets)
                     SELECT 
                         json_extract(json_data, '$.id') as plant_id,
                         json_extract(json_data, '$.scientific_name[0]') as scientific_name,
                         json_extract(json_data, '$.common_name') as common_name,
                         json_extract(json_data, '$.family') as plant_family,
                         json_extract(json_data, '$.type') as plant_type,
+                        json_extract(json_data, '$.sunlight') as sunlight_list,
                         json_extract(json_data, '$.cycle') as cycle,
                         json_extract(json_data, '$.watering') as watering,
                         json_extract(json_data, '$.pruning_count.amount') || ' '|| 'time per year' as pruning_frequency,
