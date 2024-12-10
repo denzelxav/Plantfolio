@@ -44,6 +44,7 @@ class Plant:
                                function or from manually set health attribute
         - max_log_size(int): the number of entries before that log sizes deletes the oldest value.
         - notes(str): users notes about the plant
+        - current_tasks(set[str]): set of tasks that the plant needs to have done
     """
     def __init__(self,
                  core_id: int,
@@ -125,6 +126,8 @@ class Plant:
         """
         Returns score based on time between now and last watering session
         """
+        if not self.watered:
+            return -1
         time_diff = datetime.datetime.now() - self.watered[-1]
         max_deviation = self.watering_frequency * 2
         if time_diff < self.watering_frequency:
@@ -159,6 +162,8 @@ class Plant:
         """
         Returns score based on time between now and last time the plant received nutrition
         """
+        if not self.nutrition:
+            return -1
         time_diff = datetime.datetime.now() - self.nutrition[-1]
         nutrition_frequency = datetime.timedelta(days=30)
         max_deviation = nutrition_frequency * 2
@@ -288,6 +293,26 @@ class Plant:
         self._preff_sunlight: list[Sunlight] = res
         if self.spot:
             self.sunlight_score = self.get_sunlight_score()
+
+    def get_data_to_save(self) -> dict[str, str | int | list[datetime.datetime] | dict[str, str | int] | list[str]]:
+        """
+        Returns a dictionary with all the data that needs to be saved for the plant in json format
+        """
+        return {
+            "core_id": self.core_id,
+            "personal_id": self.personal_id,
+            "personal_name": self.personal_name,
+            "icon_type": self.icon_type,
+            "spot_id": self.spot.spot_id,
+            "health": self.health.value,
+            "watered": [entry.isoformat() for entry in self.watered] if len(self.watered) > 0 else [],
+            "nutrition": [entry.isoformat() for entry in self.nutrition] if self.nutrition else [],
+            "repotted": self.repotted.isoformat() if self.repotted else None,
+            "manual_health": self.manual_health,
+            "max_log_size": self.max_log_size,
+            "notes": self.notes,
+            "current_tasks": list(self.current_tasks)
+        }
 
     def __repr__(self) -> str:
         return (f"Plant({self.core_id}, {self.personal_id}, {self.core_name}, {self.icon_type}, "

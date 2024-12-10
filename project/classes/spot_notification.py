@@ -17,6 +17,17 @@ class Spot:
     humidity: str
     assigned_plant: Plant | None
     temperature: int
+    room: str
+
+    def get_spot_data(self) -> dict[str, str | int]:
+        """
+        Returns the spot data in a dictionary format to save in a json file
+        """
+        return {"spot_id": self.spot_id,
+                "light_level": self.light_level,
+                "humidity": self.humidity,
+                "temperature": self.temperature,
+                "room": self.room}
 
 @dataclass
 class Notification:

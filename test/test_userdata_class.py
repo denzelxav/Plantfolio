@@ -31,9 +31,9 @@ def test_create_userdata_basic():
     # tests add_room
     assert mydata.rooms == {'bedroom': [], 'living room': []}
     
-    spot1 = Spot('spot1', Sunlight.FULL_SHADE, 'high humidity', None, 21)    
+    spot1 = Spot('spot1', Sunlight.FULL_SHADE, 'high humidity', None, 21, 'bedroom')    
 
-    mydata.add_spot(spot1, 'bedroom')
+    mydata.add_spot(spot1)
 
     # tests add_spot
     assert mydata.rooms == {'bedroom': [spot1], 'living room': []}
@@ -73,13 +73,13 @@ def test_sort_plants():
 
     mydata.add_room('bedroom')
     mydata.add_room('living room')
-    table = Spot('table', Sunlight.PART_SHADE, 'high humidity', maple, 21) 
-    ledge1 = Spot('ledge1', Sunlight.FULL_SUN, 'low humidity', sansevieria, 22)
-    ledge2 = Spot('ledge2', Sunlight.FULL_SUN, 'low humidity', strelitzia, 22)
+    table = Spot('table', Sunlight.PART_SHADE, 'high humidity', maple, 21, 'bedroom') 
+    ledge1 = Spot('ledge1', Sunlight.FULL_SUN, 'low humidity', sansevieria, 22, 'living room')
+    ledge2 = Spot('ledge2', Sunlight.FULL_SUN, 'low humidity', strelitzia, 22, 'living room')
 
-    mydata.add_spot(table, 'bedroom')
-    mydata.add_spot(ledge1, 'living room')
-    mydata.add_spot(ledge2, 'living room')
+    mydata.add_spot(table)
+    mydata.add_spot(ledge1)
+    mydata.add_spot(ledge2)
     mydata.add_plant(maple, table)
     mydata.add_plant(sansevieria, ledge1)
     mydata.add_plant(strelitzia, ledge2)

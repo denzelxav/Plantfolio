@@ -4,7 +4,7 @@ from project.classes.spot_notification import Spot
 import datetime
 
 def create_plant(sunlight: Sunlight = Sunlight.FULL_SHADE):
-    spot = Spot("spot", sunlight, "humid", None, 20)
+    spot = Spot("spot", sunlight, "humid", None, 20, "room1")
     return Plant(425, 1, "flowerus_mapelus", "flowering-maple",
                  "default", datetime.timedelta(days=7),
                  ["full sun", "part shade"]
@@ -15,7 +15,7 @@ def test_sunlight():
     assert maple.sunlight_score == 0
     maple.change_spot(dark_spot)
     assert maple.sunlight_score == 66, "sunlight score was not calculated or calculated incorrectly"
-    sunny_spot = Spot("spot", Sunlight.FULL_SUN, "humid", None, 20)
+    sunny_spot = Spot("spot", Sunlight.FULL_SUN, "humid", None, 20, 'room2')
     maple.change_spot(sunny_spot)
     assert maple.sunlight_score == 100, "sunlight score cache was not updated"
 
@@ -60,7 +60,7 @@ def test_nutrition():
 
 def test_health():
     maple, _ = create_plant()
-    spot = Spot("spot", Sunlight.FULL_SUN, "humid", None, 20)
+    spot = Spot("spot", Sunlight.FULL_SUN, "humid", None, 20, "room3")
     maple.change_spot(spot)
     nutri_log = [datetime.datetime.now() - datetime.timedelta(days=30 * i) for i in range(maple.max_log_size, 0, -1)]
     maple.nutrition = nutri_log

@@ -36,15 +36,19 @@ class UserData:
         """
         Adds a plant
         """
+        if assigned_spot not in [spot for room in self.rooms.values() for spot in room]:
+            self.add_room(assigned_spot.room)
+            self.add_spot(assigned_spot)
+
         if assigned_spot in [spot for room in self.rooms.values() for spot in room]:
             new_plant.change_spot(assigned_spot)
             self.plants.add(new_plant)
 
-    def add_spot(self, new_spot: Spot, room: str) -> None:
+    def add_spot(self, new_spot: Spot) -> None:
         """
         Adds a spot to an existing room
         """
-        self.rooms[room].append(new_spot)
+        self.rooms.get(new_spot.room, []).append(new_spot)
 
     def add_room(self, new_room: str) -> None:
         """
