@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Add_Spot_Window</class>
- <widget class="QDialog" name="Add_Spot_Window">
+ <class>AddSpotWindow</class>
+ <widget class="QDialog" name="AddSpotWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -335,7 +335,7 @@
   <connection>
    <sender>confirm_spot</sender>
    <signal>accepted()</signal>
-   <receiver>Add_Spot_Window</receiver>
+   <receiver>AddSpotWindow</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -351,7 +351,7 @@
   <connection>
    <sender>confirm_spot</sender>
    <signal>rejected()</signal>
-   <receiver>Add_Spot_Window</receiver>
+   <receiver>AddSpotWindow</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
