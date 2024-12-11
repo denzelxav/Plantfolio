@@ -1,7 +1,7 @@
 import json
 import os
 from test.test_userdata_class import create_plant1, create_plant2, create_plant3
-from project.classes.save_userdata import save_user_data
+from project.classes.save_and_load_userdata import save_user_data
 from project.classes.userdata import UserData
 from project.classes.enums import Sunlight
 from project.classes.spot_notification import Spot

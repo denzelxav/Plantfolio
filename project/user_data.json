@@ -59,14 +59,14 @@
             "light_level": "FULL_SUN",
             "humidity": "high humidity",
             "temperature": 21,
-            "room": "bedroom"
+            "room": "kitchen"
         },
         {
             "spot_id": "Shelf",
             "light_level": "FULL_SHADE",
-            "humidity": "high humidity",
+            "humidity": "low humidity",
             "temperature": 21,
-            "room": "bedroom"
+            "room": "living room"
         }
     ],
     "pet_preference": true
