@@ -334,7 +334,7 @@ def list_all_plants():
     """
 
     """
-    query = ("SELECT scientific_name, common_name, watering, sunlight_list "
+    query = ("SELECT plant_id, scientific_name, common_name "
              "FROM plant_details ")
     query_res = query_from_database(query)
     return query_res

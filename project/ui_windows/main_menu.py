@@ -40,6 +40,18 @@ class MainMenu(QMainWindow):
         self.add_room_window = RoomViewWindow(room_name , self)
         self.add_room_window.show()
 
+    @Slot()
+    def delete_room(self, room: RoomViewWindow):
+        room_name = room.room_name
+        self.userdata.delete_room(room_name)
+        room.close()
+        self.refresh_rooms()
+
+    def refresh_rooms(self):
+        self.ui.room_list.clear()
+        for room in self.userdata.rooms:
+            self.ui.room_list.addItem(room)
+
 
 
     # @Slot()python

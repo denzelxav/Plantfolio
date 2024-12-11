@@ -15,14 +15,45 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QDialog, QListWidget, QListWidgetItem,
-    QPushButton, QSizePolicy, QWidget)
+from PySide6.QtWidgets import (QApplication, QDialog, QLabel, QListWidget,
+    QListWidgetItem, QPushButton, QSizePolicy, QWidget)
 
 class Ui_Room_View(object):
     def setupUi(self, Room_View):
         if not Room_View.objectName():
             Room_View.setObjectName(u"Room_View")
         Room_View.resize(400, 260)
+        palette = QPalette()
+        brush = QBrush(QColor(0, 0, 0, 255))
+        brush.setStyle(Qt.SolidPattern)
+        palette.setBrush(QPalette.Active, QPalette.WindowText, brush)
+        brush1 = QBrush(QColor(255, 255, 255, 179))
+        brush1.setStyle(Qt.SolidPattern)
+        palette.setBrush(QPalette.Active, QPalette.Button, brush1)
+        palette.setBrush(QPalette.Active, QPalette.Text, brush)
+        brush2 = QBrush(QColor(64, 159, 63, 255))
+        brush2.setStyle(Qt.SolidPattern)
+        palette.setBrush(QPalette.Active, QPalette.BrightText, brush2)
+        palette.setBrush(QPalette.Active, QPalette.ButtonText, brush)
+        palette.setBrush(QPalette.Active, QPalette.Base, brush1)
+        brush3 = QBrush(QColor(165, 204, 159, 255))
+        brush3.setStyle(Qt.SolidPattern)
+        palette.setBrush(QPalette.Active, QPalette.Window, brush3)
+        palette.setBrush(QPalette.Active, QPalette.Accent, brush2)
+        palette.setBrush(QPalette.Inactive, QPalette.WindowText, brush)
+        palette.setBrush(QPalette.Inactive, QPalette.Button, brush1)
+        palette.setBrush(QPalette.Inactive, QPalette.Text, brush)
+        palette.setBrush(QPalette.Inactive, QPalette.BrightText, brush2)
+        palette.setBrush(QPalette.Inactive, QPalette.ButtonText, brush)
+        palette.setBrush(QPalette.Inactive, QPalette.Base, brush1)
+        palette.setBrush(QPalette.Inactive, QPalette.Window, brush3)
+        palette.setBrush(QPalette.Inactive, QPalette.Accent, brush2)
+        palette.setBrush(QPalette.Disabled, QPalette.Button, brush1)
+        palette.setBrush(QPalette.Disabled, QPalette.BrightText, brush2)
+        palette.setBrush(QPalette.Disabled, QPalette.Base, brush3)
+        palette.setBrush(QPalette.Disabled, QPalette.Window, brush3)
+        palette.setBrush(QPalette.Disabled, QPalette.Accent, brush2)
+        Room_View.setPalette(palette)
         self.spot_list = QListWidget(Room_View)
         self.spot_list.setObjectName(u"spot_list")
         self.spot_list.setGeometry(QRect(30, 30, 341, 141))
@@ -41,6 +72,12 @@ class Ui_Room_View(object):
         self.add_plant = QPushButton(Room_View)
         self.add_plant.setObjectName(u"add_plant")
         self.add_plant.setGeometry(QRect(140, 180, 75, 24))
+        self.spots_text = QLabel(Room_View)
+        self.spots_text.setObjectName(u"spots_text")
+        self.spots_text.setGeometry(QRect(30, 10, 49, 16))
+        font = QFont()
+        font.setBold(True)
+        self.spots_text.setFont(font)
 
         self.retranslateUi(Room_View)
 
@@ -54,5 +91,6 @@ class Ui_Room_View(object):
         self.delete_spot.setText(QCoreApplication.translate("Room_View", u"Delete spot", None))
         self.delete_room.setText(QCoreApplication.translate("Room_View", u"Delete room", None))
         self.add_plant.setText(QCoreApplication.translate("Room_View", u"Add plant", None))
+        self.spots_text.setText(QCoreApplication.translate("Room_View", u"Spots", None))
     # retranslateUi
 

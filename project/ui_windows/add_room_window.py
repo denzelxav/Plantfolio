@@ -33,5 +33,5 @@ class AddRoomWindow(QDialog):
             raise ValueError("Room already exists") # TODO
         else:
             self.main_menu.userdata.add_room(room_name)
-            self.main_menu.ui.room_list.addItem(room_name)
+            self.main_menu.refresh_rooms()
 
