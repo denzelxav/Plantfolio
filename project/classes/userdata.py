@@ -1,6 +1,8 @@
+import datetime
 from project.classes.plant import Plant
 from project.classes.spot_notification import Spot
 from project.classes.enums import Sunlight
+from project.query_function import query_from_database
 
 
 
@@ -49,7 +51,9 @@ class UserData:
         """
         Adds a spot to an existing room
         """
-        self.rooms.get(new_spot.room, []).append(new_spot)
+        if new_spot.room not in self.rooms:
+            self.rooms[new_spot.room] = []
+        self.rooms[new_spot.room].append(new_spot)
 
     def add_room(self, new_room: str) -> None:
         """
@@ -83,7 +87,9 @@ class UserData:
             del self.rooms[room_name]
 
     def sort_plants(self, attribute: str, reverse: bool) -> list[Plant] | None:
-        '''Sorts the plants based on the prompted attribute'''
+        """
+        Sorts the plants based on the prompted attribute
+        """
         if attribute in ['core_name', 'scientific_name', 'personal_name']:
             return sorted(list(self.plants),
                           key=lambda plant: getattr(plant, attribute), reverse=reverse)
@@ -97,15 +103,19 @@ class UserData:
         return None
 
     def tasks_to_string(self, plant: Plant) -> str:
-        '''Converts the tasks of a plant to a sorted string of the first letter of each task'''
+        """
+        Converts the tasks of a plant to a sorted string of the first letter of each task
+        """
         result = ''
         sorted_tasks = sorted(list(plant.current_tasks))
         for task in sorted_tasks:
             result += task[0]
         return result
     
-    def load_spot_data(self, spot_data: dict[str, str]) -> None:
-        '''Loads a spot from a dictionary'''
+    def load_spot_data(self, spot_data: dict[str, str | int]) -> None:
+        """
+        Loads a spot from a dictionary
+        """
         room = spot_data['room']
         light_level = Sunlight[spot_data['light_level']]
         spot = Spot(spot_data['spot_id'],
@@ -117,3 +127,79 @@ class UserData:
         
         self.add_room(room)
         self.add_spot(spot)
+
+    def load_plant_data(self, plant_data: dict[str, str | int | list[datetime.datetime] | list[str] | None]) -> None:
+        """
+        Loads a plant from a dictionary
+        """
+        plant_id = plant_data['core_id']
+        personal_id = plant_data['personal_id']
+
+        scientific_name = query_from_database(f"""
+                                              SELECT scientific_name
+                                              FROM plant_details
+                                              WHERE plant_id = '{plant_id}'
+                                              """)
+        for tup in scientific_name:
+            scientific_name = tup[0]
+
+        for _ in range(10):
+            print(scientific_name)
+
+
+        core_name = plant_data['personal_name']
+        icon_type = plant_data['icon_type']
+
+        watering_frequency_list = query_from_database(f"""
+                                                      SELECT watering
+                                                      FROM plant_details
+                                                      WHERE plant_id = '{plant_id}'
+                                                      """)
+        if watering_frequency_list:
+            for tup in watering_frequency_list:
+                watering_frequency_str = tup[0]
+        else:
+            watering_frequency_str = None
+        
+        if watering_frequency_str == 'Frequent':
+            watering_frequency = datetime.timedelta(days=1)
+        elif watering_frequency_str == 'Average':
+            watering_frequency = datetime.timedelta(days=3)
+        elif watering_frequency_str == 'Minimum':
+            watering_frequency = datetime.timedelta(days=7)
+        else:
+            watering_frequency = datetime.timedelta(days=0)
+
+        preff_sunlight_list = query_from_database(f"""
+                                                    SELECT sunlight_list
+                                                    FROM plant_details
+                                                    WHERE plant_id = '{plant_id}'
+                                                    """)
+        if preff_sunlight_list:
+            for tup in preff_sunlight_list:
+                preff_sunlight_big_str = tup[0].replace('[', '').replace(']', '').split(',')
+                preff_sunlight_small_strs = [s.strip('"') for s in preff_sunlight_big_str]
+            enum_lights = [light.upper().replace(' ', '_') for light in preff_sunlight_small_strs]
+            preff_sunlight = [Sunlight[enum_light] for enum_light in enum_lights]
+        else:
+            preff_sunlight = [Sunlight.FULL_SHADE, Sunlight.FULL_SUN, Sunlight.PART_SHADE, Sunlight.PART_SUN]
+        
+        new_plant = Plant(plant_id,
+                          personal_id,
+                          scientific_name,
+                          core_name,
+                          icon_type,
+                          watering_frequency,
+                          preff_sunlight)
+
+        spot_id = plant_data['spot_id']
+        for room in self.rooms.values():
+            for spot in room:
+                if spot.spot_id == spot_id:
+                    self.add_plant(new_plant, spot)
+
+
+        # for _ in range(10):
+        #     print(self.rooms)
+        #     print(repr(new_plant))
+        #     print(self.plants)

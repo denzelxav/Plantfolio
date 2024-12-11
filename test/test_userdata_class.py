@@ -8,27 +8,27 @@ def create_plant1():
     """
     Creates a plant object for testing
     """
-    return Plant(425, 1, "flowerus_mapelus", "flowering-maple",
-                 "default", datetime.timedelta(days=7),
-                 [Sunlight.FULL_SUN, Sunlight.FULL_SHADE]
+    return Plant(425, 1, "Abutilon hybridum", "flowering-maple",
+                 "default", datetime.timedelta(days=1),
+                 [Sunlight.FULL_SUN, Sunlight.PART_SHADE]
                  )
 
 def create_plant2():
     """
     Creates a plant object for testing
     """
-    return Plant(435, 2, "sansevieria", "sansevieria",
-                 "default", datetime.timedelta(days=10),
-                 [Sunlight.FULL_SUN, Sunlight.FULL_SHADE]
+    return Plant(434, 2, "Acalypha wilkesiana", "sansevieria",
+                 "default", datetime.timedelta(days=1),
+                 [Sunlight.FULL_SUN, Sunlight.PART_SHADE]
                  )
 
 def create_plant3():
     """
     Creates a plant object for testing
     """
-    return Plant(498, 2, "strelitzia", "bird of paradise flower",
-                 "default", datetime.timedelta(days=14),
-                [Sunlight.FULL_SUN, Sunlight.FULL_SHADE]
+    return Plant(502, 2, "Achimenes (group)", "bird of paradise flower",
+                 "default", datetime.timedelta(days=3),
+                [Sunlight.PART_SHADE]
                  )
 
 
@@ -77,6 +77,24 @@ def test_create_userdata_basic():
     mydata.delete_room('bedroom')
 
     assert mydata.rooms == {'living room': []}
+
+def test_add_plant_spot_not_in_room():
+    """
+    Tests the add_plant method of the UserData class when the spot is not in the room
+    """
+    maple  = create_plant1()
+    mydata = UserData()
+
+    spot1 = Spot('spot1', Sunlight.FULL_SHADE, 'high humidity', None, 21, 'bedroom')
+    spot2 = Spot('spot2', Sunlight.FULL_SUN, 'low humidity', None, 22, 'living room')
+
+    mydata.add_spot(spot1)
+
+    mydata.add_plant(maple, spot2)
+
+    assert mydata.rooms == {'bedroom': [spot1], 'living room': [spot2]}
+    assert mydata.plants == {maple}
+    assert spot2.assigned_plant == maple
 
 def test_sort_plants():
     """
@@ -155,3 +173,67 @@ def test_load_spot_data():
     assert mydata.rooms == {'bedroom': [Spot('Window', Sunlight.FULL_SHADE, 'high humidity', None, 21, 'bedroom')],
                             'kitchen': [Spot('Cabinet', Sunlight.FULL_SUN, 'high humidity', None, 21, 'kitchen')],
                             'living room': [Spot('Shelf', Sunlight.FULL_SHADE, 'low humidity', None, 21, 'living room')]}
+    
+
+# def test_load_plant_data():
+#     """
+#     Tests the load_plant_data method of the UserData class
+#     """
+#     mydata = UserData()
+#     plant_data = {
+#         "core_id": 425,
+#         "personal_id": 1,
+#         "personal_name": None,
+#         "icon_type": "default",
+#         "spot_id": "Window",
+#         "health": 2,
+#         "watered": [],
+#         "nutrition": [],
+#         "repotted": None,
+#         "manual_health": False,
+#         "max_log_size": 4,
+#         "notes": None,
+#         "current_tasks": []
+#     }
+
+#     mydata.load_plant_data(plant_data)
+
+#     assert mydata.plants == {Plant(425, 1, 'Abutilon hybridum', None, 'default', None, [])}
+
+#     plant_data = {
+#         "core_id": 434,
+#         "personal_id": 2,
+#         "personal_name": None,
+#         "icon_type": "default",
+#         "spot_id": "Cabinet",
+#         "health": 2,
+#         "watered": [],
+#         "nutrition": [],
+#         "repotted": None,
+#         "manual_health": False,
+#         "max_log_size": 4,
+#         "notes": None,
+#         "current_tasks": []
+#     }
+
+#     assert mydata.plants == {Plant(425, 1, 'Abutilon hybridum', None, 'default', None, []),
+#                              Plant(435, 2, 'Acalypha wilkesiana', None, 'default', None, [])}
+#     plant_data = {
+#         "core_id": 2498,
+#         "personal_id": 2,
+#         "personal_name": None,
+#         "icon_type": "default",
+#         "spot_id": "Shelf",
+#         "health": 2,
+#         "watered": [],
+#         "nutrition": [],
+#         "repotted": None,
+#         "manual_health": False,
+#         "max_log_size": 4,
+#         "notes": None,
+#         "current_tasks": []
+#     }
+
+#     assert mydata.plants == {Plant(425, 1, 'Abutilon hybridum', None, 'default', None, []),
+#                              Plant(435, 2, 'Acalypha wilkesiana', None, 'default', None, []),
+#                              Plant(2498, 2, 'Dionaea muscipula', None, 'default', None, [])}

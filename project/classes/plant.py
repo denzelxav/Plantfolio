@@ -304,7 +304,7 @@ class Plant:
         return {
             "core_id": self.core_id,
             "personal_id": self.personal_id,
-            "personal_name": self.personal_name,
+            "personal_name": self.core_name,
             "icon_type": self.icon_type,
             "spot_id": self.spot.spot_id if self.spot else None,
             "health": self.health.value,
@@ -320,9 +320,10 @@ class Plant:
             "notes": self.notes,
             "current_tasks": list(self.current_tasks)
         }
+    
 
     def __repr__(self) -> str:
-        return (f"Plant({self.core_id}, {self.personal_id}, {self.core_name}, {self.icon_type}, "
+        return (f"Plant({self.core_id}, {self.personal_id}, {self.scientific_name}, {self.core_name}, {self.icon_type}, "
                 f"{self.watering_frequency}, {self.preff_sunlight})")
 
     def __str__(self) -> str:

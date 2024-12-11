@@ -36,3 +36,24 @@ def save_user_data(user: UserData) -> None:
     user_data_path = os.path.join("project", "user_data.json")
     with open(user_data_path, "w", encoding='utf-8') as file:
         json.dump(data, file, cls=EnumEncoder, indent=4)
+
+def load_user_data() -> UserData:
+    """
+    Loads the user data from the json file
+    """
+    user = UserData()
+    user_data_path = os.path.join("project", "user_data.json")
+
+    if not os.path.exists(user_data_path):
+        return user
+
+    with open(user_data_path, "r", encoding='utf-8') as file:
+        data = json.load(file)
+
+    for spot_data in data["spots"]:
+        user.load_spot_data(spot_data)
+
+    for plant_data in data["plant_data"]:
+        user.load_plant_data(plant_data)
+
+    return user

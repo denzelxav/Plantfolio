@@ -1,7 +1,7 @@
 import json
 import os
 from test.test_userdata_class import create_plant1, create_plant2, create_plant3
-from project.classes.save_and_load_userdata import save_user_data
+from project.classes.save_and_load_userdata import save_user_data, load_user_data
 from project.classes.userdata import UserData
 from project.classes.enums import Sunlight
 from project.classes.spot_notification import Spot
@@ -114,6 +114,8 @@ def test_save_userdata_mulitple_plants_multiple_rooms():
     assert test_plant2 in test_user.plants
     assert test_plant3 in test_user.plants
 
+    save_user_data(test_user)
+
     saved_data_path = os.path.join("project", "user_data.json")
     with open(saved_data_path, "r", encoding='utf-8') as file:
         data = json.load(file)
@@ -133,13 +135,51 @@ def test_save_userdata_mulitple_plants_multiple_rooms():
                                 'light_level': 'FULL_SUN',
                                 'humidity': 'high humidity',
                                 'temperature': 21,
-                                'room': 'bedroom'
+                                'room': 'kitchen'
                                 },
                                 {
                                 'spot_id': 'Shelf',
                                 'light_level': 'FULL_SHADE',
-                                'humidity': 'high humidity',
+                                'humidity': 'low humidity',
                                 'temperature': 21,
-                                'room': 'bedroom'
+                                'room': 'living room'
                                 }]
     assert data["pet_preference"] is True
+
+def test_load_data():
+    test_user = UserData()
+    test_user.pet_toxicity = True
+
+    test_plant1 = create_plant1()
+    test_plant2 = create_plant2()
+    test_plant3 = create_plant3()
+
+    test_spot1 = Spot('Window', Sunlight.FULL_SHADE, 'high humidity', None, 21, 'bedroom')
+    test_spot2 = Spot('Cabinet', Sunlight.FULL_SUN, 'high humidity', None, 21, 'kitchen')
+    test_spot3 = Spot('Shelf', Sunlight.FULL_SHADE, 'low humidity', None, 21, 'living room')
+
+    test_user.add_plant(test_plant1, test_spot1)
+    test_user.add_plant(test_plant2, test_spot2)
+    test_user.add_plant(test_plant3, test_spot3)
+
+    save_user_data(test_user)
+
+    loaded_data = load_user_data()
+
+    test_spot1_with_plant = Spot('Window', Sunlight.FULL_SHADE, 'high humidity', test_plant1, 21, 'bedroom')
+    test_spot2_with_plant = Spot('Cabinet', Sunlight.FULL_SUN, 'high humidity', test_plant2, 21, 'kitchen')
+    test_spot3_with_plant = Spot('Shelf', Sunlight.FULL_SHADE, 'low humidity', test_plant3, 21, 'living room')
+
+    print(loaded_data.rooms)
+    print()
+    print({'bedroom': [test_spot1_with_plant],
+            'kitchen': [test_spot2_with_plant],
+            'living room': [test_spot3_with_plant]})
+
+    assert loaded_data.rooms == {'bedroom': [test_spot1_with_plant],
+                                 'kitchen': [test_spot2_with_plant],
+                                 'living room': [test_spot3_with_plant]}
+    
+    assert test_plant1 in loaded_data.plants
+    assert test_plant2 in loaded_data.plants
+    assert test_plant3 in loaded_data.plants
