@@ -1,17 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Main_Menu</class>
- <widget class="QMainWindow" name="Main_Menu">
+ <class>MainMenu</class>
+ <widget class="QMainWindow" name="MainMenu">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>205</width>
-    <height>450</height>
+    <width>608</width>
+    <height>426</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>608</width>
+    <height>426</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>608</width>
+    <height>426</height>
+   </size>
+  </property>
   <property name="windowTitle">
-   <string>Main_Menu</string>
+   <string>Plantfolio</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="PlantFolio_Icon">
@@ -43,7 +55,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Rooms</string>
+     <string>Open Room</string>
     </property>
    </widget>
    <widget class="QPushButton" name="open_notifier">
@@ -82,7 +94,7 @@
      <string>Recommendations</string>
     </property>
    </widget>
-   <widget class="QListWidget" name="Room_list">
+   <widget class="QListWidget" name="room_list">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -92,7 +104,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="water_all_button">
+   <widget class="QPushButton" name="water_all">
     <property name="geometry">
      <rect>
       <x>240</x>
@@ -105,7 +117,7 @@
      <string>Water all</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="add_room_button">
+   <widget class="QPushButton" name="add_room">
     <property name="geometry">
      <rect>
       <x>120</x>
@@ -131,7 +143,7 @@
      <string>All Plants</string>
     </property>
    </widget>
-   <widget class="QComboBox" name="sort_notifications">
+   <widget class="QComboBox" name="sort_notifications_by">
     <property name="geometry">
      <rect>
       <x>390</x>
@@ -156,7 +168,7 @@
      </property>
     </item>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="refresh_notifications">
     <property name="geometry">
      <rect>
       <x>470</x>
@@ -175,7 +187,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>205</width>
+     <width>608</width>
      <height>33</height>
     </rect>
    </property>

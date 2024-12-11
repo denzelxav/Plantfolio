@@ -329,3 +329,13 @@ def plant_from_database(plant_id: int) -> Plant:
                  sunlight_list
                  )
     return plant
+
+def list_all_plants():
+    """
+
+    """
+    query = ("SELECT scientific_name, common_name, watering, sunlight_list "
+             "FROM plant_details ")
+    query_res = query_from_database(query)
+    return query_res
+

@@ -6,19 +6,31 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>305</width>
+    <height>196</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>305</width>
+    <height>196</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>305</width>
+    <height>196</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Add Spot</string>
   </property>
-  <widget class="QDialogButtonBox" name="buttonBox">
+  <widget class="QDialogButtonBox" name="confirm_spot">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>240</y>
-     <width>341</width>
+     <x>40</x>
+     <y>160</y>
+     <width>261</width>
      <height>32</height>
     </rect>
    </property>
@@ -32,41 +44,40 @@
   <widget class="QLineEdit" name="Spot_Name_input">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>30</y>
+     <x>90</x>
+     <y>10</y>
      <width>113</width>
      <height>21</height>
     </rect>
    </property>
-  </widget>
-  <widget class="QLineEdit" name="humidity">
-   <property name="geometry">
-    <rect>
-     <x>50</x>
-     <y>60</y>
-     <width>113</width>
-     <height>21</height>
-    </rect>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Name of the spot. Must be unique.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
-  <widget class="QDoubleSpinBox" name="Temperature_input">
+  <widget class="QDoubleSpinBox" name="temperature_input">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>90</y>
+     <x>90</x>
+     <y>70</y>
      <width>88</width>
      <height>23</height>
     </rect>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temperature of the spot in degrees Celsius.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
   <widget class="QComboBox" name="sunlight_input">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>120</y>
+     <x>90</x>
+     <y>100</y>
      <width>91</width>
      <height>24</height>
     </rect>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The amount of light that the spot receives&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
    <item>
     <property name="text">
@@ -89,11 +100,76 @@
     </property>
    </item>
   </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>70</y>
+     <width>91</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Temperature (°C)</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>100</y>
+     <width>61</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Light level</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>10</y>
+     <width>61</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Spot name</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>40</y>
+     <width>71</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Humidity(%)</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="humidity_input">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>40</y>
+     <width>88</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Humidity of the spot in percentage.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections>
   <connection>
-   <sender>buttonBox</sender>
+   <sender>confirm_spot</sender>
    <signal>accepted()</signal>
    <receiver>Add_Spot_Window</receiver>
    <slot>accept()</slot>
@@ -109,7 +185,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>buttonBox</sender>
+   <sender>confirm_spot</sender>
    <signal>rejected()</signal>
    <receiver>Add_Spot_Window</receiver>
    <slot>reject()</slot>

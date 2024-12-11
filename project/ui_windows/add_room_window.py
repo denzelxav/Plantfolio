@@ -1,0 +1,31 @@
+from __future__ import annotations
+from typing import TYPE_CHECKING
+from PySide6 import QtWidgets
+from PySide6.QtWidgets import QDialog, QMainWindow, QListWidgetItem
+
+from project.ui.add_room import Ui_AddRoomWindow
+if TYPE_CHECKING:
+    from project.ui_windows.main_menu import MainMenu
+
+
+class AddRoomWindow(QDialog):
+    """
+    Window for adding a new room.
+    It takes the main_menu as an argument so it can refer back to it when adding the room.
+    """
+    def __init__(self, main_menu: MainMenu):
+        super().__init__()
+        self.ui = Ui_AddRoomWindow()
+        self.ui.setupUi(self)
+        self.main_menu = main_menu
+
+        #buttons
+        self.ui.confirm_room.accepted.connect(self.add_room)
+        self.ui.confirm_room.rejected.connect(self.reject)
+
+
+    def add_room(self):
+        room_name = self.ui.room_name_input.text()
+        self.main_menu.userdata.add_room(room_name)
+        self.main_menu.ui.room_list.addItem(room_name)
+

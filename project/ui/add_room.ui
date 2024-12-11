@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Add_Room_Window</class>
- <widget class="QDialog" name="Add_Room_Window">
+ <class>AddRoomWindow</class>
+ <widget class="QDialog" name="AddRoomWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Add Room</string>
   </property>
-  <widget class="QDialogButtonBox" name="buttonBox">
+  <widget class="QDialogButtonBox" name="confirm_room">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -29,7 +29,7 @@
     <set>QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Ok</set>
    </property>
   </widget>
-  <widget class="QLineEdit" name="Room_name_input">
+  <widget class="QLineEdit" name="room_name_input">
    <property name="geometry">
     <rect>
      <x>70</x>
@@ -59,9 +59,9 @@
  <resources/>
  <connections>
   <connection>
-   <sender>buttonBox</sender>
+   <sender>confirm_room</sender>
    <signal>accepted()</signal>
-   <receiver>Add_Room_Window</receiver>
+   <receiver>AddRoomWindow</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -75,9 +75,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>buttonBox</sender>
+   <sender>confirm_room</sender>
    <signal>rejected()</signal>
-   <receiver>Add_Room_Window</receiver>
+   <receiver>AddRoomWindow</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
