@@ -22,7 +22,7 @@ class Ui_Room_View(object):
     def setupUi(self, Room_View):
         if not Room_View.objectName():
             Room_View.setObjectName(u"Room_View")
-        Room_View.resize(400, 261)
+        Room_View.resize(400, 260)
         self.spot_list = QListWidget(Room_View)
         self.spot_list.setObjectName(u"spot_list")
         self.spot_list.setGeometry(QRect(30, 30, 341, 141))
