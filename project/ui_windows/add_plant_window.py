@@ -1,6 +1,5 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
-from PySide6 import QtWidgets
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QDialog, QListWidgetItem
 from PySide6.QtCore import Slot
@@ -25,9 +24,9 @@ class AddPlantWindow(QDialog):
         for plant_data in list_all_plants():
             self.ui.all_plants_list.addItem(f"{plant_data[0]}: {plant_data[1]}, {plant_data[2]}")
 
-        icons = [("./project/art/all plants/plant_1_healthy.png", "plant1"),
-                 ("./project/art/all plants/plant_2_healthy.png", "plant2"),
-                 ("./project/art/all plants/plant_3_healthy.png", "plant3")]
+        icons = [("./project/art/all plants/plant_1_healthy.png", "plant_1"),
+                 ("./project/art/all plants/plant_2_healthy.png", "plant_2"),
+                 ("./project/art/all plants/plant_3_healthy.png", "plant_3")]
 
         for icon_path, icon_name in icons:
             self.ui.icon_list.addItem(QListWidgetItem(QIcon(icon_path), icon_name))

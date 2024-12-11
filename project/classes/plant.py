@@ -88,6 +88,8 @@ class Plant:
         self.sunlight_score: int = 0 # type: ignore
         self.nutrition_score: None | int = None # type: ignore
         self.current_tasks: set[str] = set() # choose from repot, water, nutrition
+        self.water_plant()
+        self.give_nutrition()
 
     def give_nutrition(self) -> None:
         """

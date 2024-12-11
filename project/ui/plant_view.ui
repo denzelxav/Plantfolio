@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Plant_View</class>
- <widget class="QMainWindow" name="Plant_View">
+ <class>PlantViewWindow</class>
+ <widget class="QMainWindow" name="PlantViewWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -341,9 +341,9 @@
    <widget class="QLabel" name="preff_sunlight_text">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>40</x>
       <y>240</y>
-      <width>101</width>
+      <width>161</width>
       <height>16</height>
      </rect>
     </property>
@@ -354,7 +354,7 @@
    <widget class="QLabel" name="preff_sunlight_icon">
     <property name="geometry">
      <rect>
-      <x>120</x>
+      <x>0</x>
       <y>230</y>
       <width>41</width>
       <height>31</height>
@@ -400,7 +400,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>290</y>
+      <y>300</y>
       <width>111</width>
       <height>16</height>
      </rect>
@@ -447,7 +447,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <string>Notes</string>
     </property>
    </widget>
-   <widget class="QCheckBox" name="checkBox">
+   <widget class="QCheckBox" name="manual_health">
     <property name="geometry">
      <rect>
       <x>200</x>
@@ -491,7 +491,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <string>SpotID</string>
     </property>
    </widget>
-   <widget class="QLabel" name="spot_sunlight_text">
+   <widget class="QLabel" name="spot_sunlight">
     <property name="geometry">
      <rect>
       <x>380</x>
@@ -530,16 +530,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <string>temperature</string>
     </property>
    </widget>
-   <widget class="QListView" name="water_log">
-    <property name="geometry">
-     <rect>
-      <x>360</x>
-      <y>220</y>
-      <width>91</width>
-      <height>141</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QLabel" name="water_log_header">
     <property name="geometry">
      <rect>
@@ -557,6 +547,46 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <property name="text">
      <string>Water log</string>
     </property>
+   </widget>
+   <widget class="QListWidget" name="water_log_list">
+    <property name="geometry">
+     <rect>
+      <x>360</x>
+      <y>220</y>
+      <width>91</width>
+      <height>141</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="health_setter">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>320</y>
+      <width>80</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>Healthy</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Slightly unhealthy</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Unhealthy</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Dead</string>
+     </property>
+    </item>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

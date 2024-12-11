@@ -19,7 +19,7 @@ class Health(Enum):
     """
     Enum for all possible health conditions
     """
-    DEAD = 0
-    UNHEALTHY = 1
-    SLIGHTLY_UNHEALTHY = 2
-    HEALTHY = 3
+    DEAD = "dead"
+    UNHEALTHY = "unhealthy"
+    SLIGHTLY_UNHEALTHY = "slightly_unhealthy"
+    HEALTHY = "healthy"
