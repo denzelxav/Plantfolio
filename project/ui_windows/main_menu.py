@@ -42,7 +42,7 @@ class MainMenu(QMainWindow):
 
 
 
-    # @Slot()
+    # @Slot()python
     # def button_clicked(self):
     #     """Triggers if you click the button in the ui"""
     #     self.ui.label.setText("You CLICKED the BUTTON!!!")
