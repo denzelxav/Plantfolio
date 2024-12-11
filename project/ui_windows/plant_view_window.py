@@ -1,17 +1,14 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
-from PySide6 import QtWidgets
+import datetime
 from PySide6.QtCore import Slot, QSize
 from PySide6.QtGui import QIcon, QPixmap
 from PySide6.QtWidgets import QMainWindow
 
-from project.classes.enums import Sunlight
 from project.classes.public_methods import sunlight_to_string, get_sun_icon_path, health_to_string, string_to_health
 from project.ui.plant_view import Ui_PlantViewWindow
 
 if TYPE_CHECKING:
-    from project.classes.userdata import UserData
-    from project.ui_windows.room_view_window import RoomViewWindow
     from project.classes.spot_notification import Spot
 
 class PlantViewWindow(QMainWindow):
@@ -22,17 +19,21 @@ class PlantViewWindow(QMainWindow):
         self.spot = spot
         self.plant = self.spot.assigned_plant
 
-
+        #setup icons
         icon = QIcon()
         icon.addFile(u"./project/art/water.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.ui.water_plant.setIcon(icon)
         icon1 = QIcon()
         icon1.addFile(u"./project/art/nutrition.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.ui.feed_plant.setIcon(icon1)
+        icon2 = QIcon()
+        icon2.addFile(u"./project/art/empty_pot.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.ui.repot_plant.setIcon(icon2)
         self.set_plant_icon()
         self.set_spot_sun_icon()
         self.set_preff_sun_icon()
 
+        #setup text
         self.ui.plant_health_text.setText(f"Plant is {health_to_string(self.plant.health)}.")
         self.ui.plant_name.setText(f"name: {self.plant.personal_name}")
         self.ui.scientific_name.setText(f"scientific name: {self.plant.scientific_name}")
@@ -42,14 +43,32 @@ class PlantViewWindow(QMainWindow):
                 preff_sun_text += f", {sunlight_to_string(sunlight)}"
             preff_sun_text += f" or {sunlight_to_string(self.plant.preff_sunlight[-1])}"
         self.ui.preff_sunlight_text.setText(preff_sun_text)
-        self.ui.spot_id = f"spot name: {self.spot.spot_id}"
-        self.ui.spot_sunlight = f"sunlight status:{sunlight_to_string(spot.light_level)}"
+        self.ui.water_frequency_text.setText(f"Water this plant every {self.plant.watering_frequency.days} days")
+        if self.plant.nutrition:
+            self.ui.last_nutrition.setText(self.plant.nutrition[-1].strftime("%d/%m/%Y"))
+        else:
+            self.ui.last_nutrition.setText("Plant hasn't received nutrition yet")
+        self.ui.last_repotted.setText(f"Last repotted at {self.plant.repotted}")
+
+        #setup spot info
+        self.ui.spot_id.setText(f"Spot name: {self.spot.spot_id}")
+        self.ui.spot_sunlight.setText(f"light level: {sunlight_to_string(spot.light_level)}")
+        self.ui.humidity.setText(f"humidity: {self.spot.humidity}%")
+        self.ui.temperature.setText(f"temperature: {self.spot.temperature}°C")
+
+        self.ui.note_text.setText(self.plant.notes)
+        self.ui.note_text.textChanged.connect(self.handle_note_text)
 
         #buttons
         self.ui.manual_health.setChecked(self.plant.manual_health)
         self.ui.health_setter.setEnabled(self.ui.manual_health.isChecked())
         self.ui.manual_health.stateChanged.connect(self.handle_manual_health)
         self.ui.health_setter.currentTextChanged.connect(self.handle_health_setter)
+        self.ui.water_plant.clicked.connect(self.water_plant)
+        self.ui.feed_plant.clicked.connect(self.feed_plant)
+        self.ui.repot_plant.clicked.connect(self.repot_plant)
+
+        self.refresh_water_log()
 
 
     def set_plant_icon(self):
@@ -69,16 +88,47 @@ class PlantViewWindow(QMainWindow):
         """
         self.ui.sun_status.setPixmap(QPixmap(get_sun_icon_path(self.spot.light_level)))
 
+    def refresh_water_log(self):
+        """
+        Refreshes water log list
+        """
+        self.ui.water_log_list.clear()
+        for entry in self.plant.watered:
+            self.ui.water_log_list.addItem(entry.strftime('%d/%m/%Y'))
+
+    def refresh_health(self):
+        self.ui.plant_health_text.setText(f"Plant is {health_to_string(self.plant.health)}.")
+        self.set_plant_icon()
 
     @Slot()
     def handle_manual_health(self):
         self.plant.manual_health = self.ui.manual_health.isChecked()
         self.ui.health_setter.setEnabled(self.plant.manual_health)
-        self.set_plant_icon()
-        self.ui.plant_health_text.setText(f"Plant is {health_to_string(self.plant.health)}.")
+        self.refresh_health()
 
     @Slot()
     def handle_health_setter(self):
         self.plant.health = string_to_health(self.ui.health_setter.currentText())
-        self.ui.plant_health_text.setText(f"Plant is {health_to_string(self.plant.health)}.")
-        self.set_plant_icon()
+        self.refresh_health()
+
+    @Slot()
+    def water_plant(self):
+        self.plant.water_plant()
+        self.refresh_water_log()
+        self.refresh_health()
+
+    @Slot()
+    def feed_plant(self):
+        self.plant.give_nutrition()
+        self.ui.last_nutrition.setText(self.plant.nutrition[-1].strftime("%d/%m/%Y"))
+        self.refresh_health()
+
+    @Slot()
+    def repot_plant(self):
+        self.plant.repotted = datetime.datetime.now()
+        self.ui.last_repotted.setText(f"last repotted at {self.plant.repotted.strftime('%d/%m/%Y')}")
+
+
+    @Slot()
+    def handle_note_text(self):
+        self.plant.notes = self.ui.note_text.toPlainText()

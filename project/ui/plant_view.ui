@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>475</width>
-    <height>425</height>
+    <width>557</width>
+    <height>442</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>475</width>
-    <height>425</height>
+    <width>531</width>
+    <height>0</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>475</width>
-    <height>425</height>
+    <width>5310</width>
+    <height>4010</height>
    </size>
   </property>
   <property name="palette">
@@ -250,7 +250,7 @@
    <widget class="QPushButton" name="water_plant">
     <property name="geometry">
      <rect>
-      <x>200</x>
+      <x>242</x>
       <y>220</y>
       <width>121</width>
       <height>31</height>
@@ -273,14 +273,14 @@
    <widget class="QPushButton" name="feed_plant">
     <property name="geometry">
      <rect>
-      <x>200</x>
+      <x>242</x>
       <y>260</y>
       <width>121</width>
       <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string>Feed Plant</string>
+     <string>Feed plant</string>
     </property>
     <property name="icon">
      <iconset>
@@ -298,7 +298,7 @@
      <rect>
       <x>40</x>
       <y>160</y>
-      <width>101</width>
+      <width>151</width>
       <height>21</height>
      </rect>
     </property>
@@ -311,9 +311,15 @@
      <rect>
       <x>20</x>
       <y>180</y>
-      <width>111</width>
+      <width>221</width>
       <height>31</height>
      </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>221</width>
+      <height>31</height>
+     </size>
     </property>
     <property name="text">
      <string>Plant name here</string>
@@ -343,7 +349,7 @@
      <rect>
       <x>40</x>
       <y>240</y>
-      <width>161</width>
+      <width>201</width>
       <height>16</height>
      </rect>
     </property>
@@ -375,7 +381,7 @@
      <rect>
       <x>20</x>
       <y>210</y>
-      <width>111</width>
+      <width>221</width>
       <height>21</height>
      </rect>
     </property>
@@ -383,12 +389,12 @@
      <string>scientific name</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="water_frequency_text">
     <property name="geometry">
      <rect>
       <x>20</x>
       <y>270</y>
-      <width>111</width>
+      <width>221</width>
       <height>16</height>
      </rect>
     </property>
@@ -396,23 +402,23 @@
      <string>Watering_frequency</string>
     </property>
    </widget>
-   <widget class="QLabel" name="last_repotted">
+   <widget class="QLabel" name="last_nutrition">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>300</y>
-      <width>111</width>
+      <y>290</y>
+      <width>211</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
-     <string>Last repotted</string>
+     <string>Last fed</string>
     </property>
    </widget>
    <widget class="QTextEdit" name="note_text">
     <property name="geometry">
      <rect>
-      <x>200</x>
+      <x>242</x>
       <y>60</y>
       <width>151</width>
       <height>141</height>
@@ -432,7 +438,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
    <widget class="QLabel" name="notes_header">
     <property name="geometry">
      <rect>
-      <x>200</x>
+      <x>242</x>
       <y>40</y>
       <width>49</width>
       <height>16</height>
@@ -450,8 +456,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
    <widget class="QCheckBox" name="manual_health">
     <property name="geometry">
      <rect>
-      <x>200</x>
-      <y>300</y>
+      <x>240</x>
+      <y>340</y>
       <width>131</width>
       <height>20</height>
      </rect>
@@ -481,10 +487,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
    <widget class="QLabel" name="spot_id">
     <property name="geometry">
      <rect>
-      <x>380</x>
+      <x>400</x>
       <y>50</y>
-      <width>49</width>
-      <height>16</height>
+      <width>111</width>
+      <height>20</height>
      </rect>
     </property>
     <property name="text">
@@ -494,10 +500,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
    <widget class="QLabel" name="spot_sunlight">
     <property name="geometry">
      <rect>
-      <x>380</x>
+      <x>402</x>
       <y>80</y>
-      <width>71</width>
-      <height>16</height>
+      <width>111</width>
+      <height>20</height>
      </rect>
     </property>
     <property name="text">
@@ -507,10 +513,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
    <widget class="QLabel" name="humidity">
     <property name="geometry">
      <rect>
-      <x>380</x>
+      <x>400</x>
       <y>110</y>
-      <width>49</width>
-      <height>16</height>
+      <width>101</width>
+      <height>20</height>
      </rect>
     </property>
     <property name="text">
@@ -520,10 +526,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
    <widget class="QLabel" name="temperature">
     <property name="geometry">
      <rect>
-      <x>380</x>
+      <x>402</x>
       <y>140</y>
-      <width>71</width>
-      <height>16</height>
+      <width>111</width>
+      <height>20</height>
      </rect>
     </property>
     <property name="text">
@@ -533,7 +539,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
    <widget class="QLabel" name="water_log_header">
     <property name="geometry">
      <rect>
-      <x>360</x>
+      <x>402</x>
       <y>200</y>
       <width>61</width>
       <height>16</height>
@@ -551,18 +557,18 @@ li.checked::marker { content: &quot;\2612&quot;; }
    <widget class="QListWidget" name="water_log_list">
     <property name="geometry">
      <rect>
-      <x>360</x>
+      <x>402</x>
       <y>220</y>
-      <width>91</width>
-      <height>141</height>
+      <width>121</width>
+      <height>81</height>
      </rect>
     </property>
    </widget>
    <widget class="QComboBox" name="health_setter">
     <property name="geometry">
      <rect>
-      <x>200</x>
-      <y>320</y>
+      <x>240</x>
+      <y>360</y>
       <width>80</width>
       <height>24</height>
      </rect>
@@ -588,13 +594,43 @@ li.checked::marker { content: &quot;\2612&quot;; }
      </property>
     </item>
    </widget>
+   <widget class="QLabel" name="last_repotted">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>310</y>
+      <width>211</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Last repotted</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="repot_plant">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>300</y>
+      <width>121</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Repot plant</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../art/empty_pot.png</normaloff>../art/empty_pot.png</iconset>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>475</width>
+     <width>557</width>
      <height>33</height>
     </rect>
    </property>
