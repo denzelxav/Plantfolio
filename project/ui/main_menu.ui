@@ -45,7 +45,7 @@
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QPushButton" name="open_rooms">
+   <widget class="QPushButton" name="open_room">
     <property name="geometry">
      <rect>
       <x>40</x>

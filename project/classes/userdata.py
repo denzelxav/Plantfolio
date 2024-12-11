@@ -7,16 +7,16 @@ class UserData:
 
     """
     Userdata stores all the current data of the user. 
-    It has thee attributes: 
+    It has the attributes:
 
     Plants, which keeps track of all the plants the user currently owns, 
     this is a set of Plant objects.
 
-    Rooms, which is a dictonary where the key is the room name and the 
+    Rooms, which is a dictionary where the key is the room name and the
     value is a list of Spot objects.
 
     Preferences, which is a dictionary where the key is the type 
-    of preference, such as 'pet toxicity'and the value is the 
+    of preference, such as 'pet toxicity' and the value is the
     information about this preference
     """
 
@@ -27,7 +27,7 @@ class UserData:
 
     def water_all(self) -> None:
         """
-        Water all the plants in the users possesion
+        Water all the plants in the users possession
         """
         for plant in self.plants:
             plant.water_plant()

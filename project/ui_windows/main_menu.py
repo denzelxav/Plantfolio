@@ -1,12 +1,13 @@
 """The main application"""
 
 from PySide6.QtCore import Slot
-from PySide6.QtGui import QPixmap
+from PySide6.QtGui import QPixmap, QIcon
 from PySide6.QtWidgets import QMainWindow
 
 from project.classes.userdata import UserData
 from project.ui.output import Ui_MainMenu
 from project.ui_windows.add_room_window import AddRoomWindow
+from project.ui_windows.room_view_window import RoomViewWindow
 
 
 
@@ -20,14 +21,23 @@ class MainMenu(QMainWindow):
         self.ui = Ui_MainMenu()
         self.ui.setupUi(self)
         self.ui.PlantFolio_Icon.setPixmap(QPixmap(u"./art/Plantfolio_logo.png"))
+        self.setWindowIcon(QIcon("./art/Plantfolio_logo_small.png"))
 
         #buttons
         self.ui.add_room.clicked.connect(self.add_room)
+        self.ui.water_all.clicked.connect(self.userdata.water_all)
+        self.ui.open_room.clicked.connect(self.open_room)
 
 
     @Slot()
     def add_room(self):
         self.add_room_window = AddRoomWindow(self)
+        self.add_room_window.show()
+
+    @Slot()
+    def open_room(self):
+        room_name = self.ui.room_list.selectedItems()[0].text()
+        self.add_room_window = RoomViewWindow(room_name , self)
         self.add_room_window.show()
 
 
