@@ -19,8 +19,8 @@ class AddRoomWindow(QDialog):
         self.ui = Ui_AddRoomWindow()
         self.ui.setupUi(self)
         self.main_menu = main_menu
-        self.ui.house_image.setPixmap(QPixmap(u"./art/huisje.png"))
-        self.setWindowIcon(QIcon("./art/huisje.png"))
+        self.ui.house_image.setPixmap(QPixmap(u"./project/art/huisje.png"))
+        self.setWindowIcon(QIcon("./project/art/huisje.png"))
 
         #buttons
         self.ui.confirm_room.accepted.connect(self.add_room)

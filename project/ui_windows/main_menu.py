@@ -20,8 +20,8 @@ class MainMenu(QMainWindow):
         self.userdata = userdata
         self.ui = Ui_MainMenu()
         self.ui.setupUi(self)
-        self.ui.PlantFolio_Icon.setPixmap(QPixmap(u"./art/Plantfolio_logo.png"))
-        self.setWindowIcon(QIcon("./art/Plantfolio_logo_small.png"))
+        self.ui.PlantFolio_Icon.setPixmap(QPixmap(u"./project/art/Plantfolio_logo.png"))
+        self.setWindowIcon(QIcon("./project/art/Plantfolio_logo_small.png"))
 
         #buttons
         self.ui.add_room.clicked.connect(self.add_room)
