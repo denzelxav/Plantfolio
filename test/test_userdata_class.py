@@ -116,3 +116,42 @@ def test_sort_plants():
 
     sortedonnothing = mydata.sort_plants('blabla', True)
     assert sortedonnothing is None
+
+
+def test_load_spot_data():
+    """
+    Tests the load_spot_data method of the UserData class
+    """
+    mydata = UserData()
+    spot_data = {'spot_id': 'Window',
+                 'light_level': 'FULL_SHADE',
+                 'humidity': 'high humidity',
+                 'temperature': 21,
+                 'room': 'bedroom'}
+
+    mydata.load_spot_data(spot_data)
+
+    assert mydata.rooms == {'bedroom': [Spot('Window', Sunlight.FULL_SHADE, 'high humidity', None, 21, 'bedroom')]}
+
+    spot_data = {'spot_id': 'Cabinet',
+                 'light_level': 'FULL_SUN',
+                 'humidity': 'high humidity',
+                 'temperature': 21,
+                 'room': 'kitchen'}
+
+    mydata.load_spot_data(spot_data)
+
+    assert mydata.rooms == {'bedroom': [Spot('Window', Sunlight.FULL_SHADE, 'high humidity', None, 21, 'bedroom')],
+                            'kitchen': [Spot('Cabinet', Sunlight.FULL_SUN, 'high humidity', None, 21, 'kitchen')]}
+
+    spot_data = {'spot_id': 'Shelf',
+                 'light_level': 'FULL_SHADE',
+                 'humidity': 'low humidity',
+                 'temperature': 21,
+                 'room': 'living room'}
+
+    mydata.load_spot_data(spot_data)
+
+    assert mydata.rooms == {'bedroom': [Spot('Window', Sunlight.FULL_SHADE, 'high humidity', None, 21, 'bedroom')],
+                            'kitchen': [Spot('Cabinet', Sunlight.FULL_SUN, 'high humidity', None, 21, 'kitchen')],
+                            'living room': [Spot('Shelf', Sunlight.FULL_SHADE, 'low humidity', None, 21, 'living room')]}

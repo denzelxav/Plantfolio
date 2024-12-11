@@ -1,5 +1,6 @@
 from project.classes.plant import Plant
 from project.classes.spot_notification import Spot
+from project.classes.enums import Sunlight
 
 
 
@@ -102,3 +103,17 @@ class UserData:
         for task in sorted_tasks:
             result += task[0]
         return result
+    
+    def load_spot_data(self, spot_data: dict[str, str]) -> None:
+        '''Loads a spot from a dictionary'''
+        room = spot_data['room']
+        light_level = Sunlight[spot_data['light_level']]
+        spot = Spot(spot_data['spot_id'],
+                    light_level,
+                    spot_data['humidity'],
+                    None,
+                    spot_data['temperature'],
+                    room)
+        
+        self.add_room(room)
+        self.add_spot(spot)
