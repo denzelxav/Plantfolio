@@ -294,19 +294,26 @@ class Plant:
         if self.spot:
             self.sunlight_score = self.get_sunlight_score()
 
-    def get_data_to_save(self) -> dict[str, str | int | list[datetime.datetime] | dict[str, str | int] | list[str]]:
+    def get_data_to_save(self
+        ) -> dict[
+            str, str | int | list[datetime.datetime] | dict[str, str | int] | list[str] | None
+            ]:
         """
-        Returns a dictionary with all the data that needs to be saved for the plant in json format
+        Returns a dictionary with all data that needs to be saved for the plant in json format
         """
         return {
             "core_id": self.core_id,
             "personal_id": self.personal_id,
             "personal_name": self.personal_name,
             "icon_type": self.icon_type,
-            "spot_id": self.spot.spot_id,
+            "spot_id": self.spot.spot_id if self.spot else None,
             "health": self.health.value,
-            "watered": [entry.isoformat() for entry in self.watered] if len(self.watered) > 0 else [],
-            "nutrition": [entry.isoformat() for entry in self.nutrition] if self.nutrition else [],
+            "watered": [entry.isoformat()
+                        for entry in self.watered]
+                        if len(self.watered) > 0 else [],
+            "nutrition": [entry.isoformat()
+                          for entry in self.nutrition]
+                          if self.nutrition else [],
             "repotted": self.repotted.isoformat() if self.repotted else None,
             "manual_health": self.manual_health,
             "max_log_size": self.max_log_size,

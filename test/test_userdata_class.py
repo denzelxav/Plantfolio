@@ -1,27 +1,41 @@
-from project.classes.plant import *
+import datetime
+from project.classes.plant import Plant
 from project.classes.userdata import UserData
-from project.classes.spot_notification import Spot, Notification
-from project.classes.enums import *
+from project.classes.spot_notification import Spot
+from project.classes.enums import Sunlight
 
-def create_plant1(sunlight: Sunlight = Sunlight.FULL_SHADE):
+def create_plant1():
+    """
+    Creates a plant object for testing
+    """
     return Plant(425, 1, "flowerus_mapelus", "flowering-maple",
                  "default", datetime.timedelta(days=7),
-                 [Sunlight.FULL_SUN]
+                 [Sunlight.FULL_SUN, Sunlight.FULL_SHADE]
                  )
 
-def create_plant2(sunlight: Sunlight = Sunlight.FULL_SUN):
+def create_plant2():
+    """
+    Creates a plant object for testing
+    """
     return Plant(435, 2, "sansevieria", "sansevieria",
                  "default", datetime.timedelta(days=10),
-                 [Sunlight.FULL_SUN]
+                 [Sunlight.FULL_SUN, Sunlight.FULL_SHADE]
                  )
 
-def create_plant3(sunlight: Sunlight = Sunlight.FULL_SHADE):
+def create_plant3():
+    """
+    Creates a plant object for testing
+    """
     return Plant(498, 2, "strelitzia", "bird of paradise flower",
                  "default", datetime.timedelta(days=14),
-                 [Sunlight.FULL_SUN]
+                [Sunlight.FULL_SUN, Sunlight.FULL_SHADE]
                  )
 
+
 def test_create_userdata_basic():
+    """
+    Tests the basic functionality of the UserData class
+    """
     maple  = create_plant1()
     mydata = UserData()
 
@@ -30,8 +44,8 @@ def test_create_userdata_basic():
 
     # tests add_room
     assert mydata.rooms == {'bedroom': [], 'living room': []}
-    
-    spot1 = Spot('spot1', Sunlight.FULL_SHADE, 'high humidity', None, 21, 'bedroom')    
+
+    spot1 = Spot('spot1', Sunlight.FULL_SHADE, 'high humidity', None, 21, 'bedroom')
 
     mydata.add_spot(spot1)
 
@@ -47,7 +61,8 @@ def test_create_userdata_basic():
     mydata.water_all()
 
     # tests water_all
-    assert all(plant.watered[-1] < datetime.datetime.now() + datetime.timedelta(seconds = 1) for plant in mydata.plants)
+    assert all(plant.watered[-1] < datetime.datetime.now() + datetime.timedelta(seconds = 1)
+               for plant in mydata.plants)
 
     mydata.delete_plant(maple)
 
@@ -64,6 +79,9 @@ def test_create_userdata_basic():
     assert mydata.rooms == {'living room': []}
 
 def test_sort_plants():
+    """
+    Tests the sort_plants method of the UserData class
+    """
     maple  = create_plant1()
     maple.current_tasks.add('water')
     sansevieria = create_plant2()
@@ -73,7 +91,7 @@ def test_sort_plants():
 
     mydata.add_room('bedroom')
     mydata.add_room('living room')
-    table = Spot('table', Sunlight.PART_SHADE, 'high humidity', maple, 21, 'bedroom') 
+    table = Spot('table', Sunlight.PART_SHADE, 'high humidity', maple, 21, 'bedroom')
     ledge1 = Spot('ledge1', Sunlight.FULL_SUN, 'low humidity', sansevieria, 22, 'living room')
     ledge2 = Spot('ledge2', Sunlight.FULL_SUN, 'low humidity', strelitzia, 22, 'living room')
 
@@ -97,4 +115,4 @@ def test_sort_plants():
     assert sortedoncurrent_tasks == [strelitzia, sansevieria, maple]
 
     sortedonnothing = mydata.sort_plants('blabla', True)
-    assert sortedonnothing == None
+    assert sortedonnothing is None

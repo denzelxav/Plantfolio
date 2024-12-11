@@ -7,7 +7,6 @@ def create_database():
     """"
     Creates a relational database with multiple tables using SQLite and saves the file
     """
-    
     db_file = os.path.join('project', 'plant_database.db')
     with sqlite3.connect(db_file) as conn:
         cursor = conn.cursor()

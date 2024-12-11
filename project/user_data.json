@@ -6,7 +6,7 @@
             "personal_name": null,
             "icon_type": "default",
             "spot_id": "Window",
-            "health": 1,
+            "health": 2,
             "watered": [],
             "nutrition": [],
             "repotted": null,
@@ -69,5 +69,5 @@
             "room": "bedroom"
         }
     ],
-    "pet_preference": false
+    "pet_preference": true
 }

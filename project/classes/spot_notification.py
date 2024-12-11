@@ -19,7 +19,7 @@ class Spot:
     temperature: int
     room: str
 
-    def get_spot_data(self) -> dict[str, str | int]:
+    def get_spot_data(self) -> dict[str, str | int | Sunlight]:
         """
         Returns the spot data in a dictionary format to save in a json file
         """
