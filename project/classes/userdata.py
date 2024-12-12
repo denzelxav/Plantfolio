@@ -111,79 +111,37 @@ class UserData:
         for task in sorted_tasks:
             result += task[0]
         return result
-    
+
     def load_spot_data(self, spot_data: dict[str, str | int]) -> None:
         """
         Loads a spot from a dictionary
         """
         room = spot_data['room']
-        light_level = Sunlight[spot_data['light_level']]
+        light_level = Sunlight[str(spot_data['light_level'])]
         spot = Spot(spot_data['spot_id'],
                     light_level,
                     spot_data['humidity'],
                     None,
                     spot_data['temperature'],
                     room)
-        
+
         self.add_room(room)
         self.add_spot(spot)
 
-    def load_plant_data(self, plant_data: dict[str, str | int | list[datetime.datetime] | list[str] | None]) -> None:
+    def load_plant_data(self,
+                        plant: dict[str, str | int | list[datetime.datetime] | list[str] | None]
+                        ) -> None:
         """
         Loads a plant from a dictionary
         """
-        plant_id = plant_data['core_id']
-        personal_id = plant_data['personal_id']
+        plant_id = plant['core_id']
+        personal_id = plant['personal_id']
+        scientific_name = self.get_scientific_name(plant_id)
+        core_name = plant['personal_name']
+        icon_type = plant['icon_type']
+        watering_frequency = self.get_watering_frequency(plant_id)
+        preff_sunlight = self.get_preferred_sunlight(plant_id)
 
-        scientific_name = query_from_database(f"""
-                                              SELECT scientific_name
-                                              FROM plant_details
-                                              WHERE plant_id = '{plant_id}'
-                                              """)
-        for tup in scientific_name:
-            scientific_name = tup[0]
-
-        for _ in range(10):
-            print(scientific_name)
-
-
-        core_name = plant_data['personal_name']
-        icon_type = plant_data['icon_type']
-
-        watering_frequency_list = query_from_database(f"""
-                                                      SELECT watering
-                                                      FROM plant_details
-                                                      WHERE plant_id = '{plant_id}'
-                                                      """)
-        if watering_frequency_list:
-            for tup in watering_frequency_list:
-                watering_frequency_str = tup[0]
-        else:
-            watering_frequency_str = None
-        
-        if watering_frequency_str == 'Frequent':
-            watering_frequency = datetime.timedelta(days=1)
-        elif watering_frequency_str == 'Average':
-            watering_frequency = datetime.timedelta(days=3)
-        elif watering_frequency_str == 'Minimum':
-            watering_frequency = datetime.timedelta(days=7)
-        else:
-            watering_frequency = datetime.timedelta(days=0)
-
-        preff_sunlight_list = query_from_database(f"""
-                                                    SELECT sunlight_list
-                                                    FROM plant_details
-                                                    WHERE plant_id = '{plant_id}'
-                                                    """)
-        if preff_sunlight_list:
-            for tup in preff_sunlight_list:
-                preff_sunlight_big_str = tup[0].replace('[', '').replace(']', '').split(',')
-                preff_sunlight_small_strs = [s.strip('"') for s in preff_sunlight_big_str]
-            enum_lights = [light.upper().replace(' ', '_') for light in preff_sunlight_small_strs]
-            preff_sunlight = [Sunlight[enum_light] for enum_light in enum_lights]
-        else:
-            preff_sunlight = [Sunlight.FULL_SHADE, Sunlight.FULL_SUN, Sunlight.PART_SHADE, Sunlight.PART_SUN]
-        
         new_plant = Plant(plant_id,
                           personal_id,
                           scientific_name,
@@ -192,14 +150,58 @@ class UserData:
                           watering_frequency,
                           preff_sunlight)
 
-        spot_id = plant_data['spot_id']
         for room in self.rooms.values():
             for spot in room:
-                if spot.spot_id == spot_id:
+                if spot.spot_id == plant['spot_id']:
                     self.add_plant(new_plant, spot)
 
+    def get_scientific_name(self, plant_id: str) -> str:
+        """
+        Returns the scientific name of a plant from the database
+        """
+        result = query_from_database(f"""
+                                    SELECT scientific_name
+                                    FROM plant_details
+                                    WHERE plant_id = '{plant_id}'
+                                    """)
+        return result[0][0] if result else None
 
-        # for _ in range(10):
-        #     print(self.rooms)
-        #     print(repr(new_plant))
-        #     print(self.plants)
+    def get_watering_frequency(self, plant_id: str) -> datetime.timedelta:
+        """
+        Returns the watering frequency of a plant from the database
+        """
+        result = query_from_database(f"""
+                                    SELECT watering
+                                    FROM plant_details
+                                    WHERE plant_id = '{plant_id}'
+                                    """)
+        watering_frequency_str = result[0][0] if result else None
+        watering_mapping = {
+            'Frequent': datetime.timedelta(days=1),
+            'Average': datetime.timedelta(days=3),
+            'Minimum': datetime.timedelta(days=7)
+        }
+        return watering_mapping.get(watering_frequency_str, datetime.timedelta(days=0))
+
+    def get_preferred_sunlight(self, plant_id: str) -> list[Sunlight]:
+        """
+        Retuns the preferred sunlight of a plant from the database
+        """
+        result = query_from_database(f"""
+                                    SELECT sunlight_list
+                                    FROM plant_details
+                                    WHERE plant_id = '{plant_id}'
+                                    """)
+        if result:
+            preff_sunlight_big_str = result[0][0].replace('[', '').replace(']', '').split(',')
+            preff_sunlight_small_strs = [s.strip('"') for s in preff_sunlight_big_str]
+            enum_lights = [light.upper().replace(' ', '_') for light in preff_sunlight_small_strs]
+            return [Sunlight[enum_light] for enum_light in enum_lights]
+        return [Sunlight.FULL_SHADE, Sunlight.FULL_SUN, Sunlight.PART_SHADE, Sunlight.PART_SUN]
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, UserData):
+            return False
+        return (self.plants == other.plants and
+                self.rooms == other.rooms and
+                self.pet_toxicity == other.pet_toxicity)

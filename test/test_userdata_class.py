@@ -149,7 +149,12 @@ def test_load_spot_data():
 
     mydata.load_spot_data(spot_data)
 
-    assert mydata.rooms == {'bedroom': [Spot('Window', Sunlight.FULL_SHADE, 'high humidity', None, 21, 'bedroom')]}
+    assert mydata.rooms == {'bedroom': [Spot('Window',
+                                             Sunlight.FULL_SHADE,
+                                             'high humidity',
+                                             None,
+                                             21,
+                                             'bedroom')]}
 
     spot_data = {'spot_id': 'Cabinet',
                  'light_level': 'FULL_SUN',
@@ -159,8 +164,18 @@ def test_load_spot_data():
 
     mydata.load_spot_data(spot_data)
 
-    assert mydata.rooms == {'bedroom': [Spot('Window', Sunlight.FULL_SHADE, 'high humidity', None, 21, 'bedroom')],
-                            'kitchen': [Spot('Cabinet', Sunlight.FULL_SUN, 'high humidity', None, 21, 'kitchen')]}
+    assert mydata.rooms == {'bedroom': [Spot('Window',
+                                             Sunlight.FULL_SHADE,
+                                             'high humidity',
+                                             None,
+                                             21,
+                                             'bedroom')],
+                            'kitchen': [Spot('Cabinet',
+                                             Sunlight.FULL_SUN,
+                                             'high humidity',
+                                             None,
+                                             21,
+                                             'kitchen')]}
 
     spot_data = {'spot_id': 'Shelf',
                  'light_level': 'FULL_SHADE',
@@ -170,70 +185,21 @@ def test_load_spot_data():
 
     mydata.load_spot_data(spot_data)
 
-    assert mydata.rooms == {'bedroom': [Spot('Window', Sunlight.FULL_SHADE, 'high humidity', None, 21, 'bedroom')],
-                            'kitchen': [Spot('Cabinet', Sunlight.FULL_SUN, 'high humidity', None, 21, 'kitchen')],
-                            'living room': [Spot('Shelf', Sunlight.FULL_SHADE, 'low humidity', None, 21, 'living room')]}
-    
-
-# def test_load_plant_data():
-#     """
-#     Tests the load_plant_data method of the UserData class
-#     """
-#     mydata = UserData()
-#     plant_data = {
-#         "core_id": 425,
-#         "personal_id": 1,
-#         "personal_name": None,
-#         "icon_type": "default",
-#         "spot_id": "Window",
-#         "health": 2,
-#         "watered": [],
-#         "nutrition": [],
-#         "repotted": None,
-#         "manual_health": False,
-#         "max_log_size": 4,
-#         "notes": None,
-#         "current_tasks": []
-#     }
-
-#     mydata.load_plant_data(plant_data)
-
-#     assert mydata.plants == {Plant(425, 1, 'Abutilon hybridum', None, 'default', None, [])}
-
-#     plant_data = {
-#         "core_id": 434,
-#         "personal_id": 2,
-#         "personal_name": None,
-#         "icon_type": "default",
-#         "spot_id": "Cabinet",
-#         "health": 2,
-#         "watered": [],
-#         "nutrition": [],
-#         "repotted": None,
-#         "manual_health": False,
-#         "max_log_size": 4,
-#         "notes": None,
-#         "current_tasks": []
-#     }
-
-#     assert mydata.plants == {Plant(425, 1, 'Abutilon hybridum', None, 'default', None, []),
-#                              Plant(435, 2, 'Acalypha wilkesiana', None, 'default', None, [])}
-#     plant_data = {
-#         "core_id": 2498,
-#         "personal_id": 2,
-#         "personal_name": None,
-#         "icon_type": "default",
-#         "spot_id": "Shelf",
-#         "health": 2,
-#         "watered": [],
-#         "nutrition": [],
-#         "repotted": None,
-#         "manual_health": False,
-#         "max_log_size": 4,
-#         "notes": None,
-#         "current_tasks": []
-#     }
-
-#     assert mydata.plants == {Plant(425, 1, 'Abutilon hybridum', None, 'default', None, []),
-#                              Plant(435, 2, 'Acalypha wilkesiana', None, 'default', None, []),
-#                              Plant(2498, 2, 'Dionaea muscipula', None, 'default', None, [])}
+    assert mydata.rooms == {'bedroom': [Spot('Window',
+                                             Sunlight.FULL_SHADE,
+                                             'high humidity',
+                                             None,
+                                             21,
+                                             'bedroom')],
+                            'kitchen': [Spot('Cabinet',
+                                             Sunlight.FULL_SUN,
+                                             'high humidity',
+                                             None,
+                                             21,
+                                             'kitchen')],
+                            'living room': [Spot('Shelf',
+                                                 Sunlight.FULL_SHADE,
+                                                 'low humidity',
+                                                 None,
+                                                 21,
+                                                 'living room')]}

@@ -7,11 +7,18 @@ from project.classes.enums import Sunlight
 from project.classes.spot_notification import Spot
 
 
+def get_test_path():
+    """
+    Returns the path to the test user data file
+    """
+    return os.path.join("test", "test_user_data.json")
+
 def test_save_userdata_basic():
     """
     Tests saving user data with one plant and one room
     """
     test_user = UserData()
+    test_path = get_test_path()
 
     test_plant1 = create_plant1()
     test_spot1 = Spot('Window', Sunlight.FULL_SHADE, 'high humidity', None, 21, 'bedroom')
@@ -20,12 +27,11 @@ def test_save_userdata_basic():
     assert test_user.rooms == {'bedroom': [test_spot1]}
     assert test_plant1 in test_user.plants
 
-    save_user_data(test_user)
+    save_user_data(test_user, test_path)
 
     assert os.path.exists(os.path.join("project", "user_data.json"))
 
-    saved_data_path = os.path.join("project", "user_data.json")
-    with open(saved_data_path, "r", encoding='utf-8') as file:
+    with open(test_path, "r", encoding='utf-8') as file:
         data = json.load(file)
         assert data["plant_data"] == [test_plant1.get_data_to_save()]
 
@@ -34,6 +40,7 @@ def test_save_userdata_multiple_plants_one_room():
     Tests saving user data with multiple plants in one room
     """
     test_user = UserData()
+    test_path = get_test_path()
     test_user.pet_toxicity = True
 
     test_plant1 = create_plant1()
@@ -53,12 +60,11 @@ def test_save_userdata_multiple_plants_one_room():
     assert test_plant2 in test_user.plants
     assert test_plant3 in test_user.plants
 
-    save_user_data(test_user)
+    save_user_data(test_user, test_path)
 
-    assert os.path.exists(os.path.join("project", "user_data.json"))
+    assert os.path.exists(test_path)
 
-    saved_data_path = os.path.join("project", "user_data.json")
-    with open(saved_data_path, "r", encoding='utf-8') as file:
+    with open(test_path, "r", encoding='utf-8') as file:
         data = json.load(file)
 
     assert data["plant_data"] == [test_plant1.get_data_to_save(),
@@ -93,6 +99,7 @@ def test_save_userdata_mulitple_plants_multiple_rooms():
     Tests saving user data with multiple plants in multiple rooms
     """
     test_user = UserData()
+    test_path = get_test_path()
     test_user.pet_toxicity = True
 
     test_plant1 = create_plant1()
@@ -114,10 +121,9 @@ def test_save_userdata_mulitple_plants_multiple_rooms():
     assert test_plant2 in test_user.plants
     assert test_plant3 in test_user.plants
 
-    save_user_data(test_user)
+    save_user_data(test_user, test_path)
 
-    saved_data_path = os.path.join("project", "user_data.json")
-    with open(saved_data_path, "r", encoding='utf-8') as file:
+    with open(test_path, "r", encoding='utf-8') as file:
         data = json.load(file)
 
     assert data["plant_data"] == [test_plant1.get_data_to_save(),
@@ -147,7 +153,11 @@ def test_save_userdata_mulitple_plants_multiple_rooms():
     assert data["pet_preference"] is True
 
 def test_load_data():
+    """
+    Tests loading user data
+    """
     test_user = UserData()
+    test_path = get_test_path()
     test_user.pet_toxicity = True
 
     test_plant1 = create_plant1()
@@ -162,24 +172,16 @@ def test_load_data():
     test_user.add_plant(test_plant2, test_spot2)
     test_user.add_plant(test_plant3, test_spot3)
 
-    save_user_data(test_user)
+    assert test_plant1 in test_user.plants
+    assert test_plant2 in test_user.plants
+    assert test_plant3 in test_user.plants
 
-    loaded_data = load_user_data()
+    save_user_data(test_user, test_path)
 
-    test_spot1_with_plant = Spot('Window', Sunlight.FULL_SHADE, 'high humidity', test_plant1, 21, 'bedroom')
-    test_spot2_with_plant = Spot('Cabinet', Sunlight.FULL_SUN, 'high humidity', test_plant2, 21, 'kitchen')
-    test_spot3_with_plant = Spot('Shelf', Sunlight.FULL_SHADE, 'low humidity', test_plant3, 21, 'living room')
+    assert test_plant1 in test_user.plants
+    assert test_plant2 in test_user.plants
+    assert test_plant3 in test_user.plants
 
-    print(loaded_data.rooms)
-    print()
-    print({'bedroom': [test_spot1_with_plant],
-            'kitchen': [test_spot2_with_plant],
-            'living room': [test_spot3_with_plant]})
+    loaded_data = load_user_data(test_path)
 
-    assert loaded_data.rooms == {'bedroom': [test_spot1_with_plant],
-                                 'kitchen': [test_spot2_with_plant],
-                                 'living room': [test_spot3_with_plant]}
-    
-    assert test_plant1 in loaded_data.plants
-    assert test_plant2 in loaded_data.plants
-    assert test_plant3 in loaded_data.plants
+    assert loaded_data == test_user

@@ -320,11 +320,25 @@ class Plant:
             "notes": self.notes,
             "current_tasks": list(self.current_tasks)
         }
-    
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Plant):
+            return False
+        return (self.core_id == other.core_id and
+                self.personal_id == other.personal_id and
+                self.scientific_name == other.scientific_name and
+                self.core_name == other.core_name and
+                self.icon_type == other.icon_type and
+                self.watering_frequency == other.watering_frequency and
+                self.preff_sunlight == other.preff_sunlight)
+
+    def __hash__(self):
+        return hash(self.personal_id)
 
     def __repr__(self) -> str:
-        return (f"Plant({self.core_id}, {self.personal_id}, {self.scientific_name}, {self.core_name}, {self.icon_type}, "
-                f"{self.watering_frequency}, {self.preff_sunlight})")
+        return (f"Plant({self.core_id}, {self.personal_id}, {self.scientific_name},"
+                f"{self.core_name}, {self.icon_type},{self.watering_frequency},"
+                f"{self.preff_sunlight})")
 
     def __str__(self) -> str:
         return f"{self.personal_id}: {self.core_name}"

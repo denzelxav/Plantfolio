@@ -16,7 +16,7 @@ class EnumEncoder(json.JSONEncoder):
         return json.JSONEncoder.default(self, o)
 
 
-def save_user_data(user: UserData) -> None:
+def save_user_data(user: UserData, save_path: str) -> None:
     """
     Saves the user data in json format to a file to access later
     """
@@ -33,21 +33,19 @@ def save_user_data(user: UserData) -> None:
 
     data["pet_preference"] = user.pet_toxicity
 
-    user_data_path = os.path.join("project", "user_data.json")
-    with open(user_data_path, "w", encoding='utf-8') as file:
+    with open(save_path, "w", encoding='utf-8') as file:
         json.dump(data, file, cls=EnumEncoder, indent=4)
 
-def load_user_data() -> UserData:
+def load_user_data(load_path: str) -> UserData:
     """
     Loads the user data from the json file
     """
     user = UserData()
-    user_data_path = os.path.join("project", "user_data.json")
 
-    if not os.path.exists(user_data_path):
+    if not os.path.exists(load_path):
         return user
 
-    with open(user_data_path, "r", encoding='utf-8') as file:
+    with open(load_path, "r", encoding='utf-8') as file:
         data = json.load(file)
 
     for spot_data in data["spots"]:
@@ -55,5 +53,7 @@ def load_user_data() -> UserData:
 
     for plant_data in data["plant_data"]:
         user.load_plant_data(plant_data)
+
+    user.pet_toxicity = data["pet_preference"]
 
     return user
