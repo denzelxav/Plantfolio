@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>557</width>
-    <height>442</height>
+    <height>398</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -624,18 +624,20 @@ li.checked::marker { content: &quot;\2612&quot;; }
       <normaloff>../art/empty_pot.png</normaloff>../art/empty_pot.png</iconset>
     </property>
    </widget>
+   <widget class="QPushButton" name="add_delete_plant">
+    <property name="geometry">
+     <rect>
+      <x>14</x>
+      <y>0</y>
+      <width>101</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Add/Delete Plant</string>
+    </property>
+   </widget>
   </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>557</width>
-     <height>33</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections/>

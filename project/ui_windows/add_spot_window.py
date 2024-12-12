@@ -1,8 +1,7 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
-from PySide6 import QtWidgets
-from PySide6.QtGui import QPixmap, QIcon
-from PySide6.QtWidgets import QDialog, QMainWindow, QListWidgetItem
+from PySide6.QtGui import QPixmap
+from PySide6.QtWidgets import QDialog
 
 from project.classes.public_methods import string_to_sunlight
 from project.classes.spot_notification import Spot

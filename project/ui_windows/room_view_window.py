@@ -35,7 +35,7 @@ class RoomViewWindow(QDialog):
     def open_plant_view(self):
         spot_id = self.ui.spot_list.selectedItems()[0].text()
         selected_spot = self.get_spot(spot_id)
-        self.plant_view = PlantViewWindow(selected_spot)
+        self.plant_view = PlantViewWindow(selected_spot, self.main_menu.userdata)
         self.plant_view.show()
 
 
@@ -63,7 +63,7 @@ class RoomViewWindow(QDialog):
     def add_plant(self):
         spot = self.get_spot(self.ui.spot_list.selectedItems()[0].text())
         if spot.assigned_plant is None:
-            self.add_plant_window = AddPlantWindow(self, spot, self.main_menu.userdata)
+            self.add_plant_window = AddPlantWindow(spot, self.main_menu.userdata)
             self.add_plant_window.show()
 
     @Slot()

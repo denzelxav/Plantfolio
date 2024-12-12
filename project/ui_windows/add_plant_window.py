@@ -10,16 +10,16 @@ from project.classes.plant import list_all_plants, plant_from_database
 
 if TYPE_CHECKING:
     from project.classes.userdata import UserData
-    from project.ui_windows.room_view_window import RoomViewWindow
+    from project.ui_windows.plant_view_window import PlantViewWindow
 
 class AddPlantWindow(QDialog):
-    def __init__(self, room: RoomViewWindow, spot: Spot, userdata: UserData):
+    def __init__(self, spot: Spot, userdata: UserData, parent: PlantViewWindow | None =None):
         super().__init__()
         self.ui = Ui_AddPlantWindow()
         self.ui.setupUi(self)
-        self.room = room
         self.spot = spot
         self.userdata = userdata
+        self.parent = parent
 
         for plant_data in list_all_plants():
             self.ui.all_plants_list.addItem(f"{plant_data[0]}: {plant_data[1]}, {plant_data[2]}")
@@ -38,11 +38,9 @@ class AddPlantWindow(QDialog):
 
     @Slot()
     def filter_search(self):
-        print(1)
         search = self.ui.search_bar.text().lower()
         for i in range(self.ui.all_plants_list.count()):
             item = self.ui.all_plants_list.item(i)
-            print(item.text())
             item.setHidden(search not in item.text().lower())
 
     @Slot()
@@ -52,7 +50,6 @@ class AddPlantWindow(QDialog):
         plant_name = self.ui.name_input.text()
         plant.personal_name = plant_name
         plant.icon_type = self.ui.icon_list.selectedItems()[0].text()
-        print(plant.icon_type)
-        print(plant)
         self.userdata.add_plant(plant, self.spot)
-        print(self.spot)
+        if self.parent:
+            self.parent.plant_or_no_plant()

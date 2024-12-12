@@ -16,15 +16,14 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QLabel,
-    QListWidget, QListWidgetItem, QMainWindow, QMenuBar,
-    QPushButton, QSizePolicy, QStatusBar, QTextEdit,
-    QWidget)
+    QListWidget, QListWidgetItem, QMainWindow, QPushButton,
+    QSizePolicy, QTextEdit, QWidget)
 
 class Ui_PlantViewWindow(object):
     def setupUi(self, PlantViewWindow):
         if not PlantViewWindow.objectName():
             PlantViewWindow.setObjectName(u"PlantViewWindow")
-        PlantViewWindow.resize(557, 442)
+        PlantViewWindow.resize(557, 398)
         PlantViewWindow.setMinimumSize(QSize(531, 0))
         PlantViewWindow.setMaximumSize(QSize(5310, 4010))
         palette = QPalette()
@@ -160,14 +159,10 @@ class Ui_PlantViewWindow(object):
         icon2 = QIcon()
         icon2.addFile(u"../art/empty_pot.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.repot_plant.setIcon(icon2)
+        self.add_delete_plant = QPushButton(self.centralwidget)
+        self.add_delete_plant.setObjectName(u"add_delete_plant")
+        self.add_delete_plant.setGeometry(QRect(14, 0, 101, 24))
         PlantViewWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QMenuBar(PlantViewWindow)
-        self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 557, 33))
-        PlantViewWindow.setMenuBar(self.menubar)
-        self.statusbar = QStatusBar(PlantViewWindow)
-        self.statusbar.setObjectName(u"statusbar")
-        PlantViewWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(PlantViewWindow)
 
@@ -210,5 +205,6 @@ class Ui_PlantViewWindow(object):
 
         self.last_repotted.setText(QCoreApplication.translate("PlantViewWindow", u"Last repotted", None))
         self.repot_plant.setText(QCoreApplication.translate("PlantViewWindow", u"Repot plant", None))
+        self.add_delete_plant.setText(QCoreApplication.translate("PlantViewWindow", u"Add/Delete Plant", None))
     # retranslateUi
 
