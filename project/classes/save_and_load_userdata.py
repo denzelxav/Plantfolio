@@ -47,6 +47,7 @@ def load_user_data(load_path: str) -> UserData:
 
     with open(load_path, "r", encoding='utf-8') as file:
         data = json.load(file)
+        print(data)
 
     for spot_data in data["spots"]:
         user.load_spot_data(spot_data)

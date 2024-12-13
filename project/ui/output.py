@@ -97,6 +97,9 @@ class Ui_MainMenu(object):
         self.refresh_notifications = QPushButton(self.centralwidget)
         self.refresh_notifications.setObjectName(u"refresh_notifications")
         self.refresh_notifications.setGeometry(QRect(470, 120, 121, 31))
+        self.save_button = QPushButton(self.centralwidget)
+        self.save_button.setObjectName(u"save_button")
+        self.save_button.setGeometry(QRect(550, 0, 75, 24))
         MainMenu.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainMenu)
         self.menubar.setObjectName(u"menubar")
@@ -125,5 +128,6 @@ class Ui_MainMenu(object):
         self.sort_notifications_by.setItemText(2, QCoreApplication.translate("MainMenu", u"weight", None))
 
         self.refresh_notifications.setText(QCoreApplication.translate("MainMenu", u"refresh notifications", None))
+        self.save_button.setText(QCoreApplication.translate("MainMenu", u"Save", None))
     # retranslateUi
 

@@ -3,8 +3,7 @@ from project.classes.plant import Plant
 from project.classes.spot_notification import Spot
 from project.classes.enums import Sunlight, Health
 from project.query_function import query_from_database
-from project.classes.public_methods import string_to_sunlight, string_to_water_frequency
-
+from project.classes.public_methods import string_to_sunlight, string_to_water_frequency, string_to_health
 
 
 class UserData:
@@ -132,10 +131,10 @@ class UserData:
         else:
             raise ValueError('humidity must be a string')
 
-        if isinstance(spot_data['temperature'], int):
-            temperature = int(spot_data['temperature'])
+        if isinstance(spot_data['temperature'], float):
+            temperature = float(spot_data['temperature'])
         else:
-            raise ValueError('temperature must be a integer')
+            raise ValueError(f'temperature must be a integer. Got {type(spot_data['temperature'])}. value {spot_data["temperature"]}')
 
         if isinstance(spot_data['room'], str):
             room = str(spot_data['room'])
@@ -161,11 +160,11 @@ class UserData:
         if isinstance(plant['core_id'], int):
             plant_id = int(plant['core_id'])
         else:
-            raise ValueError('core_id must be a integer')
+            raise ValueError(f'core_id must be a integer. Got {type(plant["core_id"])}. value {plant["core_id"]}')
         if isinstance(plant['personal_id'], int):
             personal_id = int(plant['personal_id'])
         else:
-            raise ValueError('personal_id must be a integer')
+            raise ValueError(f'personal_id must be a integer. Got {type(plant['personal_id'])}. value {plant["personal_id"]}')
         if isinstance(plant['personal_name'], str):
             personal_name = str(plant['personal_name'])
         elif not plant['personal_name']:
@@ -180,10 +179,10 @@ class UserData:
             spot_id = str(plant['spot_id'])
         else:
             raise ValueError('spot_id must be a string')
-        if isinstance(plant['health'], int):
-            health = Health(int(plant['health']))
+        if isinstance(plant['health'], str):
+            health = string_to_health((plant['health']))
         else:
-            raise ValueError('health must be a integer')
+            raise ValueError(f'health must be a integer. Got {type(plant["health"])}. value {plant["health"]}')
         if isinstance(plant['watered'], list):
             watered = [datetime.datetime.fromisoformat(date)
                        for date in plant['watered']

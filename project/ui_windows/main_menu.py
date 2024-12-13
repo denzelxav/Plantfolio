@@ -8,6 +8,7 @@ from project.classes.userdata import UserData
 from project.ui.output import Ui_MainMenu
 from project.ui_windows.add_room_window import AddRoomWindow
 from project.ui_windows.room_view_window import RoomViewWindow
+from project.classes.save_and_load_userdata import save_user_data
 
 
 
@@ -27,6 +28,9 @@ class MainMenu(QMainWindow):
         self.ui.add_room.clicked.connect(self.add_room)
         self.ui.water_all.clicked.connect(self.userdata.water_all)
         self.ui.open_room.clicked.connect(self.open_room)
+        self.ui.save_button.clicked.connect(self.save)
+
+        self.refresh_rooms()
 
 
     @Slot()
@@ -42,6 +46,10 @@ class MainMenu(QMainWindow):
         room_name = self.ui.room_list.selectedItems()[0].text()
         self.add_room_window = RoomViewWindow(room_name , self)
         self.add_room_window.show()
+
+    @Slot()
+    def save(self):
+        save_user_data(self.userdata, "./project/user_data.json")
 
     def delete_room(self, room: RoomViewWindow) -> None:
         room_name = room.room_name
