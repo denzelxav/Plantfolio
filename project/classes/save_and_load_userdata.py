@@ -29,7 +29,7 @@ def save_user_data(user: UserData, test_mode: bool=False) -> None:
                             "spots": [],
                             "pet_preference": False}
 
-    for plant in sorted(user.plants, key=lambda x: x.core_id):
+    for plant in sorted(user.plants, key=lambda x: x.personal_id):
         data["plant_data"].append(plant.get_data_to_save())
 
     for room in user.rooms.values():
