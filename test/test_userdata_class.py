@@ -9,7 +9,7 @@ def create_plant1():
     Creates a plant object for testing
     """
     return Plant(425, 1, "Abutilon hybridum", "flowering-maple",
-                 "default", datetime.timedelta(days=1),
+                 "default", datetime.timedelta(days=4),
                  [Sunlight.FULL_SUN, Sunlight.PART_SHADE]
                  )
 
@@ -17,8 +17,8 @@ def create_plant2():
     """
     Creates a plant object for testing
     """
-    return Plant(434, 2, "Acalypha wilkesiana", "sansevieria",
-                 "default", datetime.timedelta(days=1),
+    return Plant(434, 2, "Acalypha wilkesiana", "Jacob's coat",
+                 "default", datetime.timedelta(days=4),
                  [Sunlight.FULL_SUN, Sunlight.PART_SHADE]
                  )
 
@@ -26,8 +26,8 @@ def create_plant3():
     """
     Creates a plant object for testing
     """
-    return Plant(502, 2, "Achimenes (group)", "bird of paradise flower",
-                 "default", datetime.timedelta(days=3),
+    return Plant(502, 2, "Achimenes (group)", "hot water plant",
+                 "default", datetime.timedelta(weeks=1),
                 [Sunlight.PART_SHADE]
                  )
 
@@ -121,7 +121,7 @@ def test_sort_plants():
     mydata.add_plant(strelitzia, ledge2)
 
     sortedonname = mydata.sort_plants('core_name', False)
-    assert sortedonname == [strelitzia, maple, sansevieria]
+    assert sortedonname == [maple, strelitzia, sansevieria]
 
     sortedonscientificname = mydata.sort_plants('scientific_name', False)
     assert sortedonscientificname == [maple, sansevieria, strelitzia]

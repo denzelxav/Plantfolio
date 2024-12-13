@@ -3,6 +3,7 @@ from project.classes.plant import Plant
 from project.classes.spot_notification import Spot
 from project.classes.enums import Sunlight
 from project.query_function import query_from_database
+from project.classes.public_methods import string_to_sunlight, string_to_water_frequency
 
 
 
@@ -92,7 +93,7 @@ class UserData:
         """
         if attribute in ['core_name', 'scientific_name', 'personal_name']:
             return sorted(list(self.plants),
-                          key=lambda plant: getattr(plant, attribute), reverse=reverse)
+                          key=lambda plant: getattr(plant, attribute).lower(), reverse=reverse)
         if attribute == 'room':
             result = []
             for room in sorted(self.rooms.keys(), reverse=reverse):
@@ -117,7 +118,7 @@ class UserData:
         Loads a spot from a dictionary
         """
         if isinstance(spot_data['spot_id'], str):
-            spot_id = int(spot_data['spot_id'])
+            spot_id = str(spot_data['spot_id'])
         else:
             raise ValueError('spot_id must be a string')
         
@@ -153,28 +154,58 @@ class UserData:
         """
         Loads a plant from a dictionary
         """
-        plant_id = plant['core_id']
-        personal_id = plant['personal_id']
+        if isinstance(plant['core_id'], int):
+            plant_id = int(plant['core_id'])
+        else:
+            raise ValueError('core_id must be a integer')
+        if isinstance(plant['personal_id'], int):
+            personal_id = int(plant['personal_id'])
+        else:
+            raise ValueError('personal_id must be a integer')
+        if isinstance(plant['icon_type'], str):
+            icon_type = str(plant['icon_type'])
+        else:
+            raise ValueError('icon_type must be a string')
+        
+        core_name = self.get_core_name(plant_id)
         scientific_name = self.get_scientific_name(plant_id)
-        core_name = plant['personal_name']
-        icon_type = plant['icon_type']
         watering_frequency = self.get_watering_frequency(plant_id)
+        watering_frequency_timedelta = string_to_water_frequency(watering_frequency)
         preff_sunlight = self.get_preferred_sunlight(plant_id)
+        preff_sunlight_enums = []
+        for sunlight in preff_sunlight:
+            preff_sunlight_enums.append(string_to_sunlight(sunlight))
 
         new_plant = Plant(plant_id,
                           personal_id,
                           scientific_name,
                           core_name,
                           icon_type,
-                          watering_frequency,
-                          preff_sunlight)
+                          watering_frequency_timedelta,
+                          preff_sunlight_enums)
+        
+        if isinstance(plant['personal_name'], str):
+            personal_name = str(plant['personal_name'])
+            new_plant.personal_name = personal_name
+            
 
         for room in self.rooms.values():
             for spot in room:
                 if spot.spot_id == plant['spot_id']:
                     self.add_plant(new_plant, spot)
 
-    def get_scientific_name(self, plant_id: str) -> str:
+    def get_core_name(self, plant_id: int) -> str:
+        """
+        Returns the core name of a plant from the database
+        """
+        result = query_from_database(f"""
+                                    SELECT common_name
+                                    FROM plant_details
+                                    WHERE plant_id = '{plant_id}'
+                                    """)
+        return str(result[0][0])
+
+    def get_scientific_name(self, plant_id: int) -> str:
         """
         Returns the scientific name of a plant from the database
         """
@@ -183,9 +214,9 @@ class UserData:
                                     FROM plant_details
                                     WHERE plant_id = '{plant_id}'
                                     """)
-        return result[0][0] if result else None
+        return str(result[0][0])
 
-    def get_watering_frequency(self, plant_id: str) -> datetime.timedelta:
+    def get_watering_frequency(self, plant_id: int) -> str:
         """
         Returns the watering frequency of a plant from the database
         """
@@ -194,15 +225,10 @@ class UserData:
                                     FROM plant_details
                                     WHERE plant_id = '{plant_id}'
                                     """)
-        watering_frequency_str = result[0][0] if result else None
-        watering_mapping = {
-            'Frequent': datetime.timedelta(days=1),
-            'Average': datetime.timedelta(days=3),
-            'Minimum': datetime.timedelta(days=7)
-        }
-        return watering_mapping.get(watering_frequency_str, datetime.timedelta(days=0))
+        
+        return str(result[0][0])
 
-    def get_preferred_sunlight(self, plant_id: str) -> list[Sunlight]:
+    def get_preferred_sunlight(self, plant_id: int) -> list[str]:
         """
         Retuns the preferred sunlight of a plant from the database
         """
@@ -211,12 +237,11 @@ class UserData:
                                     FROM plant_details
                                     WHERE plant_id = '{plant_id}'
                                     """)
-        if result:
-            preff_sunlight_big_str = result[0][0].replace('[', '').replace(']', '').split(',')
-            preff_sunlight_small_strs = [s.strip('"') for s in preff_sunlight_big_str]
-            enum_lights = [light.upper().replace(' ', '_') for light in preff_sunlight_small_strs]
-            return [Sunlight[enum_light] for enum_light in enum_lights]
-        return [Sunlight.FULL_SHADE, Sunlight.FULL_SUN, Sunlight.PART_SHADE, Sunlight.PART_SUN]
+
+        preff_sunlight_big_str = str(result[0][0]).replace('[', '').replace(']', '').split(',')
+        preff_sunlight_small_strs = [s.strip('"') for s in preff_sunlight_big_str]
+        return preff_sunlight_small_strs
+
 
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, UserData):

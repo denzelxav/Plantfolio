@@ -184,4 +184,7 @@ def test_load_data():
 
     loaded_data = load_user_data(test_path)
 
+    assert loaded_data.rooms == test_user.rooms
+    assert loaded_data.plants == test_user.plants
+    assert loaded_data.pet_toxicity == test_user.pet_toxicity
     assert loaded_data == test_user

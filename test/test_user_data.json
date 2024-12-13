@@ -3,7 +3,7 @@
         {
             "core_id": 425,
             "personal_id": 1,
-            "personal_name": "flowering-maple",
+            "personal_name": null,
             "icon_type": "default",
             "spot_id": "Window",
             "health": 1,
@@ -18,7 +18,7 @@
         {
             "core_id": 434,
             "personal_id": 2,
-            "personal_name": "sansevieria",
+            "personal_name": null,
             "icon_type": "default",
             "spot_id": "Cabinet",
             "health": 2,
@@ -33,7 +33,7 @@
         {
             "core_id": 502,
             "personal_id": 2,
-            "personal_name": "bird of paradise flower",
+            "personal_name": null,
             "icon_type": "default",
             "spot_id": "Shelf",
             "health": 1,

@@ -336,9 +336,15 @@ class Plant:
         return hash(self.personal_id)
 
     def __repr__(self) -> str:
-        return (f"Plant({self.core_id}, {self.personal_id}, {self.scientific_name},"
-                f"{self.core_name}, {self.icon_type},{self.watering_frequency},"
-                f"{self.preff_sunlight})")
+        return (f"Plant("
+                f"core_id={self.core_id}, "
+                f"personal_id={self.personal_id}, "
+                f"scientific_name={self.scientific_name}, "
+                f"core_name={self.core_name}, "
+                f"icon_type={self.icon_type}, "
+                f"watering_frequency={self.watering_frequency}, "
+                f"preff_sunlight={self.preff_sunlight}"
+                )
 
     def __str__(self) -> str:
         return f"{self.personal_id}: {self.core_name}"
