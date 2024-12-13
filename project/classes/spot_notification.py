@@ -3,6 +3,7 @@ from dataclasses import dataclass
 import datetime
 from project.classes.enums import Sunlight, Type_of_action, Type_of_action
 from typing import TYPE_CHECKING
+from project.classes.enums import Sunlight
 if TYPE_CHECKING:
     from project.classes.plant import Plant
 
@@ -30,3 +31,7 @@ class Notification:
     name: int #is nu de core_id van de plant.
     notification_type: Type_of_action
     plant_notification: Plant
+
+
+
+

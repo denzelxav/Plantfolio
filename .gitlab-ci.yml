@@ -22,9 +22,9 @@ pylint:
   stage: Static Analysis
   allow_failure: false
   script:
-    #  Runs pylint in a way that always succeeds but generates a code quality report in a format accepted by gitlab so it displays in MRs.
+    # Run pylint to generate human-readable and gitlab readable formats
     - pipenv run pylint --exit-zero --output-format=text -d C0116 project/ | tee /tmp/pylint.txt
-    - pipenv run pylint --exit-zero --load-plugins=pylint_gitlab --output-format=gitlab-codeclimate project/ > codeclimate.json
+    - pipenv run pylint --load-plugins=pylint_gitlab --output-format=gitlab-codeclimate project/ > codeclimate.json
   artifacts:
     expire_in: 7 days
     reports:

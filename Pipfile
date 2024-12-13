@@ -12,8 +12,12 @@ pytest = "*"
 pytest-cov = "*"
 coverage = "*"
 numpy = "*"
+pwinput = "*"
+cryptography = "*"
 requests = "*"
 types-requests = "*"
+tabulate = "*"
+types-tabulate = "*"
 
 [dev-packages]
 

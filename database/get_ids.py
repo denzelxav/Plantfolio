@@ -2,9 +2,7 @@ import json
 import os
 
 
-def get_indoor_ids() -> list:
-    """Returns a list of ids of all indoor plants in indoor_plants.json."""
-
+def get_ids() -> list:
     res = []
     file_path = os.path.join('database', 'indoor_plants.json')
     with open(file_path, 'r') as file:
@@ -17,5 +15,5 @@ def get_indoor_ids() -> list:
 
 
 if __name__ == '__main__':
-    print(get_indoor_ids())
+    print(get_ids())
         
