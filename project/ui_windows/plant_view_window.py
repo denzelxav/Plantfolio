@@ -21,6 +21,7 @@ class PlantViewWindow(QMainWindow):
         self.spot = spot
         self.plant = self.spot.assigned_plant
         self.userdata = userdata
+        self.setWindowIcon(QIcon("./project/art/Plantfolio_logo_small.png"))
 
         #setup icons
         icon = QIcon()

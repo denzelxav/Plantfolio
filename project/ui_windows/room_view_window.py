@@ -3,6 +3,7 @@ from typing import TYPE_CHECKING
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import QDialog
 from PySide6.QtCore import Slot
+from PySide6.QtGui import QIcon, QPixmap
 
 from project.classes.spot_notification import Spot
 from project.ui.room_view import Ui_Room_View
@@ -30,6 +31,7 @@ class RoomViewWindow(QDialog):
         self.ui.delete_spot.clicked.connect(self.delete_spot)
         self.ui.add_plant.clicked.connect(self.add_plant)
         self.ui.open_spot.clicked.connect(self.open_plant_view)
+        self.setWindowIcon(QIcon("./project/art/huisje.png"))
 
     @Slot()
     def open_plant_view(self):
