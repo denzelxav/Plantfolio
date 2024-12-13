@@ -116,14 +116,33 @@ class UserData:
         """
         Loads a spot from a dictionary
         """
-        room = spot_data['room']
-        light_level = Sunlight[str(spot_data['light_level'])]
-        spot = Spot(spot_data['spot_id'],
-                    light_level,
-                    spot_data['humidity'],
-                    None,
-                    spot_data['temperature'],
-                    room)
+        if isinstance(spot_data['spot_id'], str):
+            spot_id = int(spot_data['spot_id'])
+        else:
+            raise ValueError('spot_id must be a string')
+        
+        if isinstance(spot_data['light_level'], str):
+            light_level = Sunlight[str(spot_data['light_level'])]
+        else:
+            raise ValueError('light_level must be a string')
+        
+        if isinstance(spot_data['humidity'], str):
+            humidity = str(spot_data['humidity'])
+
+        if isinstance(spot_data['temperature'], int):
+            temperature = int(spot_data['temperature'])
+
+        if isinstance(spot_data['room'], str):
+            room = str(spot_data['room'])
+        else:
+            raise ValueError('room must be a string')
+        
+        spot = Spot(spot_id = spot_id,
+                    light_level = light_level,
+                    humidity = humidity,
+                    assigned_plant = None,
+                    temperature = temperature,
+                    room = room)
 
         self.add_room(room)
         self.add_spot(spot)

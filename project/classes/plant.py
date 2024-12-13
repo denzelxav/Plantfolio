@@ -304,7 +304,7 @@ class Plant:
         return {
             "core_id": self.core_id,
             "personal_id": self.personal_id,
-            "personal_name": self.core_name,
+            "personal_name": self.personal_name,
             "icon_type": self.icon_type,
             "spot_id": self.spot.spot_id if self.spot else None,
             "health": self.health.value,
