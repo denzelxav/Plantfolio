@@ -1,6 +1,6 @@
 from project.classes.plant import Plant
-from project.classes.enums import Sunlight, Health
-from project.classes.spot_notification import Spot
+from project.classes.enums import Sunlight, Health, Type_of_action
+from project.classes.spot_notification import Spot, Notification
 import datetime
 
 def create_plant(sunlight: Sunlight = Sunlight.FULL_SHADE):
@@ -9,6 +9,13 @@ def create_plant(sunlight: Sunlight = Sunlight.FULL_SHADE):
                  "default", datetime.timedelta(days=7),
                  ["full sun", "part shade"]
                  ), spot
+
+def create_notification():
+    maple, dark_spot = create_plant()
+    return Notification(3,
+                        datetime.datetime(2024, 11, 22, 12, 6),
+                        datetime.datetime.now(), 425, Type_of_action.WATERING,
+                        maple)
 
 def test_sunlight():
     maple, dark_spot = create_plant()
@@ -20,6 +27,7 @@ def test_sunlight():
     assert maple.sunlight_score == 100, "sunlight score cache was not updated"
 
 def test_water():
+    not1 = create_notification()
     maple, spot = create_plant()
     maple.change_spot(spot)
     test_datetime = datetime.datetime(2002, 1, 24, 4, 20,)
@@ -37,7 +45,7 @@ def test_water():
     maple.water_score = None
     assert len(maple.watered) == maple.max_log_size
     assert maple.water_score == 100
-    maple.water_plant()
+    maple.water_plant([not1])
     assert len(maple.watered) == maple.max_log_size, "water log exceeded max log size"
     assert maple.water_score == 38, "water score cache wasn't updated or calculated incorrectly"
     assert maple.time_to_water_score() == 100
@@ -46,6 +54,7 @@ def test_water():
     assert maple.time_to_water_score() == 75, "Time to water score was calculated incorrectly"
 
 def test_nutrition():
+    not1 = create_notification()
     maple, spot = create_plant()
     maple.change_spot(spot)
     nutri_log = [datetime.datetime.now() - datetime.timedelta(days=30*i) for i in range(maple.max_log_size, 0, -1)]
@@ -55,7 +64,7 @@ def test_nutrition():
 
     nutri_log = [datetime.datetime.now() - datetime.timedelta(days=30 * (i + 2)) for i in range(maple.max_log_size, 0, -1)]
     maple.nutrition = nutri_log
-    maple.give_nutrition()
+    maple.give_nutrition([not1])
     assert maple.nutrition_score == 88, "nutrition score cache was not updated or calculated incorrectly"
 
 def test_health():

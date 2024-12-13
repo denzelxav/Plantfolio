@@ -1,5 +1,5 @@
 from project.classes.plant import Plant
-from project.classes.spot_notification import Spot
+from project.classes.spot_notification import Spot, Notification
 
 
 
@@ -21,16 +21,16 @@ class UserData:
     """
 
     def __init__(self) -> None:
-        self.plants: set[Plant]= set()
+        self.plants: list[Plant]= list()
         self.rooms: dict[str, list[Spot]] = {}
         self.preferences: dict[str, bool|str] = {}
 
-    def water_all(self) -> None:
+    def water_all(self, list_notifications: list[Notification]) -> None:
         """
         Water all the plants in the users possesion
         """
         for plant in self.plants:
-            plant.water_plant()
+            plant.water_plant(list_notifications)
 
     def add_plant(self, new_plant: Plant, assigned_spot: Spot) -> None:
         """
@@ -38,7 +38,7 @@ class UserData:
         """
         if assigned_spot in [spot for room in self.rooms.values() for spot in room]:
             new_plant.change_spot(assigned_spot)
-            self.plants.add(new_plant)
+            self.plants.append(new_plant)
 
     def add_spot(self, new_spot: Spot, room: str) -> None:
         """

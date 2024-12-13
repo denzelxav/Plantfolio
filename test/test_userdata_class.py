@@ -21,9 +21,17 @@ def create_plant3(sunlight: Sunlight = Sunlight.FULL_SHADE):
                  ["full shade", "part shade"]
                  )
 
+def create_notification():
+    maple = create_plant1()
+    return Notification(3,
+                        datetime.datetime(2024, 11, 22, 12, 6),
+                        datetime.datetime.now(), 425, Type_of_action.WATERING,
+                        maple)
+
 def test_create_userdata_basic():
     maple  = create_plant1()
     mydata = UserData()
+    not1 = create_notification()
 
     mydata.add_room('bedroom')
     mydata.add_room('living room')
@@ -42,9 +50,9 @@ def test_create_userdata_basic():
 
     # tests add_plant
     assert mydata.rooms['bedroom'][0].assigned_plant == maple
-    assert mydata.plants == {maple}
+    assert mydata.plants == [maple]
 
-    mydata.water_all()
+    mydata.water_all([not1])
 
     # tests water_all
     assert all(plant.watered[-1] < datetime.datetime.now() + datetime.timedelta(seconds = 1) for plant in mydata.plants)
