@@ -7,7 +7,6 @@ def create_database():
     """"
     Creates a relational database with multiple tables using SQLite and saves the file
     """
-    
     db_file = os.path.join('project', 'plant_database.db')
     with sqlite3.connect(db_file) as conn:
         cursor = conn.cursor()
@@ -20,6 +19,8 @@ def create_database():
         cursor.execute("""DROP TABLE IF EXISTS plant_sunlight""")
         cursor.execute("""DROP TABLE IF EXISTS plant_pruning_months""")
         cursor.execute("""DROP TABLE IF EXISTS all_names""")
+
+        cursor.execute("""VACUUM""")
 
         # Create all tables
         cursor.execute("""
