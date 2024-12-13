@@ -20,6 +20,8 @@ def create_database():
         cursor.execute("""DROP TABLE IF EXISTS plant_pruning_months""")
         cursor.execute("""DROP TABLE IF EXISTS all_names""")
 
+        cursor.execute("""VACUUM""")
+
         # Create all tables
         cursor.execute("""
         CREATE TABLE IF NOT EXISTS staging (
