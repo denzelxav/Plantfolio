@@ -27,6 +27,9 @@ def string_to_sunlight(sunlight_string: str) -> Sunlight:
         raise TypeError(f"Expected str type. Got {type(sunlight_string)}. Value: {sunlight_string}")
 
 def sunlight_to_string(sunlight: Sunlight) -> str:
+    """
+    Returns string representation of Sunlight enum
+    """
     match sunlight:
         case Sunlight.FULL_SHADE:
             return "full shade"
@@ -65,17 +68,20 @@ def get_sun_icon_path(sunlight: Sunlight) -> str:
     """
     match sunlight:
         case Sunlight.FULL_SHADE:
-            return f"./project/art/full_shade.png"
+            return "./project/art/full_shade.png"
         case Sunlight.PART_SUN:
-            return f"./project/art/half_sun.png"
+            return "./project/art/half_sun.png"
         case Sunlight.PART_SHADE:
-            return f"./project/art/half_shade.png"
+            return "./project/art/half_shade.png"
         case Sunlight.FULL_SUN:
-            return f"./project/art/full_sun.png"
+            return "./project/art/full_sun.png"
         case unexpected_value:
             raise ValueError(f"Unexpected sunlight value {unexpected_value}")
 
 def string_to_health(health: str) -> Health:
+    """
+    Returns Health enum that corresponds to given string
+    """
     match health.lower():
         case "healthy":
             return Health.HEALTHY

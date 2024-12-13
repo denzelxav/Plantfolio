@@ -19,7 +19,7 @@ class AddPlantWindow(QDialog):
         self.ui.setupUi(self)
         self.spot = spot
         self.userdata = userdata
-        self.parent = parent
+        self.parent_window = parent
 
         for plant_data in list_all_plants():
             self.ui.all_plants_list.addItem(f"{plant_data[0]}: {plant_data[1]}, {plant_data[2]}")
@@ -51,5 +51,5 @@ class AddPlantWindow(QDialog):
         plant.personal_name = plant_name
         plant.icon_type = self.ui.icon_list.selectedItems()[0].text()
         self.userdata.add_plant(plant, self.spot)
-        if self.parent:
-            self.parent.plant_or_no_plant()
+        if self.parent_window:
+            self.parent_window.plant_or_no_plant()
