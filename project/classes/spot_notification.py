@@ -29,6 +29,15 @@ class Spot:
                 "temperature": self.temperature,
                 "room": self.room}
 
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Spot):
+            return False
+        return (self.spot_id == other.spot_id and
+                self.light_level == other.light_level and
+                self.humidity == other.humidity and
+                self.temperature == other.temperature and
+                self.room == other.room)
+
 @dataclass
 class Notification:
     """Class that stores a notification together with

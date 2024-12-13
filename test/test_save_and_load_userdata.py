@@ -1,9 +1,10 @@
 import json
 import os
+import datetime
 from test.test_userdata_class import create_plant1, create_plant2, create_plant3
 from project.classes.save_and_load_userdata import save_user_data, load_user_data
 from project.classes.userdata import UserData
-from project.classes.enums import Sunlight
+from project.classes.enums import Sunlight, Health
 from project.classes.spot_notification import Spot
 
 
@@ -164,6 +165,14 @@ def test_load_data():
     test_plant2 = create_plant2()
     test_plant3 = create_plant3()
 
+    test_plant1.health = Health.DEAD
+    test_plant2.manual_health = True
+    test_plant3.notes = "This is a note"
+    test_plant1.watered = [datetime.datetime.now()]
+    test_plant2.nutrition = [datetime.datetime.now()]
+    test_plant3.repotted = datetime.datetime.now()
+    test_plant1.current_tasks = {"water", "repot"}
+
     test_spot1 = Spot('Window', Sunlight.FULL_SHADE, 'high humidity', None, 21, 'bedroom')
     test_spot2 = Spot('Cabinet', Sunlight.FULL_SUN, 'high humidity', None, 21, 'kitchen')
     test_spot3 = Spot('Shelf', Sunlight.FULL_SHADE, 'low humidity', None, 21, 'living room')
@@ -188,3 +197,7 @@ def test_load_data():
     assert loaded_data.plants == test_user.plants
     assert loaded_data.pet_toxicity == test_user.pet_toxicity
     assert loaded_data == test_user
+
+    plant_list = sorted(loaded_data.plants, key=lambda x: x.personal_id)
+    assert plant_list == [test_plant1, test_plant2, test_plant3]
+    assert plant_list[0].health == Health.DEAD

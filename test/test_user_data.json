@@ -6,14 +6,19 @@
             "personal_name": null,
             "icon_type": "default",
             "spot_id": "Window",
-            "health": 1,
-            "watered": [],
+            "health": 0,
+            "watered": [
+                "2024-12-13T13:21:19.063892"
+            ],
             "nutrition": [],
             "repotted": null,
             "manual_health": false,
             "max_log_size": 4,
             "notes": null,
-            "current_tasks": []
+            "current_tasks": [
+                "repot",
+                "water"
+            ]
         },
         {
             "core_id": 434,
@@ -21,11 +26,13 @@
             "personal_name": null,
             "icon_type": "default",
             "spot_id": "Cabinet",
-            "health": 2,
+            "health": 3,
             "watered": [],
-            "nutrition": [],
+            "nutrition": [
+                "2024-12-13T13:21:19.063892"
+            ],
             "repotted": null,
-            "manual_health": false,
+            "manual_health": true,
             "max_log_size": 4,
             "notes": null,
             "current_tasks": []
@@ -39,10 +46,10 @@
             "health": 1,
             "watered": [],
             "nutrition": [],
-            "repotted": null,
+            "repotted": "2024-12-13T13:21:19.063892",
             "manual_health": false,
             "max_log_size": 4,
-            "notes": null,
+            "notes": "This is a note",
             "current_tasks": []
         }
     ],

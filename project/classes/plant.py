@@ -326,11 +326,25 @@ class Plant:
             return False
         return (self.core_id == other.core_id and
                 self.personal_id == other.personal_id and
+                self.personal_name == other.personal_name and
                 self.scientific_name == other.scientific_name and
                 self.core_name == other.core_name and
                 self.icon_type == other.icon_type and
+                self.spot == other.spot and
+                self.health == other.health and
                 self.watering_frequency == other.watering_frequency and
-                self.preff_sunlight == other.preff_sunlight)
+                self.preff_sunlight == other.preff_sunlight and
+                self.watered == other.watered and
+                self.nutrition == other.nutrition and
+                self.repotted == other.repotted and
+                self.notes == other.notes and
+                self.manual_health == other.manual_health and
+                self.max_log_size == other.max_log_size and
+                self.water_score == other.water_score and
+                self.sunlight_score == other.sunlight_score and
+                self.nutrition_score == other.nutrition_score and
+                self.current_tasks == other.current_tasks
+                )
 
     def __hash__(self):
         return hash(self.personal_id)

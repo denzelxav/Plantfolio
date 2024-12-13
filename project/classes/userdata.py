@@ -1,7 +1,7 @@
 import datetime
 from project.classes.plant import Plant
 from project.classes.spot_notification import Spot
-from project.classes.enums import Sunlight
+from project.classes.enums import Sunlight, Health
 from project.query_function import query_from_database
 from project.classes.public_methods import string_to_sunlight, string_to_water_frequency
 
@@ -121,23 +121,27 @@ class UserData:
             spot_id = str(spot_data['spot_id'])
         else:
             raise ValueError('spot_id must be a string')
-        
+
         if isinstance(spot_data['light_level'], str):
             light_level = Sunlight[str(spot_data['light_level'])]
         else:
             raise ValueError('light_level must be a string')
-        
+
         if isinstance(spot_data['humidity'], str):
             humidity = str(spot_data['humidity'])
+        else:
+            raise ValueError('humidity must be a string')
 
         if isinstance(spot_data['temperature'], int):
             temperature = int(spot_data['temperature'])
+        else:
+            raise ValueError('temperature must be a integer')
 
         if isinstance(spot_data['room'], str):
             room = str(spot_data['room'])
         else:
             raise ValueError('room must be a string')
-        
+
         spot = Spot(spot_id = spot_id,
                     light_level = light_level,
                     humidity = humidity,
@@ -162,11 +166,61 @@ class UserData:
             personal_id = int(plant['personal_id'])
         else:
             raise ValueError('personal_id must be a integer')
+        if isinstance(plant['personal_name'], str):
+            personal_name = str(plant['personal_name'])
+        elif not plant['personal_name']:
+            personal_name = None
+        else:
+            raise ValueError('personal_name must be a string or None')
         if isinstance(plant['icon_type'], str):
             icon_type = str(plant['icon_type'])
         else:
             raise ValueError('icon_type must be a string')
-        
+        if isinstance(plant['spot_id'], str):
+            spot_id = str(plant['spot_id'])
+        else:
+            raise ValueError('spot_id must be a string')
+        if isinstance(plant['health'], int):
+            health = Health(int(plant['health']))
+        else:
+            raise ValueError('health must be a integer')
+        if isinstance(plant['watered'], list):
+            watered = [datetime.datetime.fromisoformat(date)
+                       for date in plant['watered']
+                       if isinstance(date, str)]
+        else:
+            raise ValueError('watered must be a list of datetime objects')
+        if isinstance(plant['nutrition'], list):
+            nutrition = [datetime.datetime.fromisoformat(date)
+                         for date in plant['nutrition']
+                         if isinstance(date, str)]
+        else:
+            raise ValueError('nutrition must be a list of datetime objects')
+        if isinstance(plant['repotted'], str):
+            repotted = datetime.datetime.fromisoformat(plant['repotted'])
+        elif not plant['repotted']:
+            repotted = None
+        else:
+            raise ValueError('repotted must be a str object or None')
+        if isinstance(plant['manual_health'], bool):
+            manual_health = bool(plant['manual_health'])
+        else:
+            raise ValueError('manual_health must be a boolean')
+        if isinstance(plant['max_log_size'], int):
+            max_log_size = int(plant['max_log_size'])
+        else:
+            raise ValueError('max_log_size must be a integer')
+        if isinstance(plant['notes'], str):
+            notes = str(plant['notes'])
+        elif not plant['notes']:
+            notes = None
+        else:
+            raise ValueError('notes must be a string or None')
+        if isinstance(plant['current_tasks'], list):
+            current_tasks = {str(task) for task in plant['current_tasks']}
+        else:
+            raise ValueError('current_tasks must be a list')
+
         core_name = self.get_core_name(plant_id)
         scientific_name = self.get_scientific_name(plant_id)
         watering_frequency = self.get_watering_frequency(plant_id)
@@ -183,15 +237,20 @@ class UserData:
                           icon_type,
                           watering_frequency_timedelta,
                           preff_sunlight_enums)
-        
-        if isinstance(plant['personal_name'], str):
-            personal_name = str(plant['personal_name'])
-            new_plant.personal_name = personal_name
-            
+
+        new_plant.personal_name = personal_name
+        new_plant.health = health
+        new_plant.watered = watered
+        new_plant.nutrition = nutrition
+        new_plant.repotted = repotted
+        new_plant.manual_health = manual_health
+        new_plant.max_log_size = max_log_size
+        new_plant.notes = notes
+        new_plant.current_tasks = current_tasks
 
         for room in self.rooms.values():
             for spot in room:
-                if spot.spot_id == plant['spot_id']:
+                if spot.spot_id == spot_id:
                     self.add_plant(new_plant, spot)
 
     def get_core_name(self, plant_id: int) -> str:
@@ -225,7 +284,6 @@ class UserData:
                                     FROM plant_details
                                     WHERE plant_id = '{plant_id}'
                                     """)
-        
         return str(result[0][0])
 
     def get_preferred_sunlight(self, plant_id: int) -> list[str]:
