@@ -20,6 +20,7 @@ class AddPlantWindow(QDialog):
         self.spot = spot
         self.userdata = userdata
         self.parent = parent
+        self.setWindowIcon(QIcon("./project/art/Plantfolio_logo_small.png"))
 
         for plant_data in list_all_plants():
             self.ui.all_plants_list.addItem(f"{plant_data[0]}: {plant_data[1]}, {plant_data[2]}")

@@ -1,6 +1,6 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
-from PySide6.QtGui import QPixmap
+from PySide6.QtGui import QPixmap, QIcon
 from PySide6.QtWidgets import QDialog
 
 from project.classes.public_methods import string_to_sunlight
@@ -18,6 +18,7 @@ class AddSpotWindow(QDialog):
         self.ui.empty_pot_image.setPixmap(QPixmap(u"./project/art/empty_pot.png"))
         self.room = room
         self.main_menu = main_menu
+        self.setWindowIcon(QIcon("./project/art/Plantfolio_logo_small.png"))
 
         #buttons
         self.ui.confirm_spot.accepted.connect(self.add_spot)
