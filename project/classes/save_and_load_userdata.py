@@ -16,10 +16,15 @@ class EnumEncoder(json.JSONEncoder):
         return json.JSONEncoder.default(self, o)
 
 
-def save_user_data(user: UserData, save_path: str) -> None:
+def save_user_data(user: UserData, test_mode: bool=False) -> None:
     """
     Saves the user data in json format to a file to access later
     """
+    if test_mode:
+        save_path = os.path.join("tests", "test_user_data.json")
+    else:
+        save_path = os.path.join("project", "user_data.json")
+        
     data: dict[str, Any] = {"plant_data": [],
                             "spots": [],
                             "pet_preference": False}

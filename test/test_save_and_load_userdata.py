@@ -8,18 +8,11 @@ from project.classes.enums import Sunlight, Health
 from project.classes.spot_notification import Spot
 
 
-def get_test_path():
-    """
-    Returns the path to the test user data file
-    """
-    return os.path.join("test", "test_user_data.json")
-
 def test_save_userdata_basic():
     """
     Tests saving user data with one plant and one room
     """
     test_user = UserData()
-    test_path = get_test_path()
 
     test_plant1 = create_plant1()
     test_spot1 = Spot('Window', Sunlight.FULL_SHADE, 'high humidity', None, 21, 'bedroom')
@@ -28,9 +21,10 @@ def test_save_userdata_basic():
     assert test_user.rooms == {'bedroom': [test_spot1]}
     assert test_plant1 in test_user.plants
 
-    save_user_data(test_user, test_path)
+    save_user_data(test_user, test_mode=True)
+    test_path = os.path.join("tests", "test_user_data.json")
 
-    assert os.path.exists(os.path.join("project", "user_data.json"))
+    assert os.path.exists(test_path)
 
     with open(test_path, "r", encoding='utf-8') as file:
         data = json.load(file)
@@ -41,7 +35,6 @@ def test_save_userdata_multiple_plants_one_room():
     Tests saving user data with multiple plants in one room
     """
     test_user = UserData()
-    test_path = get_test_path()
     test_user.pet_toxicity = True
 
     test_plant1 = create_plant1()
@@ -61,7 +54,8 @@ def test_save_userdata_multiple_plants_one_room():
     assert test_plant2 in test_user.plants
     assert test_plant3 in test_user.plants
 
-    save_user_data(test_user, test_path)
+    save_user_data(test_user, test_mode=True)
+    test_path = os.path.join("tests", "test_user_data.json")
 
     assert os.path.exists(test_path)
 
@@ -100,7 +94,6 @@ def test_save_userdata_mulitple_plants_multiple_rooms():
     Tests saving user data with multiple plants in multiple rooms
     """
     test_user = UserData()
-    test_path = get_test_path()
     test_user.pet_toxicity = True
 
     test_plant1 = create_plant1()
@@ -122,7 +115,8 @@ def test_save_userdata_mulitple_plants_multiple_rooms():
     assert test_plant2 in test_user.plants
     assert test_plant3 in test_user.plants
 
-    save_user_data(test_user, test_path)
+    save_user_data(test_user, test_mode=True)
+    test_path = os.path.join("tests", "test_user_data.json")
 
     with open(test_path, "r", encoding='utf-8') as file:
         data = json.load(file)
@@ -158,7 +152,6 @@ def test_load_data():
     Tests loading user data
     """
     test_user = UserData()
-    test_path = get_test_path()
     test_user.pet_toxicity = True
 
     test_plant1 = create_plant1()
@@ -185,7 +178,8 @@ def test_load_data():
     assert test_plant2 in test_user.plants
     assert test_plant3 in test_user.plants
 
-    save_user_data(test_user, test_path)
+    save_user_data(test_user, test_mode=True)
+    test_path = os.path.join("tests", "test_user_data.json")
 
     assert test_plant1 in test_user.plants
     assert test_plant2 in test_user.plants
