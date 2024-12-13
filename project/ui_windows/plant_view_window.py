@@ -93,7 +93,7 @@ class PlantViewWindow(QMainWindow):
         self.ui.water_frequency_text.setHidden(self.plant is None)
         self.ui.last_nutrition.setHidden(self.plant is None)
         if self.plant and self.plant.nutrition:
-            self.ui.last_nutrition.setText(self.plant.nutrition[-1].strftime("%d/%m/%Y"))
+            self.ui.last_nutrition.setText(f"{self.plant.nutrition[-1].strftime(" % d / % m / % Y")}")
         else:
             self.ui.last_nutrition.setText("Plant hasn't received nutrition yet")
         self.ui.last_repotted.setHidden(self.plant is None)

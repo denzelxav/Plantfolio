@@ -332,12 +332,15 @@ def plant_from_database(plant_id: int) -> Plant:
                  )
     return plant
 
-def list_all_plants():
+def list_all_plants() -> list[tuple[int, str, str]]:
     """
-
+    Returns a list of tuples with plant_id, scientific_name and
+    common_name of all plants in database
     """
     query = ("SELECT plant_id, scientific_name, common_name "
              "FROM plant_details ")
     query_res = query_from_database(query)
-    return query_res
-
+    if all(isinstance(tup[0], int) and isinstance(tup[1], str) and
+           isinstance(tup[2], str) for tup in query_res):
+        return query_res #type: ignore
+    raise TypeError("query_res returned wrong types.")

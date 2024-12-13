@@ -90,3 +90,4 @@ class RoomViewWindow(QDialog):
         for spot in self.main_menu.userdata.rooms[self.room_name]:
             if spot.spot_id == spot_id:
                 return spot
+        raise ValueError(f"Spot {spot_id} does not exist")

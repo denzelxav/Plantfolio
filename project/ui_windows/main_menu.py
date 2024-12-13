@@ -15,7 +15,7 @@ from project.ui_windows.all_plants_window import AllPlantsWindow
 class MainMenu(QMainWindow):
     """Example application"""
 
-    def __init__(self, userdata: UserData):
+    def __init__(self, userdata: UserData) -> None:
         super().__init__()
         # Create a file with pyside6-uic project/ui/app.ui -o project/ui/output.py
         self.userdata = userdata
@@ -32,7 +32,10 @@ class MainMenu(QMainWindow):
 
 
     @Slot()
-    def add_room(self):
+    def add_room(self) -> None:
+        """
+        Opens AddRoomWindow that lets the user add a room
+        """
         self.add_room_window = AddRoomWindow(self)
         self.add_room_window.show()
 
@@ -42,8 +45,7 @@ class MainMenu(QMainWindow):
         self.add_room_window = RoomViewWindow(room_name , self)
         self.add_room_window.show()
 
-    @Slot()
-    def delete_room(self, room: RoomViewWindow):
+    def delete_room(self, room: RoomViewWindow) -> None:
         room_name = room.room_name
         self.userdata.delete_room(room_name)
         room.close()
@@ -58,11 +60,3 @@ class MainMenu(QMainWindow):
         self.ui.room_list.clear()
         for room in self.userdata.rooms:
             self.ui.room_list.addItem(room)
-
-
-
-    # @Slot()python
-    # def button_clicked(self):
-    #     """Triggers if you click the button in the ui"""
-    #     self.ui.label.setText("You CLICKED the BUTTON!!!")
-    #     self.ui.label.setStyleSheet("QLabel {color: red; font-weight: bold;}")
