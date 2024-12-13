@@ -21,7 +21,7 @@ class UserData:
     """
 
     def __init__(self) -> None:
-        self.plants: set[Plant]= set()
+        self.plants: list[Plant]= []
         self.rooms: dict[str, list[Spot]] = {}
         self.pet_toxicity = False
 
@@ -36,9 +36,15 @@ class UserData:
         """
         Adds a plant
         """
+        if len(self.plants) > 0:
+            max_id = max(plant.personal_id for plant in self.plants)
+            new_plant.personal_id = max_id+1
+        else:
+            new_plant.personal_id = 0
+            
         if assigned_spot in [spot for room in self.rooms.values() for spot in room]:
             new_plant.change_spot(assigned_spot)
-            self.plants.add(new_plant)
+            self.plants.append(new_plant)
 
     def add_spot(self, new_spot: Spot, room: str) -> None:
         """
