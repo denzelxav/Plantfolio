@@ -15,15 +15,15 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QAbstractButton, QApplication, QComboBox, QDialog,
-    QDialogButtonBox, QLabel, QListWidget, QListWidgetItem,
-    QSizePolicy, QWidget)
+from PySide6.QtWidgets import (QApplication, QComboBox, QDialog, QLabel,
+    QListWidget, QListWidgetItem, QPushButton, QSizePolicy,
+    QWidget)
 
-class Ui_all_plants(object):
-    def setupUi(self, all_plants):
-        if not all_plants.objectName():
-            all_plants.setObjectName(u"all_plants")
-        all_plants.resize(403, 324)
+class Ui_AllPlantsWindow(object):
+    def setupUi(self, AllPlantsWindow):
+        if not AllPlantsWindow.objectName():
+            AllPlantsWindow.setObjectName(u"AllPlantsWindow")
+        AllPlantsWindow.resize(403, 324)
         palette = QPalette()
         brush = QBrush(QColor(0, 0, 0, 255))
         brush.setStyle(Qt.SolidPattern)
@@ -54,56 +54,57 @@ class Ui_all_plants(object):
         palette.setBrush(QPalette.Disabled, QPalette.Base, brush3)
         palette.setBrush(QPalette.Disabled, QPalette.Window, brush3)
         palette.setBrush(QPalette.Disabled, QPalette.Accent, brush2)
-        all_plants.setPalette(palette)
-        self.buttonBox = QDialogButtonBox(all_plants)
-        self.buttonBox.setObjectName(u"buttonBox")
-        self.buttonBox.setGeometry(QRect(310, 10, 81, 241))
-        self.buttonBox.setOrientation(Qt.Orientation.Vertical)
-        self.buttonBox.setStandardButtons(QDialogButtonBox.StandardButton.Cancel|QDialogButtonBox.StandardButton.Ok)
-        self.select_plant = QListWidget(all_plants)
+        AllPlantsWindow.setPalette(palette)
+        self.select_plant = QListWidget(AllPlantsWindow)
         self.select_plant.setObjectName(u"select_plant")
         self.select_plant.setGeometry(QRect(10, 90, 256, 221))
-        self.select_label = QLabel(all_plants)
+        self.select_label = QLabel(AllPlantsWindow)
         self.select_label.setObjectName(u"select_label")
         self.select_label.setGeometry(QRect(10, 70, 151, 16))
         font = QFont()
         font.setBold(True)
         self.select_label.setFont(font)
-        self.plant_icon = QLabel(all_plants)
+        self.plant_icon = QLabel(AllPlantsWindow)
         self.plant_icon.setObjectName(u"plant_icon")
         self.plant_icon.setGeometry(QRect(280, 90, 101, 141))
         self.plant_icon.setPixmap(QPixmap(u"../art/all plants/plant_3_healthy.png"))
         self.plant_icon.setScaledContents(True)
-        self.name_label = QLabel(all_plants)
+        self.name_label = QLabel(AllPlantsWindow)
         self.name_label.setObjectName(u"name_label")
         self.name_label.setGeometry(QRect(280, 230, 49, 16))
-        self.water_label = QLabel(all_plants)
+        self.water_label = QLabel(AllPlantsWindow)
         self.water_label.setObjectName(u"water_label")
         self.water_label.setGeometry(QRect(280, 250, 81, 16))
-        self.room_label = QLabel(all_plants)
+        self.room_label = QLabel(AllPlantsWindow)
         self.room_label.setObjectName(u"room_label")
         self.room_label.setGeometry(QRect(280, 270, 49, 16))
-        self.spot_label = QLabel(all_plants)
+        self.spot_label = QLabel(AllPlantsWindow)
         self.spot_label.setObjectName(u"spot_label")
         self.spot_label.setGeometry(QRect(280, 290, 49, 16))
-        self.sort_by = QComboBox(all_plants)
+        self.sort_by = QComboBox(AllPlantsWindow)
         self.sort_by.setObjectName(u"sort_by")
         self.sort_by.setGeometry(QRect(180, 60, 80, 24))
+        self.cancel_button = QPushButton(AllPlantsWindow)
+        self.cancel_button.setObjectName(u"cancel_button")
+        self.cancel_button.setGeometry(QRect(320, 10, 75, 24))
+        self.select_plant_button = QPushButton(AllPlantsWindow)
+        self.select_plant_button.setObjectName(u"select_plant_button")
+        self.select_plant_button.setGeometry(QRect(270, 60, 75, 24))
 
-        self.retranslateUi(all_plants)
-        self.buttonBox.accepted.connect(all_plants.accept)
-        self.buttonBox.rejected.connect(all_plants.reject)
+        self.retranslateUi(AllPlantsWindow)
 
-        QMetaObject.connectSlotsByName(all_plants)
+        QMetaObject.connectSlotsByName(AllPlantsWindow)
     # setupUi
 
-    def retranslateUi(self, all_plants):
-        all_plants.setWindowTitle(QCoreApplication.translate("all_plants", u"All plants", None))
-        self.select_label.setText(QCoreApplication.translate("all_plants", u"All your plants:", None))
+    def retranslateUi(self, AllPlantsWindow):
+        AllPlantsWindow.setWindowTitle(QCoreApplication.translate("AllPlantsWindow", u"All plants", None))
+        self.select_label.setText(QCoreApplication.translate("AllPlantsWindow", u"All your plants:", None))
         self.plant_icon.setText("")
-        self.name_label.setText(QCoreApplication.translate("all_plants", u"Name", None))
-        self.water_label.setText(QCoreApplication.translate("all_plants", u"Last watered", None))
-        self.room_label.setText(QCoreApplication.translate("all_plants", u"Room", None))
-        self.spot_label.setText(QCoreApplication.translate("all_plants", u"Spot", None))
+        self.name_label.setText(QCoreApplication.translate("AllPlantsWindow", u"Name", None))
+        self.water_label.setText(QCoreApplication.translate("AllPlantsWindow", u"Last watered", None))
+        self.room_label.setText(QCoreApplication.translate("AllPlantsWindow", u"Room", None))
+        self.spot_label.setText(QCoreApplication.translate("AllPlantsWindow", u"Spot", None))
+        self.cancel_button.setText(QCoreApplication.translate("AllPlantsWindow", u"Cancel", None))
+        self.select_plant_button.setText(QCoreApplication.translate("AllPlantsWindow", u"Select plant", None))
     # retranslateUi
 

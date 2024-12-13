@@ -8,6 +8,7 @@ from project.classes.userdata import UserData
 from project.ui.output import Ui_MainMenu
 from project.ui_windows.add_room_window import AddRoomWindow
 from project.ui_windows.room_view_window import RoomViewWindow
+from project.ui_windows.all_plants_window import AllPlantsWindow
 
 
 
@@ -27,6 +28,7 @@ class MainMenu(QMainWindow):
         self.ui.add_room.clicked.connect(self.add_room)
         self.ui.water_all.clicked.connect(self.userdata.water_all)
         self.ui.open_room.clicked.connect(self.open_room)
+        self.ui.all_plants.clicked.connect(self.open_all_plants)
 
 
     @Slot()
@@ -46,6 +48,11 @@ class MainMenu(QMainWindow):
         self.userdata.delete_room(room_name)
         room.close()
         self.refresh_rooms()
+
+    @Slot()
+    def open_all_plants(self):
+        self.all_plants_window = AllPlantsWindow(self.userdata)
+        self.all_plants_window.show()
 
     def refresh_rooms(self):
         self.ui.room_list.clear()

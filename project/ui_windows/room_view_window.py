@@ -6,7 +6,7 @@ from PySide6.QtCore import Slot
 from PySide6.QtGui import QIcon, QPixmap
 
 from project.classes.spot_notification import Spot
-from project.ui.room_view import Ui_Room_View
+from project.ui.room_view import Ui_RoomViewWindow
 from project.ui_windows.add_spot_window import AddSpotWindow
 from project.ui_windows.add_plant_window import AddPlantWindow
 from project.ui_windows.plant_view_window import PlantViewWindow
@@ -20,7 +20,7 @@ class RoomViewWindow(QDialog):
     """
     def __init__(self, room_name: str, main_menu: MainMenu):
         super().__init__()
-        self.ui = Ui_Room_View()
+        self.ui = Ui_RoomViewWindow()
         self.ui.setupUi(self)
         self.main_menu = main_menu
         self.setWindowTitle(room_name)

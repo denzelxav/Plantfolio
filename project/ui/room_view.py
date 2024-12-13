@@ -18,7 +18,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QDialog, QLabel, QListWidget,
     QListWidgetItem, QPushButton, QSizePolicy, QWidget)
 
-class Ui_Room_View(object):
+class Ui_RoomViewWindow(object):
     def setupUi(self, Room_View):
         if not Room_View.objectName():
             Room_View.setObjectName(u"Room_View")
