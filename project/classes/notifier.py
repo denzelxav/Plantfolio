@@ -36,6 +36,7 @@ class Notifier:
                                                                 Type_of_action.WATERING,
                                                                 plant
                                                                 ))
+                    plant.current_tasks.add('water')
             nutrition_frequency = datetime.timedelta(days=30)
             if plant.nutrition:
                 if plant.nutrition[-1] + nutrition_frequency <= datetime.datetime.now():
@@ -48,7 +49,7 @@ class Notifier:
                                                                 Type_of_action.NUTRITION,
                                                                 plant
                                                                 ))
-
+                    plant.current_tasks.add('nutrition')
             repotting_frequency: datetime = datetime.timedelta(days=365)
             if plant.repotted:
                 if plant.repotted + repotting_frequency <= datetime.datetime.now():
@@ -61,7 +62,7 @@ class Notifier:
                                                                 Type_of_action.REPOTTING,
                                                                 plant
                                                                 ))
-
+                    plant.current_tasks.add('repot')
         # no tasks for today
         if len(self.list_notifications) == 0:
             return None

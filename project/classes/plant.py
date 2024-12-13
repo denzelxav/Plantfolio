@@ -79,6 +79,7 @@ class Plant:
         for notification in list_notifications:
             if notification.name == self.core_id and notification.notification_type == Type_of_action.NUTRITION:
                 list_notifications.remove(notification)
+        self.current_tasks.remove("nutrition")
         return list_notifications
 
     def change_spot(self, spot: Spot) -> None:
@@ -104,6 +105,7 @@ class Plant:
         for notification in list_notifications:
             if notification.name == self.core_id and notification.notification_type == Type_of_action.WATERING:
                 list_notifications.remove(notification)
+        self.current_tasks.remove("water")
         return list_notifications
 
     def repot_plant(self, list_notifications) -> list[Notification]:
@@ -114,6 +116,7 @@ class Plant:
         for notification in list_notifications:
             if notification.name == self.core_id and notification.notification_type == Type_of_action.REPOTTING:
                 list_notifications.remove(notification)
+        self.current_tasks.remove("repot")
         return list_notifications
 
     def get_water_score(self) -> int:
