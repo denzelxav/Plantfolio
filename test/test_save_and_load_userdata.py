@@ -22,7 +22,7 @@ def test_save_userdata_basic():
     assert test_plant1 in test_user.plants
 
     save_user_data(test_user, test_mode=True)
-    test_path = os.path.join("tests", "test_user_data.json")
+    test_path = os.path.join("test", "test_user_data.json")
 
     assert os.path.exists(test_path)
 
@@ -55,7 +55,7 @@ def test_save_userdata_multiple_plants_one_room():
     assert test_plant3 in test_user.plants
 
     save_user_data(test_user, test_mode=True)
-    test_path = os.path.join("tests", "test_user_data.json")
+    test_path = os.path.join("test", "test_user_data.json")
 
     assert os.path.exists(test_path)
 
@@ -116,7 +116,7 @@ def test_save_userdata_mulitple_plants_multiple_rooms():
     assert test_plant3 in test_user.plants
 
     save_user_data(test_user, test_mode=True)
-    test_path = os.path.join("tests", "test_user_data.json")
+    test_path = os.path.join("test", "test_user_data.json")
 
     with open(test_path, "r", encoding='utf-8') as file:
         data = json.load(file)
@@ -157,6 +157,8 @@ def test_load_data():
     test_plant1 = create_plant1()
     test_plant2 = create_plant2()
     test_plant3 = create_plant3()
+    test_plant4 = create_plant1()
+    test_plant4.personal_id = 4
 
     test_plant1.health = Health.DEAD
     test_plant2.manual_health = True
@@ -168,22 +170,32 @@ def test_load_data():
 
     test_spot1 = Spot('Window', Sunlight.FULL_SHADE, 'high humidity', None, 21, 'bedroom')
     test_spot2 = Spot('Cabinet', Sunlight.FULL_SUN, 'high humidity', None, 21, 'kitchen')
-    test_spot3 = Spot('Shelf', Sunlight.FULL_SHADE, 'low humidity', None, 21, 'living room')
+    test_spot3 = Spot('Shelf living room', Sunlight.FULL_SHADE, 'low humidity', None, 21, 'living room')
+    test_spot4 = Spot('Shelf garage', Sunlight.FULL_SHADE, 'low humidity', None, 15, 'garage')
 
     test_user.add_plant(test_plant1, test_spot1)
     test_user.add_plant(test_plant2, test_spot2)
     test_user.add_plant(test_plant3, test_spot3)
+    test_user.add_plant(test_plant4, test_spot4)
 
     assert test_plant1 in test_user.plants
     assert test_plant2 in test_user.plants
     assert test_plant3 in test_user.plants
+    assert test_plant4 in test_user.plants
 
     save_user_data(test_user, test_mode=True)
-    test_path = os.path.join("tests", "test_user_data.json")
+    test_path = os.path.join("test", "test_user_data.json")
+    loaded_data = load_user_data(test_mode=True)
 
     assert test_plant1 in test_user.plants
     assert test_plant2 in test_user.plants
     assert test_plant3 in test_user.plants
+    assert test_plant4 in test_user.plants
+
+    assert test_plant1 in loaded_data.plants
+    assert test_plant2 in loaded_data.plants
+    assert test_plant3 in loaded_data.plants
+    assert test_plant4 in loaded_data.plants
 
     loaded_data = load_user_data(test_path)
 
@@ -193,5 +205,5 @@ def test_load_data():
     assert loaded_data == test_user
 
     plant_list = sorted(loaded_data.plants, key=lambda x: x.personal_id)
-    assert plant_list == [test_plant1, test_plant2, test_plant3]
+    assert plant_list == [test_plant1, test_plant2, test_plant3, test_plant4]
     assert plant_list[0].health == Health.DEAD

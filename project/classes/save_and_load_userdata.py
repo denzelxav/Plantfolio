@@ -21,7 +21,7 @@ def save_user_data(user: UserData, test_mode: bool=False) -> None:
     Saves the user data in json format to a file to access later
     """
     if test_mode:
-        save_path = os.path.join("tests", "test_user_data.json")
+        save_path = os.path.join("test", "test_user_data.json")
     else:
         save_path = os.path.join("project", "user_data.json")
         
@@ -41,10 +41,15 @@ def save_user_data(user: UserData, test_mode: bool=False) -> None:
     with open(save_path, "w", encoding='utf-8') as file:
         json.dump(data, file, cls=EnumEncoder, indent=4)
 
-def load_user_data(load_path: str) -> UserData:
+def load_user_data(test_mode: bool=False) -> UserData:
     """
     Loads the user data from the json file
     """
+    if test_mode:
+        load_path = os.path.join("test", "test_user_data.json")
+    else:
+        load_path = os.path.join("project", "user_data.json")
+        
     user = UserData()
 
     if not os.path.exists(load_path):
