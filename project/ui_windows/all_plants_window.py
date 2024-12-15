@@ -1,9 +1,11 @@
 from PySide6.QtCore import Slot
 from PySide6.QtGui import QPixmap, QIcon
 from PySide6.QtWidgets import QDialog
+from datetime import datetime
 
 from project.classes.userdata import UserData
 from project.ui.all_plants import Ui_AllPlantsWindow
+
 
 class AllPlantsWindow(QDialog):
 
@@ -18,16 +20,20 @@ class AllPlantsWindow(QDialog):
         #buttons
         self.ui.cancel_button.clicked.connect(self.reject)
         self.ui.select_plant_button.clicked.connect(self.select_plant)
+        self.ui.water_all_button.clicked.connect(self.userdata.water_all)
 
         #labels
         self.ui.name_label.setHidden(True)
         self.ui.water_label.setHidden(True)
         self.ui.room_label.setHidden(True)
         self.ui.spot_label.setHidden(True)
+        self.ui.species_label.setHidden(True)
 
         #combobox
         self.ui.sort_by.addItem('ID')
         self.ui.sort_by.addItem('Name')
+        self.ui.sort_by.addItem('Room')
+        self.ui.sort_by.addItem('Species')
         self.ui.sort_by.addItem('Last watered')
 
         self.ui.sort_by.currentIndexChanged.connect(self.sort_list)
@@ -41,15 +47,17 @@ class AllPlantsWindow(QDialog):
             QPixmap(f"./project/art/all plants/{selected_plant.icon_type}_{selected_plant.health.value}.png"))
         
         self.ui.name_label.setText(f'{selected_plant.personal_name}')
-        self.ui.water_label.setText(f'{selected_plant.watered[-1]}')
+        self.ui.water_label.setText(f'{selected_plant.watered[-1].date()}')
         room = self.get_room(selected_plant)
         self.ui.room_label.setText(f'{room}')
         self.ui.spot_label.setText(f'{selected_plant.spot.spot_id}')
+        self.ui.species_label.setText(f'{selected_plant.scientific_name}')
 
         self.ui.name_label.setHidden(False)
         self.ui.water_label.setHidden(False)
         self.ui.room_label.setHidden(False)
         self.ui.spot_label.setHidden(False)
+        self.ui.species_label.setHidden(False)
 
     @Slot()
     def sort_list(self):
@@ -58,6 +66,10 @@ class AllPlantsWindow(QDialog):
             self.userdata.plants.sort(key = lambda plant: plant.personal_id)
         elif crit == 'Name':
             self.userdata.plants.sort(key = lambda plant: plant.personal_name)
+        elif crit == 'Room':
+            self.userdata.plants.sort(key = lambda plant: self.get_room(plant))
+        elif crit == 'Species':
+            self.userdata.plants.sort(key = lambda plant: plant.scientific_name)
         elif crit == 'Last watered':
             self.userdata.plants.sort(key = lambda plant: plant.watered[-1])
         self.refresh_list()
