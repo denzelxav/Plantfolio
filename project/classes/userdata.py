@@ -30,7 +30,7 @@ class UserData:
         Water all the plants in the users possesion
         """
         for plant in self.plants:
-            plant.water_plant(list_notifications)
+            plant.water_plant()
 
     def add_plant(self, new_plant: Plant, assigned_spot: Spot) -> None:
         """

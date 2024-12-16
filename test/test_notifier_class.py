@@ -4,277 +4,218 @@ from project.classes.spot_notification import Notification
 from project.classes.notifier import Notifier
 import datetime
 
-
-def create_plant1(sunlight: Sunlight = Sunlight.FULL_SHADE):
+def create_plant1():
     """
     Create maple plant
     """
     return Plant(425, 1, "flowerus_mapelus", "flowering-maple",
                  "default", datetime.timedelta(days=3),
-                 ["full sun", "part shade"]
+                 [Sunlight.FULL_SUN, Sunlight.PART_SHADE]
                  )
 
-def create_plant2(sunlight: Sunlight = Sunlight.FULL_SUN):
+def create_plant2():
     """
     Create Sansevieria plant
     """
     return Plant(435, 2, "sansevieria", "sansevieria",
                  "default", datetime.timedelta(days=10),
-                 ["full sun", "part shade"]
+                 [Sunlight.FULL_SUN, Sunlight.PART_SHADE]
                  )
 
-def create_plant3(sunlight: Sunlight = Sunlight.FULL_SHADE):
+def create_plant3():
     """
     Create Strelitzia plant
     """
     return Plant(498, 2, "strelitzia", "bird of paradise flower",
                  "default", datetime.timedelta(days=14),
-                 ["full shade", "part shade"]
+                 [Sunlight.FULL_SHADE, Sunlight.PART_SHADE]
                  )
 
+def create_notification_watering(plant, notifier):
+    return Notification((datetime.datetime.now() - (plant.watered[-1] + plant.watering_frequency)).days + 1,
+                        plant.watered[-1] + plant.watering_frequency,
+                        datetime.datetime.now(),
+                        plant.personal_id, Type_of_action.WATERING,
+                        plant, notifier)
+
+def create_notification_nutrition(plant, notifier):
+    nutrition_frequency = datetime.timedelta(days=30)
+    return Notification(((datetime.datetime.now() - (plant.nutrition[-1] + nutrition_frequency)).days + 1) / 2,
+                 plant.nutrition[-1] + nutrition_frequency,
+                 datetime.datetime.now(),
+                 plant.personal_id, Type_of_action.NUTRITION,
+                 plant, notifier)
+
+def create_notification_repotting(plant, notifier):
+    repotting_frequency = datetime.timedelta(days=365)
+    return Notification(((datetime.datetime.now() - (plant.repotted + repotting_frequency)).days + 1) / 10,
+                  plant.repotted + repotting_frequency,
+                  datetime.datetime.now(),
+                  plant.personal_id, Type_of_action.REPOTTING,
+                  plant, notifier)
+
+def test_intialize_notifier():
+    maple = create_plant1()
+    assert maple.list_notifications == [], "Plant object should be initialized with an empty list"
+    notifier = Notifier([maple])
+    assert notifier.check_tasks_today() is None, "There should be no task yet when you inialize a plant"
+    assert maple.watered[-1] == datetime.datetime.now(), ("Last watering time should correspond "
+                                                          "with creation date of the plant")
+    assert maple.nutrition[-1] == datetime.datetime.now(), ("Last nutrition time should correspond "
+                                                          "with creation date of the plant")
+    assert maple.repotted == datetime.datetime.now(), ("Last repotting time should correspond "
+                                                          "with creation date of the plant")
+
+def test_watering_notification():
+    sansevieria = create_plant2()
+    sansevieria.watered = [datetime.datetime(2024, 11, 22, 12, 6)]
+    notifier = Notifier([sansevieria])
+    assert notifier.check_tasks_today() == [create_notification_watering(sansevieria, notifier)], "Notification was uncorrectly added to the list"
+    assert sansevieria.list_notifications == [create_notification_watering(sansevieria, notifier)], "Notification was uncorrectly added to the list"
+    assert notifier.all_notifications == [create_notification_watering(sansevieria, notifier)], "Notification was uncorrectly added to the list"
+
+    sansevieria.water_plant()
+    assert sansevieria.list_notifications == [], "The list should be empty after watering the plant"
+    assert notifier.all_notifications == [], "The list should be empty after watering the plant"
+    assert notifier.check_tasks_today() is None, "After watering the plant there should be no new Notifications"
+
+def test_nutrition_notification():
+    sansevieria = create_plant2()
+    sansevieria.nutrition = [datetime.datetime(2024, 11, 15, 12, 6)]
+    notifier = Notifier([sansevieria])
+    assert notifier.check_tasks_today() == [create_notification_nutrition(sansevieria, notifier)], "Notification was uncorrectly added to the list"
+    assert sansevieria.list_notifications == [create_notification_nutrition(sansevieria, notifier)], "Notification was uncorrectly added to the list"
+    assert notifier.all_notifications == [create_notification_nutrition(sansevieria, notifier)], "Notification was uncorrectly added to the list"
+
+    sansevieria.give_nutrition()
+    assert sansevieria.list_notifications == [], "The list should be empty after feeding the plant"
+    assert notifier.all_notifications == [], "The list should be empty after feeding the plant"
+    assert notifier.check_tasks_today() is None, "After feeding the plant there should be no new Notifications"
 
 
-def create_notifications():
-    """
-    Create Notifications for testing the refresh/check task module
-    """
+def test_repot_notification():
+    sansevieria = create_plant2()
+    sansevieria.repotted = datetime.datetime(2023, 11, 15, 12, 6)
+    notifier = Notifier([sansevieria])
+    assert notifier.check_tasks_today() == [create_notification_repotting(sansevieria, notifier)], ("Notification was uncorrectly "
+                                                                                                    "added to the list")
+    assert sansevieria.list_notifications == [create_notification_repotting(sansevieria, notifier)], ("Notification was "
+                                                                                                      "uncorrectly added to the list")
+    assert notifier.all_notifications == [create_notification_repotting(sansevieria, notifier)], ("Notification was "
+                                                                                                  "uncorrectly added to the list")
+
+    sansevieria.repot_plant()
+    assert sansevieria.list_notifications == [], "The list should be empty after repotting the plant"
+    assert notifier.all_notifications == [], "The list should be empty after repotting the plant"
+    assert notifier.check_tasks_today() is None, "After feeding the plant there should be no new Notifications"
+
+def test_multiple_notifications_same_plant():
+    strelitzia = create_plant3()
+    strelitzia.watered = [datetime.datetime(2024, 11, 22, 12, 6)]
+    strelitzia.nutrition = [datetime.datetime(2024, 11, 15, 12, 6)]
+    strelitzia.repotted = datetime.datetime(2023, 11, 15, 12, 6)
+    notifier = Notifier([strelitzia])
+    assert len(notifier.check_tasks_today()) == 3, "there should be 3 notifications"
+    assert notifier.check_tasks_today() == [create_notification_watering(strelitzia, notifier),
+                                            create_notification_nutrition(strelitzia, notifier),
+                                            create_notification_repotting(strelitzia, notifier)]
+    assert strelitzia.list_notifications == [create_notification_watering(strelitzia, notifier),
+                                            create_notification_nutrition(strelitzia, notifier),
+                                            create_notification_repotting(strelitzia, notifier)]
+    assert notifier.sort_by_weight() == [create_notification_watering(strelitzia, notifier),
+                                         create_notification_repotting(strelitzia, notifier),
+                                         create_notification_nutrition(strelitzia, notifier)]
+    assert notifier.sort_by_date() == [create_notification_repotting(strelitzia, notifier),
+                                       create_notification_watering(strelitzia, notifier),
+                                       create_notification_nutrition(strelitzia, notifier)]
+    assert notifier.sort_by_type() == [create_notification_watering(strelitzia, notifier),
+                                        create_notification_nutrition(strelitzia, notifier),
+                                        create_notification_repotting(strelitzia, notifier)]
+
+def test_multiple_plants_same_task():
+    maple = create_plant1()
+    sansevieria = create_plant2()
+
+    maple.watered = [datetime.datetime(2024, 11, 22)]
+    sansevieria.watered = [datetime.datetime(2024, 11, 20)]
+
+    notifier = Notifier([maple, sansevieria])
+
+    assert len(notifier.check_tasks_today()) == 2, "There should be 2 notifications"
+    assert maple.list_notifications == [create_notification_watering(maple, notifier)]
+    assert sansevieria.list_notifications == [create_notification_watering(sansevieria, notifier)]
+
+def test_no_notifications_when_up_to_date():
+    maple = create_plant1()
+    sansevieria = create_plant2()
+
+    # Set the plants' last actions as recent enough to avoid triggering notifications
+    maple.watered = [datetime.datetime(2024, 12, 15)]
+    sansevieria.watered = [datetime.datetime(2024, 12, 14)]
+
+    notifier = Notifier([maple, sansevieria])
+
+    assert notifier.check_tasks_today() is None, "There should be no notifications when tasks are up to date"
+    assert maple.list_notifications == [], "Maple should have no notifications"
+    assert sansevieria.list_notifications == [], "Sansevieria should have no notifications"
+
+
+def test_all_plants_all_notifications():
+    # Create all three plants
     maple = create_plant1()
     sansevieria = create_plant2()
     strelitzia = create_plant3()
 
-    # test datetimes
-    last_watering_datetime = datetime.datetime(2024, 11, 22, 12, 6)
-    last_nutrition_datetime = datetime.datetime(2024, 11, 2, 12, 6)
-    time_last_repotted = datetime.datetime(2023, 9, 5, 12, 6)
+    # Set up their watering, nutrition, and repotting dates to make sure all notifications are generated
+    maple.watered = [datetime.datetime(2024, 11, 20)]
+    sansevieria.watered = [datetime.datetime(2024, 11, 15)]
+    strelitzia.watered = [datetime.datetime(2024, 11, 18)]
 
-    # creating logs for maple
-    water_log_maple = [last_watering_datetime]
-    nutri_log_maple = [last_nutrition_datetime]
-    maple.watered = water_log_maple
-    maple.nutrition = nutri_log_maple
-    maple.repotted = time_last_repotted
+    maple.nutrition = [datetime.datetime(2024, 10, 25)]
+    sansevieria.nutrition = [datetime.datetime(2024, 11, 10)]
+    strelitzia.nutrition = [datetime.datetime(2024, 11, 5)]
 
-    # creating logs for sansevieria
-    water_log_sansevieria = [last_watering_datetime]
-    nutri_log_sansevieria = [last_nutrition_datetime]
-    sansevieria.watered = water_log_sansevieria
-    sansevieria.nutrition = nutri_log_sansevieria
-    sansevieria.repotted = time_last_repotted
+    maple.repotted = datetime.datetime(2023, 11, 15)
+    sansevieria.repotted = datetime.datetime(2023, 11, 10)
+    strelitzia.repotted = datetime.datetime(2023, 11, 1)
 
-    # creating logs for strelitzia
-    water_log_strelitzia = [last_watering_datetime]
-    nutri_log_strelitzia = [last_nutrition_datetime]
-    strelitzia.watered = water_log_strelitzia
-    strelitzia.nutrition = nutri_log_strelitzia
-    strelitzia.repotted = time_last_repotted
+    # Create the notifier for all the plants
+    notifier = Notifier([maple, sansevieria, strelitzia])
 
-    # weight is how many we are passed the original due date
+    # Check that the notifications list contains the expected notifications for all plants
+    expected_notifications = [
+        create_notification_watering(maple, notifier),
+        create_notification_nutrition(maple, notifier),
+        create_notification_repotting(maple, notifier),
+        create_notification_watering(sansevieria, notifier),
+        create_notification_nutrition(sansevieria, notifier),
+        create_notification_repotting(sansevieria, notifier),
+        create_notification_watering(strelitzia, notifier),
+        create_notification_nutrition(strelitzia, notifier),
+        create_notification_repotting(strelitzia, notifier)
+    ]
 
-    not1 = Notification((datetime.datetime.now() - (water_log_maple[-1] + maple.watering_frequency)).days + 1,
-                        water_log_maple[-1] + maple.watering_frequency,
-                        datetime.datetime.now(), maple.core_id, Type_of_action.WATERING,
-                        maple)
-    not2 = Notification((datetime.datetime.now() - (water_log_sansevieria[-1] + sansevieria.watering_frequency)).days + 1,
-                        water_log_sansevieria[-1] + sansevieria.watering_frequency,
-                        datetime.datetime.now(), sansevieria.core_id, Type_of_action.WATERING,
-                        sansevieria)
-    not3 = Notification((datetime.datetime.now() - (water_log_strelitzia[-1] + strelitzia.watering_frequency)).days + 1,
-                        water_log_strelitzia[-1] + strelitzia.watering_frequency,
-                        datetime.datetime.now(), strelitzia.core_id, Type_of_action.WATERING,
-                        strelitzia)
+    # Assert that the notifications are generated correctly
+    assert notifier.check_tasks_today() == expected_notifications, "Notifications for all plants are not correct"
 
-    # nutrition notification
-    not4 = Notification((datetime.datetime.now() - (nutri_log_maple[-1] + datetime.timedelta(days=30))).days + 1,
-                        nutri_log_maple[-1] + datetime.timedelta(days=30),
-                        datetime.datetime.now(), maple.core_id, Type_of_action.NUTRITION, maple)
-    not5 = Notification((datetime.datetime.now() - (nutri_log_sansevieria[-1] + datetime.timedelta(days=30))).days + 1,
-                        nutri_log_sansevieria[-1] + datetime.timedelta(days=30),
-                        datetime.datetime.now(), sansevieria.core_id, Type_of_action.NUTRITION, sansevieria)
-    not6 = Notification((datetime.datetime.now() - (nutri_log_strelitzia[-1] + datetime.timedelta(days=30))).days + 1,
-                        nutri_log_strelitzia[-1] + datetime.timedelta(days=30),
-                        datetime.datetime.now(), strelitzia.core_id, Type_of_action.NUTRITION, strelitzia)
+    # Assert that each plant has all its notifications in its own list
+    assert maple.list_notifications == [create_notification_watering(maple, notifier),
+                                        create_notification_nutrition(maple, notifier),
+                                        create_notification_repotting(maple,
+                                                                      notifier)], "Maple's notifications are incorrect"
 
-    not7 = Notification((datetime.datetime.now() - (time_last_repotted + datetime.timedelta(days=365))).days + 1,
-                        time_last_repotted + datetime.timedelta(days=365),
-                        datetime.datetime.now(), maple.core_id, Type_of_action.REPOTTING,
-                        maple)
-    not8 = Notification((datetime.datetime.now() - (time_last_repotted + datetime.timedelta(days=365))).days + 1,
-                        time_last_repotted + datetime.timedelta(days=365),
-                        datetime.datetime.now(), sansevieria.core_id, Type_of_action.REPOTTING,
-                        sansevieria)
-    not9 = Notification((datetime.datetime.now() - (time_last_repotted + datetime.timedelta(days=365))).days + 1,
-                        time_last_repotted + datetime.timedelta(days=365),
-                        datetime.datetime.now(), strelitzia.core_id, Type_of_action.REPOTTING,
-                        strelitzia)
+    assert sansevieria.list_notifications == [create_notification_watering(sansevieria, notifier),
+                                              create_notification_nutrition(sansevieria, notifier),
+                                              create_notification_repotting(sansevieria,
+                                                                            notifier)], "Sansevieria's notifications are incorrect"
 
-    plants = [maple, sansevieria, strelitzia]
-    notifier1 = Notifier(plants)
-    notifications = notifier1.check_tasks_today()
+    assert strelitzia.list_notifications == [create_notification_watering(strelitzia, notifier),
+                                             create_notification_nutrition(strelitzia, notifier),
+                                             create_notification_repotting(strelitzia,
+                                                                           notifier)], "Strelitzia's notifications are incorrect"
 
-    plants2 = [strelitzia, maple, sansevieria]
-    notifier2 = Notifier(plants2)
-    notifications2 = notifier2.check_tasks_today()
-
-    # test if plants are available
-    assert notifier2.plants == [strelitzia, maple, sansevieria], "Plants were not added correctly"
-
-    return not1, not2, not3, not4, not5, not6, not7, not8, not9, notifications, notifications2, notifier1, notifier2
-
-def test_notification_creation():
-    (not1, not2, not3, not4, not5, not6, not7, not8, not9, _, _, _, _) = create_notifications()
-
-    assert not1.weight > 0, "Notification weight should be greater than zero"
-    assert not1.notification_type == Type_of_action.WATERING, "Notification type mismatch for maple"
-    assert isinstance(not1.original_due_date, datetime.datetime), "Notification due_date should be a datetime object"
-
-def test_notifier_edge_cases():
-    notifier = Notifier([])
-    assert notifier.check_tasks_today() == None, "Notifier should handle empty plant list"
-
-    maple = create_plant1()
-    notifier_with_one_plant = Notifier([maple])
-    assert len(notifier_with_one_plant.plants) == 1, "Notifier did not correctly add a single plant"
-
-
-def test_notifier():
-    (not1, not2, not3, not4, not5, not6, not7, not8, not9, notifications,
-     notifications2, notifier1, notifier2) = create_notifications()
-
-    assert notifier1.plants[0].core_id == 425, "Maple was not added in the rigth way"
-    assert notifier1.plants[1].core_id == 435, "Sansevieria was not added in the rigth way"
-    assert notifier1.plants[2].core_id == 498, "Strelitzia was not added in the rigth way"
-    assert notifier1.list_notifications is not None, ("list notifications should not be empty "
-                                                      "before running check_task_today")
-
-def test_notifications():
-    (not1, not2, not3, not4, not5, not6, not7, not8, not9, notifications,
-     notifications2, notifier1, notifier2) = create_notifications()
-
-
-    assert notifications is not None, "There should be notifications for the tasks"
-    assert len(notifications) == 9, f"Expected 6 notifications, got {len(notifications)}"
-    assert notifications == [not1, not4, not7, not2, not5, not8, not3, not6, not9], ("Notifications should be stored in order"
-                                                                   "of the plants in the list "
-                                                                   "[maple, sansevieria, strelitzia]")
-    assert notifications2 == [not3, not6, not9, not1, not4, not7, not2, not5, not8], ("Notificarions should be stored"
-                                                                    "in order of a different order input list"
-                                                                    "[strelitzia, maple, sansevieria]")
-
-def test_remove_task():
-    maple = create_plant1()
-    sansevieria = create_plant2()
-    strelitzia = create_plant3()
-    (not1, not2, not3, not4, not5, not6, not7, not8, not9,
-     notifications, notifications2, notifier1, notifier2) = create_notifications()
-
-    # remove watering task for maple
-    list_task_removed = maple.water_plant(notifications)
-
-    # manually remove for the check
-    check_notifications = [not4, not7, not2, not5, not8, not3, not6, not9]
-
-    # assert list_task_removed == not1, "Watering task removed from maple"
-    assert list_task_removed == check_notifications, "Watering task unsuccesfully removed for maple"
-
-    list_second_task_removed = strelitzia.water_plant(notifications)
-    check_notifications_2 = [not4, not7, not2, not5, not8, not6, not9]
-    assert list_second_task_removed == check_notifications_2, ("Watering task unsuccesfully removed "
-                                                               "for maple and strelitzia")
-
-    list_third_task_removed = sansevieria.give_nutrition(notifications)
-    check_notifications_3 = [not4, not7, not2, not8, not6, not9]
-    assert list_third_task_removed == check_notifications_3, "Remove nutrition task from notifications"
-
-    # remove repotting rask for maple
-    list_repotted_removed = maple.repot_plant(notifications)
-    check_notifications_3 = [not4, not2, not8, not6, not9]
-    assert not7 not in list_repotted_removed, "Remove repotting task from notifications for maple"
-    assert list_repotted_removed == check_notifications_3, "Remove repotting task from notifications for maple"
-
-    feed_maple = maple.give_nutrition(notifications)
-    assert not4 not in feed_maple, "Giving nutrition to maple failed"
-    assert feed_maple == [not2, not8, not6, not9], "List without nutrition notification maple"
-
-def test_empty_plant_list():
-    """
-    Test Notifier behavior when initialized with an empty plant list.
-    """
-    notifier = Notifier([])
-    assert notifier.check_tasks_today() is None, "Notifier should return None when no plants are present"
-    assert notifier.sort_by_weight() == [], "Sorting on empty notification list should return empty"
-    assert notifier.sort_by_type() == [], "Sorting by type on empty notification list should return empty"
-    assert notifier.sort_by_date() == [], "Sorting by date on empty notification list should return empty"
-
-
-def test_no_notifications_due():
-    """
-    Test when plants do not require any tasks .
-    """
-    plant = Plant(425, 1, "flowerus_mapelus", "flowering-maple",
-                 "default", datetime.timedelta(days=3),
-                 ["full sun", "part shade"]
-                 )
-    plant.watered = [datetime.datetime.now()]
-    plant.nutrition = [datetime.datetime.now()]
-    plant.repotted = datetime.datetime.now()
-    notifier = Notifier([plant])
-
-    assert notifier.check_tasks_today() is None, "No notifications should be due if all tasks are up to date"
-    assert len(notifier.list_notifications) == 0, "Notification list should remain empty"
-
-def test_single_plant_multiple_notifications():
-    """
-    Test a single plant with multiple overdue tasks.
-    """
-    plant = Plant(425, 1, "flowerus_mapelus", "flowering-maple",
-                 "default", datetime.timedelta(days=3),
-                 ["full sun", "part shade"]
-                 )
-    plant.watered = [datetime.datetime.now() - datetime.timedelta(days=7)]
-    plant.nutrition = [datetime.datetime.now() - datetime.timedelta(days=40)]
-    plant.repotted = datetime.datetime.now() - datetime.timedelta(days=400)
-    notifier = Notifier([plant])
-
-    notifications = notifier.check_tasks_today()
-    assert notifications is not None, "Notifications should be generated for overdue tasks"
-    assert len(notifications) == 3, "Expected 3 notifications (watering, nutrition, repotting)"
-    assert notifications[0].notification_type == Type_of_action.WATERING, "First notification should be for watering"
-    assert notifications[1].notification_type == Type_of_action.NUTRITION, "Second notification should be for nutrition"
-    assert notifications[2].notification_type == Type_of_action.REPOTTING, "Third notification should be for repotting"
-
-def test_plant_with_no_recorded_tasks():
-    """
-    Test behavior when a plant has no watering, nutrition, or repotting history.
-    """
-    plant = Plant(435, 2, "sansevieria", "sansevieria",
-                 "default", datetime.timedelta(days=10),
-                 ["full sun", "part shade"]
-                 )
-    plant.watered = []
-    plant.nutrition = []
-    plant.repotted = None
-
-    notifier = Notifier([plant])
-    notifications = notifier.check_tasks_today()
-
-    assert notifications is None, "No notifications should be generated if plant has no history"
-    assert len(notifier.list_notifications) == 0, "Notification list should remain empty"
-
-
-def test_sorting():
-    (not1, not2, not3, not4, not5, not6, not7, not8, not9,
-     notifications, notifications2, notifier1, notifier2) = create_notifications()
-    sort_by_type = notifier1.sort_by_type()
-
-    assert sort_by_type == [not1, not2, not3, not4, not5, not6, not7, not8, not9], "Unsuccesfully sorted notifications by type"
-
-    sort_by_weight = notifier1.sort_by_weight()
-
-    assert sort_by_weight == [not7, not8, not9, not1, not4, not2, not5, not6, not3], "Unsuccesfully sorted notifications by weight"
-    #
-    sort_by_date = notifier1.sort_by_date()
-
-    assert sort_by_date == [not7, not8, not9, not1, not4, not2, not5, not6, not3], "Unsuccesfully sorted by date"
+    # Assert that all notifications are in the notifier's all_notifications list
+    assert notifier.all_notifications == expected_notifications, "All notifications are not correctly added to the notifier"
 
 
 

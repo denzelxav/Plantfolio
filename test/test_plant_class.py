@@ -1,6 +1,7 @@
 from project.classes.plant import Plant
 from project.classes.enums import Sunlight, Health, Type_of_action
 from project.classes.spot_notification import Spot, Notification
+from project.classes.notifier import Notifier
 import datetime
 
 def create_plant(sunlight: Sunlight = Sunlight.FULL_SHADE):
@@ -12,10 +13,11 @@ def create_plant(sunlight: Sunlight = Sunlight.FULL_SHADE):
 
 def create_notification():
     maple, dark_spot = create_plant()
+    notifier = Notifier([maple])
     return Notification(3,
                         datetime.datetime(2024, 11, 22, 12, 6),
                         datetime.datetime.now(), 425, Type_of_action.WATERING,
-                        maple)
+                        maple, notifier)
 
 def test_sunlight():
     maple, dark_spot = create_plant()
@@ -45,7 +47,7 @@ def test_water():
     maple.water_score = None
     assert len(maple.watered) == maple.max_log_size
     assert maple.water_score == 100
-    maple.water_plant([not1])
+    maple.water_plant()
     assert len(maple.watered) == maple.max_log_size, "water log exceeded max log size"
     assert maple.water_score == 38, "water score cache wasn't updated or calculated incorrectly"
     assert maple.time_to_water_score() == 100
@@ -64,7 +66,7 @@ def test_nutrition():
 
     nutri_log = [datetime.datetime.now() - datetime.timedelta(days=30 * (i + 2)) for i in range(maple.max_log_size, 0, -1)]
     maple.nutrition = nutri_log
-    maple.give_nutrition([not1])
+    maple.give_nutrition()
     assert maple.nutrition_score == 88, "nutrition score cache was not updated or calculated incorrectly"
 
 def test_health():

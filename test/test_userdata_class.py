@@ -2,6 +2,11 @@ from project.classes.plant import *
 from project.classes.userdata import UserData
 from project.classes.spot_notification import Spot, Notification
 from project.classes.enums import *
+from project.classes.notifier import Notifier
+# from typing import TYPE_CHECKING
+# if TYPE_CHECKING:
+#     from project.classes.notifier import Notifier
+
 
 def create_plant1(sunlight: Sunlight = Sunlight.FULL_SHADE):
     return Plant(425, 1, "flowerus_mapelus", "flowering-maple",
@@ -23,10 +28,11 @@ def create_plant3(sunlight: Sunlight = Sunlight.FULL_SHADE):
 
 def create_notification():
     maple = create_plant1()
+    notifier = Notifier([maple])
     return Notification(3,
                         datetime.datetime(2024, 11, 22, 12, 6),
                         datetime.datetime.now(), 425, Type_of_action.WATERING,
-                        maple)
+                        maple, notifier)
 
 def test_create_userdata_basic():
     maple  = create_plant1()

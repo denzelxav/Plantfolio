@@ -6,16 +6,20 @@ between datetime entries in a sequence.
 It also contains the plant_from_database function
 that creates a plant class based on the database data.
 """
-
+from __future__ import annotations
 import datetime
+from typing import TYPE_CHECKING
 from collections.abc import Sequence
 
 from project.classes.public_methods import string_to_water_frequency, string_to_sunlight
 from project.classes.spot_notification import Spot
 from project.classes.enums import Health, Sunlight
 from project.query_function import query_from_database
-from project.classes.spot_notification import Spot, Notification
+from project.classes.spot_notification import Spot
 from project.classes.enums import Health, Sunlight, Type_of_action
+if TYPE_CHECKING:
+    from project.classes.spot_notification import Notification
+
 
 def time_average(events: Sequence[datetime.datetime]) -> datetime.timedelta:
     """
@@ -89,10 +93,13 @@ class Plant:
         self.sunlight_score: int = 0 # type: ignore
         self.nutrition_score: None | int = None # type: ignore
         self.current_tasks: set[str] = set() # choose from repot, water, nutrition
+        self.list_notifications: list[Notification] = []
         self.water_plant()
         self.give_nutrition()
+        self.repot_plant()
 
-    def give_nutrition(self, list_notifications) -> list[Notification]:
+
+    def give_nutrition(self) -> None:
         """
         Sets time when plant last received nutrition to the current date and time and deletes notifcation
         """
@@ -102,10 +109,10 @@ class Plant:
         self._nutrition_score: int | None = None
 
         # remove the task from the notifications
-        for notification in list_notifications:
-            if notification.name == self.core_id and notification.notification_type == Type_of_action.NUTRITION:
-                list_notifications.remove(notification)
-        return list_notifications
+        for notification in self.list_notifications:
+            if notification.plant_notification == self and notification.notification_type == Type_of_action.NUTRITION:
+                self.list_notifications.remove(notification)
+                notification.notifier.all_notifications.remove(notification)
 
     def change_spot(self, spot: Spot) -> None:
         """
@@ -115,7 +122,7 @@ class Plant:
         self.spot.assigned_plant = self
         self.sunlight_score = self.get_sunlight_score()
 
-    def water_plant(self, list_notifications) -> list[Notification]:
+    def water_plant(self) -> None:
         """
         Sets time when plant was last watered to current moment. and deletes water_score cache and notification
         """
@@ -127,20 +134,21 @@ class Plant:
             del self.watered[0]
         self._water_score: int | None = None
 
-        for notification in list_notifications:
-            if notification.name == self.core_id and notification.notification_type == Type_of_action.WATERING:
-                list_notifications.remove(notification)
-        return list_notifications
+        for notification in self.list_notifications:
+            if notification.plant_notification == self and notification.notification_type == Type_of_action.WATERING:
+                self.list_notifications.remove(notification)
+                notification.notifier.all_notifications.remove(notification)
 
-    def repot_plant(self, list_notifications) -> list[Notification]:
+
+    def repot_plant(self) -> None:
         """
         Sets time when plant was last repotted to current moment.
         """
         self.repotted = datetime.datetime.now()
-        for notification in list_notifications:
-            if notification.name == self.core_id and notification.notification_type == Type_of_action.REPOTTING:
-                list_notifications.remove(notification)
-        return list_notifications
+        for notification in self.list_notifications:
+            if notification.plant_notification == self and notification.notification_type == Type_of_action.REPOTTING:
+                self.list_notifications.remove(notification)
+                notification.notifier.all_notifications.remove(notification)
 
     def get_water_score(self) -> int:
         """
