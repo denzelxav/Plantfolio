@@ -1,0 +1,110 @@
+{
+    "plant_data": [
+        {
+            "core_id": 425,
+            "personal_id": 1,
+            "personal_name": null,
+            "icon_type": "default",
+            "spot_id": "Window",
+            "health": 0,
+            "watered": [
+                "2024-12-17T11:42:43.230062"
+            ],
+            "nutrition": [],
+            "repotted": null,
+            "manual_health": false,
+            "max_log_size": 4,
+            "notes": null,
+            "current_tasks": [
+                "repot",
+                "water"
+            ]
+        },
+        {
+            "core_id": 434,
+            "personal_id": 2,
+            "personal_name": null,
+            "icon_type": "default",
+            "spot_id": "Cabinet",
+            "health": 3,
+            "watered": [],
+            "nutrition": [
+                "2024-12-17T11:42:43.230062"
+            ],
+            "repotted": null,
+            "manual_health": true,
+            "max_log_size": 4,
+            "notes": null,
+            "current_tasks": []
+        },
+        {
+            "core_id": 502,
+            "personal_id": 2,
+            "personal_name": null,
+            "icon_type": "default",
+            "spot_id": "Shelf living room",
+            "health": 1,
+            "watered": [],
+            "nutrition": [],
+            "repotted": "2024-12-17T11:42:43.230062",
+            "manual_health": false,
+            "max_log_size": 4,
+            "notes": "This is a note",
+            "current_tasks": []
+        },
+        {
+            "core_id": 425,
+            "personal_id": 4,
+            "personal_name": null,
+            "icon_type": "default",
+            "spot_id": "Shelf garage",
+            "health": 1,
+            "watered": [],
+            "nutrition": [],
+            "repotted": null,
+            "manual_health": false,
+            "max_log_size": 4,
+            "notes": null,
+            "current_tasks": []
+        }
+    ],
+    "rooms": {
+        "bedroom": [
+            {
+                "spot_id": "Window",
+                "light_level": "FULL_SHADE",
+                "humidity": "high humidity",
+                "temperature": 21,
+                "room": "bedroom"
+            }
+        ],
+        "kitchen": [
+            {
+                "spot_id": "Cabinet",
+                "light_level": "FULL_SUN",
+                "humidity": "high humidity",
+                "temperature": 21,
+                "room": "kitchen"
+            }
+        ],
+        "living room": [
+            {
+                "spot_id": "Shelf living room",
+                "light_level": "FULL_SHADE",
+                "humidity": "low humidity",
+                "temperature": 21,
+                "room": "living room"
+            }
+        ],
+        "garage": [
+            {
+                "spot_id": "Shelf garage",
+                "light_level": "FULL_SHADE",
+                "humidity": "low humidity",
+                "temperature": 15,
+                "room": "garage"
+            }
+        ]
+    },
+    "pet_preference": true
+}
