@@ -113,34 +113,15 @@ class UserData:
             result += task[0]
         return result
 
-    def load_spot_data(self, spot_data: dict[str, str | int]) -> None:
+    def load_spot_data(self, spot_data):
         """
         Loads a spot from a dictionary
         """
-        if isinstance(spot_data['spot_id'], str):
-            spot_id = str(spot_data['spot_id'])
-        else:
-            raise ValueError('spot_id must be a string')
-
-        if isinstance(spot_data['light_level'], str):
-            light_level = Sunlight[str(spot_data['light_level'])]
-        else:
-            raise ValueError('light_level must be a string')
-
-        if isinstance(spot_data['humidity'], str):
-            humidity = str(spot_data['humidity'])
-        else:
-            raise ValueError('humidity must be a string')
-
-        if isinstance(spot_data['temperature'], int):
-            temperature = int(spot_data['temperature'])
-        else:
-            raise ValueError('temperature must be a integer')
-
-        if isinstance(spot_data['room'], str):
-            room = str(spot_data['room'])
-        else:
-            raise ValueError('room must be a string')
+        spot_id = spot_data['spot_id']
+        light_level = Sunlight[spot_data['light_level']]
+        humidity = spot_data['humidity']
+        temperature = spot_data['temperature']
+        room = spot_data['room']
 
         spot = Spot(spot_id = spot_id,
                     light_level = light_level,
@@ -152,74 +133,23 @@ class UserData:
         self.add_room(room)
         self.add_spot(spot)
 
-    def load_plant_data(self,
-                        plant: dict[str, str | int | list[datetime.datetime] | list[str] | None]
-                        ) -> None:
+    def load_plant_data(self, plant):
         """
         Loads a plant from a dictionary
         """
-        if isinstance(plant['core_id'], int):
-            plant_id = int(plant['core_id'])
-        else:
-            raise ValueError('core_id must be a integer')
-        if isinstance(plant['personal_id'], int):
-            personal_id = int(plant['personal_id'])
-        else:
-            raise ValueError('personal_id must be a integer')
-        if isinstance(plant['personal_name'], str):
-            personal_name = str(plant['personal_name'])
-        elif not plant['personal_name']:
-            personal_name = None
-        else:
-            raise ValueError('personal_name must be a string or None')
-        if isinstance(plant['icon_type'], str):
-            icon_type = str(plant['icon_type'])
-        else:
-            raise ValueError('icon_type must be a string')
-        if isinstance(plant['spot_id'], str):
-            spot_id = str(plant['spot_id'])
-        else:
-            raise ValueError('spot_id must be a string')
-        if isinstance(plant['health'], int):
-            health = Health(int(plant['health']))
-        else:
-            raise ValueError('health must be a integer')
-        if isinstance(plant['watered'], list):
-            watered = [datetime.datetime.fromisoformat(date)
-                       for date in plant['watered']
-                       if isinstance(date, str)]
-        else:
-            raise ValueError('watered must be a list of datetime objects')
-        if isinstance(plant['nutrition'], list):
-            nutrition = [datetime.datetime.fromisoformat(date)
-                         for date in plant['nutrition']
-                         if isinstance(date, str)]
-        else:
-            raise ValueError('nutrition must be a list of datetime objects')
-        if isinstance(plant['repotted'], str):
-            repotted = datetime.datetime.fromisoformat(plant['repotted'])
-        elif not plant['repotted']:
-            repotted = None
-        else:
-            raise ValueError('repotted must be a str object or None')
-        if isinstance(plant['manual_health'], bool):
-            manual_health = bool(plant['manual_health'])
-        else:
-            raise ValueError('manual_health must be a boolean')
-        if isinstance(plant['max_log_size'], int):
-            max_log_size = int(plant['max_log_size'])
-        else:
-            raise ValueError('max_log_size must be a integer')
-        if isinstance(plant['notes'], str):
-            notes = str(plant['notes'])
-        elif not plant['notes']:
-            notes = None
-        else:
-            raise ValueError('notes must be a string or None')
-        if isinstance(plant['current_tasks'], list):
-            current_tasks = {str(task) for task in plant['current_tasks']}
-        else:
-            raise ValueError('current_tasks must be a list')
+        plant_id = plant['core_id']
+        personal_id = plant['personal_id']
+        personal_name = plant['personal_name']
+        icon_type = plant['icon_type']
+        spot_id = plant['spot_id']
+        health = Health(plant['health'])
+        watered = [datetime.datetime.fromisoformat(date) for date in plant['watered']]
+        nutrition = [datetime.datetime.fromisoformat(date) for date in plant['nutrition']]
+        repotted = datetime.datetime.fromisoformat(plant['repotted']) if plant['repotted'] else None
+        manual_health = plant['manual_health']
+        max_log_size = plant['max_log_size']
+        notes = plant['notes']
+        current_tasks = {str(task) for task in plant['current_tasks']}
 
         core_name = self.get_core_name(plant_id)
         scientific_name = self.get_scientific_name(plant_id)

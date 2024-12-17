@@ -8,7 +8,7 @@
             "spot_id": "Window",
             "health": 0,
             "watered": [
-                "2024-12-13T13:59:23.470932"
+                "2024-12-17T10:48:32.481113"
             ],
             "nutrition": [],
             "repotted": null,
@@ -29,7 +29,7 @@
             "health": 3,
             "watered": [],
             "nutrition": [
-                "2024-12-13T13:59:23.470932"
+                "2024-12-17T10:48:32.484561"
             ],
             "repotted": null,
             "manual_health": true,
@@ -46,7 +46,7 @@
             "health": 1,
             "watered": [],
             "nutrition": [],
-            "repotted": "2024-12-13T13:59:23.470932",
+            "repotted": "2024-12-17T10:48:32.484561",
             "manual_health": false,
             "max_log_size": 4,
             "notes": "This is a note",

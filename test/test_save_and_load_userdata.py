@@ -187,6 +187,14 @@ def test_load_data():
     test_path = os.path.join("test", "test_user_data.json")
     loaded_data = load_user_data(test_mode=True)
 
+    print('Testuser plants')
+    for plant in test_user.plants:
+        print(vars(plant))
+
+    print('Loaded data plants')
+    for plant in loaded_data.plants:
+        print(vars(plant))
+
     assert test_plant1 in test_user.plants
     assert test_plant2 in test_user.plants
     assert test_plant3 in test_user.plants
