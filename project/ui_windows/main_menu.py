@@ -5,20 +5,23 @@ from PySide6.QtGui import QPixmap, QIcon
 from PySide6.QtWidgets import QMainWindow
 
 from project.classes.userdata import UserData
+from project.classes.recommender import Recommender
 from project.ui.output import Ui_MainMenu
 from project.ui_windows.add_room_window import AddRoomWindow
 from project.ui_windows.room_view_window import RoomViewWindow
 from project.ui_windows.all_plants_window import AllPlantsWindow
+from project.ui_windows.recommendations_window import RecommendationsWindow
 
 
 
 class MainMenu(QMainWindow):
     """Example application"""
 
-    def __init__(self, userdata: UserData) -> None:
+    def __init__(self, userdata: UserData, recommender: Recommender) -> None:
         super().__init__()
         # Create a file with pyside6-uic project/ui/app.ui -o project/ui/output.py
         self.userdata = userdata
+        self.recommender = recommender
         self.ui = Ui_MainMenu()
         self.ui.setupUi(self)
         self.ui.PlantFolio_Icon.setPixmap(QPixmap(u"./project/art/Plantfolio_logo.png"))
@@ -29,6 +32,7 @@ class MainMenu(QMainWindow):
         self.ui.water_all.clicked.connect(self.userdata.water_all)
         self.ui.open_room.clicked.connect(self.open_room)
         self.ui.all_plants.clicked.connect(self.open_all_plants)
+        self.ui.open_recommender.clicked.connect(self.open_recommender)
 
 
     @Slot()
@@ -60,3 +64,11 @@ class MainMenu(QMainWindow):
         self.ui.room_list.clear()
         for room in self.userdata.rooms:
             self.ui.room_list.addItem(room)
+
+    @Slot()
+    def open_recommender(self) -> None:
+        """
+        Opens RecommendationsWindow that lets the user see his recommendations
+        """
+        self.recommendations_window = RecommendationsWindow(self.recommender, self.userdata)
+        self.recommendations_window.show()

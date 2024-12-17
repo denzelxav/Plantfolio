@@ -55,7 +55,7 @@ class Recommender:
         time_sum = datetime.timedelta()
         for deltatime in all_averages:
             time_sum += deltatime
-        self.user_water_frequency = time_sum / len(all_averages)
+        self.user_water_frequency = time_sum / max(1,len(all_averages))
         self.family_count ={}
         self.already_owned = set()
         for plant in self.userdata.plants:
@@ -63,7 +63,7 @@ class Recommender:
             family_name = plant.scientific_name.split()[0]
             self.family_count[family_name] = self.family_count.get(family_name, 0) + 1
             # all_families.add(family_name)
-        self.max_familiy_count = max(self.family_count.values())
+        self.max_familiy_count = 1 if not self.family_count.values() else max(self.family_count.values())
 
     def get_recommendations(self) -> list[int]:
         """
