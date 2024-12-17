@@ -26,17 +26,16 @@ def save_user_data(user: UserData, test_mode: bool=False) -> None:
         save_path = os.path.join("test", "test_user_data.json")
     else:
         save_path = os.path.join("project", "user_data.json")
-        
+
     data: dict[str, Any] = {"plant_data": [],
-                            "spots": [],
+                            "rooms": {},
                             "pet_preference": False}
+
+    for room_name, room in user.rooms.items():
+        data["rooms"][room_name] = [spot.get_spot_data() for spot in room]
 
     for plant in sorted(user.plants, key=lambda x: x.personal_id):
         data["plant_data"].append(plant.get_data_to_save())
-
-    for room in user.rooms.values():
-        for spot in room:
-            data["spots"].append(spot.get_spot_data())
 
     data["pet_preference"] = user.pet_toxicity
 
@@ -51,7 +50,7 @@ def load_user_data(test_mode: bool=False) -> UserData:
         load_path = os.path.join("test", "test_user_data.json")
     else:
         load_path = os.path.join("project", "user_data.json")
-        
+
     user = UserData()
 
     if not os.path.exists(load_path):

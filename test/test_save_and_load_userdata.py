@@ -65,27 +65,29 @@ def test_save_userdata_multiple_plants_one_room():
     assert data["plant_data"] == [test_plant1.get_data_to_save(),
                                   test_plant2.get_data_to_save(),
                                   test_plant3.get_data_to_save()]
-    assert data["spots"] == [   {
-                                'spot_id': 'Window',
-                                'light_level': 'FULL_SHADE',
-                                'humidity': 'high humidity',
-                                'temperature': 21,
-                                'room': 'bedroom'
-                                },
-                                {
-                                'spot_id': 'Cabinet',
-                                'light_level': 'FULL_SUN',
-                                'humidity': 'high humidity',
-                                'temperature': 21,
-                                'room': 'bedroom'
-                                },
-                                {
-                                'spot_id': 'Shelf',
-                                'light_level': 'FULL_SHADE',
-                                'humidity': 'high humidity',
-                                'temperature': 21,
-                                'room': 'bedroom'
-                                }]
+    assert data["rooms"] == {'bedroom': [{
+                                        'spot_id': 'Window',
+                                        'light_level': 'FULL_SHADE',
+                                        'humidity': 'high humidity',
+                                        'temperature': 21,
+                                        'room': 'bedroom'
+                                        },
+                                        {
+                                        'spot_id': 'Cabinet',
+                                        'light_level': 'FULL_SUN',
+                                        'humidity': 'high humidity',
+                                        'temperature': 21,
+                                        'room': 'bedroom'
+                                        },
+                                        {
+                                        'spot_id': 'Shelf',
+                                        'light_level': 'FULL_SHADE',
+                                        'humidity': 'high humidity',
+                                        'temperature': 21,
+                                        'room': 'bedroom'
+                                        }]
+    }
+
     assert data["pet_preference"] is True
 
 
@@ -124,27 +126,29 @@ def test_save_userdata_mulitple_plants_multiple_rooms():
     assert data["plant_data"] == [test_plant1.get_data_to_save(),
                                   test_plant2.get_data_to_save(),
                                   test_plant3.get_data_to_save()]
-    assert data["spots"] == [   {
-                                'spot_id': 'Window',
-                                'light_level': 'FULL_SHADE',
-                                'humidity': 'high humidity',
-                                'temperature': 21,
-                                'room': 'bedroom'
-                                },
-                                {
-                                'spot_id': 'Cabinet',
-                                'light_level': 'FULL_SUN',
-                                'humidity': 'high humidity',
-                                'temperature': 21,
-                                'room': 'kitchen'
-                                },
-                                {
-                                'spot_id': 'Shelf',
-                                'light_level': 'FULL_SHADE',
-                                'humidity': 'low humidity',
-                                'temperature': 21,
-                                'room': 'living room'
-                                }]
+    assert data["rooms"] == {'bedroom': [{
+                                        'spot_id': 'Window',
+                                        'light_level': 'FULL_SHADE',
+                                        'humidity': 'high humidity',
+                                        'temperature': 21,
+                                        'room': 'bedroom'
+                                        }],
+                            'kitchen': [{
+                                        'spot_id': 'Cabinet',
+                                        'light_level': 'FULL_SUN',
+                                        'humidity': 'high humidity',
+                                        'temperature': 21,
+                                        'room': 'kitchen'
+                                        }],
+                            'living room': [{
+                                        'spot_id': 'Shelf',
+                                        'light_level': 'FULL_SHADE',
+                                        'humidity': 'low humidity',
+                                        'temperature': 21,
+                                        'room': 'living room'
+                                        }]
+    }
+
     assert data["pet_preference"] is True
 
 def test_load_data():
@@ -170,7 +174,12 @@ def test_load_data():
 
     test_spot1 = Spot('Window', Sunlight.FULL_SHADE, 'high humidity', None, 21, 'bedroom')
     test_spot2 = Spot('Cabinet', Sunlight.FULL_SUN, 'high humidity', None, 21, 'kitchen')
-    test_spot3 = Spot('Shelf living room', Sunlight.FULL_SHADE, 'low humidity', None, 21, 'living room')
+    test_spot3 = Spot('Shelf living room',
+                      Sunlight.FULL_SHADE,
+                      'low humidity',
+                      None,
+                      21,
+                      'living room')
     test_spot4 = Spot('Shelf garage', Sunlight.FULL_SHADE, 'low humidity', None, 15, 'garage')
 
     test_user.add_plant(test_plant1, test_spot1)
