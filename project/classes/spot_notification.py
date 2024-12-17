@@ -18,6 +18,26 @@ class Spot:
     humidity: str
     assigned_plant: Plant | None
     temperature: int
+    room: str
+
+    def get_spot_data(self) -> dict[str, str | int | Sunlight]:
+        """
+        Returns the spot data in a dictionary format to save in a json file
+        """
+        return {"spot_id": self.spot_id,
+                "light_level": self.light_level,
+                "humidity": self.humidity,
+                "temperature": self.temperature,
+                "room": self.room}
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Spot):
+            return False
+        return (self.spot_id == other.spot_id and
+                self.light_level == other.light_level and
+                self.humidity == other.humidity and
+                self.temperature == other.temperature and
+                self.room == other.room)
 
 @dataclass
 class Notification:
