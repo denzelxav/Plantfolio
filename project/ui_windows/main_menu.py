@@ -13,7 +13,11 @@ from project.ui_windows.all_plants_window import AllPlantsWindow
 
 
 class MainMenu(QMainWindow):
-    """Example application"""
+    """
+    This is the main window that will show up when starting the application.
+    From here you can add and open rooms, open the all plants window,
+    the recommender, and see your notifications."""
+
 
     def __init__(self, userdata: UserData) -> None:
         super().__init__()
@@ -40,23 +44,35 @@ class MainMenu(QMainWindow):
         self.add_room_window.show()
 
     @Slot()
-    def open_room(self):
+    def open_room(self) -> None:
+        """
+        Opens RoomViewWindow that show the spots a room contains.
+        """
         room_name = self.ui.room_list.selectedItems()[0].text()
-        self.add_room_window = RoomViewWindow(room_name , self)
-        self.add_room_window.show()
+        self.room_view_window = RoomViewWindow(room_name , self)
+        self.room_view_window.show()
 
     def delete_room(self, room: RoomViewWindow) -> None:
+        """
+        Deletes the selected room that doesn't contain any spots.
+        """
         room_name = room.room_name
         self.userdata.delete_room(room_name)
         room.close()
         self.refresh_rooms()
 
     @Slot()
-    def open_all_plants(self):
+    def open_all_plants(self) -> None:
+        """
+        Opens all plants window
+        """
         self.all_plants_window = AllPlantsWindow(self.userdata)
         self.all_plants_window.show()
 
-    def refresh_rooms(self):
+    def refresh_rooms(self) -> None:
+        """
+        Clears rooms from lists and re adds rooms from userdata
+        """
         self.ui.room_list.clear()
         for room in self.userdata.rooms:
             self.ui.room_list.addItem(room)

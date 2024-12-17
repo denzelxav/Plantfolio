@@ -42,7 +42,7 @@ def test_create_userdata_basic():
 
     # tests add_plant
     assert mydata.rooms['bedroom'][0].assigned_plant == maple
-    assert mydata.plants == {maple}
+    assert mydata.plants == [maple]
 
     mydata.water_all()
 
