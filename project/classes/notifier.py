@@ -75,8 +75,7 @@ class Notifier:
         # no tasks for today
         if len(self.all_notifications) == 0:
             return None
-        else:
-            return self.all_notifications
+        return self.all_notifications
 
 
     def sort_by_weight(self) -> list[Notification]:
@@ -104,10 +103,7 @@ class Notifier:
 
     def sort_by_plant(self) -> list[Notification]:
         """
-        Sort the notifications by original due date
+        Sort the notifications by original plant
         """
         return sorted(self.all_notifications,
                       key=lambda notification: notification.personal_id_plant, reverse=False)
-
-
-

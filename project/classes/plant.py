@@ -13,9 +13,7 @@ from collections.abc import Sequence
 
 from project.classes.public_methods import string_to_water_frequency, string_to_sunlight
 from project.classes.spot_notification import Spot
-from project.classes.enums import Health, Sunlight
 from project.query_function import query_from_database
-from project.classes.spot_notification import Spot
 from project.classes.enums import Health, Sunlight, Type_of_action
 if TYPE_CHECKING:
     from project.classes.spot_notification import Notification
@@ -101,7 +99,8 @@ class Plant:
 
     def give_nutrition(self) -> None:
         """
-        Sets time when plant last received nutrition to the current date and time and deletes notifcation
+        Sets time when plant last received nutrition to the current
+        date and time and deletes notifcation
         """
         self.nutrition.append(datetime.datetime.now())
         if len(self.nutrition) > self.max_log_size:
@@ -110,7 +109,8 @@ class Plant:
 
         # remove the task from the notifications
         for notification in self.list_notifications:
-            if notification.plant_notification == self and notification.notification_type == Type_of_action.NUTRITION:
+            if (notification.plant_notification == self
+                    and notification.notification_type == Type_of_action.NUTRITION):
                 self.list_notifications.remove(notification)
                 notification.notifier.all_notifications.remove(notification)
 
@@ -124,7 +124,8 @@ class Plant:
 
     def water_plant(self) -> None:
         """
-        Sets time when plant was last watered to current moment. and deletes water_score cache and notification
+        Sets time when plant was last watered to current moment
+        and deletes water_score cache and notification
         """
         if len(self.watered) > 1 and datetime.datetime.now() < self.watered[-1]:
             raise ValueError(f"Last watering entry is in the future. ({self.watered[-1]})")
@@ -135,7 +136,8 @@ class Plant:
         self._water_score: int | None = None
 
         for notification in self.list_notifications:
-            if notification.plant_notification == self and notification.notification_type == Type_of_action.WATERING:
+            if (notification.plant_notification == self
+                    and notification.notification_type == Type_of_action.WATERING):
                 self.list_notifications.remove(notification)
                 notification.notifier.all_notifications.remove(notification)
 
@@ -146,7 +148,8 @@ class Plant:
         """
         self.repotted = datetime.datetime.now()
         for notification in self.list_notifications:
-            if notification.plant_notification == self and notification.notification_type == Type_of_action.REPOTTING:
+            if (notification.plant_notification == self
+                    and notification.notification_type == Type_of_action.REPOTTING):
                 self.list_notifications.remove(notification)
                 notification.notifier.all_notifications.remove(notification)
 

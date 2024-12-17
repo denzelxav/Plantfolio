@@ -1,5 +1,5 @@
 from project.classes.plant import Plant
-from project.classes.spot_notification import Spot, Notification
+from project.classes.spot_notification import Spot
 
 
 
@@ -21,11 +21,11 @@ class UserData:
     """
 
     def __init__(self) -> None:
-        self.plants: list[Plant]= list()
+        self.plants: list[Plant]= []
         self.rooms: dict[str, list[Spot]] = {}
         self.pet_toxicity = False
 
-    def water_all(self, list_notifications: list[Notification]) -> None:
+    def water_all(self) -> None:
         """
         Water all the plants in the users possesion
         """
@@ -78,7 +78,7 @@ class UserData:
             del self.rooms[room_name]
 
     def sort_plants(self, attribute: str, reverse: bool) -> list[Plant] | None:
-        '''Sorts the plants based on the prompted attribute'''
+        """Sorts the plants based on the prompted attribute"""
         if attribute in ['core_name', 'scientific_name', 'personal_name']:
             return sorted(list(self.plants),
                           key=lambda plant: getattr(plant, attribute), reverse=reverse)
@@ -92,7 +92,7 @@ class UserData:
         return None
 
     def tasks_to_string(self, plant: Plant) -> str:
-        '''Converts the tasks of a plant to a sorted string of the first letter of each task'''
+        """Converts the tasks of a plant to a sorted string of the first letter of each task"""
         result = ''
         sorted_tasks = sorted(list(plant.current_tasks))
         for task in sorted_tasks:

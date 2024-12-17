@@ -32,7 +32,3 @@ class Notification:
     notification_type: Type_of_action
     plant_notification: Plant
     notifier: Notifier
-
-
-
-
