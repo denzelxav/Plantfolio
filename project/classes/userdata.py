@@ -41,7 +41,7 @@ class UserData:
             new_plant.personal_id = max_id+1
         else:
             new_plant.personal_id = 0
-            
+
         if assigned_spot in [spot for room in self.rooms.values() for spot in room]:
             new_plant.change_spot(assigned_spot)
             self.plants.append(new_plant)
@@ -104,4 +104,3 @@ class UserData:
         for task in sorted_tasks:
             result += task[0]
         return result
-    
