@@ -104,3 +104,4 @@ class UserData:
         for task in sorted_tasks:
             result += task[0]
         return result
+    

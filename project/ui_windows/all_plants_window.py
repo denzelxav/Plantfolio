@@ -39,7 +39,6 @@ class AllPlantsWindow(QDialog):
 
         self.ui.sort_by.currentIndexChanged.connect(self.sort_list)
 
-
     @Slot()
     def select_plant(self) -> None:
         """
@@ -47,10 +46,10 @@ class AllPlantsWindow(QDialog):
         """
         plant_id = int(self.ui.select_plant.selectedItems()[0].text().split('\t')[1])
         selected_plant = self.get_plant(plant_id)
-        selected_spot = selected_plant.spot
-        self.plant_view = PlantViewWindow(selected_spot, self.userdata)
-        self.plant_view.show()
-
+        if selected_plant.spot:
+            selected_spot = selected_plant.spot
+            self.plant_view = PlantViewWindow(selected_spot, self.userdata)
+            self.plant_view.show()
 
     @Slot()
     def sort_list(self) ->  None:
