@@ -7,7 +7,7 @@ from project.classes.spot_notification import Spot
 from project.classes.enums import Sunlight
 
 
-# https://stackoverflow.com/questions/24481852/serialising-an-enum-member-to-json
+
 class EnumEncoder(json.JSONEncoder):
     """
     Makes sure that enums are saved as strings correctly in the json file
@@ -28,14 +28,15 @@ def save_user_data(user: UserData, test_mode: bool=False) -> None:
         save_path = os.path.join("project", "user_data.json")
         
     data: dict[str, Any] = {"plant_data": [],
-                            "rooms": {},
+                            "spots": [],
                             "pet_preference": False}
-    
-    for room_name, spots in user.rooms.items():
-        data["rooms"][room_name] = [spot.get_spot_data() for spot in spots]
 
     for plant in sorted(user.plants, key=lambda x: x.personal_id):
         data["plant_data"].append(plant.get_data_to_save())
+
+    for room in user.rooms.values():
+        for spot in room:
+            data["spots"].append(spot.get_spot_data())
 
     data["pet_preference"] = user.pet_toxicity
 

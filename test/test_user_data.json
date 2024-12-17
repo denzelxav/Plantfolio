@@ -68,43 +68,35 @@
             "current_tasks": []
         }
     ],
-    "rooms": {
-        "bedroom": [
-            {
-                "spot_id": "Window",
-                "light_level": "FULL_SHADE",
-                "humidity": "high humidity",
-                "temperature": 21,
-                "room": "bedroom"
-            }
-        ],
-        "kitchen": [
-            {
-                "spot_id": "Cabinet",
-                "light_level": "FULL_SUN",
-                "humidity": "high humidity",
-                "temperature": 21,
-                "room": "kitchen"
-            }
-        ],
-        "living room": [
-            {
-                "spot_id": "Shelf living room",
-                "light_level": "FULL_SHADE",
-                "humidity": "low humidity",
-                "temperature": 21,
-                "room": "living room"
-            }
-        ],
-        "garage": [
-            {
-                "spot_id": "Shelf garage",
-                "light_level": "FULL_SHADE",
-                "humidity": "low humidity",
-                "temperature": 15,
-                "room": "garage"
-            }
-        ]
-    },
+    "spots": [
+        {
+            "spot_id": "Window",
+            "light_level": "FULL_SHADE",
+            "humidity": "high humidity",
+            "temperature": 21,
+            "room": "bedroom"
+        },
+        {
+            "spot_id": "Cabinet",
+            "light_level": "FULL_SUN",
+            "humidity": "high humidity",
+            "temperature": 21,
+            "room": "kitchen"
+        },
+        {
+            "spot_id": "Shelf living room",
+            "light_level": "FULL_SHADE",
+            "humidity": "low humidity",
+            "temperature": 21,
+            "room": "living room"
+        },
+        {
+            "spot_id": "Shelf garage",
+            "light_level": "FULL_SHADE",
+            "humidity": "low humidity",
+            "temperature": 15,
+            "room": "garage"
+        }
+    ],
     "pet_preference": true
 }
