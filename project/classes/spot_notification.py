@@ -16,10 +16,10 @@ class Spot:
     light_level: Sunlight
     humidity: str
     assigned_plant: Plant | None
-    temperature: int
+    temperature: float
     room: str
 
-    def get_spot_data(self) -> dict[str, str | int | Sunlight]:
+    def get_spot_data(self) -> dict[str, str | int | Sunlight | float]:
         """
         Returns the spot data in a dictionary format to save in a json file
         """

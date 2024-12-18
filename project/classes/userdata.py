@@ -89,7 +89,7 @@ class UserData:
         """
         Removes a room 
         """
-        if self.rooms[room_name] == []:
+        if not self.rooms[room_name]:
             del self.rooms[room_name]
 
     def sort_plants(self, attribute: str, reverse: bool) -> list[Plant] | None:

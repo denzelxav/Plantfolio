@@ -1,17 +1,77 @@
 {
     "plant_data": [
         {
-            "core_id": "426",
+            "core_id": 425,
             "personal_id": 0,
-            "personal_name": "Sjaak",
-            "icon_type": "plant_1",
-            "spot_id": "test spot",
-            "health": "slightly_unhealthy",
+            "personal_name": null,
+            "icon_type": "default",
+            "spot_id": "Window",
+            "health": "dead",
             "watered": [
-                "2024-12-18T23:27:56.880388"
+                "2024-12-18T23:39:29.793852"
             ],
             "nutrition": [
-                "2024-12-18T23:27:56.880388"
+                "2024-12-18T23:39:29.793852"
+            ],
+            "repotted": null,
+            "manual_health": false,
+            "max_log_size": 4,
+            "notes": null,
+            "current_tasks": [
+                "repot",
+                "water"
+            ]
+        },
+        {
+            "core_id": 434,
+            "personal_id": 1,
+            "personal_name": null,
+            "icon_type": "default",
+            "spot_id": "Cabinet",
+            "health": "healthy",
+            "watered": [
+                "2024-12-18T23:39:29.793852"
+            ],
+            "nutrition": [
+                "2024-12-18T23:39:29.793852"
+            ],
+            "repotted": null,
+            "manual_health": true,
+            "max_log_size": 4,
+            "notes": null,
+            "current_tasks": []
+        },
+        {
+            "core_id": 502,
+            "personal_id": 2,
+            "personal_name": null,
+            "icon_type": "default",
+            "spot_id": "Shelf living room",
+            "health": "slightly_unhealthy",
+            "watered": [
+                "2024-12-18T23:39:29.793852"
+            ],
+            "nutrition": [
+                "2024-12-18T23:39:29.793852"
+            ],
+            "repotted": "2024-12-18T23:39:29.793852",
+            "manual_health": false,
+            "max_log_size": 4,
+            "notes": "This is a note",
+            "current_tasks": []
+        },
+        {
+            "core_id": 425,
+            "personal_id": 3,
+            "personal_name": null,
+            "icon_type": "default",
+            "spot_id": "Shelf garage",
+            "health": "slightly_unhealthy",
+            "watered": [
+                "2024-12-18T23:39:29.793852"
+            ],
+            "nutrition": [
+                "2024-12-18T23:39:29.793852"
             ],
             "repotted": null,
             "manual_health": false,
@@ -21,15 +81,42 @@
         }
     ],
     "rooms": {
-        "test room": [
+        "bedroom": [
             {
-                "spot_id": "test spot",
+                "spot_id": "Window",
                 "light_level": "FULL_SHADE",
-                "humidity": "0",
-                "temperature": 0.0,
-                "room": "test room"
+                "humidity": "high humidity",
+                "temperature": 21,
+                "room": "bedroom"
+            }
+        ],
+        "kitchen": [
+            {
+                "spot_id": "Cabinet",
+                "light_level": "FULL_SUN",
+                "humidity": "high humidity",
+                "temperature": 21,
+                "room": "kitchen"
+            }
+        ],
+        "living room": [
+            {
+                "spot_id": "Shelf living room",
+                "light_level": "FULL_SHADE",
+                "humidity": "low humidity",
+                "temperature": 21,
+                "room": "living room"
+            }
+        ],
+        "garage": [
+            {
+                "spot_id": "Shelf garage",
+                "light_level": "FULL_SHADE",
+                "humidity": "low humidity",
+                "temperature": 15,
+                "room": "garage"
             }
         ]
     },
-    "pet_preference": false
+    "pet_preference": true
 }
