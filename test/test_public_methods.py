@@ -28,9 +28,9 @@ def test_string_to_water_frequency():
     """
     Tests all outcomes of string_to_water_frequency()
     """
-    assert string_to_water_frequency("Frequent") == datetime.timedelta(days=4)
-    assert string_to_water_frequency("Average") == datetime.timedelta(weeks=1)
-    assert string_to_water_frequency("Minimum") == datetime.timedelta(weeks=2)
+    assert string_to_water_frequency("frequent") == datetime.timedelta(days=4)
+    assert string_to_water_frequency("average") == datetime.timedelta(weeks=1)
+    assert string_to_water_frequency("minimum") == datetime.timedelta(weeks=2)
     assert string_to_water_frequency(datetime.timedelta(days=1)) == datetime.timedelta(days=1)
     with pytest.raises(ValueError) as excinfo:
         string_to_water_frequency("Unknown value")
