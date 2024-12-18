@@ -54,7 +54,7 @@ class MainMenu(QMainWindow):
 
     @Slot()
     def save(self):
-        save_user_data(self.userdata, "./project/user_data.json")
+        save_user_data(self.userdata)
 
     def delete_room(self, room: RoomViewWindow) -> None:
         """

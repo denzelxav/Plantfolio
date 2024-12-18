@@ -1,43 +1,43 @@
 {
     "plant_data": [
         {
-            "core_id": 426,
-            "personal_id": 1,
-            "personal_name": "Terry",
+            "core_id": "428",
+            "personal_id": 0,
+            "personal_name": "Sjaak",
             "icon_type": "plant_1",
             "spot_id": "test spot",
             "health": "healthy",
             "watered": [
-                "2024-12-13T15:56:37.584845",
-                "2024-12-13T15:56:39.043538",
-                "2024-12-13T16:02:20.181076"
+                "2024-12-18T23:31:33.661001"
             ],
             "nutrition": [
-                "2024-12-13T15:56:37.584845",
-                "2024-12-13T15:56:39.395425"
+                "2024-12-18T23:31:33.661001"
             ],
-            "repotted": "2024-12-13T16:02:18.884712",
+            "repotted": null,
             "manual_health": false,
             "max_log_size": 4,
-            "notes": "test notes",
+            "notes": null,
             "current_tasks": []
         }
     ],
-    "spots": [
-        {
-            "spot_id": "test spot",
-            "light_level": "PART_SHADE",
-            "humidity": "12",
-            "temperature": 34.0,
-            "room": "test room"
-        },
-        {
-            "spot_id": "empty spot",
-            "light_level": "FULL_SHADE",
-            "humidity": "5",
-            "temperature": 1.0,
-            "room": "test room"
-        }
-    ],
+    "rooms": {
+        "test room": [
+            {
+                "spot_id": "test spot",
+                "light_level": "FULL_SUN",
+                "humidity": "0",
+                "temperature": 0.0,
+                "room": "test room"
+            },
+            {
+                "spot_id": "empty spot",
+                "light_level": "FULL_SHADE",
+                "humidity": "0",
+                "temperature": 0.0,
+                "room": "test room"
+            }
+        ],
+        "empty room": []
+    },
     "pet_preference": false
 }

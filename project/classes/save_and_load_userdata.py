@@ -58,21 +58,21 @@ def load_user_data(test_mode: bool=False) -> UserData:
 
     with open(load_path, "r", encoding='utf-8') as file:
         data = json.load(file)
-        print(data)
 
-    for room_name, room_data in data["rooms"].items():
-        user.add_room(room_name)
-        for spot_data in room_data:
-            spot = Spot(
-                spot_data["spot_id"],
-                Sunlight[spot_data["light_level"]],
-                spot_data["humidity"],
-                None,
-                spot_data["temperature"],
-                spot_data["room"]
-                )
+    if "rooms" in data:
+        for room_name, room_data in data["rooms"].items():
+            user.add_room(room_name)
+            for spot_data in room_data:
+                spot = Spot(
+                    spot_data["spot_id"],
+                    Sunlight[spot_data["light_level"]],
+                    spot_data["humidity"],
+                    None,
+                    spot_data["temperature"],
+                    spot_data["room"]
+                    )
 
-            user.add_spot(spot)
+                user.add_spot(spot)
 
     for plant_data in data["plant_data"]:
         user.load_plant_data(plant_data)

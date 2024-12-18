@@ -127,6 +127,7 @@ class PlantViewWindow(QMainWindow):
         if self.plant:
             self.ui.plant_icon.setPixmap(
                 QPixmap(f"./project/art/all plants/{self.plant.icon_type}_{self.plant.health.value}.png"))
+            print(f"./project/art/all plants/{self.plant.icon_type}_{self.plant.health.value}.png")
         else:
             self.ui.plant_icon.setPixmap(
                 QPixmap(f"./project/art/empty_pot.png"))
