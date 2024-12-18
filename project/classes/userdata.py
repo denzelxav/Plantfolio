@@ -3,7 +3,7 @@ from project.classes.plant import Plant
 from project.classes.spot_notification import Spot
 from project.classes.enums import Sunlight, Health
 from project.query_function import query_from_database
-from project.classes.public_methods import string_to_sunlight, string_to_water_frequency, string_to_health
+from project.classes.public_methods import string_to_sunlight, string_to_water_frequency
 
 
 class UserData:
