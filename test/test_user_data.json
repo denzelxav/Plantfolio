@@ -18,8 +18,8 @@
             "max_log_size": 4,
             "notes": null,
             "current_tasks": [
-                "repot",
-                "water"
+                "water",
+                "repot"
             ]
         },
         {
@@ -66,7 +66,7 @@
             "personal_name": null,
             "icon_type": "default",
             "spot_id": "Shelf garage",
-            "health": "slightly_unhealthy",
+            "health": "healthy",
             "watered": [
                 "2024-12-18T22:54:50.432952"
             ],
@@ -74,7 +74,7 @@
                 "2024-12-18T22:54:50.432952"
             ],
             "repotted": null,
-            "manual_health": false,
+            "manual_health": true,
             "max_log_size": 4,
             "notes": null,
             "current_tasks": []
@@ -116,7 +116,8 @@
                 "temperature": 15,
                 "room": "garage"
             }
-        ]
+        ],
+        "empty room": []
     },
     "pet_preference": true
 }
