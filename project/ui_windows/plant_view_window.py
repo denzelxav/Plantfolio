@@ -14,7 +14,17 @@ if TYPE_CHECKING:
     from project.classes.userdata import UserData
 
 class PlantViewWindow(QMainWindow):
-    def __init__(self, spot: Spot, userdata: UserData):
+    """
+    This window shows all the spot details and if a plant is on the spot,
+    also the plant details. The plantcare actions can be done here by
+    interacting with the buttons and the plants health can be seen by
+    looking at the plant icon.
+    """
+    def __init__(self, spot: Spot, userdata: UserData) -> None:
+        """
+        First the spot data is added, then it checks if a plant is assigned
+        before setting the appropriate plant details and enabling the buttons.
+        """
         super().__init__()
         self.ui = Ui_PlantViewWindow()
         self.ui.setupUi(self)
@@ -93,7 +103,7 @@ class PlantViewWindow(QMainWindow):
         self.ui.water_frequency_text.setHidden(self.plant is None)
         self.ui.last_nutrition.setHidden(self.plant is None)
         if self.plant and self.plant.nutrition:
-            self.ui.last_nutrition.setText(f"{self.plant.nutrition[-1].strftime('%d/%m/%Y')}")
+            self.ui.last_nutrition.setText(f"Last received nutrition on {self.plant.nutrition[-1].strftime('%d/%m/%Y')}")
         else:
             self.ui.last_nutrition.setText("Plant hasn't received nutrition yet")
         self.ui.last_repotted.setHidden(self.plant is None)
