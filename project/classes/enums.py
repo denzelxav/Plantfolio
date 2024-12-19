@@ -24,7 +24,7 @@ class Health(Enum):
     SLIGHTLY_UNHEALTHY = 2
     HEALTHY = 3
 
-class Type_of_action(Enum):
+class Action(Enum):
     """
     Enum for all possible Notifications
     """

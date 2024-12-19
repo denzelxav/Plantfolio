@@ -2,7 +2,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 import datetime
 from typing import TYPE_CHECKING
-from project.classes.enums import Sunlight, Type_of_action
+from project.classes.enums import Sunlight, Action
 if TYPE_CHECKING:
     from project.classes.plant import Plant
     from project.classes.notifier import Notifier
@@ -49,6 +49,6 @@ class Notification:
     original_due_date: datetime.datetime
     time_sent: datetime.datetime
     personal_id_plant: int #is nu de core_id van de plant.
-    notification_type: Type_of_action
+    notification_type: Action
     plant_notification: Plant
     notifier: Notifier

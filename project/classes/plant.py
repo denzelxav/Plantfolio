@@ -14,7 +14,7 @@ from collections.abc import Sequence
 from project.classes.public_methods import string_to_water_frequency, string_to_sunlight
 from project.classes.spot_notification import Spot
 from project.query_function import query_from_database
-from project.classes.enums import Health, Sunlight, Type_of_action
+from project.classes.enums import Health, Sunlight, Action
 if TYPE_CHECKING:
     from project.classes.spot_notification import Notification
 
@@ -111,7 +111,7 @@ class Plant:
         # remove the task from the notifications
         for notification in self.list_notifications:
             if (notification.plant_notification == self
-                    and notification.notification_type == Type_of_action.NUTRITION):
+                    and notification.notification_type == Action.NUTRITION):
                 self.list_notifications.remove(notification)
                 notification.notifier.all_notifications.remove(notification)
 
@@ -138,7 +138,7 @@ class Plant:
 
         for notification in self.list_notifications:
             if (notification.plant_notification == self
-                    and notification.notification_type == Type_of_action.WATERING):
+                    and notification.notification_type == Action.WATERING):
                 self.list_notifications.remove(notification)
                 notification.notifier.all_notifications.remove(notification)
 
@@ -150,7 +150,7 @@ class Plant:
         self.repotted = datetime.datetime.now()
         for notification in self.list_notifications:
             if (notification.plant_notification == self
-                    and notification.notification_type == Type_of_action.REPOTTING):
+                    and notification.notification_type == Action.REPOTTING):
                 self.list_notifications.remove(notification)
                 notification.notifier.all_notifications.remove(notification)
 

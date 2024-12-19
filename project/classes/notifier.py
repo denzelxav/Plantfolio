@@ -1,6 +1,6 @@
 import datetime
 from project.classes.spot_notification import Notification
-from project.classes.enums import Type_of_action
+from project.classes.enums import Action
 from project.classes.plant import Plant
 
 class Notifier:
@@ -34,7 +34,7 @@ class Notifier:
                                                 plant.watered[-1] + plant.watering_frequency,
                                                 datetime.datetime.now(),
                                                 plant.personal_id,
-                                                Type_of_action.WATERING,
+                                                Action.WATERING,
                                                 plant,
                                                 self
                                                 )
@@ -49,7 +49,7 @@ class Notifier:
                                                 plant.nutrition[-1] + nutrition_frequency,
                                                 datetime.datetime.now(),
                                                 plant.personal_id,
-                                                Type_of_action.NUTRITION,
+                                                Action.NUTRITION,
                                                 plant,
                                                 self
                                                 )
@@ -65,7 +65,7 @@ class Notifier:
                                                 plant.repotted + repotting_frequency,
                                                 datetime.datetime.now(),
                                                 plant.personal_id,
-                                                Type_of_action.REPOTTING,
+                                                Action.REPOTTING,
                                                 plant,
                                                 self
                                                 )

@@ -1,5 +1,5 @@
 from project.classes.plant import Plant
-from project.classes.enums import Type_of_action, Sunlight
+from project.classes.enums import Action, Sunlight
 from project.classes.spot_notification import Notification
 from project.classes.notifier import Notifier
 import datetime
@@ -35,24 +35,24 @@ def create_notification_watering(plant, notifier):
     return Notification((datetime.datetime.now() - (plant.watered[-1] + plant.watering_frequency)).days + 1,
                         plant.watered[-1] + plant.watering_frequency,
                         datetime.datetime.now(),
-                        plant.personal_id, Type_of_action.WATERING,
+                        plant.personal_id, Action.WATERING,
                         plant, notifier)
 
 def create_notification_nutrition(plant, notifier):
     nutrition_frequency = datetime.timedelta(days=30)
     return Notification(((datetime.datetime.now() - (plant.nutrition[-1] + nutrition_frequency)).days + 1) / 2,
-                 plant.nutrition[-1] + nutrition_frequency,
-                 datetime.datetime.now(),
-                 plant.personal_id, Type_of_action.NUTRITION,
-                 plant, notifier)
+                        plant.nutrition[-1] + nutrition_frequency,
+                        datetime.datetime.now(),
+                        plant.personal_id, Action.NUTRITION,
+                        plant, notifier)
 
 def create_notification_repotting(plant, notifier):
     repotting_frequency = datetime.timedelta(days=365)
     return Notification(((datetime.datetime.now() - (plant.repotted + repotting_frequency)).days + 1) / 10,
-                  plant.repotted + repotting_frequency,
-                  datetime.datetime.now(),
-                  plant.personal_id, Type_of_action.REPOTTING,
-                  plant, notifier)
+                        plant.repotted + repotting_frequency,
+                        datetime.datetime.now(),
+                        plant.personal_id, Action.REPOTTING,
+                        plant, notifier)
 
 def test_intialize_notifier():
     maple = create_plant1()
