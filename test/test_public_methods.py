@@ -40,6 +40,9 @@ def test_string_to_water_frequency():
     assert str(excinfo.value) == "Expected str type. Got <class 'int'>. Value: 1"
 
 def test_time_average():
+    """
+    Tests time_average()
+    """
     test_list = [datetime.datetime.now() + datetime.timedelta(days = 1) * i for i in range(10)]
     test_average = time_average(test_list)
     assert test_average <= datetime.timedelta(days = 1, seconds=10)

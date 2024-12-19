@@ -3,6 +3,7 @@ from PySide6.QtGui import QPixmap, QIcon
 from PySide6.QtWidgets import QDialog, QListWidgetItem
 from datetime import datetime
 
+import images_qr
 from project.classes.userdata import UserData
 from project.ui.all_plants import Ui_AllPlantsWindow
 from project.ui_windows.plant_view_window import PlantViewWindow
@@ -12,7 +13,7 @@ from project.classes.plant import Plant
 class AllPlantsWindow(QDialog):
 
     """
-    Window showing an overview of all the plants the user owns. 
+    Window showing an overview of all the plants the user owns.
     These can be sorted on different attributes.
     """
 
@@ -21,7 +22,7 @@ class AllPlantsWindow(QDialog):
         self.userdata = userdata
         self.ui = Ui_AllPlantsWindow()
         self.ui.setupUi(self)
-        self.setWindowIcon(QIcon("./project/art/Plantfolio_logo_small.png"))
+        self.setWindowIcon(QIcon(":/Plantfolio_logo_small.png"))
 
         self.refresh_list()
 
