@@ -150,7 +150,7 @@ def test_no_notifications_when_up_to_date():
     sansevieria = create_plant2()
 
     # Set the plants' last actions as recent enough to avoid triggering notifications
-    maple.watered = [datetime.datetime(2024, 12, 15)]
+    maple.watered = [datetime.datetime(2024, 12, 18)]
     sansevieria.watered = [datetime.datetime(2024, 12, 14)]
 
     notifier = Notifier([maple, sansevieria])
