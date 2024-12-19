@@ -3,6 +3,7 @@ from PySide6.QtGui import QPixmap, QIcon
 from PySide6.QtWidgets import QDialog
 from datetime import datetime
 
+import images_qr
 from project.classes.userdata import UserData
 from project.ui.all_plants import Ui_AllPlantsWindow
 
@@ -44,7 +45,7 @@ class AllPlantsWindow(QDialog):
         plant_id = int(self.ui.select_plant.selectedItems()[0].text().split()[-1])
         selected_plant = self.get_plant(plant_id)
         self.ui.plant_icon.setPixmap(
-            QPixmap(f"./project/art/all plants/{selected_plant.icon_type}_{selected_plant.health.value}.png"))
+            QPixmap(f":/{selected_plant.icon_type}_{selected_plant.health.value}.png"))
         
         self.ui.name_label.setText(f'{selected_plant.personal_name}')
         self.ui.water_label.setText(f'{selected_plant.watered[-1].date()}')

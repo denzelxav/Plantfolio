@@ -1,0 +1,26 @@
+<RCC>
+  <qresource prefix="/" >
+    <file alias="empty_pot.png">project/art/empty_pot.png</file>
+    <file alias="exclamation_mark.png">project/art/exclamation_mark.png</file>
+    <file alias="full_shade.png">project/art/full_shade.png</file>
+    <file alias="full_sun.png">project/art/full_sun.png</file>
+    <file alias="huisje.png">project/art/huisje.png</file>
+    <file alias="nutrition.png">project/art/nutrition.png</file>
+    <file alias="Plantfolio_logo.png">project/art/Plantfolio_logo.png</file>
+    <file alias="Plantfolio_logo_small.png">project/art/Plantfolio_logo_small.png</file>
+    <file alias="spot.png">project/art/spot.png</file>
+    <file alias="water.png">project/art/water.png</file>
+    <file alias="plant_1_dead.png">project/art/all plants/plant_1_dead.png</file>
+    <file alias="plant_1_healthy.png">project/art/all plants/plant_1_healthy.png</file>
+    <file alias="plant_1_slightly_unhealthy.png">project/art/all plants/plant_1_slightly_unhealthy.png</file>
+    <file alias="plant_1_unhealthy.png">project/art/all plants/plant_1_unhealthy.png</file>
+    <file alias="plant_2_dead.png">project/art/all plants/plant_2_dead.png</file>
+    <file alias="plant_2_healthy.png">project/art/all plants/plant_2_healthy.png</file>
+    <file alias="plant_2_slightly_unhealthy.png">project/art/all plants/plant_2_slightly_unhealthy.png</file>
+    <file alias="plant_2_unhealthy.png">project/art/all plants/plant_2_unhealthy.png</file>
+    <file alias="plant_3_dead.png">project/art/all plants/plant_3_dead.png</file>
+    <file alias="plant_3_healthy.png">project/art/all plants/plant_3_healthy.png</file>
+    <file alias="plant_3_slightly_unhealthy.png">project/art/all plants/plant_3_slightly_unhealthy.png</file>
+    <file alias="plant_3_unhealthy.png">project/art/all plants/plant_3_unhealthy.png</file>
+  </qresource>
+</RCC>
