@@ -3,6 +3,7 @@ from typing import TYPE_CHECKING
 from PySide6.QtGui import QPixmap, QIcon
 from PySide6.QtWidgets import QDialog
 
+import images_qr
 from project.classes.public_methods import string_to_sunlight
 from project.classes.spot_notification import Spot
 from project.ui.add_spot import Ui_AddSpotWindow
@@ -15,10 +16,10 @@ class AddSpotWindow(QDialog):
         super().__init__()
         self.ui = Ui_AddSpotWindow()
         self.ui.setupUi(self)
-        self.ui.empty_pot_image.setPixmap(QPixmap(u"./project/art/empty_pot.png"))
+        self.ui.empty_pot_image.setPixmap(QPixmap(":/empty_pot.png"))
         self.room = room
         self.main_menu = main_menu
-        self.setWindowIcon(QIcon("./project/art/Plantfolio_logo_small.png"))
+        self.setWindowIcon(QIcon(":/Plantfolio_logo_small.png"))
 
         #buttons
         self.ui.confirm_spot.accepted.connect(self.add_spot)
