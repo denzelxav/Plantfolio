@@ -31,7 +31,7 @@ class AddSpotWindow(QDialog):
         humidity = self.ui.humidity_input.text()
         temperature = self.ui.temperature_input.value()
 
-        spot = Spot(spot_name, light_level, humidity, None, temperature)
+        spot = Spot(spot_name, light_level, humidity, None, temperature, self.room.room_name)
 
-        self.main_menu.userdata.add_spot(spot, self.room.room_name)
+        self.main_menu.userdata.add_spot(spot)
         self.room.refresh_list()
