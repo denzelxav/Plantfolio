@@ -8,12 +8,12 @@
             "spot_id": "Window",
             "health": 0,
             "watered": [
-                "2024-12-19T20:59:23.461178"
+                "2024-12-19T22:26:57.905908"
             ],
             "nutrition": [
-                "2024-12-19T20:59:23.461178"
+                "2024-12-19T22:26:57.905908"
             ],
-            "repotted": "2024-12-19T20:59:23.461178",
+            "repotted": "2024-12-19T22:26:57.905908",
             "manual_health": false,
             "max_log_size": 4,
             "notes": null,
@@ -23,38 +23,38 @@
             ]
         },
         {
-            "core_id": 435,
+            "core_id": 434,
             "personal_id": 2,
             "personal_name": null,
             "icon_type": "default",
             "spot_id": "Cabinet",
             "health": 3,
             "watered": [
-                "2024-12-19T20:59:23.461178"
+                "2024-12-19T22:26:57.905908"
             ],
             "nutrition": [
-                "2024-12-19T20:59:23.461178"
+                "2024-12-19T22:26:57.905908"
             ],
-            "repotted": "2024-12-19T20:59:23.461178",
+            "repotted": "2024-12-19T22:26:57.905908",
             "manual_health": true,
             "max_log_size": 4,
             "notes": null,
             "current_tasks": []
         },
         {
-            "core_id": 498,
+            "core_id": 502,
             "personal_id": 2,
             "personal_name": null,
             "icon_type": "default",
             "spot_id": "Shelf living room",
             "health": 2,
             "watered": [
-                "2024-12-19T20:59:23.461178"
+                "2024-12-19T22:26:57.905908"
             ],
             "nutrition": [
-                "2024-12-19T20:59:23.461178"
+                "2024-12-19T22:26:57.905908"
             ],
-            "repotted": "2024-12-19T20:59:23.461178",
+            "repotted": "2024-12-19T22:26:57.905908",
             "manual_health": false,
             "max_log_size": 4,
             "notes": "This is a note",
@@ -68,12 +68,12 @@
             "spot_id": "Shelf garage",
             "health": 2,
             "watered": [
-                "2024-12-19T20:59:23.461178"
+                "2024-12-19T22:26:57.905908"
             ],
             "nutrition": [
-                "2024-12-19T20:59:23.461178"
+                "2024-12-19T22:26:57.905908"
             ],
-            "repotted": "2024-12-19T20:59:23.461178",
+            "repotted": "2024-12-19T22:26:57.905908",
             "manual_health": false,
             "max_log_size": 4,
             "notes": null,
