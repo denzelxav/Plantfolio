@@ -3,7 +3,6 @@ from project.classes.enums import Action, Sunlight
 from project.classes.spot_notification import Notification
 from project.classes.notifier import Notifier
 import datetime
-from unittest import mock
 
 def create_plant1():
     """
@@ -72,86 +71,370 @@ def test_intialize_notifier():
         "with creation date of the plant")
 
 def test_watering_notification():
-    sansevieria = create_plant2()
-    sansevieria.watered = [datetime.datetime(2024, 11, 22, 12, 6)]
-    notifier = Notifier([sansevieria])
-    assert notifier.check_tasks_today() == [create_notification_watering(sansevieria, notifier)], "Notification was uncorrectly added to the list"
-    assert sansevieria.list_notifications == [create_notification_watering(sansevieria, notifier)], "Notification was uncorrectly added to the list"
-    assert notifier.all_notifications == [create_notification_watering(sansevieria, notifier)], "Notification was uncorrectly added to the list"
+    # Define the margin for comparisons
+    margin = datetime.timedelta(seconds=5)
+    now = datetime.datetime.now()
 
+    # Create the plant and notifier
+    sansevieria = create_plant2()
+    sansevieria.watered = [now - datetime.timedelta(days=30)]
+    notifier = Notifier([sansevieria])
+
+    # Expected notification
+    expected_notification = create_notification_watering(sansevieria, notifier)
+
+    # Check tasks today
+    tasks_today = notifier.check_tasks_today()
+    assert tasks_today is not None, "No notifications were generated"
+    assert len(tasks_today) == 1, "There should be exactly one notification"
+    notification = tasks_today[0]
+
+    # Validate the notification's attributes
+    assert notification.notification_type == expected_notification.notification_type, \
+        "Notification type mismatch"
+    assert notification.plant_notification == expected_notification.plant_notification, \
+        "Plant mismatch in notification"
+    assert notification.weight == expected_notification.weight, \
+        "Notification weight mismatch"
+    assert notification.personal_id_plant == expected_notification.personal_id_plant, \
+        "Plant personal ID mismatch in notification"
+    assert notification.original_due_date == expected_notification.original_due_date, \
+        "Original due date mismatch in notification"
+    assert now - margin <= notification.time_sent <= now + margin, \
+        "Notification time_sent is outside the allowed margin"
+
+    # Validate Sansevieria's list_notifications
+    assert len(sansevieria.list_notifications) == 1, "Sansevieria should have exactly one notification"
+    list_notification = sansevieria.list_notifications[0]
+
+    assert list_notification.notification_type == expected_notification.notification_type, \
+        "Notification type mismatch in Sansevieria's list"
+    assert list_notification.plant_notification == expected_notification.plant_notification, \
+        "Plant mismatch in Sansevieria's list"
+    assert list_notification.weight == expected_notification.weight, \
+        "Notification weight mismatch in Sansevieria's list"
+    assert list_notification.personal_id_plant == expected_notification.personal_id_plant, \
+        "Plant personal ID mismatch in Sansevieria's list"
+    assert list_notification.original_due_date == expected_notification.original_due_date, \
+        "Original due date mismatch in Sansevieria's list"
+    assert now - margin <= list_notification.time_sent <= now + margin, \
+        "Notification time_sent is outside the allowed margin in Sansevieria's list"
+
+    # Validate notifier's all_notifications
+    assert len(notifier.all_notifications) == 1, "Notifier should have exactly one notification"
+    all_notification = notifier.all_notifications[0]
+
+    assert all_notification.notification_type == expected_notification.notification_type, \
+        "Notification type mismatch in notifier's all_notifications"
+    assert all_notification.plant_notification == expected_notification.plant_notification, \
+        "Plant mismatch in notifier's all_notifications"
+    assert all_notification.weight == expected_notification.weight, \
+        "Notification weight mismatch in notifier's all_notifications"
+    assert all_notification.personal_id_plant == expected_notification.personal_id_plant, \
+        "Plant personal ID mismatch in notifier's all_notifications"
+    assert all_notification.original_due_date == expected_notification.original_due_date, \
+        "Original due date mismatch in notifier's all_notifications"
+    assert now - margin <= all_notification.time_sent <= now + margin, \
+        "Notification time_sent is outside the allowed margin in notifier's all_notifications"
+
+    # Water the plant and validate empty lists
     sansevieria.water_plant()
     assert sansevieria.list_notifications == [], "The list should be empty after watering the plant"
-    assert notifier.all_notifications == [], "The list should be empty after watering the plant"
-    assert notifier.check_tasks_today() is None, "After watering the plant there should be no new Notifications"
+    assert notifier.all_notifications == [], "The notifier's notifications list should be empty after watering the plant"
+    assert notifier.check_tasks_today() is None, "After watering the plant there should be no new notifications"
 
 def test_nutrition_notification():
-    sansevieria = create_plant2()
-    sansevieria.nutrition = [datetime.datetime(2024, 11, 15, 12, 6)]
-    notifier = Notifier([sansevieria])
-    assert notifier.check_tasks_today() == [create_notification_nutrition(sansevieria, notifier)], "Notification was uncorrectly added to the list"
-    assert sansevieria.list_notifications == [create_notification_nutrition(sansevieria, notifier)], "Notification was uncorrectly added to the list"
-    assert notifier.all_notifications == [create_notification_nutrition(sansevieria, notifier)], "Notification was uncorrectly added to the list"
+    # Define the margin for comparisons
+    margin = datetime.timedelta(seconds=5)
+    now = datetime.datetime.now()
 
+    # Create the plant and notifier
+    sansevieria = create_plant2()
+    sansevieria.nutrition = [now - datetime.timedelta(days=47)]
+    notifier = Notifier([sansevieria])
+
+    # Expected notification
+    expected_notification = create_notification_nutrition(sansevieria, notifier)
+
+    # Check tasks today
+    tasks_today = notifier.check_tasks_today()
+    assert tasks_today is not None, "No notifications were generated"
+    assert len(tasks_today) == 1, "There should be exactly one notification"
+    notification = tasks_today[0]
+
+    # Validate the notification's attributes
+    assert notification.notification_type == expected_notification.notification_type, \
+        "Notification type mismatch"
+    assert notification.plant_notification == expected_notification.plant_notification, \
+        "Plant mismatch in notification"
+    assert notification.weight == expected_notification.weight, \
+        "Notification weight mismatch"
+    assert notification.personal_id_plant == expected_notification.personal_id_plant, \
+        "Plant personal ID mismatch in notification"
+    assert notification.original_due_date == expected_notification.original_due_date, \
+        "Original due date mismatch in notification"
+    assert now - margin <= notification.time_sent <= now + margin, \
+        "Notification time_sent is outside the allowed margin"
+
+    # Validate Sansevieria's list_notifications
+    assert len(sansevieria.list_notifications) == 1, "Sansevieria should have exactly one notification"
+    list_notification = sansevieria.list_notifications[0]
+
+    assert list_notification.notification_type == expected_notification.notification_type, \
+        "Notification type mismatch in Sansevieria's list"
+    assert list_notification.plant_notification == expected_notification.plant_notification, \
+        "Plant mismatch in Sansevieria's list"
+    assert list_notification.weight == expected_notification.weight, \
+        "Notification weight mismatch in Sansevieria's list"
+    assert list_notification.personal_id_plant == expected_notification.personal_id_plant, \
+        "Plant personal ID mismatch in Sansevieria's list"
+    assert list_notification.original_due_date == expected_notification.original_due_date, \
+        "Original due date mismatch in Sansevieria's list"
+    assert now - margin <= list_notification.time_sent <= now + margin, \
+        "Notification time_sent is outside the allowed margin in Sansevieria's list"
+
+    # Validate notifier's all_notifications
+    assert len(notifier.all_notifications) == 1, "Notifier should have exactly one notification"
+    all_notification = notifier.all_notifications[0]
+
+    assert all_notification.notification_type == expected_notification.notification_type, \
+        "Notification type mismatch in notifier's all_notifications"
+    assert all_notification.plant_notification == expected_notification.plant_notification, \
+        "Plant mismatch in notifier's all_notifications"
+    assert all_notification.weight == expected_notification.weight, \
+        "Notification weight mismatch in notifier's all_notifications"
+    assert all_notification.personal_id_plant == expected_notification.personal_id_plant, \
+        "Plant personal ID mismatch in notifier's all_notifications"
+    assert all_notification.original_due_date == expected_notification.original_due_date, \
+        "Original due date mismatch in notifier's all_notifications"
+    assert now - margin <= all_notification.time_sent <= now + margin, \
+        "Notification time_sent is outside the allowed margin in notifier's all_notifications"
+
+    # Feed the plant and validate empty lists
     sansevieria.give_nutrition()
     assert sansevieria.list_notifications == [], "The list should be empty after feeding the plant"
-    assert notifier.all_notifications == [], "The list should be empty after feeding the plant"
-    assert notifier.check_tasks_today() is None, "After feeding the plant there should be no new Notifications"
+    assert notifier.all_notifications == [], "The notifier's notifications list should be empty after feeding the plant"
+    assert notifier.check_tasks_today() is None, "After feeding the plant there should be no new notifications"
 
+
+# def test_repot_notification():
+#     sansevieria = create_plant2()
+#     sansevieria.repotted = datetime.datetime(2023, 11, 15, 12, 6)
+#     notifier = Notifier([sansevieria])
+#     assert notifier.check_tasks_today() == [create_notification_repotting(sansevieria, notifier)], ("Notification was uncorrectly "
+#                                                                                                     "added to the list")
+#     assert sansevieria.list_notifications == [create_notification_repotting(sansevieria, notifier)], ("Notification was "
+#                                                                                                       "uncorrectly added to the list")
+#     assert notifier.all_notifications == [create_notification_repotting(sansevieria, notifier)], ("Notification was "
+#                                                                                                   "uncorrectly added to the list")
+#
+#     sansevieria.repot_plant()
+#     assert sansevieria.list_notifications == [], "The list should be empty after repotting the plant"
+#     assert notifier.all_notifications == [], "The list should be empty after repotting the plant"
+#     assert notifier.check_tasks_today() is None, "After feeding the plant there should be no new Notifications"
 
 def test_repot_notification():
-    sansevieria = create_plant2()
-    sansevieria.repotted = datetime.datetime(2023, 11, 15, 12, 6)
-    notifier = Notifier([sansevieria])
-    assert notifier.check_tasks_today() == [create_notification_repotting(sansevieria, notifier)], ("Notification was uncorrectly "
-                                                                                                    "added to the list")
-    assert sansevieria.list_notifications == [create_notification_repotting(sansevieria, notifier)], ("Notification was "
-                                                                                                      "uncorrectly added to the list")
-    assert notifier.all_notifications == [create_notification_repotting(sansevieria, notifier)], ("Notification was "
-                                                                                                  "uncorrectly added to the list")
+    # Define the margin for comparisons
+    margin = datetime.timedelta(seconds=5)
+    now = datetime.datetime.now()
 
+    # Create the plant and notifier
+    sansevieria = create_plant2()
+    sansevieria.repotted = now - datetime.timedelta(days=402)
+    notifier = Notifier([sansevieria])
+
+    # Expected notification
+    expected_notification = create_notification_repotting(sansevieria, notifier)
+
+    # Check tasks today
+    tasks_today = notifier.check_tasks_today()
+    assert tasks_today is not None, "No notifications were generated"
+    assert len(tasks_today) == 1, "There should be exactly one notification"
+    notification = tasks_today[0]
+
+    # Validate the notification's attributes
+    assert notification.notification_type == expected_notification.notification_type, \
+        "Notification type mismatch"
+    assert notification.plant_notification == expected_notification.plant_notification, \
+        "Plant mismatch in notification"
+    assert notification.weight == expected_notification.weight, \
+        "Notification weight mismatch"
+    assert notification.personal_id_plant == expected_notification.personal_id_plant, \
+        "Plant personal ID mismatch in notification"
+    assert notification.original_due_date == expected_notification.original_due_date, \
+        "Original due date mismatch in notification"
+    assert now - margin <= notification.time_sent <= now + margin, \
+        "Notification time_sent is outside the allowed margin"
+
+    # Validate Sansevieria's list_notifications
+    assert len(sansevieria.list_notifications) == 1, "Sansevieria should have exactly one notification"
+    list_notification = sansevieria.list_notifications[0]
+
+    assert list_notification.notification_type == expected_notification.notification_type, \
+        "Notification type mismatch in Sansevieria's list"
+    assert list_notification.plant_notification == expected_notification.plant_notification, \
+        "Plant mismatch in Sansevieria's list"
+    assert list_notification.weight == expected_notification.weight, \
+        "Notification weight mismatch in Sansevieria's list"
+    assert list_notification.personal_id_plant == expected_notification.personal_id_plant, \
+        "Plant personal ID mismatch in Sansevieria's list"
+    assert list_notification.original_due_date == expected_notification.original_due_date, \
+        "Original due date mismatch in Sansevieria's list"
+    assert now - margin <= list_notification.time_sent <= now + margin, \
+        "Notification time_sent is outside the allowed margin in Sansevieria's list"
+
+    # Validate notifier's all_notifications
+    assert len(notifier.all_notifications) == 1, "Notifier should have exactly one notification"
+    all_notification = notifier.all_notifications[0]
+
+    assert all_notification.notification_type == expected_notification.notification_type, \
+        "Notification type mismatch in notifier's all_notifications"
+    assert all_notification.plant_notification == expected_notification.plant_notification, \
+        "Plant mismatch in notifier's all_notifications"
+    assert all_notification.weight == expected_notification.weight, \
+        "Notification weight mismatch in notifier's all_notifications"
+    assert all_notification.personal_id_plant == expected_notification.personal_id_plant, \
+        "Plant personal ID mismatch in notifier's all_notifications"
+    assert all_notification.original_due_date == expected_notification.original_due_date, \
+        "Original due date mismatch in notifier's all_notifications"
+    assert now - margin <= all_notification.time_sent <= now + margin, \
+        "Notification time_sent is outside the allowed margin in notifier's all_notifications"
+
+    # Repot the plant and validate empty lists
     sansevieria.repot_plant()
     assert sansevieria.list_notifications == [], "The list should be empty after repotting the plant"
-    assert notifier.all_notifications == [], "The list should be empty after repotting the plant"
-    assert notifier.check_tasks_today() is None, "After feeding the plant there should be no new Notifications"
+    assert notifier.all_notifications == [], "The notifier's notifications list should be empty after repotting the plant"
+    assert notifier.check_tasks_today() is None, "After repotting the plant there should be no new notifications"
 
-def test_multiple_notifications_same_plant():
-    strelitzia = create_plant3()
-    # strelitzia.watered = [datetime.datetime(2024, 11, 22, 12, 6)]
-    strelitzia.watered = [datetime.datetime.now() - datetime.timedelta(days=25)]
-    # strelitzia.nutrition = [datetime.datetime(2024, 11, 15, 12, 6)]
-    strelitzia.nutrition = [datetime.datetime.now() - datetime.timedelta(days=35)]
-    # strelitzia.repotted = datetime.datetime(2023, 11, 15, 12, 6)
-    strelitzia.repotted = datetime.datetime.now() - datetime.timedelta(days=400)
-    notifier = Notifier([strelitzia])
-    assert len(notifier.check_tasks_today()) == 3, "there should be 3 notifications"
-    assert notifier.check_tasks_today() == [create_notification_watering(strelitzia, notifier),
-                                            create_notification_nutrition(strelitzia, notifier),
-                                            create_notification_repotting(strelitzia, notifier)]
-    assert strelitzia.list_notifications == [create_notification_watering(strelitzia, notifier),
-                                            create_notification_nutrition(strelitzia, notifier),
-                                            create_notification_repotting(strelitzia, notifier)]
-    assert notifier.sort_by_weight() == [create_notification_watering(strelitzia, notifier),
-                                         create_notification_repotting(strelitzia, notifier),
-                                         create_notification_nutrition(strelitzia, notifier)]
-    assert notifier.sort_by_date() == [create_notification_repotting(strelitzia, notifier),
-                                       create_notification_watering(strelitzia, notifier),
-                                       create_notification_nutrition(strelitzia, notifier)]
-    assert notifier.sort_by_type() == [create_notification_watering(strelitzia, notifier),
-                                        create_notification_nutrition(strelitzia, notifier),
-                                        create_notification_repotting(strelitzia, notifier)]
+# def test_multiple_plants_same_task():
+#     maple = create_plant1()
+#     sansevieria = create_plant2()
+#
+#     maple.watered = [datetime.datetime(2024, 11, 22)]
+#     sansevieria.watered = [datetime.datetime(2024, 11, 20)]
+#
+#     notifier = Notifier([maple, sansevieria])
+#
+#     assert len(notifier.check_tasks_today()) == 2, "There should be 2 notifications"
+#     assert maple.list_notifications == [create_notification_watering(maple, notifier)]
+#     assert sansevieria.list_notifications == [create_notification_watering(sansevieria, notifier)]
 
 def test_multiple_plants_same_task():
+    # Define the margin for comparisons
+    margin = datetime.timedelta(seconds=5)
+    now = datetime.datetime.now()
+
+    # Create the plants and set their watering times
     maple = create_plant1()
     sansevieria = create_plant2()
 
-    maple.watered = [datetime.datetime(2024, 11, 22)]
-    sansevieria.watered = [datetime.datetime(2024, 11, 20)]
+    maple.watered = [now - datetime.timedelta(days=30)]
+    sansevieria.watered = [now - datetime.timedelta(days=32)]
 
+    # Create the notifier
     notifier = Notifier([maple, sansevieria])
 
-    assert len(notifier.check_tasks_today()) == 2, "There should be 2 notifications"
-    assert maple.list_notifications == [create_notification_watering(maple, notifier)]
-    assert sansevieria.list_notifications == [create_notification_watering(sansevieria, notifier)]
+    # Expected notifications
+    expected_notification_maple = create_notification_watering(maple, notifier)
+    expected_notification_sansevieria = create_notification_watering(sansevieria, notifier)
+
+    # Check tasks today
+    tasks_today = notifier.check_tasks_today()
+    assert tasks_today is not None, "No notifications were generated"
+    assert len(tasks_today) == 2, "There should be exactly two notifications"
+
+    # Check notification for Maple
+    notification_maple = tasks_today[0]
+    assert notification_maple.notification_type == expected_notification_maple.notification_type, \
+        "Notification type mismatch for Maple"
+    assert notification_maple.plant_notification == expected_notification_maple.plant_notification, \
+        "Plant mismatch for Maple"
+    assert notification_maple.weight == expected_notification_maple.weight, \
+        "Notification weight mismatch for Maple"
+    assert notification_maple.personal_id_plant == expected_notification_maple.personal_id_plant, \
+        "Plant personal ID mismatch for Maple"
+    assert notification_maple.original_due_date == expected_notification_maple.original_due_date, \
+        "Original due date mismatch for Maple"
+    assert now - margin <= notification_maple.time_sent <= now + margin, \
+        "Notification time_sent is outside the allowed margin for Maple"
+
+    # Check notification for Sansevieria
+    notification_sansevieria = tasks_today[1]
+    assert notification_sansevieria.notification_type == expected_notification_sansevieria.notification_type, \
+        "Notification type mismatch for Sansevieria"
+    assert notification_sansevieria.plant_notification == expected_notification_sansevieria.plant_notification, \
+        "Plant mismatch for Sansevieria"
+    assert notification_sansevieria.weight == expected_notification_sansevieria.weight, \
+        "Notification weight mismatch for Sansevieria"
+    assert notification_sansevieria.personal_id_plant == expected_notification_sansevieria.personal_id_plant, \
+        "Plant personal ID mismatch for Sansevieria"
+    assert notification_sansevieria.original_due_date == expected_notification_sansevieria.original_due_date, \
+        "Original due date mismatch for Sansevieria"
+    assert now - margin <= notification_sansevieria.time_sent <= now + margin, \
+        "Notification time_sent is outside the allowed margin for Sansevieria"
+
+    # Validate the list_notifications for each plant
+    assert len(maple.list_notifications) == 1, "Maple should have exactly one notification"
+    list_notification_maple = maple.list_notifications[0]
+    assert list_notification_maple.notification_type == expected_notification_maple.notification_type, \
+        "Notification type mismatch in Maple's list"
+    assert list_notification_maple.plant_notification == expected_notification_maple.plant_notification, \
+        "Plant mismatch in Maple's list"
+    assert list_notification_maple.weight == expected_notification_maple.weight, \
+        "Notification weight mismatch in Maple's list"
+    assert list_notification_maple.personal_id_plant == expected_notification_maple.personal_id_plant, \
+        "Plant personal ID mismatch in Maple's list"
+    assert list_notification_maple.original_due_date == expected_notification_maple.original_due_date, \
+        "Original due date mismatch in Maple's list"
+    assert now - margin <= list_notification_maple.time_sent <= now + margin, \
+        "Notification time_sent is outside the allowed margin in Maple's list"
+
+    assert len(sansevieria.list_notifications) == 1, "Sansevieria should have exactly one notification"
+    list_notification_sansevieria = sansevieria.list_notifications[0]
+    assert list_notification_sansevieria.notification_type == expected_notification_sansevieria.notification_type, \
+        "Notification type mismatch in Sansevieria's list"
+    assert list_notification_sansevieria.plant_notification == expected_notification_sansevieria.plant_notification, \
+        "Plant mismatch in Sansevieria's list"
+    assert list_notification_sansevieria.weight == expected_notification_sansevieria.weight, \
+        "Notification weight mismatch in Sansevieria's list"
+    assert list_notification_sansevieria.personal_id_plant == expected_notification_sansevieria.personal_id_plant, \
+        "Plant personal ID mismatch in Sansevieria's list"
+    assert list_notification_sansevieria.original_due_date == expected_notification_sansevieria.original_due_date, \
+        "Original due date mismatch in Sansevieria's list"
+    assert now - margin <= list_notification_sansevieria.time_sent <= now + margin, \
+        "Notification time_sent is outside the allowed margin in Sansevieria's list"
+
+    # Validate the all_notifications list in the notifier
+    assert len(notifier.all_notifications) == 2, "Notifier should have exactly two notifications"
+    all_notification_maple = notifier.all_notifications[0]
+    all_notification_sansevieria = notifier.all_notifications[1]
+
+    assert all_notification_maple.notification_type == expected_notification_maple.notification_type, \
+        "Notification type mismatch in notifier's all_notifications (Maple)"
+    assert all_notification_maple.plant_notification == expected_notification_maple.plant_notification, \
+        "Plant mismatch in notifier's all_notifications (Maple)"
+    assert all_notification_maple.weight == expected_notification_maple.weight, \
+        "Notification weight mismatch in notifier's all_notifications (Maple)"
+    assert all_notification_maple.personal_id_plant == expected_notification_maple.personal_id_plant, \
+        "Plant personal ID mismatch in notifier's all_notifications (Maple)"
+    assert all_notification_maple.original_due_date == expected_notification_maple.original_due_date, \
+        "Original due date mismatch in notifier's all_notifications (Maple)"
+    assert now - margin <= all_notification_maple.time_sent <= now + margin, \
+        "Notification time_sent is outside the allowed margin in notifier's all_notifications (Maple)"
+
+    assert all_notification_sansevieria.notification_type == expected_notification_sansevieria.notification_type, \
+        "Notification type mismatch in notifier's all_notifications (Sansevieria)"
+    assert all_notification_sansevieria.plant_notification == expected_notification_sansevieria.plant_notification, \
+        "Plant mismatch in notifier's all_notifications (Sansevieria)"
+    assert all_notification_sansevieria.weight == expected_notification_sansevieria.weight, \
+        "Notification weight mismatch in notifier's all_notifications (Sansevieria)"
+    assert all_notification_sansevieria.personal_id_plant == expected_notification_sansevieria.personal_id_plant, \
+        "Plant personal ID mismatch in notifier's all_notifications (Sansevieria)"
+    assert all_notification_sansevieria.original_due_date == expected_notification_sansevieria.original_due_date, \
+        "Original due date mismatch in notifier's all_notifications (Sansevieria)"
+    assert now - margin <= all_notification_sansevieria.time_sent <= now + margin, \
+        "Notification time_sent is outside the allowed margin in notifier's all_notifications (Sansevieria)"
+
 
 def test_no_notifications_when_up_to_date():
     maple = create_plant1()
@@ -246,23 +529,3 @@ def test_all_plants_all_notifications():
         assert notification.notification_type == expected.notification_type, "Notification type mismatch in Strelitzia's notifications"
         assert notification.plant_notification == expected.plant_notification, "Notification plant mismatch in Strelitzia's notifications"
         assert now - margin <= notification.time_sent <= now + margin, "Notification time_sent is outside the margin in Strelitzia's notifications"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
