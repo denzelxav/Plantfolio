@@ -8,18 +8,18 @@
             "spot_id": "Window",
             "health": "dead",
             "watered": [
-                "2024-12-18T23:39:29.793852"
+                "2025-01-04T14:35:31.271429"
             ],
             "nutrition": [
-                "2024-12-18T23:39:29.793852"
+                "2025-01-04T14:35:31.271429"
             ],
-            "repotted": null,
+            "repotted": "2025-01-04T14:35:31.271429",
             "manual_health": false,
             "max_log_size": 4,
             "notes": null,
             "current_tasks": [
-                "repot",
-                "water"
+                "water",
+                "repot"
             ]
         },
         {
@@ -30,12 +30,12 @@
             "spot_id": "Cabinet",
             "health": "healthy",
             "watered": [
-                "2024-12-18T23:39:29.793852"
+                "2025-01-04T14:35:31.271429"
             ],
             "nutrition": [
-                "2024-12-18T23:39:29.793852"
+                "2025-01-04T14:35:31.271429"
             ],
-            "repotted": null,
+            "repotted": "2025-01-04T14:35:31.271429",
             "manual_health": true,
             "max_log_size": 4,
             "notes": null,
@@ -49,12 +49,12 @@
             "spot_id": "Shelf living room",
             "health": "slightly_unhealthy",
             "watered": [
-                "2024-12-18T23:39:29.793852"
+                "2025-01-04T14:35:31.271429"
             ],
             "nutrition": [
-                "2024-12-18T23:39:29.793852"
+                "2025-01-04T14:35:31.271429"
             ],
-            "repotted": "2024-12-18T23:39:29.793852",
+            "repotted": "2025-01-04T14:35:31.271429",
             "manual_health": false,
             "max_log_size": 4,
             "notes": "This is a note",
@@ -68,12 +68,12 @@
             "spot_id": "Shelf garage",
             "health": "slightly_unhealthy",
             "watered": [
-                "2024-12-18T23:39:29.793852"
+                "2025-01-04T14:35:31.271429"
             ],
             "nutrition": [
-                "2024-12-18T23:39:29.793852"
+                "2025-01-04T14:35:31.271429"
             ],
-            "repotted": null,
+            "repotted": "2025-01-04T14:35:31.271429",
             "manual_health": false,
             "max_log_size": 4,
             "notes": null,

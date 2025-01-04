@@ -12,19 +12,19 @@ class UserData:
     Userdata stores all the current data of the user. 
     It has the attributes:
 
-    Plants, which keeps track of all the plants the user currently owns, 
+    Plants, which keeps track of all the plants the user currently owns,
     this is a set of Plant objects.
 
     Rooms, which is a dictionary where the key is the room name and the
     value is a list of Spot objects.
 
-    Preferences, which is a dictionary where the key is the type 
+    Preferences, which is a dictionary where the key is the type
     of preference, such as 'pet toxicity' and the value is the
     information about this preference
     """
 
     def __init__(self) -> None:
-        self.plants: list[Plant]= []
+        self.plants: set[Plant]= set()
         self.rooms: dict[str, list[Spot]] = {}
         self.pet_toxicity = False
 
@@ -51,7 +51,7 @@ class UserData:
 
         if assigned_spot in [spot for room in self.rooms.values() for spot in room]:
             new_plant.change_spot(assigned_spot)
-            self.plants.append(new_plant)
+            self.plants.add(new_plant)
 
     def add_spot(self, new_spot: Spot) -> None:
         """
@@ -87,7 +87,7 @@ class UserData:
 
     def delete_room(self, room_name: str) -> None:
         """
-        Removes a room 
+        Removes a room
         """
         if not self.rooms[room_name]:
             del self.rooms[room_name]
