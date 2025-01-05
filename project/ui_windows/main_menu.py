@@ -37,6 +37,7 @@ class MainMenu(QMainWindow):
         self.setWindowIcon(QIcon(":/Plantfolio_logo_small.png"))
 
         #buttons
+        self.ui.Notification_list.addItems(self.notifier.check_tasks_today)
         self.ui.add_room.clicked.connect(self.add_room)
         self.ui.water_all.clicked.connect(self.userdata.water_all)
         self.ui.open_room.clicked.connect(self.open_room)
@@ -73,7 +74,7 @@ class MainMenu(QMainWindow):
 
     @Slot()
     def open_notifier(self):
-        self.notifier_window = NotifierWindow(#Sjhwhw)
+        self.notifier_window = NotifierWindow(self)
         self.notifier_window.show()
 
     def handle_sort_change(self, index):
@@ -82,11 +83,23 @@ class MainMenu(QMainWindow):
         """
         selected_option = self.ui.sort_notifications_by.itemText(index)
         if selected_option == "day":
-            self.notifier.sort_by_date()
+            self.ui.Notification_list.clear()
+            notifications = self.notifier.sort_by_date()
+            for notification in notifications:
+                self.ui.Notification_list.addItems(notification.personal_id_plant,
+                                                   notification.notification_type)
         elif selected_option == "weight":
-            self.notifier.sort_by_weight()
+            self.ui.Notification_list.clear()
+            notifications = self.notifier.sort_by_weight()
+            for notification in notifications:
+                self.ui.Notification_list.addItems(notification.personal_id_plant,
+                                                   notification.notification_type)
         elif selected_option == "type":
-            self.notifier.sort_by_type()
+            self.ui.Notification_list.clear()
+            notifications = self.notifier.sort_by_type()
+            for notification in notifications:
+                self.ui.Notification_list.addItems(notification.personal_id_plant,
+                                                   notification.notification_type)
 
     @Slot()
     def open_all_plants(self) -> None:

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Notifier_windows</class>
- <widget class="QMainWindow" name="Notifier_windows">
+ <class>Notifier_window</class>
+ <widget class="QMainWindow" name="Notifier_window">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -13,43 +13,72 @@
   <property name="windowTitle">
    <string>Notification</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(151, 255, 135);</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="personal_id_plant">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>40</y>
+      <x>40</x>
+      <y>80</y>
+      <width>161</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>personal_id_plant</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="notification_type">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>110</y>
       <width>121</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
-     <string>Notification type</string>
+     <string>notificication_type</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QComboBox" name="Notifications">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>90</y>
-      <width>49</width>
+      <x>30</x>
+      <y>20</y>
+      <width>401</width>
+      <height>41</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="weight">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>140</y>
+      <width>91</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
-     <string>corresponding plant</string>
+     <string>weight</string>
     </property>
    </widget>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>445</width>
-     <height>33</height>
-    </rect>
-   </property>
+   <widget class="QLabel" name="original_due_date">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>170</y>
+      <width>121</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>original_due_date</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>

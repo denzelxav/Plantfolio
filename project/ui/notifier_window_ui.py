@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'notifier_window.ui'
+## Form generated from reading UI file 'notifier_windowtgapcq.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.8.1
 ##
@@ -15,39 +15,48 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QLabel, QMainWindow, QMenuBar,
+from PySide6.QtWidgets import (QApplication, QComboBox, QLabel, QMainWindow,
     QSizePolicy, QStatusBar, QWidget)
 
-class Ui_Notifier_windows(object):
-    def setupUi(self, Notifier_windows):
-        if not Notifier_windows.objectName():
-            Notifier_windows.setObjectName(u"Notifier_windows")
-        Notifier_windows.resize(445, 305)
-        self.centralwidget = QWidget(Notifier_windows)
+class Ui_Notifier_window(object):
+    def setupUi(self, Notifier_window):
+        if not Notifier_window.objectName():
+            Notifier_window.setObjectName(u"Notifier_window")
+        Notifier_window.resize(445, 305)
+        Notifier_window.setStyleSheet(u"background-color: rgb(151, 255, 135);")
+        self.centralwidget = QWidget(Notifier_window)
         self.centralwidget.setObjectName(u"centralwidget")
-        self.label = QLabel(self.centralwidget)
-        self.label.setObjectName(u"label")
-        self.label.setGeometry(QRect(50, 40, 121, 16))
-        self.label_2 = QLabel(self.centralwidget)
-        self.label_2.setObjectName(u"label_2")
-        self.label_2.setGeometry(QRect(50, 90, 49, 16))
-        Notifier_windows.setCentralWidget(self.centralwidget)
-        self.menubar = QMenuBar(Notifier_windows)
-        self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 445, 33))
-        Notifier_windows.setMenuBar(self.menubar)
-        self.statusbar = QStatusBar(Notifier_windows)
+        self.personal_id_plant = QLabel(self.centralwidget)
+        self.personal_id_plant.setObjectName(u"personal_id_plant")
+        self.personal_id_plant.setGeometry(QRect(40, 80, 161, 16))
+        self.notification_type = QLabel(self.centralwidget)
+        self.notification_type.setObjectName(u"notification_type")
+        self.notification_type.setGeometry(QRect(40, 110, 121, 16))
+        self.Notifications = QComboBox(self.centralwidget)
+        self.Notifications.setObjectName(u"Notifications")
+        self.Notifications.setGeometry(QRect(30, 20, 401, 41))
+        self.weight = QLabel(self.centralwidget)
+        self.weight.setObjectName(u"weight")
+        self.weight.setGeometry(QRect(40, 140, 91, 16))
+        self.original_due_date = QLabel(self.centralwidget)
+        self.original_due_date.setObjectName(u"original_due_date")
+        self.original_due_date.setGeometry(QRect(40, 170, 121, 16))
+        Notifier_window.setCentralWidget(self.centralwidget)
+        self.statusbar = QStatusBar(Notifier_window)
         self.statusbar.setObjectName(u"statusbar")
-        Notifier_windows.setStatusBar(self.statusbar)
+        Notifier_window.setStatusBar(self.statusbar)
 
-        self.retranslateUi(Notifier_windows)
+        self.retranslateUi(Notifier_window)
 
-        QMetaObject.connectSlotsByName(Notifier_windows)
+        QMetaObject.connectSlotsByName(Notifier_window)
     # setupUi
 
-    def retranslateUi(self, Notifier_windows):
-        Notifier_windows.setWindowTitle(QCoreApplication.translate("Notifier_windows", u"Notification", None))
-        self.label.setText(QCoreApplication.translate("Notifier_windows", u"Notification type", None))
-        self.label_2.setText(QCoreApplication.translate("Notifier_windows", u"corresponding plant", None))
+    def retranslateUi(self, Notifier_window):
+        Notifier_window.setWindowTitle(QCoreApplication.translate("Notifier_window", u"Notification", None))
+        self.personal_id_plant.setText(QCoreApplication.translate("Notifier_window", u"personal_id_plant", None))
+        self.notification_type.setText(QCoreApplication.translate("Notifier_window", u"notificication_type", None))
+        self.weight.setText(QCoreApplication.translate("Notifier_window", u"weight", None))
+        self.original_due_date.setText(QCoreApplication.translate("Notifier_window", u"original_due_date", None))
     # retranslateUi
+
 
