@@ -4,6 +4,7 @@ from PySide6 import QtWidgets
 from PySide6.QtGui import QPixmap, QIcon
 from PySide6.QtWidgets import QDialog, QMainWindow, QListWidgetItem
 import images_qr
+from project.classes.spot_notification import Notification
 
 from project.ui.notifier_window_ui import Ui_Notifier_window
 if TYPE_CHECKING:
@@ -21,7 +22,7 @@ class NotifierWindow(QDialog):
         self.notifier = notifier
 
         # Initialize a placeholder to store notifications
-        self.notifications_list = []
+        self.notifications_list: list[Notification] = []
 
         # connect buttons
         self.ui.Notifications.clicked.connect(self.update_notifications_combobox)
