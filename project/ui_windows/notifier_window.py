@@ -7,7 +7,6 @@ import images_qr
 
 from project.ui.notifier_window_ui import Ui_Notifier_window
 if TYPE_CHECKING:
-    from project.classes.spot_notification import Spot
     from project.classes.notifier import Notifier
 
 class NotifierWindow(QDialog):
@@ -15,7 +14,7 @@ class NotifierWindow(QDialog):
     Window in which you can individually inspect notification
     on all their properties like name, type, weight, orginal_due_date
     """
-    def __init__(self, notifier: Notifier, spot: Spot):
+    def __init__(self, notifier: Notifier):
         super().__init__()
         self.ui = Ui_Notifier_window()
         self.ui.setupUi(self)
