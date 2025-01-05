@@ -37,12 +37,11 @@ class MainMenu(QMainWindow):
         self.setWindowIcon(QIcon(":/Plantfolio_logo_small.png"))
 
         #buttons
-        self.ui.Notification_list.addItems(self.notifier.check_tasks_today)
         self.ui.add_room.clicked.connect(self.add_room)
         self.ui.water_all.clicked.connect(self.userdata.water_all)
         self.ui.open_room.clicked.connect(self.open_room)
         self.ui.all_plants.clicked.connect(self.open_all_plants)
-        self.ui.refresh_notifications.clicked.connect(self.notifier.check_tasks_today)
+        self.ui.refresh_notifications.clicked.connect(self.update_notifications)
         self.ui.sort_notifications_by.currentIndexChanged.connect(self.handle_sort_change)
         self.ui.open_notifier.clicked.connect(self.open_notifier)
 
@@ -62,6 +61,15 @@ class MainMenu(QMainWindow):
         room_name = self.ui.room_list.selectedItems()[0].text()
         self.room_view_window = RoomViewWindow(room_name , self)
         self.room_view_window.show()
+
+    def update_notifications(self):
+
+        self.ui.Notification_list.clear()
+        notifications = self.notifier.check_tasks_today
+        for notification in notifications:
+            self.ui.Notification_list.addItems(f"{notification.personal_id_plant}, "
+                                               f"{notification.notification_type}")
+
 
     def delete_room(self, room: RoomViewWindow) -> None:
         """
@@ -86,20 +94,20 @@ class MainMenu(QMainWindow):
             self.ui.Notification_list.clear()
             notifications = self.notifier.sort_by_date()
             for notification in notifications:
-                self.ui.Notification_list.addItems(notification.personal_id_plant,
-                                                   notification.notification_type)
+                self.ui.Notification_list.addItems(f"{notification.personal_id_plant}, "
+                                                   f"{notification.notification_type}")
         elif selected_option == "weight":
             self.ui.Notification_list.clear()
             notifications = self.notifier.sort_by_weight()
             for notification in notifications:
-                self.ui.Notification_list.addItems(notification.personal_id_plant,
-                                                   notification.notification_type)
+                self.ui.Notification_list.addItems(f"{notification.personal_id_plant}, "
+                                                   f"{notification.notification_type}")
         elif selected_option == "type":
             self.ui.Notification_list.clear()
             notifications = self.notifier.sort_by_type()
             for notification in notifications:
-                self.ui.Notification_list.addItems(notification.personal_id_plant,
-                                                   notification.notification_type)
+                self.ui.Notification_list.addItems(f"{notification.personal_id_plant}, "
+                                                   f"{notification.notification_type}")
 
     @Slot()
     def open_all_plants(self) -> None:
@@ -116,5 +124,3 @@ class MainMenu(QMainWindow):
         self.ui.room_list.clear()
         for room in self.userdata.rooms:
             self.ui.room_list.addItem(room)
-
-

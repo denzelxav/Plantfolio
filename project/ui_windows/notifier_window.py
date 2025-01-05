@@ -59,5 +59,3 @@ class NotifierWindow(QDialog):
         self.ui.notification_type.setText(f"Type of Notification: {notification.notification_type}")
         self.ui.weight.setText(f"Weight: {notification.weight}")
         self.ui.original_due_date.setText(f"Original due date: {notification.original_due_date}")
-
-
