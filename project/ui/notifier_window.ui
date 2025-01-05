@@ -14,7 +14,8 @@
    <string>Notification</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(151, 255, 135);</string>
+   <string notr="true">
+background-color: rgb(191, 255, 184);</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="personal_id_plant">
