@@ -1,5 +1,8 @@
 """The main application window"""
 
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
 from PySide6.QtCore import Slot
 from PySide6.QtGui import QPixmap, QIcon
 from PySide6.QtWidgets import QMainWindow
@@ -9,6 +12,9 @@ from project.ui.output import Ui_MainMenu
 from project.ui_windows.add_room_window import AddRoomWindow
 from project.ui_windows.room_view_window import RoomViewWindow
 from project.ui_windows.all_plants_window import AllPlantsWindow
+from project.ui_windows.notifier_window import NotifierWindow
+if TYPE_CHECKING:
+    from project.classes.notifier import Notifier
 
 import images_qr
 
@@ -20,10 +26,11 @@ class MainMenu(QMainWindow):
     the recommender, and see your notifications."""
 
 
-    def __init__(self, userdata: UserData) -> None:
+    def __init__(self, userdata: UserData, notifier: Notifier) -> None:
         super().__init__()
         # Create a file with pyside6-uic project/ui/app.ui -o project/ui/output.py
         self.userdata = userdata
+        self.notifier = notifier
         self.ui = Ui_MainMenu()
         self.ui.setupUi(self)
         self.ui.PlantFolio_Icon.setPixmap(QPixmap(u":/Plantfolio_logo.png"))
@@ -34,7 +41,9 @@ class MainMenu(QMainWindow):
         self.ui.water_all.clicked.connect(self.userdata.water_all)
         self.ui.open_room.clicked.connect(self.open_room)
         self.ui.all_plants.clicked.connect(self.open_all_plants)
-
+        self.ui.refresh_notifications.clicked.connect(self.notifier.check_tasks_today)
+        self.ui.sort_notifications_by.currentIndexChanged.connect(self.handle_sort_change)
+        self.ui.open_notifier.clicked.connect(self.open_notifier)
 
     @Slot()
     def add_room(self) -> None:
@@ -63,6 +72,23 @@ class MainMenu(QMainWindow):
         self.refresh_rooms()
 
     @Slot()
+    def open_notifier(self):
+        self.notifier_window = NotifierWindow(#Sjhwhw)
+        self.notifier_window.show()
+
+    def handle_sort_change(self, index):
+        """
+        Handle the change in sorting
+        """
+        selected_option = self.ui.sort_notifications_by.itemText(index)
+        if selected_option == "day":
+            self.notifier.sort_by_date()
+        elif selected_option == "weight":
+            self.notifier.sort_by_weight()
+        elif selected_option == "type":
+            self.notifier.sort_by_type()
+
+    @Slot()
     def open_all_plants(self) -> None:
         """
         Opens all plants window
@@ -77,3 +103,5 @@ class MainMenu(QMainWindow):
         self.ui.room_list.clear()
         for room in self.userdata.rooms:
             self.ui.room_list.addItem(room)
+
+
