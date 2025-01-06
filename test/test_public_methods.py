@@ -16,6 +16,9 @@ def test_string_to_sunlight():
     assert string_to_sunlight('filtered shade') == Sunlight.PART_SHADE
     assert string_to_sunlight('full sun') == Sunlight.FULL_SUN
     assert string_to_sunlight(Sunlight.FULL_SUN) == Sunlight.FULL_SUN
+    assert string_to_sunlight(Sunlight.PART_SUN) == Sunlight.PART_SUN
+    assert string_to_sunlight(Sunlight.PART_SHADE) == Sunlight.PART_SHADE
+    assert string_to_sunlight(Sunlight.FULL_SHADE) == Sunlight.FULL_SHADE
     with pytest.raises(ValueError) as excinfo:
         string_to_sunlight("Unknown value")
     assert str(excinfo.value) == "Unexpected sunlight value Unknown value"
@@ -31,7 +34,9 @@ def test_string_to_water_frequency():
     assert string_to_water_frequency("Frequent") == datetime.timedelta(days=4)
     assert string_to_water_frequency("Average") == datetime.timedelta(weeks=1)
     assert string_to_water_frequency("Minimum") == datetime.timedelta(weeks=2)
-    assert string_to_water_frequency(datetime.timedelta(days=1)) == datetime.timedelta(days=1)
+    assert string_to_water_frequency(datetime.timedelta(days=4)) == datetime.timedelta(days=4)
+    assert string_to_water_frequency(datetime.timedelta(weeks=1)) == datetime.timedelta(weeks=1)
+    assert string_to_water_frequency(datetime.timedelta(weeks=2)) == datetime.timedelta(weeks=2)
     with pytest.raises(ValueError) as excinfo:
         string_to_water_frequency("Unknown value")
     assert str(excinfo.value) == "Unexpected watering_string Unknown value"
