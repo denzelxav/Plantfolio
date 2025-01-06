@@ -9,16 +9,13 @@ from project.ui.output import Ui_MainMenu
 from project.ui_windows.add_room_window import AddRoomWindow
 from project.ui_windows.room_view_window import RoomViewWindow
 from project.ui_windows.all_plants_window import AllPlantsWindow
+from project.classes.save_and_load_userdata import save_user_data
 
 import images_qr
 
 
 class MainMenu(QMainWindow):
-    """
-    This is the main window that will show up when starting the application.
-    From here you can add and open rooms, open the all plants window,
-    the recommender, and see your notifications."""
-
+    """Example application"""
 
     def __init__(self, userdata: UserData) -> None:
         super().__init__()
@@ -34,6 +31,9 @@ class MainMenu(QMainWindow):
         self.ui.water_all.clicked.connect(self.userdata.water_all)
         self.ui.open_room.clicked.connect(self.open_room)
         self.ui.all_plants.clicked.connect(self.open_all_plants)
+        self.ui.save_button.clicked.connect(self.save)
+
+        self.refresh_rooms()
 
 
     @Slot()
@@ -52,6 +52,10 @@ class MainMenu(QMainWindow):
         room_name = self.ui.room_list.selectedItems()[0].text()
         self.room_view_window = RoomViewWindow(room_name , self)
         self.room_view_window.show()
+
+    @Slot()
+    def save(self):
+        save_user_data(self.userdata)
 
     def delete_room(self, room: RoomViewWindow) -> None:
         """

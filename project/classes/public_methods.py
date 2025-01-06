@@ -85,7 +85,7 @@ def string_to_health(health: str) -> Health:
     match health.lower():
         case "healthy":
             return Health.HEALTHY
-        case "slightly unhealthy":
+        case "slightly unhealthy" | "slightly_unhealthy":
             return Health.SLIGHTLY_UNHEALTHY
         case "unhealthy":
             return Health.UNHEALTHY
