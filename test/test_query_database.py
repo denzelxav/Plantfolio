@@ -17,17 +17,14 @@ def test_query_plant_details():
     assert os.path.exists('project/plant_database.db')
     test_query = "SELECT * FROM plant_details"
     result = query_from_database(test_query)
-    assert len(result) == 154
+    assert len(result) == 380
     assert (result[0] == (425,
                           "Abutilon hybridum",
                           "flowering-maple",
-                          "Malvaceae",
-                          "Broadleaf evergreen",
                           '["full sun","part shade"]',
-                          "Perennial",
-                          "Frequent",
-                          "Low",
-                          None ,
+                          "perennial",
+                          "frequent",
+                          "low",
                           0))
 
 def test_other_names():
@@ -70,16 +67,17 @@ def test_output_file():
     test_query = """
     SELECT pd.plant_id
         FROM plant_details pd
-        INNER JOIN plant_pruning_months ppm
-        ON pd.plant_id = ppm.plant_id
-        WHERE ppm.pruning_month = 'July'
+        INNER JOIN plant_origins po
+        ON pd.plant_id = po.plant_id
+        WHERE po.origin = 'Brazil'
         """
     query_from_database(test_query, output_to_file=True)
     with open(os.path.join('database', 'database_output.txt'), 'r', encoding='utf-8') as file:
         content = file.read()
     assert os.path.exists('database/database_output.txt')
     assert 'plant_id' in content
-    assert '428' in content
+    assert '426' in content
+    assert '425' not in content
 
 
 def test_all_names():
@@ -90,7 +88,7 @@ def test_all_names():
     SELECT * FROM all_names
     """
     result = query_from_database(test_query)
-    assert len(result) == 329
+    assert len(result) == 820
     assert ('maidenhair fern', 543) in result
     assert ('Adiantum capillus-veneris', 543) in result
     assert ('Southern Maidenhair', 543) in result
