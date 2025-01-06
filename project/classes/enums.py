@@ -23,3 +23,11 @@ class Health(Enum):
     UNHEALTHY = 1
     SLIGHTLY_UNHEALTHY = 2
     HEALTHY = 3
+
+class Action(Enum):
+    """
+    Enum for all possible Notifications
+    """
+    WATERING = 0
+    NUTRITION = 1
+    REPOTTING = 2

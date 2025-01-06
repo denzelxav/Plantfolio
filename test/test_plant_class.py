@@ -103,3 +103,7 @@ def test_health():
     maple.manual_health = False
     maple.health = Health.DEAD
     assert maple.health == Health.DEAD, "Dead status overwritten"
+
+
+
+
