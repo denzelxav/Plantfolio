@@ -7,6 +7,7 @@ from PySide6.QtWidgets import QMainWindow, QDialog, QListWidgetItem
 
 from project.ui.plant_view import Ui_PlantViewWindow
 from project.ui.recommendations_ui import Ui_RecommendationsWindow
+from project.classes.plant import plant_from_database
 
 if TYPE_CHECKING:
     from project.classes.spot_notification import Spot
@@ -27,7 +28,8 @@ class RecommendationsWindow(QDialog):
 
         self.recommendations = self.recommender.get_recommendations()
         for recommendation in self.recommendations:
-            self.ui.select_recommendation.addItem(str(recommendation))
+            plant = plant_from_database(recommendation)
+            self.ui.select_recommendation.addItem(plant.scientific_name)
 
 
 
