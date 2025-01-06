@@ -66,9 +66,6 @@ class Ui_RecommendationsWindow(object):
         self.cancel_recommendations = QPushButton(RecommendationsWindow)
         self.cancel_recommendations.setObjectName(u"cancel_recommendations")
         self.cancel_recommendations.setGeometry(QRect(320, 10, 75, 24))
-        self.refresh_recommendation_button = QPushButton(RecommendationsWindow)
-        self.refresh_recommendation_button.setObjectName(u"refresh_recommendation_button")
-        self.refresh_recommendation_button.setGeometry(QRect(320, 40, 75, 24))
         self.image_recommender = QLabel(RecommendationsWindow)
         self.image_recommender.setObjectName(u"image_recommender")
         self.image_recommender.setGeometry(QRect(270, 120, 131, 161))
@@ -77,7 +74,6 @@ class Ui_RecommendationsWindow(object):
         self.image_recommender.setScaledContents(True)
 
         self.retranslateUi(RecommendationsWindow)
-        self.refresh_recommendation_button.clicked.connect(RecommendationsWindow.update)
         self.cancel_recommendations.clicked.connect(RecommendationsWindow.close)
 
         QMetaObject.connectSlotsByName(RecommendationsWindow)
@@ -87,7 +83,6 @@ class Ui_RecommendationsWindow(object):
         RecommendationsWindow.setWindowTitle(QCoreApplication.translate("RecommendationsWindow", u"Recommendations", None))
         self.Recommendations_text.setText(QCoreApplication.translate("RecommendationsWindow", u"Recommended plants", None))
         self.cancel_recommendations.setText(QCoreApplication.translate("RecommendationsWindow", u"Cancel", None))
-        self.refresh_recommendation_button.setText(QCoreApplication.translate("RecommendationsWindow", u"Refresh", None))
         self.image_recommender.setText("")
     # retranslateUi
 

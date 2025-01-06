@@ -253,19 +253,6 @@
     <string>Cancel</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="refresh_recommendation_button">
-   <property name="geometry">
-    <rect>
-     <x>320</x>
-     <y>40</y>
-     <width>75</width>
-     <height>24</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Refresh</string>
-   </property>
-  </widget>
   <widget class="QLabel" name="image_recommender">
    <property name="geometry">
     <rect>
@@ -291,22 +278,6 @@
  </widget>
  <resources/>
  <connections>
-  <connection>
-   <sender>refresh_recommendation_button</sender>
-   <signal>clicked()</signal>
-   <receiver>RecommendationsWindow</receiver>
-   <slot>update()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>307</x>
-     <y>71</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>201</x>
-     <y>161</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>cancel_recommendations</sender>
    <signal>clicked()</signal>
