@@ -14,9 +14,9 @@ def string_to_sunlight(sunlight_string: str) -> Sunlight:
     """Converts sunlight string from core database to Sunlight enum"""
     if isinstance(sunlight_string, (str, Sunlight)):
         match sunlight_string:
-            case "full shade" | "deep shade":
+            case "full shade" | "deep shade" | "sun-part shade":
                 return Sunlight.FULL_SHADE
-            case "part sun/part shade":
+            case "part sun/part shade" | " part sun/part shade":
                 return Sunlight.PART_SUN
             case "part shade" | "filtered shade":
                 return Sunlight.PART_SHADE
@@ -33,11 +33,11 @@ def string_to_water_frequency(watering_string: str) -> datetime.timedelta:
     """Converts water frequency string from core database to appropriate datetime.timedelta"""
     if isinstance(watering_string, (str, datetime.timedelta)):
         match watering_string:
-            case "Frequent":
+            case "frequent":
                 return datetime.timedelta(days=4)
-            case "Average":
+            case "average":
                 return datetime.timedelta(weeks=1)
-            case "Minimum":
+            case "minimum":
                 return datetime.timedelta(weeks=2)
             case time_delta if isinstance(time_delta, datetime.timedelta):
                 return time_delta

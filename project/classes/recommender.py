@@ -83,7 +83,7 @@ class Recommender:
         if plant_id in self.already_owned:
             return 0
 
-        query = ("SELECT toxic_to_pets, sunlight_list, watering, plant_family  "
+        query = ("SELECT toxic_to_pets, sunlight_list, watering, scientific_name "
                 "FROM plant_details "
                  f"WHERE plant_id = '{plant_id}'")
         query_res = query_from_database(query)
@@ -107,7 +107,8 @@ class Recommender:
             raise TypeError("watering_frequency must be of type str. "
                 f"Got {type(plant_data[2])}. Value: {plant_data[2]}.")
         if isinstance(plant_data[3], str):
-            family = plant_data[3]
+            names = plant_data[3].split()
+            family = names[0]
         else:
             raise TypeError("family must be of type str. "
                 f"Got {type(plant_data[3])}. Value: {plant_data[3]}.")
