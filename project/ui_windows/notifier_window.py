@@ -31,10 +31,10 @@ class NotifierWindow(QMainWindow):
         self.ui.Date_icon.setPixmap(QPixmap(u":/date.png"))
 
         # Initialize the combobox with notifications
-        self.update_notifications_combobox()
+        self.refresh_notifications_combobox()
         self.ui.Notifications.currentIndexChanged.connect(self.handle_sort_change)
 
-    def update_notifications_combobox(self):
+    def refresh_notifications_combobox(self):
         """
         Fills the combobox with the notifications
         """
@@ -47,8 +47,8 @@ class NotifierWindow(QMainWindow):
         # Add the new notifications to the QComboBox
         if self.notifications_list:
             for notification in self.notifications_list:
-                self.ui.Notifications.addItems(f"{notification.personal_id_plant}, "
-                                               f"{notification.notification_type}")
+                notification_input = f"{notification.plant_notification.personal_name}, "f"{notification.notification_type.name.lower()}"
+                self.ui.Notifications.addItem(notification_input)
 
         # Set up the notification info for the first item (if available)
         if self.notifications_list:
@@ -66,7 +66,7 @@ class NotifierWindow(QMainWindow):
         """
         Update the labels with information about the selected notification.
         """
-        self.ui.personal_id_plant.setText(f"Plant: {notification.personal_id_plant}")
-        self.ui.notification_type.setText(f"Type of Notification: {notification.notification_type}")
+        self.ui.personal_id_plant.setText(f"Plant: {notification.plant_notification.personal_name}")
+        self.ui.notification_type.setText(f"Type of Notification: {notification.notification_type.name.lower()}")
         self.ui.weight.setText(f"Weight: {notification.weight}")
-        self.ui.original_due_date.setText(f"Original due date: {notification.original_due_date}")
+        self.ui.original_due_date.setText(f"Original due date: {notification.original_due_date.date()}")

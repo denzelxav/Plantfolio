@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'notifier_windowgfIiWa.ui'
+## Form generated from reading UI file 'notifier_windowkmdXhd.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.8.1
 ##
@@ -59,19 +59,19 @@ class Ui_Notifier_window(object):
         self.centralwidget.setObjectName(u"centralwidget")
         self.personal_id_plant = QLabel(self.centralwidget)
         self.personal_id_plant.setObjectName(u"personal_id_plant")
-        self.personal_id_plant.setGeometry(QRect(70, 130, 161, 16))
+        self.personal_id_plant.setGeometry(QRect(70, 130, 331, 16))
         self.notification_type = QLabel(self.centralwidget)
         self.notification_type.setObjectName(u"notification_type")
-        self.notification_type.setGeometry(QRect(70, 170, 121, 16))
+        self.notification_type.setGeometry(QRect(70, 170, 311, 16))
         self.Notifications = QComboBox(self.centralwidget)
         self.Notifications.setObjectName(u"Notifications")
         self.Notifications.setGeometry(QRect(30, 20, 401, 41))
         self.weight = QLabel(self.centralwidget)
         self.weight.setObjectName(u"weight")
-        self.weight.setGeometry(QRect(70, 210, 91, 16))
+        self.weight.setGeometry(QRect(70, 210, 171, 16))
         self.original_due_date = QLabel(self.centralwidget)
         self.original_due_date.setObjectName(u"original_due_date")
-        self.original_due_date.setGeometry(QRect(70, 250, 121, 16))
+        self.original_due_date.setGeometry(QRect(70, 250, 241, 16))
         self.Notification_info = QLabel(self.centralwidget)
         self.Notification_info.setObjectName(u"Notification_info")
         self.Notification_info.setGeometry(QRect(10, 80, 151, 21))
@@ -120,6 +120,8 @@ class Ui_Notifier_window(object):
         self.Weight_icon.setText("")
         self.Date_icon.setText("")
     # retranslateUi
+
+
 
 
 

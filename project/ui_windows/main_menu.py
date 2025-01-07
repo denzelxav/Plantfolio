@@ -27,12 +27,19 @@ class MainMenu(QMainWindow):
         super().__init__()
         # Create a file with pyside6-uic project/ui/app.ui -o project/ui/output.py
         self.userdata = userdata
+        self.notifier = Notifier(userdata.plants)
         self.ui = Ui_MainMenu()
         self.ui.setupUi(self)
         self.ui.PlantFolio_Icon.setPixmap(QPixmap(u":/Plantfolio_logo.png"))
         self.setWindowIcon(QIcon(":/Plantfolio_logo_small.png"))
 
         #buttons
+
+        self.update_notifications()
+        self.ui.refresh_notifications.clicked.connect(self.update_notifications)
+        self.ui.sort_notifications_by.currentIndexChanged.connect(self.handle_sort_change)
+        self.ui.open_notifier.clicked.connect(self.open_notifier)
+
         self.ui.add_room.clicked.connect(self.add_room)
         self.ui.water_all.clicked.connect(self.userdata.water_all)
         self.ui.open_room.clicked.connect(self.open_room)
@@ -42,10 +49,7 @@ class MainMenu(QMainWindow):
 
         self.refresh_rooms()
 
-        self.update_notifications()
-        self.ui.refresh_notifications.clicked.connect(self.update_notifications)
-        self.ui.sort_notifications_by.currentIndexChanged.connect(self.handle_sort_change)
-        self.ui.open_notifier.clicked.connect(self.open_notifier)
+
 
     @Slot()
     def add_room(self) -> None:
@@ -76,8 +80,8 @@ class MainMenu(QMainWindow):
         notifications = self.notifier.check_tasks_today()
         if notifications:
             for notification in notifications:
-                self.ui.Notification_list.addItems(f"{notification.personal_id_plant}, "
-                                                   f"{notification.notification_type}")
+                notification_input = f"{notification.plant_notification.personal_name}, "f"{notification.notification_type.name.lower()}"
+                self.ui.Notification_list.addItem(notification_input)
 
 
     def delete_room(self, room: RoomViewWindow) -> None:
@@ -107,20 +111,20 @@ class MainMenu(QMainWindow):
             self.ui.Notification_list.clear()
             notifications = self.notifier.sort_by_date()
             for notification in notifications:
-                self.ui.Notification_list.addItems(f"{notification.personal_id_plant}, "
-                                                   f"{notification.notification_type}")
+                notification_input = f"{notification.plant_notification.personal_name}, "f"{notification.notification_type.name.lower()}"
+                self.ui.Notification_list.addItem(notification_input)
         elif selected_option == "weight":
             self.ui.Notification_list.clear()
             notifications = self.notifier.sort_by_weight()
             for notification in notifications:
-                self.ui.Notification_list.addItems(f"{notification.personal_id_plant}, "
-                                                   f"{notification.notification_type}")
+                notification_input = f"{notification.plant_notification.personal_name}, "f"{notification.notification_type.name.lower()}"
+                self.ui.Notification_list.addItem(notification_input)
         elif selected_option == "type":
             self.ui.Notification_list.clear()
             notifications = self.notifier.sort_by_type()
             for notification in notifications:
-                self.ui.Notification_list.addItems(f"{notification.personal_id_plant}, "
-                                                   f"{notification.notification_type}")
+                notification_input = f"{notification.plant_notification.personal_name}, "f"{notification.notification_type.name.lower()}"
+                self.ui.Notification_list.addItem(notification_input)
 
     @Slot()
     def open_all_plants(self) -> None:
