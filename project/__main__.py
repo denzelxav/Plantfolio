@@ -12,7 +12,6 @@ if TYPE_CHECKING:
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    plants: list[Plant] = []
-    myApp = MainMenu(UserData(), Notifier(plants))
+    myApp = MainMenu(UserData())
     myApp.show()
     app.exec()
