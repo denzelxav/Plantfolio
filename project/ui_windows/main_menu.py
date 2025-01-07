@@ -1,4 +1,4 @@
-"""The main application"""
+"""The main application window"""
 
 from PySide6.QtCore import Slot
 from PySide6.QtGui import QPixmap, QIcon
@@ -12,6 +12,10 @@ from project.ui_windows.room_view_window import RoomViewWindow
 from project.ui_windows.all_plants_window import AllPlantsWindow
 from project.ui_windows.recommendations_window import RecommendationsWindow
 from project.classes.save_and_load_userdata import save_user_data
+from project.ui_windows.notifier_window import NotifierWindow
+from project.classes.notifier import Notifier
+
+
 
 import images_qr
 
@@ -23,6 +27,7 @@ class MainMenu(QMainWindow):
         super().__init__()
         # Create a file with pyside6-uic project/ui/app.ui -o project/ui/output.py
         self.userdata = userdata
+        self.notifier = Notifier(userdata.plants)
         self.recommender = Recommender(userdata)
         self.ui = Ui_MainMenu()
         self.ui.setupUi(self)
@@ -30,6 +35,12 @@ class MainMenu(QMainWindow):
         self.setWindowIcon(QIcon(":/Plantfolio_logo_small.png"))
 
         #buttons
+
+        self.update_notifications()
+        self.ui.refresh_notifications.clicked.connect(self.update_notifications)
+        self.ui.sort_notifications_by.currentIndexChanged.connect(self.handle_sort_change)
+        self.ui.open_notifier.clicked.connect(self.open_notifier)
+
         self.ui.add_room.clicked.connect(self.add_room)
         self.ui.water_all.clicked.connect(self.userdata.water_all)
         self.ui.open_room.clicked.connect(self.open_room)
@@ -38,6 +49,7 @@ class MainMenu(QMainWindow):
         self.ui.open_recommender.clicked.connect(self.open_recommender)
 
         self.refresh_rooms()
+
 
 
     @Slot()
@@ -61,6 +73,18 @@ class MainMenu(QMainWindow):
     def save(self):
         save_user_data(self.userdata)
 
+    def update_notifications(self):
+        """
+        Refreshes the notifications in the notification window
+        """
+        self.ui.Notification_list.clear()
+        notifications = self.notifier.check_tasks_today()
+        if notifications:
+            for notification in notifications:
+                notification_input = f"{notification.plant_notification.personal_name}, "f"{notification.notification_type.name.lower()}"
+                self.ui.Notification_list.addItem(notification_input)
+
+
     def delete_room(self, room: RoomViewWindow) -> None:
         """
         Deletes the selected room that doesn't contain any spots.
@@ -69,6 +93,39 @@ class MainMenu(QMainWindow):
         self.userdata.delete_room(room_name)
         room.close()
         self.refresh_rooms()
+
+    @Slot()
+    def open_notifier(self):
+        """
+        Opens the notification window
+        """
+        self.notifier_window = NotifierWindow(self.notifier)
+        self.notifier_window.show()
+
+    def handle_sort_change(self, index):
+        """
+        Handle the change in notification window based
+        on type of sorting
+        """
+        selected_option = self.ui.sort_notifications_by.itemText(index)
+        if selected_option == "day":
+            self.ui.Notification_list.clear()
+            notifications = self.notifier.sort_by_date()
+            for notification in notifications:
+                notification_input = f"{notification.plant_notification.personal_name}, "f"{notification.notification_type.name.lower()}"
+                self.ui.Notification_list.addItem(notification_input)
+        elif selected_option == "weight":
+            self.ui.Notification_list.clear()
+            notifications = self.notifier.sort_by_weight()
+            for notification in notifications:
+                notification_input = f"{notification.plant_notification.personal_name}, "f"{notification.notification_type.name.lower()}"
+                self.ui.Notification_list.addItem(notification_input)
+        elif selected_option == "type":
+            self.ui.Notification_list.clear()
+            notifications = self.notifier.sort_by_type()
+            for notification in notifications:
+                notification_input = f"{notification.plant_notification.personal_name}, "f"{notification.notification_type.name.lower()}"
+                self.ui.Notification_list.addItem(notification_input)
 
     @Slot()
     def open_all_plants(self) -> None:
