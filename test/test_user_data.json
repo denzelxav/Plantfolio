@@ -3,39 +3,39 @@
         {
             "core_id": 425,
             "personal_id": 0,
-            "personal_name": "flowering-maple",
+            "personal_name": null,
             "icon_type": "default",
             "spot_id": "Window",
             "health": "dead",
             "watered": [
-                "2025-01-07T11:13:00.992816"
+                "2025-01-07T10:57:57.634025"
             ],
             "nutrition": [
-                "2025-01-07T11:13:00.992816"
+                "2025-01-07T10:57:57.634025"
             ],
-            "repotted": "2025-01-07T11:13:00.992816",
+            "repotted": "2025-01-07T10:57:57.634025",
             "manual_health": false,
             "max_log_size": 4,
             "notes": null,
             "current_tasks": [
-                "water",
-                "repot"
+                "repot",
+                "water"
             ]
         },
         {
             "core_id": 434,
             "personal_id": 1,
-            "personal_name": "Jacob's coat",
+            "personal_name": null,
             "icon_type": "default",
             "spot_id": "Cabinet",
             "health": "healthy",
             "watered": [
-                "2025-01-07T11:13:00.992816"
+                "2025-01-07T10:57:57.634025"
             ],
             "nutrition": [
-                "2025-01-07T11:13:00.992816"
+                "2025-01-07T10:57:57.634025"
             ],
-            "repotted": "2025-01-07T11:13:00.992816",
+            "repotted": "2025-01-07T10:57:57.634025",
             "manual_health": true,
             "max_log_size": 4,
             "notes": null,
@@ -44,17 +44,17 @@
         {
             "core_id": 502,
             "personal_id": 2,
-            "personal_name": "hot water plant",
+            "personal_name": null,
             "icon_type": "default",
             "spot_id": "Shelf living room",
             "health": "slightly_unhealthy",
             "watered": [
-                "2025-01-07T11:13:00.992816"
+                "2025-01-07T10:57:57.634025"
             ],
             "nutrition": [
-                "2025-01-07T11:13:00.992816"
+                "2025-01-07T10:57:57.634025"
             ],
-            "repotted": "2025-01-07T11:13:00.992816",
+            "repotted": "2025-01-07T10:57:57.634025",
             "manual_health": false,
             "max_log_size": 4,
             "notes": "This is a note",
@@ -63,17 +63,17 @@
         {
             "core_id": 425,
             "personal_id": 3,
-            "personal_name": "flowering-maple",
+            "personal_name": null,
             "icon_type": "default",
             "spot_id": "Shelf garage",
             "health": "slightly_unhealthy",
             "watered": [
-                "2025-01-07T11:13:00.992816"
+                "2025-01-07T10:57:57.634025"
             ],
             "nutrition": [
-                "2025-01-07T11:13:00.992816"
+                "2025-01-07T10:57:57.634025"
             ],
-            "repotted": "2025-01-07T11:13:00.992816",
+            "repotted": "2025-01-07T10:57:57.634025",
             "manual_health": false,
             "max_log_size": 4,
             "notes": null,

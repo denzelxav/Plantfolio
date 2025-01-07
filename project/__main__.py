@@ -3,6 +3,7 @@
 import sys
 
 from PySide6.QtWidgets import QApplication
+
 from project.ui_windows.main_menu import MainMenu
 from project.classes.save_and_load_userdata import load_user_data
 
