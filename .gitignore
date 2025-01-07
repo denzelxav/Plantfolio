@@ -146,6 +146,9 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# userdata files
+# Userdata files
 /project/user_data.json
 /test/test_user_data.json
+
+# Do not ignore
+!dist/Plantfolio.exe
