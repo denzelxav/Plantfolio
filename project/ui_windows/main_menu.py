@@ -28,6 +28,7 @@ class MainMenu(QMainWindow):
         # Create a file with pyside6-uic project/ui/app.ui -o project/ui/output.py
         self.userdata = userdata
         self.notifier = Notifier(userdata.plants)
+        self.recommender = Recommender(userdata)
         self.ui = Ui_MainMenu()
         self.ui.setupUi(self)
         self.ui.PlantFolio_Icon.setPixmap(QPixmap(u":/Plantfolio_logo.png"))
