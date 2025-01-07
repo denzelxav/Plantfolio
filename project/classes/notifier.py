@@ -58,6 +58,7 @@ class Notifier:
 
             repotting_frequency = datetime.timedelta(days=365)
             if plant.repotted:
+
                 if plant.repotted + repotting_frequency <= datetime.datetime.now():
                     weight_repotting: float = ((datetime.datetime.now() -
                               (plant.repotted + repotting_frequency)).days + 1) / 10
