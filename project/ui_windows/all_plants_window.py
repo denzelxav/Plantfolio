@@ -37,6 +37,7 @@ class AllPlantsWindow(QDialog):
         self.ui.sort_by.addItem('Room')
         self.ui.sort_by.addItem('Species')
         self.ui.sort_by.addItem('Last watered')
+        self.ui.sort_by.addItem('Current tasks')
 
         self.ui.sort_by.currentIndexChanged.connect(self.sort_list)
 
@@ -68,6 +69,8 @@ class AllPlantsWindow(QDialog):
             self.userdata.plants.sort(key = lambda plant: plant.scientific_name)
         elif crit == 'Last watered':
             self.userdata.plants.sort(key = lambda plant: plant.watered[-1])
+        elif crit == 'Current tasks':
+            self.userdata.sort_plants('current_task', False)
         self.refresh_list()
 
     def get_plant(self, plant_id: int) -> Plant:
@@ -94,6 +97,6 @@ class AllPlantsWindow(QDialog):
         """
         self.ui.select_plant.clear()
         for plant in self.userdata.plants:
-            item_txt = f'{plant.personal_name} \t {plant.personal_id} \t {self.get_room(plant)} \t {plant.scientific_name} \t {plant.watered[-1].date()}'
+            item_txt = f'{plant.personal_name} \t {plant.personal_id} \t {self.get_room(plant)} \t {plant.scientific_name} \t {plant.watered[-1].date()} \t {', '.join(plant.current_tasks)}'
             icon  = QIcon(f"./project/art/all plants/{plant.icon_type}_{plant.health.value}.png")
             self.ui.select_plant.addItem(QListWidgetItem(icon, item_txt))

@@ -17,7 +17,7 @@
             "manual_health": false,
             "max_log_size": 4,
             "notes": null,
-            "current_tasks": []
+            "current_tasks": ["water", "nutrition"]
         }
     ],
     "rooms": {
