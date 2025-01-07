@@ -6,7 +6,7 @@ from PySide6.QtCore import Slot
 
 from project.classes.spot_notification import Spot
 from project.ui.add_plant import Ui_AddPlantWindow
-from project.classes.plant import list_all_plants, plant_from_database
+from project.classes.plant import list_all_plants_in_database, plant_from_database
 
 if TYPE_CHECKING:
     from project.classes.userdata import UserData
@@ -23,14 +23,14 @@ class AddPlantWindow(QDialog):
         self.spot = spot
         self.userdata = userdata
         self.parent_window = parent
-        self.setWindowIcon(QIcon("./project/art/Plantfolio_logo_small.png"))
+        self.setWindowIcon(QIcon(":/Plantfolio_logo_small.png"))
 
-        for plant_data in list_all_plants():
+        for plant_data in list_all_plants_in_database():
             self.ui.all_plants_list.addItem(f"{plant_data[0]}: {plant_data[1]}, {plant_data[2]}")
 
-        icons = [("./project/art/all plants/plant_1_healthy.png", "plant_1"),
-                 ("./project/art/all plants/plant_2_healthy.png", "plant_2"),
-                 ("./project/art/all plants/plant_3_healthy.png", "plant_3")]
+        icons = [(":/plant_1_healthy.png", "plant_1"),
+                 (":/plant_2_healthy.png", "plant_2"),
+                 (":/plant_3_healthy.png", "plant_3")]
 
         for icon_path, icon_name in icons:
             self.ui.icon_list.addItem(QListWidgetItem(QIcon(icon_path), icon_name))

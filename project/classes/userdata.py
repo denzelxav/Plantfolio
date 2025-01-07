@@ -6,7 +6,6 @@ from project.query_function import query_from_database
 from project.classes.public_methods import string_to_sunlight, string_to_water_frequency
 
 
-
 class UserData:
 
     """
@@ -90,7 +89,7 @@ class UserData:
         """
         Removes a room
         """
-        if self.rooms[room_name] == []:
+        if not self.rooms[room_name]:
             del self.rooms[room_name]
 
     def sort_plants(self, attribute: str, reverse: bool) -> list[Plant] | None:

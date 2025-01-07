@@ -1,26 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>AllPlantsWindow</class>
- <widget class="QDialog" name="AllPlantsWindow">
+ <class>RecommendationsWindow</class>
+ <widget class="QDialog" name="RecommendationsWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>550</width>
-    <height>350</height>
+    <width>403</width>
+    <height>324</height>
    </rect>
-  </property>
-  <property name="minimumSize">
-   <size>
-    <width>423</width>
-    <height>350</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>550</width>
-    <height>350</height>
-   </size>
   </property>
   <property name="palette">
    <palette>
@@ -222,29 +210,23 @@
    </palette>
   </property>
   <property name="windowTitle">
-   <string>All plants</string>
+   <string>Recommendations</string>
   </property>
-  <widget class="QListWidget" name="select_plant">
+  <widget class="QListWidget" name="select_recommendation">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>90</y>
-     <width>531</width>
-     <height>251</height>
+     <y>40</y>
+     <width>256</width>
+     <height>271</height>
     </rect>
    </property>
-   <property name="iconSize">
-    <size>
-     <width>64</width>
-     <height>64</height>
-    </size>
-   </property>
   </widget>
-  <widget class="QLabel" name="select_label">
+  <widget class="QLabel" name="Recommendations_text">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>70</y>
+     <y>20</y>
      <width>151</width>
      <height>16</height>
     </rect>
@@ -255,23 +237,13 @@
     </font>
    </property>
    <property name="text">
-    <string>All your plants:</string>
+    <string>Recommended plants</string>
    </property>
   </widget>
-  <widget class="QComboBox" name="sort_by">
+  <widget class="QPushButton" name="cancel_recommendations">
    <property name="geometry">
     <rect>
-     <x>429</x>
-     <y>60</y>
-     <width>121</width>
-     <height>24</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="cancel_button">
-   <property name="geometry">
-    <rect>
-     <x>470</x>
+     <x>320</x>
      <y>10</y>
      <width>75</width>
      <height>24</height>
@@ -281,51 +253,46 @@
     <string>Cancel</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="select_plant_button">
+  <widget class="QLabel" name="image_recommender">
    <property name="geometry">
     <rect>
-     <x>90</x>
-     <y>10</y>
-     <width>75</width>
-     <height>24</height>
+     <x>270</x>
+     <y>120</y>
+     <width>131</width>
+     <height>161</height>
     </rect>
    </property>
    <property name="text">
-    <string>View plant</string>
+    <string/>
    </property>
-  </widget>
-  <widget class="QPushButton" name="water_all_button">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>75</width>
-     <height>24</height>
-    </rect>
+   <property name="textFormat">
+    <enum>Qt::TextFormat::RichText</enum>
    </property>
-   <property name="text">
-    <string>Water all</string>
+   <property name="pixmap">
+    <pixmap>../art/all plants/plant_1_healthy.png</pixmap>
    </property>
-  </widget>
-  <widget class="QLabel" name="sort_by_label">
-   <property name="geometry">
-    <rect>
-     <x>430</x>
-     <y>40</y>
-     <width>151</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="text">
-    <string>Sort by:</string>
+   <property name="scaledContents">
+    <bool>true</bool>
    </property>
   </widget>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>cancel_recommendations</sender>
+   <signal>clicked()</signal>
+   <receiver>RecommendationsWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>357</x>
+     <y>21</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>201</x>
+     <y>161</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

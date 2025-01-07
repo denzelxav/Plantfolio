@@ -49,13 +49,13 @@ class Recommender:
         all_averages = []
 
         for plant in self.userdata.plants:
-            avg_water_time = time_average(plant.watered)
+            avg_water_time = time_average(plant.watered + [datetime.datetime.now()])
             all_averages.append(avg_water_time)
 
         time_sum = datetime.timedelta()
         for deltatime in all_averages:
             time_sum += deltatime
-        self.user_water_frequency = time_sum / len(all_averages)
+        self.user_water_frequency = time_sum / max(1,len(all_averages))
         self.family_count ={}
         self.already_owned = set()
         for plant in self.userdata.plants:
@@ -63,7 +63,8 @@ class Recommender:
             family_name = plant.scientific_name.split()[0]
             self.family_count[family_name] = self.family_count.get(family_name, 0) + 1
             # all_families.add(family_name)
-        self.max_familiy_count = max(self.family_count.values())
+        self.max_familiy_count = 1 if not self.family_count.values() \
+                else max(self.family_count.values())
 
     def get_recommendations(self) -> list[int]:
         """
@@ -72,9 +73,8 @@ class Recommender:
         """
         for plant_id in self.all_ids:
             self.plant_scores[plant_id] = self.calculate_score(plant_id)
-        recommendations = sorted(self.all_ids,
+        recommendations = sorted([plant for plant in self.all_ids if self.plant_scores[plant] > 50],
                                  key=lambda plant_id: self.plant_scores[plant_id], reverse=True)
-        print(self.calculate_score(recommendations[0]), self.calculate_score(recommendations[-1]))
         return recommendations
 
 
@@ -83,7 +83,7 @@ class Recommender:
         if plant_id in self.already_owned:
             return 0
 
-        query = ("SELECT toxic_to_pets, sunlight_list, watering, plant_family  "
+        query = ("SELECT toxic_to_pets, sunlight_list, watering, scientific_name "
                 "FROM plant_details "
                  f"WHERE plant_id = '{plant_id}'")
         query_res = query_from_database(query)
@@ -107,7 +107,8 @@ class Recommender:
             raise TypeError("watering_frequency must be of type str. "
                 f"Got {type(plant_data[2])}. Value: {plant_data[2]}.")
         if isinstance(plant_data[3], str):
-            family = plant_data[3]
+            names = plant_data[3].split()
+            family = names[0]
         else:
             raise TypeError("family must be of type str. "
                 f"Got {type(plant_data[3])}. Value: {plant_data[3]}.")

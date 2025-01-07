@@ -1,15 +1,17 @@
 """The main application window"""
 
-
 from PySide6.QtCore import Slot
 from PySide6.QtGui import QPixmap, QIcon
 from PySide6.QtWidgets import QMainWindow
 
 from project.classes.userdata import UserData
+from project.classes.recommender import Recommender
 from project.ui.output import Ui_MainMenu
 from project.ui_windows.add_room_window import AddRoomWindow
 from project.ui_windows.room_view_window import RoomViewWindow
 from project.ui_windows.all_plants_window import AllPlantsWindow
+from project.ui_windows.recommendations_window import RecommendationsWindow
+from project.classes.save_and_load_userdata import save_user_data
 from project.ui_windows.notifier_window import NotifierWindow
 from project.classes.notifier import Notifier
 
@@ -19,18 +21,12 @@ import images_qr
 
 
 class MainMenu(QMainWindow):
-    """
-    This is the main window that will show up when starting the application.
-    From here you can add and open rooms, open the all plants window,
-    the recommender, and see your notifications
-    """
-
+    """Example application"""
 
     def __init__(self, userdata: UserData) -> None:
         super().__init__()
         # Create a file with pyside6-uic project/ui/app.ui -o project/ui/output.py
         self.userdata = userdata
-        self.notifier = Notifier(userdata.plants)
         self.ui = Ui_MainMenu()
         self.ui.setupUi(self)
         self.ui.PlantFolio_Icon.setPixmap(QPixmap(u":/Plantfolio_logo.png"))
@@ -41,6 +37,10 @@ class MainMenu(QMainWindow):
         self.ui.water_all.clicked.connect(self.userdata.water_all)
         self.ui.open_room.clicked.connect(self.open_room)
         self.ui.all_plants.clicked.connect(self.open_all_plants)
+        self.ui.save_button.clicked.connect(self.save)
+        self.ui.open_recommender.clicked.connect(self.open_recommender)
+
+        self.refresh_rooms()
 
         self.update_notifications()
         self.ui.refresh_notifications.clicked.connect(self.update_notifications)
@@ -63,6 +63,10 @@ class MainMenu(QMainWindow):
         room_name = self.ui.room_list.selectedItems()[0].text()
         self.room_view_window = RoomViewWindow(room_name , self)
         self.room_view_window.show()
+
+    @Slot()
+    def save(self):
+        save_user_data(self.userdata)
 
     def update_notifications(self):
         """
@@ -133,3 +137,11 @@ class MainMenu(QMainWindow):
         self.ui.room_list.clear()
         for room in self.userdata.rooms:
             self.ui.room_list.addItem(room)
+
+    @Slot()
+    def open_recommender(self) -> None:
+        """
+        Opens RecommendationsWindow that lets the user see his recommendations
+        """
+        self.recommendations_window = RecommendationsWindow(self.recommender, self.userdata)
+        self.recommendations_window.show()
