@@ -2,18 +2,18 @@
     "plant_data": [
         {
             "core_id": 425,
-            "personal_id": 1,
+            "personal_id": 0,
             "personal_name": null,
             "icon_type": "default",
             "spot_id": "Window",
-            "health": 0,
+            "health": "dead",
             "watered": [
-                "2025-01-04T14:37:34.744078"
+                "2025-01-07T10:57:57.634025"
             ],
             "nutrition": [
-                "2025-01-04T14:37:34.744078"
+                "2025-01-07T10:57:57.634025"
             ],
-            "repotted": "2025-01-04T14:37:34.744078",
+            "repotted": "2025-01-07T10:57:57.634025",
             "manual_health": false,
             "max_log_size": 4,
             "notes": null,
@@ -24,18 +24,18 @@
         },
         {
             "core_id": 434,
-            "personal_id": 2,
+            "personal_id": 1,
             "personal_name": null,
             "icon_type": "default",
             "spot_id": "Cabinet",
-            "health": 3,
+            "health": "healthy",
             "watered": [
-                "2025-01-04T14:37:34.744078"
+                "2025-01-07T10:57:57.634025"
             ],
             "nutrition": [
-                "2025-01-04T14:37:34.744078"
+                "2025-01-07T10:57:57.634025"
             ],
-            "repotted": "2025-01-04T14:37:34.744078",
+            "repotted": "2025-01-07T10:57:57.634025",
             "manual_health": true,
             "max_log_size": 4,
             "notes": null,
@@ -47,14 +47,14 @@
             "personal_name": null,
             "icon_type": "default",
             "spot_id": "Shelf living room",
-            "health": 2,
+            "health": "slightly_unhealthy",
             "watered": [
-                "2025-01-04T14:37:34.744078"
+                "2025-01-07T10:57:57.634025"
             ],
             "nutrition": [
-                "2025-01-04T14:37:34.744078"
+                "2025-01-07T10:57:57.634025"
             ],
-            "repotted": "2025-01-04T14:37:34.744078",
+            "repotted": "2025-01-07T10:57:57.634025",
             "manual_health": false,
             "max_log_size": 4,
             "notes": "This is a note",
@@ -62,18 +62,18 @@
         },
         {
             "core_id": 425,
-            "personal_id": 4,
+            "personal_id": 3,
             "personal_name": null,
             "icon_type": "default",
             "spot_id": "Shelf garage",
-            "health": 2,
+            "health": "slightly_unhealthy",
             "watered": [
-                "2025-01-04T14:37:34.744078"
+                "2025-01-07T10:57:57.634025"
             ],
             "nutrition": [
-                "2025-01-04T14:37:34.744078"
+                "2025-01-07T10:57:57.634025"
             ],
-            "repotted": "2025-01-04T14:37:34.744078",
+            "repotted": "2025-01-07T10:57:57.634025",
             "manual_health": false,
             "max_log_size": 4,
             "notes": null,

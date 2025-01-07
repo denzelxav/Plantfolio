@@ -18,6 +18,7 @@ requests = "*"
 types-requests = "*"
 tabulate = "*"
 types-tabulate = "*"
+pyinstaller = "*"
 
 [dev-packages]
 
