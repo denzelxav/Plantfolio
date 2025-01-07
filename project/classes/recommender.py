@@ -49,7 +49,7 @@ class Recommender:
         all_averages = []
 
         for plant in self.userdata.plants:
-            avg_water_time = time_average(plant.watered)
+            avg_water_time = time_average(plant.watered + [datetime.datetime.now()])
             all_averages.append(avg_water_time)
 
         time_sum = datetime.timedelta()
