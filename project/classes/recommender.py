@@ -63,7 +63,8 @@ class Recommender:
             family_name = plant.scientific_name.split()[0]
             self.family_count[family_name] = self.family_count.get(family_name, 0) + 1
             # all_families.add(family_name)
-        self.max_familiy_count = 1 if not self.family_count.values() else max(self.family_count.values())
+        self.max_familiy_count = 1 if not self.family_count.values() \
+                else max(self.family_count.values())
 
     def get_recommendations(self) -> list[int]:
         """
