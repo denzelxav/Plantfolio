@@ -433,7 +433,7 @@ def plant_from_database(plant_id: int) -> Plant:
                  )
     return plant
 
-def list_all_plants() -> list[tuple[int, str, str]]:
+def list_all_plants_in_database() -> list[tuple[int, str, str]]:
     """
     Returns a list of tuples with plant_id, scientific_name and
     common_name of all plants in database
