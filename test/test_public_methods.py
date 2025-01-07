@@ -39,7 +39,7 @@ def test_string_to_water_frequency():
     assert string_to_water_frequency(datetime.timedelta(weeks=2)) == datetime.timedelta(weeks=2)
     with pytest.raises(ValueError) as excinfo:
         string_to_water_frequency("Unknown value")
-    assert str(excinfo.value) == "Unexpected watering_string Unknown value"
+    assert str(excinfo.value) == "Unexpected watering_string unknown value"
     with pytest.raises(TypeError) as excinfo:
         string_to_water_frequency(1)
     assert str(excinfo.value) == "Expected str type. Got <class 'int'>. Value: 1"

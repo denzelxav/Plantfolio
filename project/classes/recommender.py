@@ -49,13 +49,13 @@ class Recommender:
         all_averages = []
 
         for plant in self.userdata.plants:
-            avg_water_time = time_average(plant.watered)
+            avg_water_time = time_average(plant.watered + [datetime.datetime.now()])
             all_averages.append(avg_water_time)
 
         time_sum = datetime.timedelta()
         for deltatime in all_averages:
             time_sum += deltatime
-        self.user_water_frequency = time_sum / len(all_averages)
+        self.user_water_frequency = time_sum / max(1,len(all_averages))
         self.family_count ={}
         self.already_owned = set()
         for plant in self.userdata.plants:
@@ -63,7 +63,8 @@ class Recommender:
             family_name = plant.scientific_name.split()[0]
             self.family_count[family_name] = self.family_count.get(family_name, 0) + 1
             # all_families.add(family_name)
-        self.max_familiy_count = max(self.family_count.values())
+        self.max_familiy_count = 1 if not self.family_count.values() \
+                else max(self.family_count.values())
 
     def get_recommendations(self) -> list[int]:
         """
@@ -72,9 +73,8 @@ class Recommender:
         """
         for plant_id in self.all_ids:
             self.plant_scores[plant_id] = self.calculate_score(plant_id)
-        recommendations = sorted(self.all_ids,
+        recommendations = sorted([plant for plant in self.all_ids if self.plant_scores[plant] > 50],
                                  key=lambda plant_id: self.plant_scores[plant_id], reverse=True)
-        print(self.calculate_score(recommendations[0]), self.calculate_score(recommendations[-1]))
         return recommendations
 
 

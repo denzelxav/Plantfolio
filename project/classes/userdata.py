@@ -6,32 +6,31 @@ from project.query_function import query_from_database
 from project.classes.public_methods import string_to_sunlight, string_to_water_frequency
 
 
-
 class UserData:
 
     """
-    Userdata stores all the current data of the user.
-    It has thee attributes:
+    Userdata stores all the current data of the user. 
+    It has the attributes:
 
     Plants, which keeps track of all the plants the user currently owns,
     this is a set of Plant objects.
 
-    Rooms, which is a dictonary where the key is the room name and the
+    Rooms, which is a dictionary where the key is the room name and the
     value is a list of Spot objects.
 
     Preferences, which is a dictionary where the key is the type
-    of preference, such as 'pet toxicity'and the value is the
+    of preference, such as 'pet toxicity' and the value is the
     information about this preference
     """
 
     def __init__(self) -> None:
-        self.plants: set[Plant]= set()
+        self.plants: list[Plant]= []
         self.rooms: dict[str, list[Spot]] = {}
         self.pet_toxicity = False
 
     def water_all(self) -> None:
         """
-        Water all the plants in the users possesion
+        Water all the plants in the users possession
         """
         for plant in self.plants:
             plant.water_plant()
@@ -40,13 +39,19 @@ class UserData:
         """
         Adds a plant
         """
+        if len(self.plants) > 0:
+            max_id = max(plant.personal_id for plant in self.plants)
+            new_plant.personal_id = max_id+1
+        else:
+            new_plant.personal_id = 0
+
         if assigned_spot not in [spot for room in self.rooms.values() for spot in room]:
             self.add_room(assigned_spot.room)
             self.add_spot(assigned_spot)
 
         if assigned_spot in [spot for room in self.rooms.values() for spot in room]:
             new_plant.change_spot(assigned_spot)
-            self.plants.add(new_plant)
+            self.plants.append(new_plant)
 
     def add_spot(self, new_spot: Spot) -> None:
         """
@@ -84,7 +89,7 @@ class UserData:
         """
         Removes a room
         """
-        if self.rooms[room_name] == []:
+        if not self.rooms[room_name]:
             del self.rooms[room_name]
 
     def sort_plants(self, attribute: str, reverse: bool) -> list[Plant] | None:

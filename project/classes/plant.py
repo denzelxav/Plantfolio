@@ -74,7 +74,7 @@ class Plant:
 
         self.core_id = core_id
         self.personal_id = personal_id
-        self.personal_name: None | str = None
+        self.personal_name: str = core_name
         self.scientific_name: str = scientific_name
         self.core_name = core_name
         self.icon_type = icon_type
@@ -432,3 +432,16 @@ def plant_from_database(plant_id: int) -> Plant:
                  sunlight_list
                  )
     return plant
+
+def list_all_plants_in_database() -> list[tuple[int, str, str]]:
+    """
+    Returns a list of tuples with plant_id, scientific_name and
+    common_name of all plants in database
+    """
+    query = ("SELECT plant_id, scientific_name, common_name "
+             "FROM plant_details ")
+    query_res = query_from_database(query)
+    if all(isinstance(tup[0], int) and isinstance(tup[1], str) and
+           isinstance(tup[2], str) for tup in query_res):
+        return query_res #type: ignore
+    raise TypeError("query_res returned wrong types.")

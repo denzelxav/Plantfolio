@@ -56,7 +56,7 @@ def test_create_userdata_basic():
 
     # tests add_plant
     assert mydata.rooms['bedroom'][0].assigned_plant == maple
-    assert mydata.plants == {maple}
+    assert mydata.plants == [maple]
 
     mydata.water_all()
 
@@ -94,7 +94,7 @@ def test_add_plant_spot_not_in_room():
     mydata.add_plant(maple, spot2)
 
     assert mydata.rooms == {'bedroom': [spot1], 'living room': [spot2]}
-    assert mydata.plants == {maple}
+    assert mydata.plants == [maple]
     assert spot2.assigned_plant == maple
 
 def test_sort_plants():
