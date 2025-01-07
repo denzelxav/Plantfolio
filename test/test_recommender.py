@@ -36,21 +36,51 @@ def create_userdata() -> UserData:
     ud.add_spot(spot5, "room")
     return ud
 
+def create_userdata2() -> UserData:
+    ud = UserData()
+    plant1 = plant_from_database(626)
+    apply_fake_logs(plant1)
+    plant2 = plant_from_database(552)
+    apply_fake_logs(plant2)
+    plant3 = plant_from_database(710)
+    apply_fake_logs(plant3)
+    plant4 = plant_from_database(715)
+    apply_fake_logs(plant4)
+    spot1 = Spot("1", Sunlight.FULL_SUN, "high", None, 20)
+    spot2 = Spot("2", Sunlight.FULL_SUN, "high", None, 20)
+    spot3 = Spot("3", Sunlight.FULL_SUN, "high", None, 20)
+    spot4 = Spot("4", Sunlight.FULL_SUN, "high", None, 20)
+    ud.add_room("room")
+    for spot in [spot1, spot2, spot3, spot4]:
+        ud.add_spot(spot, "room")
+    ud.add_plant(plant1, spot1)
+    ud.add_plant(plant2, spot2)
+    ud.add_plant(plant3, spot3)
+    ud.add_plant(plant4, spot4)
+    spot5 = Spot("5", Sunlight.FULL_SUN, "high", None, 20)
+    ud.add_spot(spot5, "room")
+    return ud
+
 def test_recommender():
-    ud = create_userdata()
-    recommender = Recommender(ud)
-    rec_res = recommender.get_recommendations()
-    print(rec_res)
-    rec_expect = [1024, 1222, 2568, 1036, 1038, 2242, 2244, 543, 546, 551, 552, 1130, 1133, 625, 626, 627, 628, 1150,
-                  1195, 1196, 1198, 1199, 1200, 1201, 1202, 1203, 1716, 1208, 1210, 1211, 1212, 1213, 1214, 1215, 1216,
-                  1217, 1218, 1219, 1221, 710, 1224, 712, 713, 714, 715, 716, 717, 1225, 2774, 2775, 2272, 2274, 2275,
-                  2277, 748, 2287, 2829, 2322, 2323, 1820, 1822, 1846, 1847, 1848, 2891, 861, 2915, 1416, 2962, 2976,
-                  2468, 1457, 1971, 1469, 1470, 1471, 2499, 1993, 1999, 2528, 2529, 2531, 1001, 1023, 1031, 1147, 1194,
-                  1220, 711, 747, 2288, 2294, 2295, 1272, 1821, 856, 434, 1468, 2501, 549, 1149, 1192, 1197, 1209, 718,
-                  1226, 2773, 2290, 2354, 2885, 855, 2954, 2955, 2961, 2963, 2498, 2533, 2030, 1598, 2263, 2965, 1025,
-                  1223, 721, 1845, 1891, 2500, 2530, 2532, 1597, 1601, 1603, 667, 1855, 1870, 1871, 1873, 2956, 2957,
-                  2958, 2959, 428, 2000, 1864, 1868, 727, 2289, 540, 2193, 728, 425, 426, 427, 502]
-    assert rec_res == rec_expect
+    ud1 = create_userdata()
+    recommender1 = Recommender(ud1)
+    rec_res1 = recommender1.get_recommendations()
+    rec_expect = [1024, 1222, 2568, 1036, 1038, 2242, 2244, 543, 546, 551, 552, 1130, 1133, 625,
+                  626, 627, 628, 1150, 1195, 1196, 1198, 1199, 1200, 1201, 1202, 1203, 1716, 1208,
+                  1210, 1211, 1212, 1213, 1214, 1215, 1216, 1217, 1218, 1219, 1221, 710, 1224,
+                  712, 713, 714, 715, 716, 717, 1225, 2774, 2775, 2272, 2274, 2275, 2277, 748,
+                  2287, 2829, 2322, 2323, 1820, 1822, 1846, 1847, 1848, 2891, 861, 2915, 1416,
+                  2962, 2976, 2468, 1457, 1971, 1469, 1470, 1471, 2499, 1993, 1999, 2528, 2529,
+                  2531, 1001, 1023, 1031, 1147, 1194, 1220, 711, 747, 2288, 2294, 2295, 1272,
+                  1821, 856, 434, 1468, 2501, 549, 1149, 1192, 1197, 1209, 718, 1226, 2773, 2290,
+                  2354, 2885, 855, 2954, 2955, 2961, 2963, 2498, 2533, 2030, 1598, 2263, 2965, 1025,
+                  1223, 721, 1845, 1891, 2500, 2530, 2532, 1597, 1601, 1603, 667, 1855, 1870, 1871,
+                  1873, 2956, 2957, 2958, 2959, 428, 2000]
+    assert rec_res1 == rec_expect
+    ud2 = create_userdata2()
+    recommender2 = Recommender(ud2)
+    rec_res2 = recommender2.get_recommendations()
+    assert rec_res1 != rec_res2, "Different userdata gives same reccomendation"
 
 
 def test_calculate_score():
