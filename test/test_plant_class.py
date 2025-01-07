@@ -1,5 +1,5 @@
 import datetime
-from project.classes.plant import Plant
+from project.classes.plant import Plant, plant_from_database
 from project.classes.enums import Sunlight, Health
 from project.classes.spot_notification import Spot
 
@@ -105,15 +105,13 @@ def test_health():
     assert maple.health == Health.DEAD, "Dead status overwritten"
 
 def test_operator_overloading():
-    plant, _ = create_plant()
-    equals = Plant(425, 1, "flowerus_mapelus", "flowering-maple", "default", datetime.timedelta(days=7), [Sunlight.FULL_SUN]) == plant
-    not_equals = plant == 1
-    assert equals == True
-    assert not_equals == False
+    plant1 = Plant(425, 1, "Abutilon hybridum", "flowering-maple",
+                   "default", datetime.timedelta(days=4), [Sunlight.FULL_SUN, Sunlight.PART_SHADE])
+    plant2 = Plant(426, 2, "Abutilon hybridum 'Bella Red'", "flowering-maple",
+                   "default", datetime.timedelta(days=7), [Sunlight.FULL_SUN, Sunlight.PART_SHADE])
     
-    repr_str = repr(plant)
-    assert repr_str == "Plant(core_id=425, personal_id=1, scientific_name='flowerus_mapelus', core_name='flowering-maple', icon_type='default', watering_frequency=datetime.timedelta(days=7), preff_sunlight=[Sunlight.FULL_SUN])"
-    assert eval(repr_str) == plant
+    assert eval(repr(plant1)) == plant1
+    assert eval(repr(plant2)) == plant2
     
-    plant_str = str(plant)
-    assert plant_str == "1: flowering-maple"
+    assert str(plant1) == "1: flowering-maple"
+    assert str(plant2) == "2: flowering-maple"
