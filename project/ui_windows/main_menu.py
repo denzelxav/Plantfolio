@@ -15,7 +15,6 @@ from project.ui_windows.all_plants_window import AllPlantsWindow
 from project.ui_windows.notifier_window import NotifierWindow
 if TYPE_CHECKING:
     from project.classes.notifier import Notifier
-    from project.classes.plant import Plant
 
 import images_qr
 
