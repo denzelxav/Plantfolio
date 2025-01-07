@@ -68,13 +68,13 @@ def get_sun_icon_path(sunlight: Sunlight) -> str:
     """
     match sunlight:
         case Sunlight.FULL_SHADE:
-            return "./project/art/full_shade.png"
+            return ":/full_shade.png"
         case Sunlight.PART_SUN:
-            return "./project/art/half_sun.png"
+            return ":/half_sun.png"
         case Sunlight.PART_SHADE:
-            return "./project/art/half_shade.png"
+            return ":/half_shade.png"
         case Sunlight.FULL_SUN:
-            return "./project/art/full_sun.png"
+            return ":/full_sun.png"
         case unexpected_value:
             raise ValueError(f"Unexpected sunlight value {unexpected_value}")
 
