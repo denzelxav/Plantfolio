@@ -5,7 +5,7 @@ a = Analysis(
     ['project\\__main__.py'],
     pathex=[],
     binaries=[],
-    datas=[],
+    datas=[("project\plant_database.db", ".")],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
