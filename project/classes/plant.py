@@ -386,14 +386,15 @@ class Plant:
         return hash(self.personal_id)
 
     def __repr__(self) -> str:
+        sunlight_string = ", ".join(f"Sunlight.{sunlight.name}" for sunlight in self.preff_sunlight)
         return (f"Plant("
                 f"core_id={self.core_id}, "
                 f"personal_id={self.personal_id}, "
-                f"scientific_name={self.scientific_name}, "
-                f"core_name={self.core_name}, "
-                f"icon_type={self.icon_type}, "
-                f"watering_frequency={self.watering_frequency}, "
-                f"preff_sunlight={self.preff_sunlight}"
+                f"scientific_name='{self.scientific_name}', "
+                f"core_name='{self.core_name}', "
+                f"icon_type='{self.icon_type}', "
+                f"watering_frequency=datetime.timedelta(days={self.watering_frequency.days}), "
+                f"preff_sunlight=[Sunlight.{self.preff_sunlight[0].name}])"
                 )
 
     def __str__(self) -> str:

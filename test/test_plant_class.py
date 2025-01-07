@@ -104,6 +104,16 @@ def test_health():
     maple.health = Health.DEAD
     assert maple.health == Health.DEAD, "Dead status overwritten"
 
-
-
-
+def test_operator_overloading():
+    plant, _ = create_plant()
+    equals = Plant(425, 1, "flowerus_mapelus", "flowering-maple", "default", datetime.timedelta(days=7), [Sunlight.FULL_SUN]) == plant
+    not_equals = plant == 1
+    assert equals == True
+    assert not_equals == False
+    
+    repr_str = repr(plant)
+    assert repr_str == "Plant(core_id=425, personal_id=1, scientific_name='flowerus_mapelus', core_name='flowering-maple', icon_type='default', watering_frequency=datetime.timedelta(days=7), preff_sunlight=[Sunlight.FULL_SUN])"
+    assert eval(repr_str) == plant
+    
+    plant_str = str(plant)
+    assert plant_str == "1: flowering-maple"

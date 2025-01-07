@@ -54,7 +54,6 @@ def test_recommender():
     ud = create_userdata()
     recommender = Recommender(ud)
     rec_res = recommender.get_recommendations()
-    print(rec_res)
     rec_expect = [
     8480, 428, 6178, 6199, 6200, 6201, 6202, 6203, 6204, 6206, 6210, 4181, 4182, 4183,
     6252, 6253, 8314, 6317, 6318, 8377, 2242, 8386, 2244, 2272, 2274, 2275, 2277, 8422,
@@ -136,3 +135,46 @@ def test_sunlight_score():
     assert sunlight_score == 75
     sunlight_score = recommender.sunlight_score(Sunlight.FULL_SUN)
     assert sunlight_score == 50
+
+def test_recommendation_with_pets():
+    ud = create_userdata()
+    ud.pet_toxicity = 1
+    recommender = Recommender(ud)
+    rec_res = recommender.get_recommendations()
+    assert 710 not in rec_res
+    assert 711 not in rec_res
+    assert 712 not in rec_res
+    assert 713 not in rec_res
+    assert 714 not in rec_res
+    assert 715 not in rec_res
+    assert 716 not in rec_res
+    assert 717 not in rec_res
+    assert 718 not in rec_res
+    assert 1999 not in rec_res
+    assert 2272 not in rec_res
+    assert 2274 not in rec_res
+    assert 2468 not in rec_res
+    assert 2773 not in rec_res
+    assert 2774 not in rec_res
+    assert 3347 not in rec_res
+    assert 3349 not in rec_res
+    assert 3350 not in rec_res
+    assert 3351 not in rec_res
+    assert 3352 not in rec_res
+    assert 3353 not in rec_res
+    assert 3354 not in rec_res
+    assert 3355 not in rec_res
+    assert 4557 not in rec_res
+    assert 4947 not in rec_res
+    assert 5203 not in rec_res
+    assert 5868 not in rec_res
+    assert 7245 not in rec_res
+    assert 7345 not in rec_res
+    assert 7463 not in rec_res
+    assert 8485 not in rec_res
+    assert 8487 not in rec_res
+    assert 8565 not in rec_res
+    assert 8596 not in rec_res
+    assert 8603 not in rec_res
+    assert 8755 not in rec_res
+    assert 8763 not in rec_res
