@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'notifier_windowAzocoJ.ui'
+## Form generated from reading UI file 'notifier_windowgfIiWa.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.8.1
 ##
@@ -85,16 +85,16 @@ class Ui_Notifier_window(object):
         self.Type_notification_icon.setGeometry(QRect(10, 160, 41, 41))
         self.Type_notification_icon.setPixmap(QPixmap(u"../../../../Documents/A-Tu delft/Minor informatica/CS project/Nieuwe icons/Nieuwe icons/type_notification.png"))
         self.Type_notification_icon.setScaledContents(True)
-        self.label = QLabel(self.centralwidget)
-        self.label.setObjectName(u"label")
-        self.label.setGeometry(QRect(10, 200, 41, 31))
-        self.label.setPixmap(QPixmap(u"../../../../Documents/A-Tu delft/Minor informatica/CS project/Nieuwe icons/Nieuwe icons/weight.png"))
-        self.label.setScaledContents(True)
-        self.label_2 = QLabel(self.centralwidget)
-        self.label_2.setObjectName(u"label_2")
-        self.label_2.setGeometry(QRect(10, 240, 41, 41))
-        self.label_2.setPixmap(QPixmap(u"../../../../Documents/A-Tu delft/Minor informatica/CS project/Nieuwe icons/Nieuwe icons/date.png"))
-        self.label_2.setScaledContents(True)
+        self.Weight_icon = QLabel(self.centralwidget)
+        self.Weight_icon.setObjectName(u"Weight_icon")
+        self.Weight_icon.setGeometry(QRect(10, 200, 41, 31))
+        self.Weight_icon.setPixmap(QPixmap(u"../../../../Documents/A-Tu delft/Minor informatica/CS project/Nieuwe icons/Nieuwe icons/weight.png"))
+        self.Weight_icon.setScaledContents(True)
+        self.Date_icon = QLabel(self.centralwidget)
+        self.Date_icon.setObjectName(u"Date_icon")
+        self.Date_icon.setGeometry(QRect(10, 240, 41, 41))
+        self.Date_icon.setPixmap(QPixmap(u"../../../../Documents/A-Tu delft/Minor informatica/CS project/Nieuwe icons/Nieuwe icons/date.png"))
+        self.Date_icon.setScaledContents(True)
         Notifier_window.setCentralWidget(self.centralwidget)
         self.statusbar = QStatusBar(Notifier_window)
         self.statusbar.setObjectName(u"statusbar")
@@ -117,9 +117,10 @@ class Ui_Notifier_window(object):
         self.Notification_info.setText(QCoreApplication.translate("Notifier_window", u"<html><head/><body><p><span style=\" font-size:12pt; font-weight:700;\">Notification info</span></p></body></html>", None))
         self.Id_icon.setText("")
         self.Type_notification_icon.setText("")
-        self.label.setText("")
-        self.label_2.setText("")
+        self.Weight_icon.setText("")
+        self.Date_icon.setText("")
     # retranslateUi
+
 
 
 

@@ -10,7 +10,7 @@ from project.ui.notifier_window_ui import Ui_Notifier_window
 if TYPE_CHECKING:
     from project.classes.notifier import Notifier
 
-class NotifierWindow(QDialog):
+class NotifierWindow(QMainWindow):
     """
     Window in which you can individually inspect notification
     on all their properties like name, type, weight, orginal_due_date
@@ -24,11 +24,20 @@ class NotifierWindow(QDialog):
         # Initialize a placeholder to store notifications
         self.notifications_list: list[Notification] = []
 
-        # connect buttons
-        self.ui.Notifications.clicked.connect(self.update_notifications_combobox)
+        # set icons
+        self.ui.Id_icon.setPixmap(QPixmap(u":/id.png"))
+        self.ui.Type_notification_icon.setPixmap(QPixmap(u":/type_notification.png"))
+        self.ui.Weight_icon.setPixmap(QPixmap(u":/weight.png"))
+        self.ui.Date_icon.setPixmap(QPixmap(u":/date.png"))
+
+        # Initialize the combobox with notifications
+        self.update_notifications_combobox()
         self.ui.Notifications.currentIndexChanged.connect(self.handle_sort_change)
 
     def update_notifications_combobox(self):
+        """
+        Fills the combobox with the notifications
+        """
         # Fetch the list of notifications
         self.notifications_list = self.notifier.check_tasks_today()
 
@@ -36,9 +45,10 @@ class NotifierWindow(QDialog):
         self.ui.Notifications.clear()
 
         # Add the new notifications to the QComboBox
-        for notification in self.notifications_list:
-            self.ui.Notifications.addItems(f"{notification.personal_id_plant}, "
-                                           f"{notification.notification_type}")
+        if self.notifications_list:
+            for notification in self.notifications_list:
+                self.ui.Notifications.addItems(f"{notification.personal_id_plant}, "
+                                               f"{notification.notification_type}")
 
         # Set up the notification info for the first item (if available)
         if self.notifications_list:

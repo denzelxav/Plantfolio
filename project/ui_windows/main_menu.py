@@ -1,7 +1,5 @@
 """The main application window"""
 
-from __future__ import annotations
-from typing import TYPE_CHECKING
 
 from PySide6.QtCore import Slot
 from PySide6.QtGui import QPixmap, QIcon
@@ -13,8 +11,9 @@ from project.ui_windows.add_room_window import AddRoomWindow
 from project.ui_windows.room_view_window import RoomViewWindow
 from project.ui_windows.all_plants_window import AllPlantsWindow
 from project.ui_windows.notifier_window import NotifierWindow
-if TYPE_CHECKING:
-    from project.classes.notifier import Notifier
+from project.classes.notifier import Notifier
+
+
 
 import images_qr
 
@@ -23,7 +22,8 @@ class MainMenu(QMainWindow):
     """
     This is the main window that will show up when starting the application.
     From here you can add and open rooms, open the all plants window,
-    the recommender, and see your notifications."""
+    the recommender, and see your notifications
+    """
 
 
     def __init__(self, userdata: UserData) -> None:
@@ -41,6 +41,8 @@ class MainMenu(QMainWindow):
         self.ui.water_all.clicked.connect(self.userdata.water_all)
         self.ui.open_room.clicked.connect(self.open_room)
         self.ui.all_plants.clicked.connect(self.open_all_plants)
+
+        self.update_notifications()
         self.ui.refresh_notifications.clicked.connect(self.update_notifications)
         self.ui.sort_notifications_by.currentIndexChanged.connect(self.handle_sort_change)
         self.ui.open_notifier.clicked.connect(self.open_notifier)
@@ -63,12 +65,15 @@ class MainMenu(QMainWindow):
         self.room_view_window.show()
 
     def update_notifications(self):
-
+        """
+        Refreshes the notifications in the notification window
+        """
         self.ui.Notification_list.clear()
-        notifications = self.notifier.check_tasks_today
-        for notification in notifications:
-            self.ui.Notification_list.addItems(f"{notification.personal_id_plant}, "
-                                               f"{notification.notification_type}")
+        notifications = self.notifier.check_tasks_today()
+        if notifications:
+            for notification in notifications:
+                self.ui.Notification_list.addItems(f"{notification.personal_id_plant}, "
+                                                   f"{notification.notification_type}")
 
 
     def delete_room(self, room: RoomViewWindow) -> None:
@@ -82,12 +87,16 @@ class MainMenu(QMainWindow):
 
     @Slot()
     def open_notifier(self):
-        self.notifier_window = NotifierWindow(self)
+        """
+        Opens the notification window
+        """
+        self.notifier_window = NotifierWindow(self.notifier)
         self.notifier_window.show()
 
     def handle_sort_change(self, index):
         """
-        Handle the change in sorting
+        Handle the change in notification window based
+        on type of sorting
         """
         selected_option = self.ui.sort_notifications_by.itemText(index)
         if selected_option == "day":
