@@ -74,7 +74,7 @@ class Plant:
 
         self.core_id = core_id
         self.personal_id = personal_id
-        self.personal_name: None | str = None
+        self.personal_name: str = core_name
         self.scientific_name: str = scientific_name
         self.core_name = core_name
         self.icon_type = icon_type
