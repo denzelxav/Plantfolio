@@ -10,10 +10,13 @@ def query_from_database(query: str, output_to_file: bool=False) -> list[tuple[st
     """
     # Connect to the database and execute the query
     if getattr(sys, 'frozen', False):
-        db_file = os.path.join(sys._MEIPASS, 'plant_database.db')
+        db_file = os.path.join(sys._MEIPASS, 'plant_database.db') # type: ignore # pylint: disable=W0212
 
     elif __file__:
         db_file = os.path.join(os.path.dirname(__file__), 'plant_database.db')
+    else:
+        raise ValueError("Unexpected run state")
+
 
 
     with sqlite3.connect(db_file) as conn:

@@ -26,7 +26,10 @@ def save_user_data(user: UserData, test_mode: bool=False) -> None:
     if test_mode:
         save_path = os.path.join("test", "test_user_data.json")
     elif getattr(sys, 'frozen', False):
-        directory = os.path.join(os.getenv('APPDATA'), "Plantfolio")
+        appdata = os.getenv('APPDATA')
+        if appdata is None:
+            raise FileNotFoundError("Appdata folder could not be found")
+        directory = os.path.join(appdata, "Plantfolio")
         try:
             os.mkdir(directory)
         except FileExistsError:
@@ -57,7 +60,10 @@ def load_user_data(test_mode: bool=False) -> UserData:
     if test_mode:
         load_path = os.path.join("test", "test_user_data.json")
     elif getattr(sys, 'frozen', False):
-        load_path = os.path.join(os.getenv('APPDATA'), "Plantfolio", "user_data.json")
+        appdata = os.getenv('APPDATA')
+        if appdata is None:
+            raise FileNotFoundError("Appdata folder could not be found")
+        load_path = os.path.join(appdata, "Plantfolio", "user_data.json")
     else:
         load_path = os.path.join("project", "user_data.json")
 
