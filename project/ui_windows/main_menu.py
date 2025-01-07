@@ -27,11 +27,11 @@ class MainMenu(QMainWindow):
     the recommender, and see your notifications."""
 
 
-    def __init__(self, userdata: UserData, notifier: Notifier) -> None:
+    def __init__(self, userdata: UserData) -> None:
         super().__init__()
         # Create a file with pyside6-uic project/ui/app.ui -o project/ui/output.py
         self.userdata = userdata
-        self.notifier = notifier
+        self.notifier = Notifier(userdata.plants)
         self.ui = Ui_MainMenu()
         self.ui.setupUi(self)
         self.ui.PlantFolio_Icon.setPixmap(QPixmap(u":/Plantfolio_logo.png"))

@@ -25,7 +25,7 @@ class UserData:
     """
 
     def __init__(self) -> None:
-        self.plants: set[Plant]= set()
+        self.plants: list[Plant]= []
         self.rooms: dict[str, list[Spot]] = {}
         self.pet_toxicity = False
 
