@@ -93,20 +93,3 @@ def string_to_health(health: str) -> Health:
             return Health.DEAD
         case unexpected_value:
             raise ValueError(f"Unexpected health value {unexpected_value}")
-
-
-def health_to_string(health: Health) -> str:
-    """
-    Returns string representation of health enum
-    """
-    match health:
-        case Health.DEAD:
-            return "dead"
-        case Health.UNHEALTHY:
-            return "unhealthy"
-        case Health.SLIGHTLY_UNHEALTHY:
-            return "slightly unhealthy"
-        case Health.HEALTHY:
-            return "healthy"
-        case unexpected_value:
-            raise ValueError(f"Unexpected health value {unexpected_value}")

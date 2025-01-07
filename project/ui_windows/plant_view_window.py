@@ -5,7 +5,7 @@ from PySide6.QtCore import Slot, QSize
 from PySide6.QtGui import QIcon, QPixmap
 from PySide6.QtWidgets import QMainWindow
 
-from project.classes.public_methods import sunlight_to_string, get_sun_icon_path, health_to_string, string_to_health
+from project.classes.public_methods import sunlight_to_string, get_sun_icon_path, string_to_health
 from project.ui.plant_view import Ui_PlantViewWindow
 from project.ui_windows.add_plant_window import AddPlantWindow
 import images_qr
@@ -77,7 +77,7 @@ class PlantViewWindow(QMainWindow):
         #setting plant text
         self.plant = self.spot.assigned_plant
         if self.plant:
-            self.ui.plant_health_text.setText(f"Plant is {health_to_string(self.plant.health)}.")
+            self.ui.plant_health_text.setText(f"Plant is {self.plant.health.value.replace("_"," ")}.")
             self.ui.plant_name.setText(f"name: {self.plant.personal_name}")
             self.ui.scientific_name.setText(f"scientific name: {self.plant.scientific_name}")
             preff_sun_text = f"prefers {sunlight_to_string(self.plant.preff_sunlight[0])}"
@@ -157,7 +157,7 @@ class PlantViewWindow(QMainWindow):
 
     def refresh_health(self):
         if self.plant:
-            self.ui.plant_health_text.setText(f"Plant is {health_to_string(self.plant.health)}.")
+            self.ui.plant_health_text.setText(f"Plant is {self.plant.health.value.replace("_"," ")}.")
             self.set_plant_icon()
         else:
             self.ui.plant_health_text.setText("Select a plant")
