@@ -13,7 +13,10 @@ if TYPE_CHECKING:
     from project.ui_windows.plant_view_window import PlantViewWindow
 
 class AddPlantWindow(QDialog):
-    def __init__(self, spot: Spot, userdata: UserData, parent: PlantViewWindow | None =None):
+    """
+    Window from which you can add plants to a spot
+    """
+    def __init__(self, spot: Spot, userdata: UserData, parent: PlantViewWindow | None =None) -> None:
         super().__init__()
         self.ui = Ui_AddPlantWindow()
         self.ui.setupUi(self)
@@ -38,14 +41,21 @@ class AddPlantWindow(QDialog):
 
 
     @Slot()
-    def filter_search(self):
+    def filter_search(self) -> None:
+        """
+        Hides items that do not correspond to the text in the search bar.
+        """
         search = self.ui.search_bar.text().lower()
         for i in range(self.ui.all_plants_list.count()):
             item = self.ui.all_plants_list.item(i)
             item.setHidden(search not in item.text().lower())
 
     @Slot()
-    def add_plant(self):
+    def add_plant(self) -> None:
+        """
+        Adds the selected plant to the userdata, refreshes the plant view window
+        and closes the AddPlantWindow.
+        """
         plant_id = self.ui.all_plants_list.selectedItems()[0].text().split(":")[0]
         plant = plant_from_database(plant_id)
         plant_name = self.ui.name_input.text()

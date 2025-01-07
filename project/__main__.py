@@ -4,13 +4,13 @@ import sys
 
 from PySide6.QtWidgets import QApplication
 
-from project.classes.userdata import UserData
 from project.classes.recommender import Recommender
 from project.ui_windows.main_menu import MainMenu
+from project.classes.save_and_load_userdata import load_user_data
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    userdata = UserData()
+    userdata = load_user_data()
     myApp = MainMenu(userdata)
     myApp.show()
     app.exec()

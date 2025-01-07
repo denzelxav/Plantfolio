@@ -1,27 +1,41 @@
-from project.classes.plant import *
+import datetime
+from project.classes.plant import Plant
 from project.classes.userdata import UserData
-from project.classes.spot_notification import Spot, Notification
-from project.classes.enums import *
+from project.classes.spot_notification import Spot
+from project.classes.enums import Sunlight
 
-def create_plant1(sunlight: Sunlight = Sunlight.FULL_SHADE):
-    return Plant(425, 1, "flowerus_mapelus", "flowering-maple",
-                 "default", datetime.timedelta(days=7),
-                 [Sunlight.FULL_SUN]
+def create_plant1():
+    """
+    Creates a plant object for testing
+    """
+    return Plant(425, 1, "Abutilon hybridum", "flowering-maple",
+                 "default", datetime.timedelta(days=4),
+                 [Sunlight.FULL_SUN, Sunlight.PART_SHADE]
                  )
 
-def create_plant2(sunlight: Sunlight = Sunlight.FULL_SUN):
-    return Plant(435, 2, "sansevieria", "sansevieria",
-                 "default", datetime.timedelta(days=10),
-                 [Sunlight.FULL_SUN]
+def create_plant2():
+    """
+    Creates a plant object for testing
+    """
+    return Plant(434, 2, "Acalypha wilkesiana", "Jacob's coat",
+                 "default", datetime.timedelta(days=4),
+                 [Sunlight.FULL_SUN, Sunlight.PART_SHADE]
                  )
 
-def create_plant3(sunlight: Sunlight = Sunlight.FULL_SHADE):
-    return Plant(498, 2, "strelitzia", "bird of paradise flower",
-                 "default", datetime.timedelta(days=14),
-                 [Sunlight.FULL_SUN]
+def create_plant3():
+    """
+    Creates a plant object for testing
+    """
+    return Plant(502, 2, "Achimenes (group)", "hot water plant",
+                 "default", datetime.timedelta(weeks=1),
+                [Sunlight.PART_SHADE]
                  )
+
 
 def test_create_userdata_basic():
+    """
+    Tests the basic functionality of the UserData class
+    """
     maple  = create_plant1()
     mydata = UserData()
 
@@ -30,10 +44,10 @@ def test_create_userdata_basic():
 
     # tests add_room
     assert mydata.rooms == {'bedroom': [], 'living room': []}
-    
-    spot1 = Spot('spot1', Sunlight.FULL_SHADE, 'high humidity', None, 21)    
 
-    mydata.add_spot(spot1, 'bedroom')
+    spot1 = Spot('spot1', Sunlight.FULL_SHADE, 'high humidity', None, 21, 'bedroom')
+
+    mydata.add_spot(spot1)
 
     # tests add_spot
     assert mydata.rooms == {'bedroom': [spot1], 'living room': []}
@@ -42,12 +56,13 @@ def test_create_userdata_basic():
 
     # tests add_plant
     assert mydata.rooms['bedroom'][0].assigned_plant == maple
-    assert mydata.plants == {maple}
+    assert mydata.plants == [maple]
 
     mydata.water_all()
 
     # tests water_all
-    assert all(plant.watered[-1] < datetime.datetime.now() + datetime.timedelta(seconds = 1) for plant in mydata.plants)
+    assert all(plant.watered[-1] < datetime.datetime.now() + datetime.timedelta(seconds = 1)
+               for plant in mydata.plants)
 
     mydata.delete_plant(maple)
 
@@ -63,7 +78,28 @@ def test_create_userdata_basic():
 
     assert mydata.rooms == {'living room': []}
 
+def test_add_plant_spot_not_in_room():
+    """
+    Tests the add_plant method of the UserData class when the spot is not in the room
+    """
+    maple  = create_plant1()
+    mydata = UserData()
+
+    spot1 = Spot('spot1', Sunlight.FULL_SHADE, 'high humidity', None, 21, 'bedroom')
+    spot2 = Spot('spot2', Sunlight.FULL_SUN, 'low humidity', None, 22, 'living room')
+
+    mydata.add_spot(spot1)
+
+    mydata.add_plant(maple, spot2)
+
+    assert mydata.rooms == {'bedroom': [spot1], 'living room': [spot2]}
+    assert mydata.plants == [maple]
+    assert spot2.assigned_plant == maple
+
 def test_sort_plants():
+    """
+    Tests the sort_plants method of the UserData class
+    """
     maple  = create_plant1()
     maple.current_tasks.add('water')
     sansevieria = create_plant2()
@@ -73,19 +109,19 @@ def test_sort_plants():
 
     mydata.add_room('bedroom')
     mydata.add_room('living room')
-    table = Spot('table', Sunlight.PART_SHADE, 'high humidity', maple, 21) 
-    ledge1 = Spot('ledge1', Sunlight.FULL_SUN, 'low humidity', sansevieria, 22)
-    ledge2 = Spot('ledge2', Sunlight.FULL_SUN, 'low humidity', strelitzia, 22)
+    table = Spot('table', Sunlight.PART_SHADE, 'high humidity', maple, 21, 'bedroom')
+    ledge1 = Spot('ledge1', Sunlight.FULL_SUN, 'low humidity', sansevieria, 22, 'living room')
+    ledge2 = Spot('ledge2', Sunlight.FULL_SUN, 'low humidity', strelitzia, 22, 'living room')
 
-    mydata.add_spot(table, 'bedroom')
-    mydata.add_spot(ledge1, 'living room')
-    mydata.add_spot(ledge2, 'living room')
+    mydata.add_spot(table)
+    mydata.add_spot(ledge1)
+    mydata.add_spot(ledge2)
     mydata.add_plant(maple, table)
     mydata.add_plant(sansevieria, ledge1)
     mydata.add_plant(strelitzia, ledge2)
 
     sortedonname = mydata.sort_plants('core_name', False)
-    assert sortedonname == [strelitzia, maple, sansevieria]
+    assert sortedonname == [maple, strelitzia, sansevieria]
 
     sortedonscientificname = mydata.sort_plants('scientific_name', False)
     assert sortedonscientificname == [maple, sansevieria, strelitzia]
@@ -97,4 +133,73 @@ def test_sort_plants():
     assert sortedoncurrent_tasks == [strelitzia, sansevieria, maple]
 
     sortedonnothing = mydata.sort_plants('blabla', True)
-    assert sortedonnothing == None
+    assert sortedonnothing is None
+
+
+def test_load_spot_data():
+    """
+    Tests the load_spot_data method of the UserData class
+    """
+    mydata = UserData()
+    spot_data = {'spot_id': 'Window',
+                 'light_level': 'FULL_SHADE',
+                 'humidity': 'high humidity',
+                 'temperature': 21,
+                 'room': 'bedroom'}
+
+    mydata.load_spot_data(spot_data)
+
+    assert mydata.rooms == {'bedroom': [Spot('Window',
+                                             Sunlight.FULL_SHADE,
+                                             'high humidity',
+                                             None,
+                                             21,
+                                             'bedroom')]}
+
+    spot_data = {'spot_id': 'Cabinet',
+                 'light_level': 'FULL_SUN',
+                 'humidity': 'high humidity',
+                 'temperature': 21,
+                 'room': 'kitchen'}
+
+    mydata.load_spot_data(spot_data)
+
+    assert mydata.rooms == {'bedroom': [Spot('Window',
+                                             Sunlight.FULL_SHADE,
+                                             'high humidity',
+                                             None,
+                                             21,
+                                             'bedroom')],
+                            'kitchen': [Spot('Cabinet',
+                                             Sunlight.FULL_SUN,
+                                             'high humidity',
+                                             None,
+                                             21,
+                                             'kitchen')]}
+
+    spot_data = {'spot_id': 'Shelf',
+                 'light_level': 'FULL_SHADE',
+                 'humidity': 'low humidity',
+                 'temperature': 21,
+                 'room': 'living room'}
+
+    mydata.load_spot_data(spot_data)
+
+    assert mydata.rooms == {'bedroom': [Spot('Window',
+                                             Sunlight.FULL_SHADE,
+                                             'high humidity',
+                                             None,
+                                             21,
+                                             'bedroom')],
+                            'kitchen': [Spot('Cabinet',
+                                             Sunlight.FULL_SUN,
+                                             'high humidity',
+                                             None,
+                                             21,
+                                             'kitchen')],
+                            'living room': [Spot('Shelf',
+                                                 Sunlight.FULL_SHADE,
+                                                 'low humidity',
+                                                 None,
+                                                 21,
+                                                 'living room')]}

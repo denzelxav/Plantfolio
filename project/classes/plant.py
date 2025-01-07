@@ -6,14 +6,17 @@ between datetime entries in a sequence.
 It also contains the plant_from_database function
 that creates a plant class based on the database data.
 """
-
+from __future__ import annotations
 import datetime
+from typing import TYPE_CHECKING
 from collections.abc import Sequence
 
 from project.classes.public_methods import string_to_water_frequency, string_to_sunlight
 from project.classes.spot_notification import Spot
-from project.classes.enums import Health, Sunlight
 from project.query_function import query_from_database
+from project.classes.enums import Health, Sunlight, Action
+if TYPE_CHECKING:
+    from project.classes.spot_notification import Notification
 
 
 def time_average(events: Sequence[datetime.datetime]) -> datetime.timedelta:
@@ -58,6 +61,7 @@ class Plant:
                                function or from manually set health attribute
         - max_log_size(int): the number of entries before that log sizes deletes the oldest value.
         - notes(str): users notes about the plant
+        - current_tasks(set[str]): set of tasks that the plant needs to have done
     """
     def __init__(self,
                  core_id: int,
@@ -88,17 +92,28 @@ class Plant:
         self.sunlight_score: int = 0 # type: ignore
         self.nutrition_score: None | int = None # type: ignore
         self.current_tasks: set[str] = set() # choose from repot, water, nutrition
+        self.list_notifications: list[Notification] = []
         self.water_plant()
         self.give_nutrition()
+        self.repot_plant()
+
 
     def give_nutrition(self) -> None:
         """
-        Sets time when plant last received nutrition to the current date and time
+        Sets time when plant last received nutrition to the current
+        date and time and deletes notifcation
         """
         self.nutrition.append(datetime.datetime.now())
         if len(self.nutrition) > self.max_log_size:
             del self.nutrition[0]
         self._nutrition_score: int | None = None
+
+        # remove the task from the notifications
+        for notification in self.list_notifications:
+            if (notification.plant_notification == self
+                    and notification.notification_type == Action.NUTRITION):
+                self.list_notifications.remove(notification)
+                notification.notifier.all_notifications.remove(notification)
 
     def change_spot(self, spot: Spot) -> None:
         """
@@ -110,14 +125,34 @@ class Plant:
 
     def water_plant(self) -> None:
         """
-        Sets time when plant was last watered to current moment. and deletes water_score cache
+        Sets time when plant was last watered to current moment
+        and deletes water_score cache and notification
         """
         if len(self.watered) > 1 and datetime.datetime.now() < self.watered[-1]:
             raise ValueError(f"Last watering entry is in the future. ({self.watered[-1]})")
         self.watered.append(datetime.datetime.now())
+
         if len(self.watered) > self.max_log_size:
             del self.watered[0]
         self._water_score: int | None = None
+
+        for notification in self.list_notifications:
+            if (notification.plant_notification == self
+                    and notification.notification_type == Action.WATERING):
+                self.list_notifications.remove(notification)
+                notification.notifier.all_notifications.remove(notification)
+
+
+    def repot_plant(self) -> None:
+        """
+        Sets time when plant was last repotted to current moment.
+        """
+        self.repotted = datetime.datetime.now()
+        for notification in self.list_notifications:
+            if (notification.plant_notification == self
+                    and notification.notification_type == Action.REPOTTING):
+                self.list_notifications.remove(notification)
+                notification.notifier.all_notifications.remove(notification)
 
     def get_water_score(self) -> int:
         """
@@ -141,6 +176,8 @@ class Plant:
         """
         Returns score based on time between now and last watering session
         """
+        if not self.watered:
+            return -1
         time_diff = datetime.datetime.now() - self.watered[-1]
         max_deviation = self.watering_frequency * 2
         if time_diff < self.watering_frequency:
@@ -175,6 +212,8 @@ class Plant:
         """
         Returns score based on time between now and last time the plant received nutrition
         """
+        if not self.nutrition:
+            return -1
         time_diff = datetime.datetime.now() - self.nutrition[-1]
         nutrition_frequency = datetime.timedelta(days=30)
         max_deviation = nutrition_frequency * 2
@@ -291,9 +330,71 @@ class Plant:
         if self.spot:
             self.sunlight_score = self.get_sunlight_score()
 
+    def get_data_to_save(self
+        ) -> dict[
+            str, str | int | list[datetime.datetime] | dict[str, str | int] | list[str] | None
+            ]:
+        """
+        Returns a dictionary with all data that needs to be saved for the plant in json format
+        """
+        return {
+            "core_id": self.core_id,
+            "personal_id": self.personal_id,
+            "personal_name": self.personal_name,
+            "icon_type": self.icon_type,
+            "spot_id": self.spot.spot_id if self.spot else None,
+            "health": self.health.value,
+            "watered": [entry.isoformat()
+                        for entry in self.watered]
+                        if len(self.watered) > 0 else [],
+            "nutrition": [entry.isoformat()
+                          for entry in self.nutrition]
+                          if self.nutrition else [],
+            "repotted": self.repotted.isoformat() if self.repotted else None,
+            "manual_health": self.manual_health,
+            "max_log_size": self.max_log_size,
+            "notes": self.notes,
+            "current_tasks": list(self.current_tasks)
+        }
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Plant):
+            return False
+        return (self.core_id == other.core_id and
+                self.personal_id == other.personal_id and
+                self.personal_name == other.personal_name and
+                self.scientific_name == other.scientific_name and
+                self.core_name == other.core_name and
+                self.icon_type == other.icon_type and
+                self.spot == other.spot and
+                self.health == other.health and
+                self.watering_frequency == other.watering_frequency and
+                self.preff_sunlight == other.preff_sunlight and
+                self.watered == other.watered and
+                self.nutrition == other.nutrition and
+                self.repotted == other.repotted and
+                self.notes == other.notes and
+                self.manual_health == other.manual_health and
+                self.max_log_size == other.max_log_size and
+                self.water_score == other.water_score and
+                self.sunlight_score == other.sunlight_score and
+                self.nutrition_score == other.nutrition_score and
+                self.current_tasks == other.current_tasks
+                )
+
+    def __hash__(self):
+        return hash(self.personal_id)
+
     def __repr__(self) -> str:
-        return (f"Plant({self.core_id}, {self.personal_id}, {self.core_name}, {self.icon_type}, "
-                f"{self.watering_frequency}, {self.preff_sunlight})")
+        return (f"Plant("
+                f"core_id={self.core_id}, "
+                f"personal_id={self.personal_id}, "
+                f"scientific_name={self.scientific_name}, "
+                f"core_name={self.core_name}, "
+                f"icon_type={self.icon_type}, "
+                f"watering_frequency={self.watering_frequency}, "
+                f"preff_sunlight={self.preff_sunlight}"
+                )
 
     def __str__(self) -> str:
         return f"{self.personal_id}: {self.core_name}"
