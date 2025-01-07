@@ -75,7 +75,6 @@ class Recommender:
             self.plant_scores[plant_id] = self.calculate_score(plant_id)
         recommendations = sorted([plant for plant in self.all_ids if self.plant_scores[plant] > 50],
                                  key=lambda plant_id: self.plant_scores[plant_id], reverse=True)
-        print(self.calculate_score(recommendations[0]), self.calculate_score(recommendations[-1]))
         return recommendations
 
 

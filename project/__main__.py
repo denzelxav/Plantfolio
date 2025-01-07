@@ -11,7 +11,6 @@ from project.ui_windows.main_menu import MainMenu
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     userdata = UserData()
-    recommender = Recommender(userdata)
-    myApp = MainMenu(userdata, recommender)
+    myApp = MainMenu(userdata)
     myApp.show()
     app.exec()

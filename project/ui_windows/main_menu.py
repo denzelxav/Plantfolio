@@ -17,11 +17,11 @@ from project.ui_windows.recommendations_window import RecommendationsWindow
 class MainMenu(QMainWindow):
     """Example application"""
 
-    def __init__(self, userdata: UserData, recommender: Recommender) -> None:
+    def __init__(self, userdata: UserData) -> None:
         super().__init__()
         # Create a file with pyside6-uic project/ui/app.ui -o project/ui/output.py
         self.userdata = userdata
-        self.recommender = recommender
+        self.recommender = Recommender(userdata)
         self.ui = Ui_MainMenu()
         self.ui.setupUi(self)
         self.ui.PlantFolio_Icon.setPixmap(QPixmap(u"./project/art/Plantfolio_logo.png"))
