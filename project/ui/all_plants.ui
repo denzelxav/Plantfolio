@@ -6,9 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>403</width>
-    <height>324</height>
+    <width>425</width>
+    <height>350</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>425</width>
+    <height>350</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>425</width>
+    <height>350</height>
+   </size>
   </property>
   <property name="palette">
    <palette>
@@ -218,7 +230,7 @@
      <x>10</x>
      <y>90</y>
      <width>256</width>
-     <height>221</height>
+     <height>251</height>
     </rect>
    </property>
   </widget>
@@ -264,7 +276,7 @@
     <rect>
      <x>280</x>
      <y>230</y>
-     <width>49</width>
+     <width>141</width>
      <height>16</height>
     </rect>
    </property>
@@ -276,8 +288,8 @@
    <property name="geometry">
     <rect>
      <x>280</x>
-     <y>250</y>
-     <width>81</width>
+     <y>270</y>
+     <width>141</width>
      <height>16</height>
     </rect>
    </property>
@@ -289,8 +301,8 @@
    <property name="geometry">
     <rect>
      <x>280</x>
-     <y>270</y>
-     <width>49</width>
+     <y>290</y>
+     <width>141</width>
      <height>16</height>
     </rect>
    </property>
@@ -302,8 +314,8 @@
    <property name="geometry">
     <rect>
      <x>280</x>
-     <y>290</y>
-     <width>49</width>
+     <y>310</y>
+     <width>141</width>
      <height>16</height>
     </rect>
    </property>
@@ -314,9 +326,9 @@
   <widget class="QComboBox" name="sort_by">
    <property name="geometry">
     <rect>
-     <x>180</x>
+     <x>139</x>
      <y>60</y>
-     <width>80</width>
+     <width>121</width>
      <height>24</height>
     </rect>
    </property>
@@ -324,7 +336,7 @@
   <widget class="QPushButton" name="cancel_button">
    <property name="geometry">
     <rect>
-     <x>320</x>
+     <x>340</x>
      <y>10</y>
      <width>75</width>
      <height>24</height>
@@ -345,6 +357,50 @@
    </property>
    <property name="text">
     <string>Select plant</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="water_all_button">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>75</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Water all</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="species_label">
+   <property name="geometry">
+    <rect>
+     <x>280</x>
+     <y>250</y>
+     <width>141</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Species</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="sort_by_label">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>40</y>
+     <width>151</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Sort by:</string>
    </property>
   </widget>
  </widget>

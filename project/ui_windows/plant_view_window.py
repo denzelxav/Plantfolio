@@ -8,30 +8,41 @@ from PySide6.QtWidgets import QMainWindow
 from project.classes.public_methods import sunlight_to_string, get_sun_icon_path, health_to_string, string_to_health
 from project.ui.plant_view import Ui_PlantViewWindow
 from project.ui_windows.add_plant_window import AddPlantWindow
+import images_qr
 
 if TYPE_CHECKING:
     from project.classes.spot_notification import Spot
     from project.classes.userdata import UserData
 
 class PlantViewWindow(QMainWindow):
-    def __init__(self, spot: Spot, userdata: UserData):
+    """
+    This window shows all the spot details and if a plant is on the spot,
+    also the plant details. The plantcare actions can be done here by
+    interacting with the buttons and the plants health can be seen by
+    looking at the plant icon.
+    """
+    def __init__(self, spot: Spot, userdata: UserData) -> None:
+        """
+        First the spot data is added, then it checks if a plant is assigned
+        before setting the appropriate plant details and enabling the buttons.
+        """
         super().__init__()
         self.ui = Ui_PlantViewWindow()
         self.ui.setupUi(self)
         self.spot = spot
         self.plant = self.spot.assigned_plant
         self.userdata = userdata
-        self.setWindowIcon(QIcon("./project/art/Plantfolio_logo_small.png"))
+        self.setWindowIcon(QIcon(":/Plantfolio_logo_small.png"))
 
         #setup icons
         icon = QIcon()
-        icon.addFile(u"./project/art/water.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon.addFile(":/water.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.ui.water_plant.setIcon(icon)
         icon1 = QIcon()
-        icon1.addFile(u"./project/art/nutrition.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon1.addFile(":/nutrition.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.ui.feed_plant.setIcon(icon1)
         icon2 = QIcon()
-        icon2.addFile(u"./project/art/empty_pot.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon2.addFile(":/empty_pot.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.ui.repot_plant.setIcon(icon2)
         self.set_plant_icon()
         self.set_spot_sun_icon()
@@ -93,7 +104,7 @@ class PlantViewWindow(QMainWindow):
         self.ui.water_frequency_text.setHidden(self.plant is None)
         self.ui.last_nutrition.setHidden(self.plant is None)
         if self.plant and self.plant.nutrition:
-            self.ui.last_nutrition.setText(f"{self.plant.nutrition[-1].strftime('%d/%m/%Y')}")
+            self.ui.last_nutrition.setText(f"Last received nutrition on {self.plant.nutrition[-1].strftime('%d/%m/%Y')}")
         else:
             self.ui.last_nutrition.setText("Plant hasn't received nutrition yet")
         self.ui.last_repotted.setHidden(self.plant is None)
@@ -116,10 +127,10 @@ class PlantViewWindow(QMainWindow):
     def set_plant_icon(self):
         if self.plant:
             self.ui.plant_icon.setPixmap(
-                QPixmap(f"./project/art/all plants/{self.plant.icon_type}_{self.plant.health.value}.png"))
+                QPixmap(f":/{self.plant.icon_type}_{self.plant.health.value}.png"))
         else:
             self.ui.plant_icon.setPixmap(
-                QPixmap(f"./project/art/empty_pot.png"))
+                QPixmap(f":/empty_pot.png"))
 
     def set_preff_sun_icon(self):
         """

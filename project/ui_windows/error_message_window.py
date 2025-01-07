@@ -1,5 +1,6 @@
 from project.ui.error_message import Ui_ErrorMessageWindow
 from PySide6.QtWidgets import QDialog
+import images_qr
 
 
 class ErrorMessageWindow(QDialog):
