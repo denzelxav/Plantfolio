@@ -27,7 +27,6 @@ class RecommendationsWindow(QDialog):
         self.ui.image_recommender.setPixmap(QPixmap(u"./project/art/plant_1_healthy.png"))
 
         self.recommendations = self.recommender.get_recommendations()
-        print(self.recommendations)
         for recommendation in self.recommendations:
             plant = plant_from_database(recommendation)
             self.ui.select_recommendation.addItem(plant.scientific_name)
