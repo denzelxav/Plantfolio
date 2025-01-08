@@ -1,6 +1,6 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
-from PySide6.QtGui import QIcon
+from PySide6.QtGui import QIcon, QPixmap
 from PySide6.QtWidgets import QDialog, QListWidgetItem
 from PySide6.QtCore import Slot
 
@@ -24,6 +24,10 @@ class AddPlantWindow(QDialog):
         self.userdata = userdata
         self.parent_window = parent
         self.setWindowIcon(QIcon(":/Plantfolio_logo_small.png"))
+
+        self.ui.icon_frame.setPixmap(QPixmap(u":/list_art.png"))
+        self.ui.search_frame.setPixmap(QPixmap(u":/list_art.png"))
+        self.ui.small_logo.setPixmap(QPixmap(u":/Plantfolio_logo_small.png"))
 
         for plant_data in list_all_plants_in_database():
             self.ui.all_plants_list.addItem(f"{plant_data[0]}: {plant_data[1]}, {plant_data[2]}")
