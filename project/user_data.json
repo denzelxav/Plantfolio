@@ -6,7 +6,7 @@
             "personal_name": "Sjaak",
             "icon_type": "plant_1",
             "spot_id": "test spot",
-            "health": "healthy",
+            "health": "slightly_unhealthy",
             "watered": [
                 "2024-12-18T23:31:33.661001"
             ],
@@ -31,6 +31,13 @@
             },
             {
                 "spot_id": "empty spot",
+                "light_level": "FULL_SHADE",
+                "humidity": "0",
+                "temperature": 0.0,
+                "room": "test room"
+            },
+            {
+                "spot_id": "A spot",
                 "light_level": "FULL_SHADE",
                 "humidity": "0",
                 "temperature": 0.0,

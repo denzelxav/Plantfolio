@@ -32,6 +32,8 @@ class MainMenu(QMainWindow):
         self.ui = Ui_MainMenu()
         self.ui.setupUi(self)
         self.ui.PlantFolio_Icon.setPixmap(QPixmap(u":/Plantfolio_logo.png"))
+        self.ui.notification_list_frame.setPixmap(QPixmap(u":/list_art.png"))
+        self.ui.room_list_frame.setPixmap(QPixmap(u":/list_art.png"))
         self.setWindowIcon(QIcon(":/Plantfolio_logo_small.png"))
 
         #buttons
