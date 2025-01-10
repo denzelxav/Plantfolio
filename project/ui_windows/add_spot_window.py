@@ -16,7 +16,7 @@ class AddSpotWindow(QDialog):
         super().__init__()
         self.ui = Ui_AddSpotWindow()
         self.ui.setupUi(self)
-        self.ui.empty_pot_image.setPixmap(QPixmap(":/empty_pot.png"))
+        self.ui.sun_image.setPixmap(QPixmap(":/full_sun.png"))
         self.room = room
         self.main_menu = main_menu
         self.setWindowIcon(QIcon(":/Plantfolio_logo_small.png"))

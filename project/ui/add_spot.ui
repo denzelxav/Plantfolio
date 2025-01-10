@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>305</width>
-    <height>196</height>
+    <height>180</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>305</width>
-    <height>196</height>
+    <height>180</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>305</width>
-    <height>196</height>
+    <height>180</height>
    </size>
   </property>
   <property name="palette">
@@ -227,8 +227,8 @@
   <widget class="QDialogButtonBox" name="confirm_spot">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>160</y>
+     <x>-30</x>
+     <y>140</y>
      <width>261</width>
      <height>32</height>
     </rect>
@@ -243,7 +243,7 @@
   <widget class="QLineEdit" name="Spot_Name_input">
    <property name="geometry">
     <rect>
-     <x>90</x>
+     <x>110</x>
      <y>10</y>
      <width>113</width>
      <height>21</height>
@@ -256,7 +256,7 @@
   <widget class="QDoubleSpinBox" name="temperature_input">
    <property name="geometry">
     <rect>
-     <x>90</x>
+     <x>110</x>
      <y>70</y>
      <width>88</width>
      <height>23</height>
@@ -269,7 +269,7 @@
   <widget class="QComboBox" name="sunlight_input">
    <property name="geometry">
     <rect>
-     <x>90</x>
+     <x>110</x>
      <y>100</y>
      <width>91</width>
      <height>24</height>
@@ -302,59 +302,59 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>0</x>
+     <x>10</x>
      <y>70</y>
-     <width>91</width>
+     <width>101</width>
      <height>16</height>
     </rect>
    </property>
    <property name="text">
-    <string>Temperature (°C)</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Temperature (°C)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>0</x>
+     <x>10</x>
      <y>100</y>
      <width>61</width>
      <height>16</height>
     </rect>
    </property>
    <property name="text">
-    <string>Light level</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Light level&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>0</x>
+     <x>10</x>
      <y>10</y>
      <width>61</width>
      <height>16</height>
     </rect>
    </property>
    <property name="text">
-    <string>Spot name</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Spot name&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_4">
    <property name="geometry">
     <rect>
-     <x>0</x>
+     <x>10</x>
      <y>40</y>
      <width>71</width>
      <height>16</height>
     </rect>
    </property>
    <property name="text">
-    <string>Humidity(%)</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Humidity(%)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
   <widget class="QSpinBox" name="humidity_input">
    <property name="geometry">
     <rect>
-     <x>90</x>
+     <x>110</x>
      <y>40</y>
      <width>88</width>
      <height>23</height>
@@ -364,20 +364,20 @@
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Humidity of the spot in percentage.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
-  <widget class="QLabel" name="empty_pot_image">
+  <widget class="QLabel" name="sun_image">
    <property name="geometry">
     <rect>
      <x>200</x>
-     <y>60</y>
-     <width>91</width>
-     <height>81</height>
+     <y>20</y>
+     <width>161</width>
+     <height>131</height>
     </rect>
    </property>
    <property name="text">
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>../art/empty_pot.png</pixmap>
+    <pixmap>../art/full_sun.png</pixmap>
    </property>
    <property name="scaledContents">
     <bool>true</bool>

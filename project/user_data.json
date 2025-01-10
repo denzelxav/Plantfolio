@@ -1,19 +1,57 @@
 {
     "plant_data": [
         {
-            "core_id": "428",
+            "core_id": "728",
             "personal_id": 0,
-            "personal_name": "Sjaak",
+            "personal_name": "Cat killer 1",
             "icon_type": "plant_1",
             "spot_id": "test spot",
-            "health": "slightly_unhealthy",
+            "health": "healthy",
             "watered": [
-                "2024-12-18T23:31:33.661001"
+                "2025-01-10T16:22:05.855143"
             ],
             "nutrition": [
-                "2024-12-18T23:31:33.661001"
+                "2025-01-10T16:22:05.855143"
             ],
-            "repotted": null,
+            "repotted": "2025-01-10T16:22:05.855143",
+            "manual_health": false,
+            "max_log_size": 4,
+            "notes": "",
+            "current_tasks": []
+        },
+        {
+            "core_id": "728",
+            "personal_id": 1,
+            "personal_name": "Cat killer 2",
+            "icon_type": "plant_1",
+            "spot_id": "empty spot",
+            "health": "slightly_unhealthy",
+            "watered": [
+                "2025-01-10T16:22:24.398497"
+            ],
+            "nutrition": [
+                "2025-01-10T16:22:24.398497"
+            ],
+            "repotted": "2025-01-10T16:22:24.398497",
+            "manual_health": false,
+            "max_log_size": 4,
+            "notes": null,
+            "current_tasks": []
+        },
+        {
+            "core_id": "728",
+            "personal_id": 2,
+            "personal_name": "Cat killer 3",
+            "icon_type": "plant_1",
+            "spot_id": "A spot",
+            "health": "slightly_unhealthy",
+            "watered": [
+                "2025-01-10T16:22:36.413215"
+            ],
+            "nutrition": [
+                "2025-01-10T16:22:36.413215"
+            ],
+            "repotted": "2025-01-10T16:22:36.413215",
             "manual_health": false,
             "max_log_size": 4,
             "notes": null,
