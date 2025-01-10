@@ -76,7 +76,7 @@ class AllPlantsWindow(QDialog):
         elif crit == 'Last watered':
             self.userdata.plants.sort(key=lambda plant: plant.watered[-1], reverse=reverse)
         elif crit == 'Current tasks':
-            self.userdata.sort_plants('current_task', reverse=reverse)
+            self.userdata.sort_plants('current_task', reverse)
         self.refresh_table()
 
     def get_plant(self, plant_id: int) -> Plant:

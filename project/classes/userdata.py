@@ -112,10 +112,9 @@ class UserData:
         """
         Converts the tasks of a plant to a sorted string of the first letter of each task
         """
-        result = ''
-        sorted_tasks = sorted(list(plant.current_tasks))
-        for task in sorted_tasks:
-            result += task[0]
+        task_priority = {'repot': 3, 'nutrition': 2, 'water': 1} # The higher the number, the higher the priority
+        sorted_tasks = sorted(list(plant.current_tasks), key=lambda task: task_priority.get(task, 100))
+        result = ''.join([task[0] for task in sorted_tasks])       
         return result
 
     def load_spot_data(self, spot_data):
