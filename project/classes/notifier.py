@@ -30,31 +30,55 @@ class Notifier:
                 if plant.watered[-1] + plant.watering_frequency <= datetime.datetime.now():
                     weight_watering: float = (datetime.datetime.now() -
                                    (plant.watered[-1] + plant.watering_frequency)).days + 1
-                    notification = Notification(weight_watering,
-                                                plant.watered[-1] + plant.watering_frequency,
-                                                datetime.datetime.now(),
-                                                plant.personal_id,
-                                                Action.WATERING,
-                                                plant,
-                                                self
-                                                )
-                    self.all_notifications.append(notification)
-                    plant.list_notifications.append(notification)
+                    if weight_watering >= 10:
+                        notification = Notification(f"{weight_watering} (urgent)",
+                                                    plant.watered[-1] + plant.watering_frequency,
+                                                    datetime.datetime.now(),
+                                                    plant.personal_id,
+                                                    Action.WATERING,
+                                                    plant,
+                                                    self
+                                                    )
+                        self.all_notifications.append(notification)
+                        plant.list_notifications.append(notification)
+                    else:
+                        notification = Notification(f"{weight_watering}",
+                                                    plant.watered[-1] + plant.watering_frequency,
+                                                    datetime.datetime.now(),
+                                                    plant.personal_id,
+                                                    Action.WATERING,
+                                                    plant,
+                                                    self
+                                                    )
+                        self.all_notifications.append(notification)
+                        plant.list_notifications.append(notification)
             nutrition_frequency = datetime.timedelta(days=30)
             if plant.nutrition:
                 if plant.nutrition[-1] + nutrition_frequency <= datetime.datetime.now():
                     weight_nutrition: float = ((datetime.datetime.now() -
                                    (plant.nutrition[-1] + nutrition_frequency)).days + 1) / 2
-                    notification = Notification(weight_nutrition,
-                                                plant.nutrition[-1] + nutrition_frequency,
-                                                datetime.datetime.now(),
-                                                plant.personal_id,
-                                                Action.NUTRITION,
-                                                plant,
-                                                self
-                                                )
-                    self.all_notifications.append(notification)
-                    plant.list_notifications.append(notification)
+                    if weight_nutrition >= 10:
+                        notification = Notification(f"{weight_nutrition} (urgent)",
+                                                    plant.nutrition[-1] + nutrition_frequency,
+                                                    datetime.datetime.now(),
+                                                    plant.personal_id,
+                                                    Action.NUTRITION,
+                                                    plant,
+                                                    self
+                                                    )
+                        self.all_notifications.append(notification)
+                        plant.list_notifications.append(notification)
+                    else:
+                        notification = Notification(f"{weight_nutrition}",
+                                                    plant.nutrition[-1] + nutrition_frequency,
+                                                    datetime.datetime.now(),
+                                                    plant.personal_id,
+                                                    Action.NUTRITION,
+                                                    plant,
+                                                    self
+                                                    )
+                        self.all_notifications.append(notification)
+                        plant.list_notifications.append(notification)
 
             repotting_frequency = datetime.timedelta(days=365)
             if plant.repotted:
@@ -62,16 +86,28 @@ class Notifier:
                 if plant.repotted + repotting_frequency <= datetime.datetime.now():
                     weight_repotting: float = ((datetime.datetime.now() -
                               (plant.repotted + repotting_frequency)).days + 1) / 10
-                    notification = Notification(weight_repotting,
-                                                plant.repotted + repotting_frequency,
-                                                datetime.datetime.now(),
-                                                plant.personal_id,
-                                                Action.REPOTTING,
-                                                plant,
-                                                self
-                                                )
-                    self.all_notifications.append(notification)
-                    plant.list_notifications.append(notification)
+                    if weight_repotting >= 30:
+                        notification = Notification(f"{weight_repotting} (urgent)",
+                                                    plant.repotted + repotting_frequency,
+                                                    datetime.datetime.now(),
+                                                    plant.personal_id,
+                                                    Action.REPOTTING,
+                                                    plant,
+                                                    self
+                                                    )
+                        self.all_notifications.append(notification)
+                        plant.list_notifications.append(notification)
+                    else:
+                        notification = Notification(f"{weight_repotting}",
+                                                    plant.repotted + repotting_frequency,
+                                                    datetime.datetime.now(),
+                                                    plant.personal_id,
+                                                    Action.REPOTTING,
+                                                    plant,
+                                                    self
+                                                    )
+                        self.all_notifications.append(notification)
+                        plant.list_notifications.append(notification)
 
         # no tasks for today
         if len(self.all_notifications) == 0:
