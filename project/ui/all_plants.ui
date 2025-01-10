@@ -230,7 +230,7 @@
      <x>10</x>
      <y>90</y>
      <width>531</width>
-     <height>251</height>
+     <height>81</height>
     </rect>
    </property>
    <property name="iconSize">
@@ -261,7 +261,7 @@
   <widget class="QComboBox" name="sort_by">
    <property name="geometry">
     <rect>
-     <x>420</x>
+     <x>340</x>
      <y>60</y>
      <width>121</width>
      <height>24</height>
@@ -310,8 +310,8 @@
   <widget class="QLabel" name="sort_by_label">
    <property name="geometry">
     <rect>
-     <x>420</x>
-     <y>30</y>
+     <x>290</x>
+     <y>60</y>
      <width>151</width>
      <height>16</height>
     </rect>
@@ -325,17 +325,27 @@
     <string>Sort by:</string>
    </property>
   </widget>
-  <widget class="QCheckBox" name="checkBox">
+  <widget class="QCheckBox" name="reverse_button">
    <property name="geometry">
     <rect>
-     <x>480</x>
-     <y>40</y>
+     <x>470</x>
+     <y>60</y>
      <width>78</width>
      <height>20</height>
     </rect>
    </property>
    <property name="text">
     <string>Reverse</string>
+   </property>
+  </widget>
+  <widget class="QTableWidget" name="plant_table">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>180</y>
+     <width>531</width>
+     <height>151</height>
+    </rect>
    </property>
   </widget>
  </widget>

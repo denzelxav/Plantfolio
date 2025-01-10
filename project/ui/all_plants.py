@@ -15,8 +15,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QComboBox, QDialog, QLabel,
-    QListWidget, QListWidgetItem, QPushButton, QSizePolicy,
+from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDialog,
+    QHeaderView, QLabel, QListWidget, QListWidgetItem,
+    QPushButton, QSizePolicy, QTableWidget, QTableWidgetItem,
     QWidget)
 
 class Ui_AllPlantsWindow(object):
@@ -59,7 +60,7 @@ class Ui_AllPlantsWindow(object):
         AllPlantsWindow.setPalette(palette)
         self.select_plant = QListWidget(AllPlantsWindow)
         self.select_plant.setObjectName(u"select_plant")
-        self.select_plant.setGeometry(QRect(10, 90, 531, 251))
+        self.select_plant.setGeometry(QRect(10, 90, 531, 81))
         self.select_plant.setIconSize(QSize(64, 64))
         self.select_label = QLabel(AllPlantsWindow)
         self.select_label.setObjectName(u"select_label")
@@ -69,7 +70,7 @@ class Ui_AllPlantsWindow(object):
         self.select_label.setFont(font)
         self.sort_by = QComboBox(AllPlantsWindow)
         self.sort_by.setObjectName(u"sort_by")
-        self.sort_by.setGeometry(QRect(429, 60, 121, 24))
+        self.sort_by.setGeometry(QRect(340, 60, 121, 24))
         self.cancel_button = QPushButton(AllPlantsWindow)
         self.cancel_button.setObjectName(u"cancel_button")
         self.cancel_button.setGeometry(QRect(470, 10, 75, 24))
@@ -81,8 +82,14 @@ class Ui_AllPlantsWindow(object):
         self.water_all_button.setGeometry(QRect(10, 10, 75, 24))
         self.sort_by_label = QLabel(AllPlantsWindow)
         self.sort_by_label.setObjectName(u"sort_by_label")
-        self.sort_by_label.setGeometry(QRect(430, 40, 151, 16))
+        self.sort_by_label.setGeometry(QRect(290, 60, 151, 16))
         self.sort_by_label.setFont(font)
+        self.reverse_button = QCheckBox(AllPlantsWindow)
+        self.reverse_button.setObjectName(u"reverse_button")
+        self.reverse_button.setGeometry(QRect(470, 60, 78, 20))
+        self.plant_table = QTableWidget(AllPlantsWindow)
+        self.plant_table.setObjectName(u"plant_table")
+        self.plant_table.setGeometry(QRect(10, 180, 531, 151))
 
         self.retranslateUi(AllPlantsWindow)
 
@@ -96,5 +103,6 @@ class Ui_AllPlantsWindow(object):
         self.select_plant_button.setText(QCoreApplication.translate("AllPlantsWindow", u"View plant", None))
         self.water_all_button.setText(QCoreApplication.translate("AllPlantsWindow", u"Water all", None))
         self.sort_by_label.setText(QCoreApplication.translate("AllPlantsWindow", u"Sort by:", None))
+        self.reverse_button.setText(QCoreApplication.translate("AllPlantsWindow", u"Reverse", None))
     # retranslateUi
 
