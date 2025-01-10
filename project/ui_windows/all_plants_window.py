@@ -1,6 +1,6 @@
 from PySide6.QtCore import Slot
 from PySide6.QtGui import QPixmap, QIcon
-from PySide6.QtWidgets import QDialog, QListWidgetItem
+from PySide6.QtWidgets import QDialog, QTableWidgetItem, QAbstractItemView
 from datetime import datetime
 
 import images_qr
@@ -24,14 +24,15 @@ class AllPlantsWindow(QDialog):
         self.ui.setupUi(self)
         self.setWindowIcon(QIcon(":/Plantfolio_logo_small.png"))
 
-        self.refresh_list()
+        self.setup_table()
+        self.refresh_table()
 
-        #buttons
+        # Buttons
         self.ui.cancel_button.clicked.connect(self.reject)
         self.ui.select_plant_button.clicked.connect(self.select_plant)
         self.ui.water_all_button.clicked.connect(self.userdata.water_all)
 
-        #combobox
+        # Combobox
         self.ui.sort_by.addItem('ID')
         self.ui.sort_by.addItem('Name')
         self.ui.sort_by.addItem('Room')
@@ -39,14 +40,18 @@ class AllPlantsWindow(QDialog):
         self.ui.sort_by.addItem('Last watered')
         self.ui.sort_by.addItem('Current tasks')
 
-        self.ui.sort_by.currentIndexChanged.connect(self.sort_list)
+        self.ui.sort_by.currentIndexChanged.connect(self.sort_table)
+        self.ui.reverse_button.stateChanged.connect(self.sort_table)
 
     @Slot()
     def select_plant(self) -> None:
         """
         Opens the plant view window for a selected plant
         """
-        plant_id = int(self.ui.select_plant.selectedItems()[0].text().split('\t')[1])
+        selected_row = self.ui.plant_table.currentRow()
+        if selected_row == -1:
+            return
+        plant_id = int(self.ui.plant_table.item(selected_row, 1).text())
         selected_plant = self.get_plant(plant_id)
         if selected_plant.spot:
             selected_spot = selected_plant.spot
@@ -54,24 +59,25 @@ class AllPlantsWindow(QDialog):
             self.plant_view.show()
 
     @Slot()
-    def sort_list(self) ->  None:
+    def sort_table(self) -> None:
         """
-        Sorts the list of plants on a specific attribute
+        Sorts the table of plants on a specific attribute
         """
+        reverse = self.ui.reverse_button.isChecked()
         crit = self.ui.sort_by.currentText()
         if crit == 'ID':
-            self.userdata.plants.sort(key = lambda plant: plant.personal_id)
+            self.userdata.plants.sort(key=lambda plant: plant.personal_id, reverse=reverse)
         elif crit == 'Name':
-            self.userdata.plants.sort(key = lambda plant: plant.personal_name)
+            self.userdata.plants.sort(key=lambda plant: plant.personal_name.lower(), reverse=reverse)
         elif crit == 'Room':
-            self.userdata.plants.sort(key = lambda plant: self.get_room(plant))
+            self.userdata.plants.sort(key=lambda plant: self.get_room(plant).lower(), reverse=reverse)
         elif crit == 'Species':
-            self.userdata.plants.sort(key = lambda plant: plant.scientific_name)
+            self.userdata.plants.sort(key=lambda plant: plant.scientific_name.lower(), reverse=reverse)
         elif crit == 'Last watered':
-            self.userdata.plants.sort(key = lambda plant: plant.watered[-1])
+            self.userdata.plants.sort(key=lambda plant: plant.watered[-1], reverse=reverse)
         elif crit == 'Current tasks':
-            self.userdata.sort_plants('current_task', False)
-        self.refresh_list()
+            self.userdata.sort_plants('current_task', reverse=reverse)
+        self.refresh_table()
 
     def get_plant(self, plant_id: int) -> Plant:
         """
@@ -90,13 +96,37 @@ class AllPlantsWindow(QDialog):
             if plant.spot in self.userdata.rooms[room]:
                 return room
         raise IndexError(f"{plant} does not have a room")
-    
-    def refresh_list(self) -> None:
+
+    def setup_table(self) -> None:
+        self.ui.plant_table.setColumnCount(6)
+        self.ui.plant_table.setHorizontalHeaderLabels([ 'Name', 'ID', 'Room', 'Species', 'Last Watered', 'Current Tasks'])
+        self.ui.plant_table.setColumnWidth(0, 70)
+        self.ui.plant_table.setColumnWidth(1, 30)
+        self.ui.plant_table.setColumnWidth(2, 100)
+        self.ui.plant_table.setColumnWidth(3, 120)
+        self.ui.plant_table.setColumnWidth(4, 106)
+        self.ui.plant_table.setColumnWidth(5, 100)
+        self.ui.plant_table.verticalHeader().setVisible(False)
+        self.ui.plant_table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+
+
+    def refresh_table(self) -> None:
         """
-        Refreshes the list of plants
+        Refreshes the table of plants
         """
-        self.ui.select_plant.clear()
+        self.ui.plant_table.setRowCount(0)  # Clear the table
         for plant in self.userdata.plants:
-            item_txt = f'{plant.personal_name} \t {plant.personal_id} \t {self.get_room(plant)} \t {plant.scientific_name} \t {plant.watered[-1].date()} \t {', '.join(plant.current_tasks)}'
-            icon  = QIcon(f"./project/art/all plants/{plant.icon_type}_{plant.health.value}.png")
-            self.ui.select_plant.addItem(QListWidgetItem(icon, item_txt))
+            row = self.ui.plant_table.rowCount()
+            self.ui.plant_table.insertRow(row)
+
+            # Add items to the table
+            name_item = QTableWidgetItem(plant.personal_name)
+            icon = QIcon(f"./project/art/all plants/{plant.icon_type}_{plant.health.value}.png")
+            name_item.setIcon(icon)  # Set the icon for the name column
+            self.ui.plant_table.setItem(row, 0, name_item)
+
+            self.ui.plant_table.setItem(row, 1, QTableWidgetItem(str(plant.personal_id)))
+            self.ui.plant_table.setItem(row, 2, QTableWidgetItem(self.get_room(plant)))
+            self.ui.plant_table.setItem(row, 3, QTableWidgetItem(plant.scientific_name))
+            self.ui.plant_table.setItem(row, 4, QTableWidgetItem(plant.watered[-1].date().isoformat()))
+            self.ui.plant_table.setItem(row, 5, QTableWidgetItem(", ".join(plant.current_tasks)))
