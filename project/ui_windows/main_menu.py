@@ -42,7 +42,7 @@ class MainMenu(QMainWindow):
         self.ui.open_notifier.clicked.connect(self.open_notifier)
 
         self.ui.add_room.clicked.connect(self.add_room)
-        self.ui.water_all.clicked.connect(self.userdata.water_all)
+        self.ui.water_all.clicked.connect(self.water_all)
         self.ui.open_room.clicked.connect(self.open_room)
         self.ui.all_plants.clicked.connect(self.open_all_plants)
         self.ui.save_button.clicked.connect(self.save)
@@ -72,6 +72,11 @@ class MainMenu(QMainWindow):
     @Slot()
     def save(self):
         save_user_data(self.userdata)
+
+    def water_all(self):
+        self.userdata.water_all()
+        self.update_notifications()
+
 
     def update_notifications(self):
         """
