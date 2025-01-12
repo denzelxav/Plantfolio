@@ -33,7 +33,6 @@ class RecommendationsWindow(QDialog):
 
         self.ui.pet_tox_check.stateChanged.connect(self.pet_safe_change)
 
-    @Slot()
     def pet_safe_change(self, state):
         if state == 2:  # Qt.Checked is 2
             self.userdata.pet_toxicity = True
