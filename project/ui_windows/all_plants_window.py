@@ -30,7 +30,7 @@ class AllPlantsWindow(QDialog):
         # Buttons
         self.ui.cancel_button.clicked.connect(self.reject)
         self.ui.select_plant_button.clicked.connect(self.select_plant)
-        self.ui.water_all_button.clicked.connect(self.userdata.water_all)
+        self.ui.water_all_button.clicked.connect(self.water_all)
 
         # Combobox
         self.ui.sort_by.addItem('ID')
@@ -40,6 +40,8 @@ class AllPlantsWindow(QDialog):
         self.ui.sort_by.addItem('Last watered')
         self.ui.sort_by.addItem('Current tasks')
 
+        # Some table settings
+        self.ui.plant_table.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.ui.sort_by.currentIndexChanged.connect(self.sort_table)
         self.ui.reverse_button.stateChanged.connect(self.sort_table)
 
@@ -77,6 +79,14 @@ class AllPlantsWindow(QDialog):
             self.userdata.plants.sort(key=lambda plant: plant.watered[-1], reverse=reverse)
         elif crit == 'Current tasks':
             self.userdata.sort_plants('current_task', reverse)
+        self.refresh_table()
+
+    @Slot()
+    def water_all(self) -> None:
+        """
+        Waters all plants and refreshes table
+        """
+        self.userdata.water_all()
         self.refresh_table()
 
     def get_plant(self, plant_id: int) -> Plant:
