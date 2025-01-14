@@ -15,9 +15,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QComboBox, QDialog, QLabel,
-    QListWidget, QListWidgetItem, QPushButton, QSizePolicy,
-    QWidget)
+from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDialog,
+    QHeaderView, QLabel, QPushButton, QSizePolicy,
+    QTableWidget, QTableWidgetItem, QWidget)
 
 class Ui_AllPlantsWindow(object):
     def setupUi(self, AllPlantsWindow):
@@ -57,10 +57,6 @@ class Ui_AllPlantsWindow(object):
         palette.setBrush(QPalette.Disabled, QPalette.Window, brush3)
         palette.setBrush(QPalette.Disabled, QPalette.Accent, brush2)
         AllPlantsWindow.setPalette(palette)
-        self.select_plant = QListWidget(AllPlantsWindow)
-        self.select_plant.setObjectName(u"select_plant")
-        self.select_plant.setGeometry(QRect(10, 90, 531, 251))
-        self.select_plant.setIconSize(QSize(64, 64))
         self.select_label = QLabel(AllPlantsWindow)
         self.select_label.setObjectName(u"select_label")
         self.select_label.setGeometry(QRect(10, 70, 151, 16))
@@ -69,7 +65,7 @@ class Ui_AllPlantsWindow(object):
         self.select_label.setFont(font)
         self.sort_by = QComboBox(AllPlantsWindow)
         self.sort_by.setObjectName(u"sort_by")
-        self.sort_by.setGeometry(QRect(429, 60, 121, 24))
+        self.sort_by.setGeometry(QRect(340, 60, 121, 24))
         self.cancel_button = QPushButton(AllPlantsWindow)
         self.cancel_button.setObjectName(u"cancel_button")
         self.cancel_button.setGeometry(QRect(470, 10, 75, 24))
@@ -81,8 +77,41 @@ class Ui_AllPlantsWindow(object):
         self.water_all_button.setGeometry(QRect(10, 10, 75, 24))
         self.sort_by_label = QLabel(AllPlantsWindow)
         self.sort_by_label.setObjectName(u"sort_by_label")
-        self.sort_by_label.setGeometry(QRect(430, 40, 151, 16))
+        self.sort_by_label.setGeometry(QRect(290, 60, 151, 16))
         self.sort_by_label.setFont(font)
+        self.reverse_button = QCheckBox(AllPlantsWindow)
+        self.reverse_button.setObjectName(u"reverse_button")
+        self.reverse_button.setGeometry(QRect(470, 60, 78, 20))
+        self.plant_table = QTableWidget(AllPlantsWindow)
+        if (self.plant_table.columnCount() < 6):
+            self.plant_table.setColumnCount(6)
+        __qtablewidgetitem = QTableWidgetItem()
+        __qtablewidgetitem.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
+        __qtablewidgetitem.setFont(font);
+        self.plant_table.setHorizontalHeaderItem(0, __qtablewidgetitem)
+        __qtablewidgetitem1 = QTableWidgetItem()
+        __qtablewidgetitem1.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
+        __qtablewidgetitem1.setFont(font);
+        self.plant_table.setHorizontalHeaderItem(1, __qtablewidgetitem1)
+        __qtablewidgetitem2 = QTableWidgetItem()
+        __qtablewidgetitem2.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
+        __qtablewidgetitem2.setFont(font);
+        self.plant_table.setHorizontalHeaderItem(2, __qtablewidgetitem2)
+        __qtablewidgetitem3 = QTableWidgetItem()
+        __qtablewidgetitem3.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
+        __qtablewidgetitem3.setFont(font);
+        self.plant_table.setHorizontalHeaderItem(3, __qtablewidgetitem3)
+        __qtablewidgetitem4 = QTableWidgetItem()
+        __qtablewidgetitem4.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
+        __qtablewidgetitem4.setFont(font);
+        self.plant_table.setHorizontalHeaderItem(4, __qtablewidgetitem4)
+        __qtablewidgetitem5 = QTableWidgetItem()
+        __qtablewidgetitem5.setTextAlignment(Qt.AlignLeading|Qt.AlignVCenter);
+        __qtablewidgetitem5.setFont(font);
+        self.plant_table.setHorizontalHeaderItem(5, __qtablewidgetitem5)
+        self.plant_table.setObjectName(u"plant_table")
+        self.plant_table.setGeometry(QRect(10, 90, 530, 250))
+        self.plant_table.setColumnCount(6)
 
         self.retranslateUi(AllPlantsWindow)
 
@@ -96,5 +125,18 @@ class Ui_AllPlantsWindow(object):
         self.select_plant_button.setText(QCoreApplication.translate("AllPlantsWindow", u"View plant", None))
         self.water_all_button.setText(QCoreApplication.translate("AllPlantsWindow", u"Water all", None))
         self.sort_by_label.setText(QCoreApplication.translate("AllPlantsWindow", u"Sort by:", None))
+        self.reverse_button.setText(QCoreApplication.translate("AllPlantsWindow", u"Reverse", None))
+        ___qtablewidgetitem = self.plant_table.horizontalHeaderItem(0)
+        ___qtablewidgetitem.setText(QCoreApplication.translate("AllPlantsWindow", u"Name", None));
+        ___qtablewidgetitem1 = self.plant_table.horizontalHeaderItem(1)
+        ___qtablewidgetitem1.setText(QCoreApplication.translate("AllPlantsWindow", u"ID", None));
+        ___qtablewidgetitem2 = self.plant_table.horizontalHeaderItem(2)
+        ___qtablewidgetitem2.setText(QCoreApplication.translate("AllPlantsWindow", u"Room", None));
+        ___qtablewidgetitem3 = self.plant_table.horizontalHeaderItem(3)
+        ___qtablewidgetitem3.setText(QCoreApplication.translate("AllPlantsWindow", u"Species", None));
+        ___qtablewidgetitem4 = self.plant_table.horizontalHeaderItem(4)
+        ___qtablewidgetitem4.setText(QCoreApplication.translate("AllPlantsWindow", u"Last watered", None));
+        ___qtablewidgetitem5 = self.plant_table.horizontalHeaderItem(5)
+        ___qtablewidgetitem5.setText(QCoreApplication.translate("AllPlantsWindow", u"Current tasks", None));
     # retranslateUi
 
