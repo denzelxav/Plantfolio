@@ -31,6 +31,7 @@ class AllPlantsWindow(QDialog):
         self.ui.cancel_button.clicked.connect(self.reject)
         self.ui.select_plant_button.clicked.connect(self.select_plant)
         self.ui.water_all_button.clicked.connect(self.water_all)
+        self.ui.plant_table.itemDoubleClicked.connect(self.select_plant)
 
         # Combobox
         self.ui.sort_by.addItem('ID')
@@ -50,11 +51,10 @@ class AllPlantsWindow(QDialog):
         """
         Opens the plant view window for a selected plant
         """
-        selected_row = self.ui.plant_table.currentRow()
-        if selected_row == -1:
+        selection = self.ui.plant_table.selectedItems()
+        if not selection:
             return
-        plant_id = int(self.ui.plant_table.item(selected_row, 1).text())
-        selected_plant = self.get_plant(plant_id)
+        selected_plant = selection[0].data(0)
         if selected_plant.spot:
             selected_spot = selected_plant.spot
             self.plant_view = PlantViewWindow(selected_spot, self.userdata)
@@ -136,6 +136,7 @@ class AllPlantsWindow(QDialog):
 
             # Add items to the table
             name_item = QTableWidgetItem(plant.personal_name)
+            name_item.setData(0, plant)
             icon = QIcon(f":/{plant.icon_type}_{plant.health.value}.png")
             name_item.setIcon(icon)  # Set the icon for the name column
             self.ui.plant_table.setItem(row, 0, name_item)
