@@ -173,7 +173,6 @@ class UserData:
         notes = plant['notes']
         current_tasks = {str(task) for task in plant['current_tasks']}
         custom_image = plant['custom_image'] if "custom_image" in plant else None
-        print(custom_image, None)
 
         core_name = self.get_core_name(plant_id)
         scientific_name = self.get_scientific_name(plant_id)

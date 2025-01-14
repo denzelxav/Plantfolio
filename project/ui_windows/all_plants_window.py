@@ -57,7 +57,7 @@ class AllPlantsWindow(QDialog):
         selected_plant = selection[0].data(0)
         if selected_plant.spot:
             selected_spot = selected_plant.spot
-            self.plant_view = PlantViewWindow(selected_spot, self.userdata)
+            self.plant_view = PlantViewWindow(selected_spot, self.userdata, self)
             self.plant_view.show()
 
     @Slot()

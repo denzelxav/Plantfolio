@@ -39,16 +39,8 @@ class RoomViewWindow(QDialog):
         self.ui.add_plant.clicked.connect(self.add_plant)
         self.ui.open_spot.clicked.connect(self.open_plant_view)
         self.ui.spot_list.itemDoubleClicked.connect(self.open_plant_view)
+        self.ui.spot_list.itemSelectionChanged.connect(self.handle_item_select)
         self.setWindowIcon(QIcon(":/huisje.png"))
-
-    @Slot()
-    def open_plant_view(self):
-        selection = self.ui.spot_list.selectedItems()
-        if selection:
-            selected_spot = selection[0].data(3)
-            self.plant_view = PlantViewWindow(selected_spot, self.main_menu.userdata)
-            self.plant_view.show()
-
 
     @Slot()
     def add_spot(self):
@@ -62,6 +54,14 @@ class RoomViewWindow(QDialog):
             error_msg.exec()
         else:
             self.add_spot_window.show()
+
+
+    @Slot()
+    def delete_room(self):
+        """
+        delete the room that this roomviewwindow corresponds to.
+        """
+        self.main_menu.delete_room(self)
 
 
     @Slot()
@@ -84,19 +84,30 @@ class RoomViewWindow(QDialog):
 
     @Slot()
     def add_plant(self):
+        """
+        Adds a plant to the currently selected  spot
+        """
         selection = self.ui.spot_list.selectedItems()
         if selection:
-            spot = selection[0].data()
+            spot = selection[0].data(3)
             if spot.assigned_plant is None:
                 self.add_plant_window = AddPlantWindow(spot, self.main_menu.userdata)
                 self.add_plant_window.show()
 
     @Slot()
-    def delete_room(self):
-        """
-        delete the room that this roomviewwindow corresponds to.
-        """
-        self.main_menu.delete_room(self)
+    def open_plant_view(self):
+        selection = self.ui.spot_list.selectedItems()
+        if selection:
+            selected_spot = selection[0].data(3)
+            self.plant_view = PlantViewWindow(selected_spot, self.main_menu.userdata, self)
+            self.plant_view.show()
+
+    @Slot()
+    def handle_item_select(self):
+        selection = self.ui.spot_list.selectedItems()
+        if selection:
+            spot = selection[0].data(3)
+            self.ui.add_plant.setEnabled(spot.assigned_plant is None)
 
     def refresh_list(self):
         """

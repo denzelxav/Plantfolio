@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING
 import datetime
 from PySide6.QtCore import Slot, QSize
 from PySide6.QtGui import QIcon, QPixmap
-from PySide6.QtWidgets import QMainWindow, QFileDialog
+from PySide6.QtWidgets import QMainWindow, QFileDialog, QDialog
 
 from project.classes.public_methods import sunlight_to_string, get_sun_icon_path, string_to_health
 from project.ui.plant_view import Ui_PlantViewWindow
@@ -26,7 +26,7 @@ class PlantViewWindow(QMainWindow):
     interacting with the buttons and the plants health can be seen by
     looking at the plant icon.
     """
-    def __init__(self, spot: Spot, userdata: UserData) -> None:
+    def __init__(self, spot: Spot, userdata: UserData, parent: QDialog = None) -> None:
         """
         First the spot data is added, then it checks if a plant is assigned
         before setting the appropriate plant details and enabling the buttons.
@@ -37,6 +37,7 @@ class PlantViewWindow(QMainWindow):
         self.spot = spot
         self.plant = self.spot.assigned_plant
         self.userdata = userdata
+        self.parent = parent
         self.setWindowIcon(QIcon(":/Plantfolio_logo_small.png"))
 
         #setup icons
@@ -222,8 +223,12 @@ class PlantViewWindow(QMainWindow):
                 self.userdata.delete_plant(self.plant)
                 self.plant_or_no_plant()
         else:
-            self.add_plant_window = AddPlantWindow(self.spot, self.userdata, self)
-            self.add_plant_window.show()
+            add_plant_window = AddPlantWindow(self.spot, self.userdata, self)
+            add_plant_window.exec()
+        if self.parent.__class__.__name__ == "RoomViewWindow":
+            self.parent.handle_item_select()
+        else:
+            print(self.parent.__class__.__name__)
 
     @Slot()
     def add_delete_image(self):
