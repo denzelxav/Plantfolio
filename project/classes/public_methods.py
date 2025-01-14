@@ -74,14 +74,15 @@ def wiki_page(plant: str, test_mode=False) -> dict[str, str | QPixmap]:
         i1 = thumbnail_url.rfind('/')
         thumbnail_url = thumbnail_url[:i1]
         if not test_mode:
-            with urllib.urlopen(thumbnail_url).read() as data:
-                pixmap = QPixmap()
-                pixmap.loadFromData(data)
+            data =urllib.urlopen(thumbnail_url).read() # pylint: disable=R1732
+            pixmap = QPixmap()
+            pixmap.loadFromData(data)
         else:
             pixmap = thumbnail_url
-    except TypeError:
+    except TypeError as e:
         if not test_mode:
             pixmap = QPixmap(":/plant_1_healthy")
+            print(e)
         else:
             pixmap = "test_image" # type: ignore
     except Exception as e:
