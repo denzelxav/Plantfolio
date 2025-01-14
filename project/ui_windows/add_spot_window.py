@@ -5,7 +5,7 @@ from PySide6.QtWidgets import QDialog
 from PySide6.QtCore import Slot
 
 import images_rc
-from project.classes.exceptions import NameTakenError
+from project.classes.exceptions import NameTakenError, EmptyNameError
 from project.classes.public_methods import string_to_sunlight
 from project.classes.spot_notification import Spot
 from project.ui.add_spot import Ui_AddSpotWindow
@@ -39,6 +39,9 @@ class AddSpotWindow(QDialog):
         spot = Spot(spot_name, light_level, humidity, None, temperature, self.room.room_name)
         try:
             self.main_menu.userdata.add_spot(spot)
+        except EmptyNameError:
+            error_msg = ErrorMessageWindow("Please fill in a spot name.", "Spot name is empty")
+            error_msg.exec()
         except NameTakenError:
             error_msg = ErrorMessageWindow(f"spot named {spot_name} already exists, please choose another name", "Name taken")
             error_msg.exec()
