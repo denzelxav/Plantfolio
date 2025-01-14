@@ -18,14 +18,15 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QCheckBox, QDialog, QLabel,
     QListWidget, QListWidgetItem, QPushButton, QSizePolicy,
     QWidget)
+import images_rc
 
 class Ui_RecommendationsWindow(object):
     def setupUi(self, RecommendationsWindow):
         if not RecommendationsWindow.objectName():
             RecommendationsWindow.setObjectName(u"RecommendationsWindow")
-        RecommendationsWindow.resize(330, 385)
+        RecommendationsWindow.resize(500, 385)
         RecommendationsWindow.setMinimumSize(QSize(330, 385))
-        RecommendationsWindow.setMaximumSize(QSize(330, 385))
+        RecommendationsWindow.setMaximumSize(QSize(500, 385))
         palette = QPalette()
         brush = QBrush(QColor(0, 0, 0, 255))
         brush.setStyle(Qt.SolidPattern)
@@ -77,11 +78,33 @@ class Ui_RecommendationsWindow(object):
         self.pet_tox_check = QCheckBox(RecommendationsWindow)
         self.pet_tox_check.setObjectName(u"pet_tox_check")
         self.pet_tox_check.setGeometry(QRect(80, 320, 161, 20))
+        self.article_title = QLabel(RecommendationsWindow)
+        self.article_title.setObjectName(u"article_title")
+        self.article_title.setGeometry(QRect(290, 50, 181, 20))
+        font1 = QFont()
+        font1.setPointSize(12)
+        self.article_title.setFont(font1)
+        self.article_image = QLabel(RecommendationsWindow)
+        self.article_image.setObjectName(u"article_image")
+        self.article_image.setGeometry(QRect(290, 110, 201, 151))
+        self.article_image.setScaledContents(True)
+        self.article_description = QLabel(RecommendationsWindow)
+        self.article_description.setObjectName(u"article_description")
+        self.article_description.setGeometry(QRect(290, 70, 171, 41))
+        self.article_description.setAlignment(Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignTop)
+        self.article_description.setWordWrap(True)
+        self.wiki_source = QLabel(RecommendationsWindow)
+        self.wiki_source.setObjectName(u"wiki_source")
+        self.wiki_source.setGeometry(QRect(400, 0, 101, 16))
         self.frame.raise_()
         self.select_recommendation.raise_()
         self.Recommendations_text.raise_()
         self.cancel_recommendations.raise_()
         self.pet_tox_check.raise_()
+        self.article_title.raise_()
+        self.article_image.raise_()
+        self.article_description.raise_()
+        self.wiki_source.raise_()
 
         self.retranslateUi(RecommendationsWindow)
         self.cancel_recommendations.clicked.connect(RecommendationsWindow.close)
@@ -95,5 +118,9 @@ class Ui_RecommendationsWindow(object):
         self.cancel_recommendations.setText(QCoreApplication.translate("RecommendationsWindow", u"Cancel", None))
         self.frame.setText("")
         self.pet_tox_check.setText(QCoreApplication.translate("RecommendationsWindow", u"Only show pet-safe plants", None))
+        self.article_title.setText(QCoreApplication.translate("RecommendationsWindow", u"<html><head/><body><p>select a recommendation</p><p><br/></p></body></html>", None))
+        self.article_image.setText("")
+        self.article_description.setText("")
+        self.wiki_source.setText(QCoreApplication.translate("RecommendationsWindow", u"source: wikipedia", None))
     # retranslateUi
 

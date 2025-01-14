@@ -95,5 +95,5 @@
             }
         ]
     },
-    "pet_preference": false
+    "pet_preference": true
 }
