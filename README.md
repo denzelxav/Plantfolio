@@ -22,7 +22,7 @@ The application consists of multiple features, including:
     * Deleting a room: when there are no spots left in the room, press 'Delete room'.
     * Adding a spot: press 'Add spot', type in a name and press 'OK'.
     * Deleting a spot: select an empty spot and press 'Delete spot'.
-    * Adding a plant: select an empty spot and press 'Add plant'. Then search for a species and select it, select an icon, type in a name and press 'OK'.
+    * Adding a plant: select an empty spot and press 'Add plant' or open a spot and press 'Add plant'. Then search for a species and select it, select an icon, type in a name and press 'OK'.
     * Opening a spot: select a spot and press 'Open spot'.
         * Deleting a plant: press 'Delete plant'.
         * Taking care of plant: press 'Water plant', 'Feed plant' or 'Repot plant'.
@@ -30,8 +30,10 @@ The application consists of multiple features, including:
         * Adding notes: type your own notes in the corresponding box.
         * Information: read the text in the plant view for the current information of the plant.
 
-* Watering all plants: in the main or 'All Plants' window, press 'Water all'
-
+* Watering all plants: in the main or 'All Plants' window, press 'Water all'. 
+* Viewing all plants: press 'All plants'
+    * Viewing a plant: select a plant and press 'View plant'
+    * Sorting the plants: choose the criteria to sort by and tick the 'Reverse' box when needed.
 
 ## Use case example
 
