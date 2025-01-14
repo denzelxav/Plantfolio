@@ -41,7 +41,7 @@ class AllPlantsWindow(QDialog):
         self.ui.sort_by.addItem('Current tasks')
 
         # Some table settings
-        self.ui.plant_table.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.ui.plant_table.setSelectionBehavior(QAbstractItemView.SelectRows) # type: ignore
         self.ui.sort_by.currentIndexChanged.connect(self.sort_table)
         self.ui.reverse_button.stateChanged.connect(self.sort_table)
 
