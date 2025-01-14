@@ -26,7 +26,7 @@ class PlantViewWindow(QMainWindow):
     interacting with the buttons and the plants health can be seen by
     looking at the plant icon.
     """
-    def __init__(self, spot: Spot, userdata: UserData, parent: QDialog = None) -> None:
+    def __init__(self, spot: Spot, userdata: UserData, parent: QDialog | None = None) -> None:
         """
         First the spot data is added, then it checks if a plant is assigned
         before setting the appropriate plant details and enabling the buttons.
@@ -37,7 +37,7 @@ class PlantViewWindow(QMainWindow):
         self.spot = spot
         self.plant = self.spot.assigned_plant
         self.userdata = userdata
-        self.parent = parent
+        self.parent_window = parent
         self.setWindowIcon(QIcon(":/Plantfolio_logo_small.png"))
 
         #setup icons
@@ -146,7 +146,13 @@ class PlantViewWindow(QMainWindow):
                                               self.plant.custom_icon)
                 else:
                     image_path = os.path.join("project", "custom_pictures", self.plant.custom_icon)
-                self.ui.plant_icon.setPixmap(QPixmap(image_path))
+                if os.path.exists(image_path):
+                    self.ui.plant_icon.setPixmap(QPixmap(image_path))
+                else:
+                    self.plant.custom_icon = None
+                    self.ui.plant_icon.setPixmap(
+                        QPixmap(f":/{self.plant.icon_type}_{self.plant.health.value}.png"))
+
         else:
             self.ui.plant_icon.setPixmap(
                 QPixmap(f":/empty_pot.png"))
@@ -221,14 +227,19 @@ class PlantViewWindow(QMainWindow):
             confirmation = ConfirmationWindow(f"Are you sure you want to delete {self.plant.personal_name}?")
             if confirmation.exec():
                 self.userdata.delete_plant(self.plant)
+                if getattr(sys, 'frozen', False):
+                    image_path = os.path.join(os.getenv('APPDATA'), "Plantfolio", "custom_pictures", self.plant.custom_icon)
+                else:
+                    image_path = os.path.join("project", "custom_pictures", self.plant.custom_icon)
+                os.remove(image_path)
                 self.plant_or_no_plant()
         else:
             add_plant_window = AddPlantWindow(self.spot, self.userdata, self)
             add_plant_window.exec()
-        if self.parent.__class__.__name__ == "RoomViewWindow":
-            self.parent.handle_item_select()
-        else:
-            print(self.parent.__class__.__name__)
+        if self.parent_window.__class__.__name__ == "RoomViewWindow":
+            self.parent_window.handle_item_select()
+        elif self.parent_window.__class__.__name__ == "AllPlantsWindow":
+            self.parent_window.refresh_table()
 
     @Slot()
     def add_delete_image(self):
@@ -264,4 +275,6 @@ class PlantViewWindow(QMainWindow):
                 new_path = os.path.join(directory, f"{self.plant.personal_id}.{old_path.split(".")[-1]}")
                 copyfile(old_path, new_path)
                 self.plant.custom_icon = f"{self.plant.personal_id}.{old_path.split(".")[-1]}"
+        if self.parent_window.__class__.__name__ == "AllPlantsWindow":
+            self.parent_window.refresh_table()
         self.plant_or_no_plant()

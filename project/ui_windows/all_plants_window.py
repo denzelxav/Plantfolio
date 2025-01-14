@@ -1,3 +1,6 @@
+import os
+import sys
+
 from PySide6.QtCore import Slot, QSize
 from PySide6.QtGui import QPixmap, QIcon
 from PySide6.QtWidgets import QDialog, QTableWidgetItem, QAbstractItemView
@@ -54,7 +57,7 @@ class AllPlantsWindow(QDialog):
         selection = self.ui.plant_table.selectedItems()
         if not selection:
             return
-        selected_plant = selection[0].data(0)
+        selected_plant = selection[0].data(3)
         if selected_plant.spot:
             selected_spot = selected_plant.spot
             self.plant_view = PlantViewWindow(selected_spot, self.userdata, self)
@@ -136,8 +139,9 @@ class AllPlantsWindow(QDialog):
 
             # Add items to the table
             name_item = QTableWidgetItem(plant.personal_name)
-            name_item.setData(0, plant)
-            icon = QIcon(f":/{plant.icon_type}_{plant.health.value}.png")
+            name_item.setData(3, plant)
+            icon_path = self.get_icon_path(plant)
+            icon = QIcon(icon_path)
             name_item.setIcon(icon)  # Set the icon for the name column
             self.ui.plant_table.setItem(row, 0, name_item)
 
@@ -146,3 +150,26 @@ class AllPlantsWindow(QDialog):
             self.ui.plant_table.setItem(row, 3, QTableWidgetItem(plant.scientific_name))
             self.ui.plant_table.setItem(row, 4, QTableWidgetItem(plant.watered[-1].date().isoformat()))
             self.ui.plant_table.setItem(row, 5, QTableWidgetItem(", ".join(plant.current_tasks)))
+
+
+    def get_icon_path(self, plant: Plant) -> str:
+        """
+        Returns relative path to the correct icon for the given plant.
+        """
+
+        if plant.custom_icon:
+            if getattr(sys, 'frozen', False):
+                appdata = os.getenv('APPDATA')
+                if appdata:
+                    image_path = os.path.join(appdata, "Plantfolio", "custom_pictures",
+                                              plant.custom_icon)
+                else:
+                    raise FileNotFoundError("Could not find %appdata%")
+            else:
+                image_path = os.path.join("project", "custom_pictures", plant.custom_icon)
+        else:
+            image_path = f":/{plant.icon_type}_{plant.health.value}.png"
+        if os.path.exists(image_path):
+            return image_path
+        plant.custom_icon = None
+        return f":/{plant.icon_type}_{plant.health.value}.png"
