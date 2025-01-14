@@ -30,10 +30,23 @@ The application consists of multiple features, including:
         * Adding notes: type your own notes in the corresponding box.
         * Information: read the text in the plant view for the current information of the plant.
 
-* Watering all plants: in the main or 'All Plants' window, press 'Water all'. 
-* Viewing all plants: press 'All plants'
-    * Viewing a plant: select a plant and press 'View plant'
+* Watering all plants: in the main or 'All Plants' window, press 'Water all'.
+
+* Viewing all plants: press 'All plants'.
+    * Viewing a plant: select a plant and press 'View plant'.
     * Sorting the plants: choose the criteria to sort by and tick the 'Reverse' box when needed.
+
+* Viewing recommended plants: press 'Recommendations'.
+    * Excluding dangerous plants for pets: press 'Only show pet-safe plants'.
+
+* Saving your data manually: press 'Save'. The application saves automatically upon closure but a crash may prevent saving.
+
+* Viewing all notifications: press 'Notifications'. A less detailed overview is shown in the list on the main window.
+    * Viewing a single notification along with its details: choose the right notification in the combobox.
+
+* Sorting notifications: choose 'day', 'type' or 'weight' in the combobox to sort on the corresponding criteria.
+
+* Refreshing notifications: press 'refresh notifications'. This will also delete notifications that are taken care of in the mean time.
 
 ## Use case example
 
