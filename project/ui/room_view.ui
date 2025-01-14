@@ -6,9 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>260</height>
+    <width>375</width>
+    <height>265</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>375</width>
+    <height>265</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>375</width>
+    <height>265</height>
+   </size>
   </property>
   <property name="palette">
    <palette>
@@ -215,18 +227,18 @@
   <widget class="QListWidget" name="spot_list">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>30</y>
-     <width>341</width>
-     <height>141</height>
+     <x>72</x>
+     <y>40</y>
+     <width>241</width>
+     <height>121</height>
     </rect>
    </property>
   </widget>
   <widget class="QPushButton" name="open_spot">
    <property name="geometry">
     <rect>
-     <x>220</x>
-     <y>180</y>
+     <x>152</x>
+     <y>170</y>
      <width>75</width>
      <height>24</height>
     </rect>
@@ -234,12 +246,18 @@
    <property name="text">
     <string>Open spot</string>
    </property>
+   <property name="autoDefault">
+    <bool>true</bool>
+   </property>
+   <property name="default">
+    <bool>true</bool>
+   </property>
   </widget>
   <widget class="QPushButton" name="add_spot">
    <property name="geometry">
     <rect>
-     <x>300</x>
-     <y>180</y>
+     <x>72</x>
+     <y>170</y>
      <width>75</width>
      <height>24</height>
     </rect>
@@ -247,12 +265,18 @@
    <property name="text">
     <string>Add spot</string>
    </property>
+   <property name="autoDefault">
+    <bool>true</bool>
+   </property>
+   <property name="default">
+    <bool>true</bool>
+   </property>
   </widget>
   <widget class="QPushButton" name="delete_spot">
    <property name="geometry">
     <rect>
-     <x>300</x>
-     <y>210</y>
+     <x>232</x>
+     <y>170</y>
      <width>75</width>
      <height>24</height>
     </rect>
@@ -260,12 +284,18 @@
    <property name="text">
     <string>Delete spot</string>
    </property>
+   <property name="autoDefault">
+    <bool>true</bool>
+   </property>
+   <property name="default">
+    <bool>true</bool>
+   </property>
   </widget>
   <widget class="QPushButton" name="delete_room">
    <property name="geometry">
     <rect>
-     <x>320</x>
-     <y>0</y>
+     <x>232</x>
+     <y>200</y>
      <width>75</width>
      <height>24</height>
     </rect>
@@ -273,12 +303,18 @@
    <property name="text">
     <string>Delete room</string>
    </property>
+   <property name="autoDefault">
+    <bool>true</bool>
+   </property>
+   <property name="default">
+    <bool>true</bool>
+   </property>
   </widget>
   <widget class="QPushButton" name="add_plant">
    <property name="geometry">
     <rect>
-     <x>140</x>
-     <y>180</y>
+     <x>72</x>
+     <y>200</y>
      <width>75</width>
      <height>24</height>
     </rect>
@@ -286,14 +322,20 @@
    <property name="text">
     <string>Add plant</string>
    </property>
+   <property name="autoDefault">
+    <bool>true</bool>
+   </property>
+   <property name="default">
+    <bool>true</bool>
+   </property>
   </widget>
   <widget class="QLabel" name="spots_text">
    <property name="geometry">
     <rect>
-     <x>30</x>
+     <x>142</x>
      <y>10</y>
-     <width>49</width>
-     <height>16</height>
+     <width>91</width>
+     <height>20</height>
     </rect>
    </property>
    <property name="font">
@@ -302,9 +344,56 @@
     </font>
    </property>
    <property name="text">
-    <string>Spots</string>
+    <string>Room overview</string>
    </property>
   </widget>
+  <widget class="QLabel" name="room_view_frame">
+   <property name="geometry">
+    <rect>
+     <x>2</x>
+     <y>20</y>
+     <width>351</width>
+     <height>161</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap>../art/list_art.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="house_image">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>190</y>
+     <width>61</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap>../art/huisje.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <zorder>room_view_frame</zorder>
+  <zorder>spot_list</zorder>
+  <zorder>open_spot</zorder>
+  <zorder>add_spot</zorder>
+  <zorder>delete_spot</zorder>
+  <zorder>delete_room</zorder>
+  <zorder>add_plant</zorder>
+  <zorder>spots_text</zorder>
+  <zorder>house_image</zorder>
  </widget>
  <resources/>
  <connections/>

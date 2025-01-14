@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>525</width>
+    <width>590</width>
     <height>300</height>
    </rect>
   </property>
@@ -18,8 +18,8 @@
   </property>
   <property name="maximumSize">
    <size>
-    <width>525</width>
-    <height>300</height>
+    <width>10000</width>
+    <height>100000</height>
    </size>
   </property>
   <property name="palette">
@@ -227,8 +227,8 @@
   <widget class="QDialogButtonBox" name="confirm_plant">
    <property name="geometry">
     <rect>
-     <x>430</x>
-     <y>220</y>
+     <x>470</x>
+     <y>110</y>
      <width>81</width>
      <height>241</height>
     </rect>
@@ -243,8 +243,8 @@
   <widget class="QLabel" name="select_icon">
    <property name="geometry">
     <rect>
-     <x>290</x>
-     <y>60</y>
+     <x>340</x>
+     <y>40</y>
      <width>71</width>
      <height>16</height>
     </rect>
@@ -261,8 +261,8 @@
   <widget class="QLineEdit" name="search_bar">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>50</y>
+     <x>110</x>
+     <y>30</y>
      <width>113</width>
      <height>21</height>
     </rect>
@@ -271,9 +271,9 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>30</y>
-     <width>111</width>
+     <x>130</x>
+     <y>10</y>
+     <width>81</width>
      <height>16</height>
     </rect>
    </property>
@@ -289,9 +289,9 @@
   <widget class="QLineEdit" name="name_input">
    <property name="geometry">
     <rect>
-     <x>400</x>
+     <x>450</x>
      <y>80</y>
-     <width>113</width>
+     <width>121</width>
      <height>21</height>
     </rect>
    </property>
@@ -299,7 +299,7 @@
   <widget class="QLabel" name="choose_name">
    <property name="geometry">
     <rect>
-     <x>400</x>
+     <x>470</x>
      <y>60</y>
      <width>91</width>
      <height>16</height>
@@ -317,20 +317,20 @@
   <widget class="QListWidget" name="all_plants_list">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>80</y>
-     <width>256</width>
-     <height>192</height>
+     <x>60</x>
+     <y>60</y>
+     <width>221</width>
+     <height>201</height>
     </rect>
    </property>
   </widget>
   <widget class="QListWidget" name="icon_list">
    <property name="geometry">
     <rect>
-     <x>290</x>
-     <y>80</y>
+     <x>320</x>
+     <y>61</y>
      <width>101</width>
-     <height>192</height>
+     <height>201</height>
     </rect>
    </property>
    <property name="iconSize">
@@ -340,6 +340,74 @@
     </size>
    </property>
   </widget>
+  <widget class="QLabel" name="search_frame">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>30</y>
+     <width>321</width>
+     <height>261</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap>../art/list_art.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="icon_frame">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>30</y>
+     <width>148</width>
+     <height>261</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap>../art/list_art.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="small_logo">
+   <property name="geometry">
+    <rect>
+     <x>470</x>
+     <y>190</y>
+     <width>91</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap>../art/Plantfolio_logo_small.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <zorder>icon_frame</zorder>
+  <zorder>search_frame</zorder>
+  <zorder>icon_list</zorder>
+  <zorder>all_plants_list</zorder>
+  <zorder>confirm_plant</zorder>
+  <zorder>select_icon</zorder>
+  <zorder>search_bar</zorder>
+  <zorder>label</zorder>
+  <zorder>name_input</zorder>
+  <zorder>choose_name</zorder>
+  <zorder>small_logo</zorder>
  </widget>
  <resources/>
  <connections>

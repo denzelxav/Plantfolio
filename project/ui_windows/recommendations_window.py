@@ -23,13 +23,28 @@ class RecommendationsWindow(QDialog):
         self.ui.setupUi(self)
         self.userdata = userdata
         self.recommender = recommender
-        self.setWindowIcon(QIcon("./project/art/Plantfolio_logo_small.png"))
-        self.ui.image_recommender.setPixmap(QPixmap(u"./project/art/plant_1_healthy.png"))
+        self.setWindowIcon(QIcon(":/Plantfolio_logo_small.png"))
+        self.ui.frame.setPixmap(QPixmap(u":/list_art.png"))
 
         self.recommendations = self.recommender.get_recommendations()
         for recommendation in self.recommendations:
             plant = plant_from_database(recommendation)
             self.ui.select_recommendation.addItem(plant.scientific_name)
 
+        self.ui.pet_tox_check.stateChanged.connect(self.pet_safe_change)
 
+    def pet_safe_change(self, state):
+        if state == 2:  # Qt.Checked is 2
+            self.userdata.pet_toxicity = True
+        else:
+            self.userdata.pet_toxicity = False
 
+        self.recommender.userdata = self.userdata
+        self.recommender.set_values()
+        self.recommendations = self.recommender.get_recommendations()
+
+        self.ui.select_recommendation.clear()
+        for recommendation in self.recommendations:
+            plant = plant_from_database(recommendation)
+            self.ui.select_recommendation.addItem(plant.scientific_name)
+        

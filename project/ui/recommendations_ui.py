@@ -15,14 +15,17 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QDialog, QLabel, QListWidget,
-    QListWidgetItem, QPushButton, QSizePolicy, QWidget)
+from PySide6.QtWidgets import (QApplication, QCheckBox, QDialog, QLabel,
+    QListWidget, QListWidgetItem, QPushButton, QSizePolicy,
+    QWidget)
 
 class Ui_RecommendationsWindow(object):
     def setupUi(self, RecommendationsWindow):
         if not RecommendationsWindow.objectName():
             RecommendationsWindow.setObjectName(u"RecommendationsWindow")
-        RecommendationsWindow.resize(403, 324)
+        RecommendationsWindow.resize(330, 385)
+        RecommendationsWindow.setMinimumSize(QSize(330, 385))
+        RecommendationsWindow.setMaximumSize(QSize(330, 385))
         palette = QPalette()
         brush = QBrush(QColor(0, 0, 0, 255))
         brush.setStyle(Qt.SolidPattern)
@@ -56,22 +59,29 @@ class Ui_RecommendationsWindow(object):
         RecommendationsWindow.setPalette(palette)
         self.select_recommendation = QListWidget(RecommendationsWindow)
         self.select_recommendation.setObjectName(u"select_recommendation")
-        self.select_recommendation.setGeometry(QRect(10, 40, 256, 271))
+        self.select_recommendation.setGeometry(QRect(60, 60, 211, 241))
         self.Recommendations_text = QLabel(RecommendationsWindow)
         self.Recommendations_text.setObjectName(u"Recommendations_text")
-        self.Recommendations_text.setGeometry(QRect(10, 20, 151, 16))
+        self.Recommendations_text.setGeometry(QRect(80, 30, 171, 16))
         font = QFont()
         font.setBold(True)
         self.Recommendations_text.setFont(font)
         self.cancel_recommendations = QPushButton(RecommendationsWindow)
         self.cancel_recommendations.setObjectName(u"cancel_recommendations")
-        self.cancel_recommendations.setGeometry(QRect(320, 10, 75, 24))
-        self.image_recommender = QLabel(RecommendationsWindow)
-        self.image_recommender.setObjectName(u"image_recommender")
-        self.image_recommender.setGeometry(QRect(270, 120, 131, 161))
-        self.image_recommender.setTextFormat(Qt.TextFormat.RichText)
-        self.image_recommender.setPixmap(QPixmap(u"../art/all plants/plant_1_healthy.png"))
-        self.image_recommender.setScaledContents(True)
+        self.cancel_recommendations.setGeometry(QRect(130, 350, 75, 24))
+        self.frame = QLabel(RecommendationsWindow)
+        self.frame.setObjectName(u"frame")
+        self.frame.setGeometry(QRect(0, 20, 311, 321))
+        self.frame.setPixmap(QPixmap(u"../art/list_art.png"))
+        self.frame.setScaledContents(True)
+        self.pet_tox_check = QCheckBox(RecommendationsWindow)
+        self.pet_tox_check.setObjectName(u"pet_tox_check")
+        self.pet_tox_check.setGeometry(QRect(80, 320, 161, 20))
+        self.frame.raise_()
+        self.select_recommendation.raise_()
+        self.Recommendations_text.raise_()
+        self.cancel_recommendations.raise_()
+        self.pet_tox_check.raise_()
 
         self.retranslateUi(RecommendationsWindow)
         self.cancel_recommendations.clicked.connect(RecommendationsWindow.close)
@@ -81,8 +91,9 @@ class Ui_RecommendationsWindow(object):
 
     def retranslateUi(self, RecommendationsWindow):
         RecommendationsWindow.setWindowTitle(QCoreApplication.translate("RecommendationsWindow", u"Recommendations", None))
-        self.Recommendations_text.setText(QCoreApplication.translate("RecommendationsWindow", u"Recommended plants", None))
+        self.Recommendations_text.setText(QCoreApplication.translate("RecommendationsWindow", u"Recommended plants for you", None))
         self.cancel_recommendations.setText(QCoreApplication.translate("RecommendationsWindow", u"Cancel", None))
-        self.image_recommender.setText("")
+        self.frame.setText("")
+        self.pet_tox_check.setText(QCoreApplication.translate("RecommendationsWindow", u"Only show pet-safe plants", None))
     # retranslateUi
 
