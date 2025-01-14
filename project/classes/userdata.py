@@ -4,6 +4,7 @@ from project.classes.spot_notification import Spot
 from project.classes.enums import Sunlight, Health
 from project.query_function import query_from_database
 from project.classes.public_methods import string_to_sunlight, string_to_water_frequency
+from project.classes.exceptions import ContainerNotEmpty, NameTakenError
 
 
 class UserData:
@@ -45,8 +46,9 @@ class UserData:
         else:
             new_plant.personal_id = 0
 
-        if assigned_spot not in [spot for room in self.rooms.values() for spot in room]:
+        if assigned_spot.room not in self.rooms:
             self.add_room(assigned_spot.room)
+        if assigned_spot not in self.rooms[assigned_spot.room]:
             self.add_spot(assigned_spot)
 
         if assigned_spot in [spot for room in self.rooms.values() for spot in room]:
@@ -57,9 +59,15 @@ class UserData:
         """
         Adds a spot to an existing room
         """
+
         if new_spot.room not in self.rooms:
             self.rooms[new_spot.room] = []
+        for room in self.rooms.values():
+            for spot in room:
+                if spot.spot_id.lower() == new_spot.spot_id.lower():
+                    raise NameTakenError(f"Spot named {new_spot.spot_id} already exists.")
         self.rooms[new_spot.room].append(new_spot)
+
 
     def add_room(self, new_room: str) -> None:
         """
@@ -67,6 +75,8 @@ class UserData:
         """
         if new_room not in self.rooms:
             self.rooms[new_room] = []
+        else:
+            raise NameTakenError(f"room with name '{new_room}' already exists'")
 
     def delete_plant(self, bad_plant: Plant) -> None:
         """
@@ -81,9 +91,9 @@ class UserData:
         Removes a spot, but only if it is empty
         """
         if bad_spot.assigned_plant is None:
-            for spots in self.rooms.values():
-                if bad_spot in spots:
-                    spots.remove(bad_spot)
+            self.rooms[bad_spot.room].remove(bad_spot)
+        else:
+            raise ContainerNotEmpty(f"{bad_spot} is not empty")
 
     def delete_room(self, room_name: str) -> None:
         """
@@ -91,6 +101,8 @@ class UserData:
         """
         if not self.rooms[room_name]:
             del self.rooms[room_name]
+        elif len(self.rooms[room_name]) > 0:
+            raise ContainerNotEmpty(f"room: '{room_name}' is not empty and can't be deleted.")
 
     def sort_plants(self, attribute: str, reverse: bool) -> list[Plant] | None:
         """
