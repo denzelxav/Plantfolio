@@ -107,7 +107,7 @@ class AllPlantsWindow(QDialog):
         self.ui.plant_table.setColumnWidth(4, 106)
         self.ui.plant_table.setColumnWidth(5, 100)
         self.ui.plant_table.verticalHeader().setVisible(False)
-        self.ui.plant_table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.ui.plant_table.setEditTriggers(QAbstractItemView.NoEditTriggers) # type: ignore
 
 
     def refresh_table(self) -> None:
