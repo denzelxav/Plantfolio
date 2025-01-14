@@ -162,6 +162,12 @@ class Ui_PlantViewWindow(object):
         self.add_delete_plant = QPushButton(self.centralwidget)
         self.add_delete_plant.setObjectName(u"add_delete_plant")
         self.add_delete_plant.setGeometry(QRect(14, 0, 101, 24))
+        self.add_delete_image = QPushButton(self.centralwidget)
+        self.add_delete_image.setObjectName(u"add_delete_image")
+        self.add_delete_image.setGeometry(QRect(140, 60, 61, 21))
+        font1 = QFont()
+        font1.setPointSize(8)
+        self.add_delete_image.setFont(font1)
         PlantViewWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(PlantViewWindow)
@@ -206,5 +212,6 @@ class Ui_PlantViewWindow(object):
         self.last_repotted.setText(QCoreApplication.translate("PlantViewWindow", u"Last repotted", None))
         self.repot_plant.setText(QCoreApplication.translate("PlantViewWindow", u"Repot plant", None))
         self.add_delete_plant.setText(QCoreApplication.translate("PlantViewWindow", u"Add/Delete Plant", None))
+        self.add_delete_image.setText(QCoreApplication.translate("PlantViewWindow", u"Add Image", None))
     # retranslateUi
 

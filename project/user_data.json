@@ -17,7 +17,8 @@
             "manual_health": false,
             "max_log_size": 4,
             "notes": "",
-            "current_tasks": []
+            "current_tasks": [],
+            "custom_image": null
         },
         {
             "core_id": "728",
@@ -36,7 +37,8 @@
             "manual_health": false,
             "max_log_size": 4,
             "notes": null,
-            "current_tasks": []
+            "current_tasks": [],
+            "custom_image": null
         },
         {
             "core_id": "728",
@@ -54,11 +56,12 @@
             "repotted": "2025-01-10T16:22:36.413215",
             "manual_health": false,
             "max_log_size": 4,
-            "notes": null,
+            "notes": "",
             "current_tasks": [
                 "nutrition",
                 "water"
-            ]
+            ],
+            "custom_image": null
         }
     ],
     "rooms": {

@@ -1,9 +1,13 @@
 from __future__ import annotations
+
+import os
+import sys
+from shutil import copyfile
 from typing import TYPE_CHECKING
 import datetime
 from PySide6.QtCore import Slot, QSize
 from PySide6.QtGui import QIcon, QPixmap
-from PySide6.QtWidgets import QMainWindow
+from PySide6.QtWidgets import QMainWindow, QFileDialog
 
 from project.classes.public_methods import sunlight_to_string, get_sun_icon_path, string_to_health
 from project.ui.plant_view import Ui_PlantViewWindow
@@ -68,6 +72,7 @@ class PlantViewWindow(QMainWindow):
         self.ui.feed_plant.clicked.connect(self.feed_plant)
         self.ui.repot_plant.clicked.connect(self.repot_plant)
         self.ui.add_delete_plant.clicked.connect(self.add_delete_plant)
+        self.ui.add_delete_image.clicked.connect(self.add_delete_image)
 
 
 
@@ -119,6 +124,10 @@ class PlantViewWindow(QMainWindow):
         self.ui.feed_plant.setEnabled(self.plant is not None)
         self.ui.repot_plant.setEnabled(self.plant is not None)
         self.ui.manual_health.setEnabled(self.plant is not None)
+        if self.plant:
+            ad_im_txt = "Add image" if self.plant.custom_icon is None else "Delete image"
+            self.ui.add_delete_image.setText(ad_im_txt)
+        self.ui.add_delete_image.setEnabled(self.plant is not None)
 
         self.set_plant_icon()
         self.set_preff_sun_icon()
@@ -127,8 +136,16 @@ class PlantViewWindow(QMainWindow):
 
     def set_plant_icon(self):
         if self.plant:
-            self.ui.plant_icon.setPixmap(
-                QPixmap(f":/{self.plant.icon_type}_{self.plant.health.value}.png"))
+            if not self.plant.custom_icon:
+                self.ui.plant_icon.setPixmap(
+                    QPixmap(f":/{self.plant.icon_type}_{self.plant.health.value}.png"))
+            if self.plant.custom_icon:
+                if getattr(sys, 'frozen', False):
+                    image_path = os.path.join(os.getenv('APPDATA'), "Plantfolio", "custom_pictures",
+                                              self.plant.custom_icon)
+                else:
+                    image_path = os.path.join("project", "custom_pictures", self.plant.custom_icon)
+                self.ui.plant_icon.setPixmap(QPixmap(image_path))
         else:
             self.ui.plant_icon.setPixmap(
                 QPixmap(f":/empty_pot.png"))
@@ -208,3 +225,38 @@ class PlantViewWindow(QMainWindow):
             self.add_plant_window = AddPlantWindow(self.spot, self.userdata, self)
             self.add_plant_window.show()
 
+    @Slot()
+    def add_delete_image(self):
+        """
+        Opens window to add custom image or deletes it, depending on if the plant has one assigned already
+        """
+        if self.plant.custom_icon:
+            confirmation = ConfirmationWindow(f"Are you sure you want to delete this image?")
+            if confirmation.exec():
+                if getattr(sys, 'frozen', False):
+                    image_path = os.path.join(os.getenv('APPDATA'), "Plantfolio", "custom_pictures", self.plant.custom_icon)
+                else:
+                    image_path = os.path.join("project", "custom_pictures", self.plant.custom_icon)
+                os.remove(image_path)
+                self.plant.custom_icon = None
+        elif not self.plant.custom_icon:
+            fname = QFileDialog.getOpenFileName(
+                self,
+                "Select custom image",
+                f"C:/Users/{os.getlogin()}/Pictures/",
+                "Image files (*.jpg *.jpeg *.png)",
+            )
+            if fname[0]:
+                old_path = fname[0]
+                if getattr(sys, 'frozen', False):
+                    directory = os.path.join(os.getenv('APPDATA'), "Plantfolio", "custom_pictures")
+                else:
+                    directory = os.path.abspath(os.path.join("project", "custom_pictures"))
+                try:
+                    os.mkdir(os.path.abspath(directory))
+                except FileExistsError:
+                    pass
+                new_path = os.path.join(directory, f"{self.plant.personal_id}.{old_path.split(".")[-1]}")
+                copyfile(old_path, new_path)
+                self.plant.custom_icon = f"{self.plant.personal_id}.{old_path.split(".")[-1]}"
+        self.plant_or_no_plant()
