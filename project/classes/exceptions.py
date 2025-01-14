@@ -18,3 +18,8 @@ class NameTakenError(ValueError):
     """
     When a name is already used.
     """
+
+class EmptyNameError(ValueError):
+    """
+    When a name field is left empty.
+    """

@@ -4,9 +4,11 @@ from PySide6.QtGui import QIcon, QPixmap
 from PySide6.QtWidgets import QDialog, QListWidgetItem
 from PySide6.QtCore import Slot
 
+from project.classes.exceptions import EmptyNameError
 from project.classes.spot_notification import Spot
 from project.ui.add_plant import Ui_AddPlantWindow
 from project.classes.plant import list_all_plants_in_database, plant_from_database
+from project.ui_windows.error_message_window import ErrorMessageWindow
 
 if TYPE_CHECKING:
     from project.classes.userdata import UserData
@@ -65,6 +67,10 @@ class AddPlantWindow(QDialog):
         plant_name = self.ui.name_input.text()
         plant.personal_name = plant_name
         plant.icon_type = self.ui.icon_list.selectedItems()[0].text()
-        self.userdata.add_plant(plant, self.spot)
+        try:
+            self.userdata.add_plant(plant, self.spot)
+        except EmptyNameError:
+            error_msg = ErrorMessageWindow("Please fill in plant name.", "Plant name is empty")
+            error_msg.exec()
         if self.parent_window:
             self.parent_window.plant_or_no_plant()

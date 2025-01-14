@@ -4,7 +4,7 @@ from project.classes.spot_notification import Spot
 from project.classes.enums import Sunlight, Health
 from project.query_function import query_from_database
 from project.classes.public_methods import string_to_sunlight, string_to_water_frequency
-from project.classes.exceptions import ContainerNotEmpty, NameTakenError
+from project.classes.exceptions import ContainerNotEmpty, NameTakenError, EmptyNameError
 
 
 class UserData:
@@ -40,6 +40,8 @@ class UserData:
         """
         Adds a plant
         """
+        if len(new_plant.personal_name) == 0:
+            raise EmptyNameError("Plant name cannot be empty")
         if len(self.plants) > 0:
             max_id = max(plant.personal_id for plant in self.plants)
             new_plant.personal_id = max_id+1
@@ -59,7 +61,8 @@ class UserData:
         """
         Adds a spot to an existing room
         """
-
+        if len(new_spot.spot_id) == 0:
+            raise EmptyNameError("Spot name cannot be empty")
         if new_spot.room not in self.rooms:
             self.rooms[new_spot.room] = []
         for room in self.rooms.values():
@@ -73,6 +76,8 @@ class UserData:
         """
         Adds a new room
         """
+        if len(new_room) == 0:
+            raise EmptyNameError("Room name cannot be empty.")
         if new_room not in self.rooms:
             self.rooms[new_room] = []
         else:

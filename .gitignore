@@ -147,9 +147,9 @@ dmypy.json
 .pyre/
 
 # Userdata files
-project/user_data.json
-test/test_user_data.json
-project/plant_database.db
+/project/user_data.json
+/test/test_user_data.json
+/project/plant_database.db
 
 # Do not ignore
 !dist/Plantfolio.exe
