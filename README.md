@@ -16,10 +16,24 @@ The application works by simply running a .exe file. To do so, go to the main br
 
 ## List of implemented features and how to use them
 The application consists of multiple features, including:
-* Adding a room: press 'Add Room', type the name of your room in the box and press 'OK'
-* Opening a room: select a room name in the rooms list and press 'Open Room'
-    * Deleting a room: when there are no spots left in the room, press 'Delete room'
+* Adding a room: press 'Add Room', type the name of your room in the box and press 'OK'.
 
+* Opening a room: select a room name in the rooms list and press 'Open Room'.
+    * Deleting a room: when there are no spots left in the room, press 'Delete room'.
+    * Adding a spot: press 'Add spot', type in a name and press 'OK'.
+    * Deleting a spot: select an empty spot and press 'Delete spot'.
+    * Adding a plant: select an empty spot and press 'Add plant'. Then search for a species and select it, select an icon, type in a name and press 'OK'.
+    * Opening a spot: select a spot and press 'Open spot'.
+        * Deleting a plant: press 'Delete plant'.
+        * Taking care of plant: press 'Water plant', 'Feed plant' or 'Repot plant'.
+        * Manual health mode: when the calculated health does not match the actual health, you can control it manually.
+        * Adding notes: type your own notes in the corresponding box.
+        * Information: read the text in the plant view for the current information of the plant.
+
+* Watering all plants: in the main or 'All Plants' window, press 'Water all'
+
+
+## Use case example
 
 
 ## Additional documentation for other developers (optional*2)
