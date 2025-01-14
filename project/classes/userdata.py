@@ -110,7 +110,7 @@ class UserData:
 
     def tasks_to_string(self, plant: Plant) -> str:
         """
-        Converts the tasks of a plant to a sorted string of the first letter of each task
+        Converts the tasks of a plant to a sorted string of the priority of the tasks
         """
         task_priority = {'repot': 3, 'nutrition': 2, 'water': 1}
         sorted_tasks = sorted(list(plant.current_tasks),

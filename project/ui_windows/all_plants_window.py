@@ -98,6 +98,9 @@ class AllPlantsWindow(QDialog):
         raise IndexError(f"{plant} does not have a room")
 
     def setup_table(self) -> None:
+        """
+        Sets up the table of plants with the correct headers and column widths
+        """
         self.ui.plant_table.setColumnCount(6)
         self.ui.plant_table.setHorizontalHeaderLabels([ 'Name', 'ID', 'Room', 'Species', 'Last Watered', 'Current Tasks'])
         self.ui.plant_table.setColumnWidth(0, 70)
