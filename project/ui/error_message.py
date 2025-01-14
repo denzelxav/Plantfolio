@@ -17,13 +17,15 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QDialog, QLabel, QPushButton,
     QSizePolicy, QWidget)
+import images_rc
 
 class Ui_ErrorMessageWindow(object):
     def setupUi(self, ErrorMessageWindow):
         if not ErrorMessageWindow.objectName():
             ErrorMessageWindow.setObjectName(u"ErrorMessageWindow")
-        ErrorMessageWindow.resize(344, 122)
-        ErrorMessageWindow.setMaximumSize(QSize(16777212, 16777215))
+        ErrorMessageWindow.resize(376, 218)
+        ErrorMessageWindow.setMinimumSize(QSize(376, 218))
+        ErrorMessageWindow.setMaximumSize(QSize(376, 218))
         palette = QPalette()
         brush = QBrush(QColor(0, 0, 0, 255))
         brush.setStyle(Qt.SolidPattern)
@@ -57,10 +59,24 @@ class Ui_ErrorMessageWindow(object):
         ErrorMessageWindow.setPalette(palette)
         self.error_message = QLabel(ErrorMessageWindow)
         self.error_message.setObjectName(u"error_message")
-        self.error_message.setGeometry(QRect(10, 20, 251, 71))
+        self.error_message.setGeometry(QRect(10, 90, 351, 91))
+        self.error_message.setMinimumSize(QSize(0, 0))
+        font = QFont()
+        font.setBold(False)
+        self.error_message.setFont(font)
+        self.error_message.setAlignment(Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignTop)
         self.close_message = QPushButton(ErrorMessageWindow)
         self.close_message.setObjectName(u"close_message")
-        self.close_message.setGeometry(QRect(260, 90, 75, 24))
+        self.close_message.setGeometry(QRect(290, 190, 75, 24))
+        self.label = QLabel(ErrorMessageWindow)
+        self.label.setObjectName(u"label")
+        self.label.setGeometry(QRect(170, 0, 31, 51))
+        self.label.setPixmap(QPixmap(u":/exclamation_mark.png"))
+        self.label.setScaledContents(True)
+        self.error_type = QLabel(ErrorMessageWindow)
+        self.error_type.setObjectName(u"error_type")
+        self.error_type.setGeometry(QRect(8, 55, 361, 31))
+        self.error_type.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.retranslateUi(ErrorMessageWindow)
 
@@ -68,8 +84,10 @@ class Ui_ErrorMessageWindow(object):
     # setupUi
 
     def retranslateUi(self, ErrorMessageWindow):
-        ErrorMessageWindow.setWindowTitle(QCoreApplication.translate("ErrorMessageWindow", u"Dialog", None))
+        ErrorMessageWindow.setWindowTitle(QCoreApplication.translate("ErrorMessageWindow", u"Plantfolio Error", None))
         self.error_message.setText(QCoreApplication.translate("ErrorMessageWindow", u"Error message here", None))
         self.close_message.setText(QCoreApplication.translate("ErrorMessageWindow", u"Close", None))
+        self.label.setText("")
+        self.error_type.setText(QCoreApplication.translate("ErrorMessageWindow", u"Error type here", None))
     # retranslateUi
 

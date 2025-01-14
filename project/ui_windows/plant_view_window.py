@@ -8,7 +8,8 @@ from PySide6.QtWidgets import QMainWindow
 from project.classes.public_methods import sunlight_to_string, get_sun_icon_path, string_to_health
 from project.ui.plant_view import Ui_PlantViewWindow
 from project.ui_windows.add_plant_window import AddPlantWindow
-import images_qr
+import images_rc
+from project.ui_windows.confirmation_window import ConfirmationWindow
 
 if TYPE_CHECKING:
     from project.classes.spot_notification import Spot
@@ -199,8 +200,10 @@ class PlantViewWindow(QMainWindow):
     @Slot()
     def add_delete_plant(self):
         if self.plant:
-            self.userdata.delete_plant(self.plant)
-            self.plant_or_no_plant()
+            confirmation = ConfirmationWindow(f"Are you sure you want to delete {self.plant.personal_name}?")
+            if confirmation.exec():
+                self.userdata.delete_plant(self.plant)
+                self.plant_or_no_plant()
         else:
             self.add_plant_window = AddPlantWindow(self.spot, self.userdata, self)
             self.add_plant_window.show()

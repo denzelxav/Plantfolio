@@ -5,7 +5,6 @@ from PySide6.QtCore import Slot, QSize
 from PySide6.QtGui import QIcon, QPixmap
 from PySide6.QtWidgets import QMainWindow, QDialog, QListWidgetItem
 
-from project.ui.plant_view import Ui_PlantViewWindow
 from project.ui.recommendations_ui import Ui_RecommendationsWindow
 from project.classes.plant import plant_from_database
 

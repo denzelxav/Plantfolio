@@ -5,11 +5,13 @@ from PySide6.QtWidgets import QDialog
 from PySide6.QtCore import Slot
 from PySide6.QtGui import QIcon, QPixmap
 
-import images_qr
+import images_rc
+from project.classes.exceptions import ContainerNotEmpty
 from project.classes.spot_notification import Spot
 from project.ui.room_view import Ui_Room_View
 from project.ui_windows.add_spot_window import AddSpotWindow
 from project.ui_windows.add_plant_window import AddPlantWindow
+from project.ui_windows.error_message_window import ErrorMessageWindow
 from project.ui_windows.plant_view_window import PlantViewWindow
 if TYPE_CHECKING:
     from project.ui_windows.main_menu import MainMenu
@@ -51,8 +53,13 @@ class RoomViewWindow(QDialog):
         """
         Open add spot window
         """
-        self.add_spot_window = AddSpotWindow(self, self.main_menu)
-        self.add_spot_window.show()
+        try:
+            self.add_spot_window = AddSpotWindow(self, self.main_menu)
+        except Exception as e:
+            error_msg = ErrorMessageWindow(e)
+            error_msg.exec()
+        else:
+            self.add_spot_window.show()
 
 
     @Slot()
@@ -60,10 +67,27 @@ class RoomViewWindow(QDialog):
         """
         Delete the selected spot
         """
-        spot_id = self.ui.spot_list.selectedItems()[0].text()
-        selected_spot = self.get_spot(spot_id)
-        if selected_spot:
-            self.main_menu.userdata.delete_spot(selected_spot)
+        selection= self.ui.spot_list.selectedItems()
+        if selection:
+            spot_id = selection[0].text()
+            try:
+                selected_spot = self.get_spot(spot_id)
+            except ValueError as e:
+                error_msg = ErrorMessageWindow(e)
+                error_msg.exec()
+            else:
+                if selected_spot:
+                    try:
+                        self.main_menu.userdata.delete_spot(selected_spot)
+                    except ContainerNotEmpty:
+                        error_msg = ErrorMessageWindow(
+                            f"Spot {selected_spot} is not not empty. "
+                            f"Please delete plant first before deleting spot.",
+                            "Spot not empty")
+                        error_msg.exec()
+        else:
+            error_msg = ErrorMessageWindow("Please select a spot to delete", "No spot selected")
+            error_msg.exec()
         self.refresh_list()
 
     @Slot()

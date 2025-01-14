@@ -3,7 +3,7 @@ from PySide6.QtGui import QPixmap, QIcon
 from PySide6.QtWidgets import QDialog, QListWidgetItem
 from datetime import datetime
 
-import images_qr
+import images_rc
 from project.classes.userdata import UserData
 from project.ui.all_plants import Ui_AllPlantsWindow
 from project.ui_windows.plant_view_window import PlantViewWindow
@@ -95,5 +95,5 @@ class AllPlantsWindow(QDialog):
         self.ui.select_plant.clear()
         for plant in self.userdata.plants:
             item_txt = f'{plant.personal_name} \t {plant.personal_id} \t {self.get_room(plant)} \t {plant.scientific_name} \t {plant.watered[-1].date()}'
-            icon  = QIcon(f"./project/art/all plants/{plant.icon_type}_{plant.health.value}.png")
+            icon  = QIcon(f":/{plant.icon_type}_{plant.health.value}.png")
             self.ui.select_plant.addItem(QListWidgetItem(icon, item_txt))
