@@ -1,4 +1,4 @@
-from PySide6.QtCore import Slot
+from PySide6.QtCore import Slot, QSize
 from PySide6.QtGui import QPixmap, QIcon
 from PySide6.QtWidgets import QDialog, QTableWidgetItem, QAbstractItemView
 from datetime import datetime
@@ -113,12 +113,12 @@ class AllPlantsWindow(QDialog):
         """
         self.ui.plant_table.setColumnCount(6)
         self.ui.plant_table.setHorizontalHeaderLabels([ 'Name', 'ID', 'Room', 'Species', 'Last Watered', 'Current Tasks'])
-        self.ui.plant_table.setColumnWidth(0, 70)
-        self.ui.plant_table.setColumnWidth(1, 30)
-        self.ui.plant_table.setColumnWidth(2, 100)
-        self.ui.plant_table.setColumnWidth(3, 120)
-        self.ui.plant_table.setColumnWidth(4, 106)
-        self.ui.plant_table.setColumnWidth(5, 100)
+        self.ui.plant_table.setColumnWidth(0, 130)
+        self.ui.plant_table.setColumnWidth(1, 20)
+        self.ui.plant_table.setColumnWidth(2, 70)
+        self.ui.plant_table.setColumnWidth(3, 110)
+        self.ui.plant_table.setColumnWidth(4, 84)
+        self.ui.plant_table.setColumnWidth(5, 90)
         self.ui.plant_table.verticalHeader().setVisible(False)
         self.ui.plant_table.setEditTriggers(QAbstractItemView.NoEditTriggers) # type: ignore
 
@@ -127,14 +127,16 @@ class AllPlantsWindow(QDialog):
         """
         Refreshes the table of plants
         """
+        self.ui.plant_table.setIconSize(QSize(64, 64))
         self.ui.plant_table.setRowCount(0)  # Clear the table
         for plant in self.userdata.plants:
             row = self.ui.plant_table.rowCount()
             self.ui.plant_table.insertRow(row)
+            self.ui.plant_table.setRowHeight(row, 80)
 
             # Add items to the table
             name_item = QTableWidgetItem(plant.personal_name)
-            icon = QIcon(f"./project/art/all plants/{plant.icon_type}_{plant.health.value}.png")
+            icon = QIcon(f":/{plant.icon_type}_{plant.health.value}.png")
             name_item.setIcon(icon)  # Set the icon for the name column
             self.ui.plant_table.setItem(row, 0, name_item)
 
