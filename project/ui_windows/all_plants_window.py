@@ -3,7 +3,7 @@ from PySide6.QtGui import QPixmap, QIcon
 from PySide6.QtWidgets import QDialog, QTableWidgetItem, QAbstractItemView
 from datetime import datetime
 
-import images_qr
+import images_rc
 from project.classes.userdata import UserData
 from project.ui.all_plants import Ui_AllPlantsWindow
 from project.ui_windows.plant_view_window import PlantViewWindow

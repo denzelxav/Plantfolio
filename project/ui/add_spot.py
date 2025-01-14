@@ -15,9 +15,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QAbstractButton, QApplication, QComboBox, QDialog,
-    QDialogButtonBox, QDoubleSpinBox, QLabel, QLineEdit,
-    QSizePolicy, QSpinBox, QWidget)
+from PySide6.QtWidgets import (QApplication, QComboBox, QDialog, QDoubleSpinBox,
+    QLabel, QLineEdit, QPushButton, QSizePolicy,
+    QSpinBox, QWidget)
 
 class Ui_AddSpotWindow(object):
     def setupUi(self, AddSpotWindow):
@@ -57,11 +57,6 @@ class Ui_AddSpotWindow(object):
         palette.setBrush(QPalette.Disabled, QPalette.Window, brush3)
         palette.setBrush(QPalette.Disabled, QPalette.Accent, brush2)
         AddSpotWindow.setPalette(palette)
-        self.confirm_spot = QDialogButtonBox(AddSpotWindow)
-        self.confirm_spot.setObjectName(u"confirm_spot")
-        self.confirm_spot.setGeometry(QRect(-30, 140, 261, 32))
-        self.confirm_spot.setOrientation(Qt.Orientation.Horizontal)
-        self.confirm_spot.setStandardButtons(QDialogButtonBox.StandardButton.Cancel|QDialogButtonBox.StandardButton.Ok)
         self.Spot_Name_input = QLineEdit(AddSpotWindow)
         self.Spot_Name_input.setObjectName(u"Spot_Name_input")
         self.Spot_Name_input.setGeometry(QRect(110, 10, 113, 21))
@@ -95,10 +90,14 @@ class Ui_AddSpotWindow(object):
         self.sun_image.setGeometry(QRect(200, 20, 161, 131))
         self.sun_image.setPixmap(QPixmap(u"../art/full_sun.png"))
         self.sun_image.setScaledContents(True)
+        self.add_spot_button = QPushButton(AddSpotWindow)
+        self.add_spot_button.setObjectName(u"add_spot_button")
+        self.add_spot_button.setGeometry(QRect(120, 150, 75, 24))
+        self.cancel_button = QPushButton(AddSpotWindow)
+        self.cancel_button.setObjectName(u"cancel_button")
+        self.cancel_button.setGeometry(QRect(210, 150, 75, 24))
 
         self.retranslateUi(AddSpotWindow)
-        self.confirm_spot.accepted.connect(AddSpotWindow.accept)
-        self.confirm_spot.rejected.connect(AddSpotWindow.reject)
 
         QMetaObject.connectSlotsByName(AddSpotWindow)
     # setupUi
@@ -127,5 +126,7 @@ class Ui_AddSpotWindow(object):
         self.humidity_input.setToolTip(QCoreApplication.translate("AddSpotWindow", u"<html><head/><body><p>Humidity of the spot in percentage.</p></body></html>", None))
 #endif // QT_CONFIG(tooltip)
         self.sun_image.setText("")
+        self.add_spot_button.setText(QCoreApplication.translate("AddSpotWindow", u"Add Spot", None))
+        self.cancel_button.setText(QCoreApplication.translate("AddSpotWindow", u"Cancel", None))
     # retranslateUi
 

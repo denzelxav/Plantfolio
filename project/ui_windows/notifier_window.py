@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 from PySide6 import QtWidgets
 from PySide6.QtGui import QPixmap, QIcon
 from PySide6.QtWidgets import QDialog, QMainWindow, QListWidgetItem
-import images_qr
+import images_rc
 from project.classes.spot_notification import Notification
 
 from project.ui.notifier_window_ui import Ui_Notifier_window
