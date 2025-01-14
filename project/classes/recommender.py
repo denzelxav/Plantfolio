@@ -71,6 +71,7 @@ class Recommender:
         Returns a list of plant_ids that are sorted on
         how good they fit the users needs in descending order
         """
+        self.set_values()
         for plant_id in self.all_ids:
             self.plant_scores[plant_id] = self.calculate_score(plant_id)
         recommendations = sorted([plant for plant in self.all_ids if self.plant_scores[plant] > 50],

@@ -7,7 +7,7 @@ from PySide6.QtGui import QIcon, QPixmap
 
 import images_qr
 from project.classes.spot_notification import Spot
-from project.ui.room_view import Ui_RoomViewWindow
+from project.ui.room_view import Ui_Room_View
 from project.ui_windows.add_spot_window import AddSpotWindow
 from project.ui_windows.add_plant_window import AddPlantWindow
 from project.ui_windows.plant_view_window import PlantViewWindow
@@ -21,11 +21,15 @@ class RoomViewWindow(QDialog):
     """
     def __init__(self, room_name: str, main_menu: MainMenu):
         super().__init__()
-        self.ui = Ui_RoomViewWindow()
+        self.ui = Ui_Room_View()
         self.ui.setupUi(self)
         self.main_menu = main_menu
         self.setWindowTitle(room_name)
         self.room_name = room_name
+
+        self.ui.room_view_frame.setPixmap(QPixmap(u":/list_art.png"))
+        self.ui.house_image.setPixmap(QPixmap(u":/huisje.png"))
+
         self.refresh_list()
         self.ui.add_spot.clicked.connect(self.add_spot)
         self.ui.delete_room.clicked.connect(self.delete_room)

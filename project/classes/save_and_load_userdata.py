@@ -1,5 +1,6 @@
 import json
 import os
+import sys
 from typing import Any
 from enum import Enum
 from project.classes.userdata import UserData
@@ -24,6 +25,16 @@ def save_user_data(user: UserData, test_mode: bool=False) -> None:
     """
     if test_mode:
         save_path = os.path.join("test", "test_user_data.json")
+    elif getattr(sys, 'frozen', False):
+        appdata = os.getenv('APPDATA')
+        if appdata is None:
+            raise FileNotFoundError("Appdata folder could not be found")
+        directory = os.path.join(appdata, "Plantfolio")
+        try:
+            os.mkdir(directory)
+        except FileExistsError:
+            pass
+        save_path = os.path.join(directory, "user_data.json")
     else:
         save_path = os.path.join("project", "user_data.json")
 
@@ -48,6 +59,11 @@ def load_user_data(test_mode: bool=False) -> UserData:
     """
     if test_mode:
         load_path = os.path.join("test", "test_user_data.json")
+    elif getattr(sys, 'frozen', False):
+        appdata = os.getenv('APPDATA')
+        if appdata is None:
+            raise FileNotFoundError("Appdata folder could not be found")
+        load_path = os.path.join(appdata, "Plantfolio", "user_data.json")
     else:
         load_path = os.path.join("project", "user_data.json")
 
