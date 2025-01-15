@@ -59,7 +59,7 @@ def test_wiki_page():
     try:
         requests.get("https://www.google.com", timeout=2)
         connected = True
-    except (requests.ConnectionError, requests.Timeout):
+    except (requests.exceptions.ConnectionError, requests.exceptions.Timeout):
         # user has no internet
         connected = False
     except Exception as e:
