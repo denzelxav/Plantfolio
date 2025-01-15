@@ -18,4 +18,4 @@ if __name__ == "__main__":
     else:
         myApp = MainMenu(userdata)
         myApp.show()
-        app.exec()
+        sys.exit(app.exec())

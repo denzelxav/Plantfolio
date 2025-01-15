@@ -57,7 +57,7 @@ def test_wiki_page():
  'title': '<a href="https://en.wikipedia.org/wiki/Kri-kri"><span style=" '
           'text-decoration: underline; color:#00007f;">Kri-kri</span></a>'}
     try:
-        requests.get("https://www.google.com", timeout=5)
+        requests.get("https://www.google.com", timeout=2)
         connected = True
     except (requests.ConnectionError, requests.Timeout):
         # user has no internet
@@ -68,5 +68,5 @@ def test_wiki_page():
     if connected:
         assert res == expected, "Wrong wiki result with internet connection"
     if not connected:
-        assert res == {"title": "No wiki page available", "description": "...", "image": "test_image"}, \
+        assert res == {"title": "kri-kri", "description": "No wikipedia page available", "image": "test_image"}, \
             "Failed request doesn't return default dictionary"

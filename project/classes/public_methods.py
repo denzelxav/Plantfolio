@@ -5,7 +5,6 @@ This module contains independent public methods
 from __future__ import annotations
 import datetime
 
-
 import urllib.request as urllib
 import json
 import requests
@@ -55,7 +54,7 @@ def wiki_page(plant: str, test_mode=False) -> dict[str, str | QPixmap]:
     endpoint = '/search/page'
     url = base_url + language_code + endpoint
     parameters = {'q': search_query, 'limit': number_of_results}
-    response_code = requests.get(url, headers=headers, params=parameters, timeout=5) # type: ignore
+    response_code = requests.get(url, headers=headers, params=parameters, timeout=2) # type: ignore
     response = json.loads(response_code.text)
     if (response_code.status_code != 200 or
             len(response["pages"]) == 0 or
@@ -64,7 +63,7 @@ def wiki_page(plant: str, test_mode=False) -> dict[str, str | QPixmap]:
             pixmap = QPixmap(":/plant_1_healthy.png")
         else:
             pixmap = "test_image" # type: ignore
-        return {"title": "No wiki page available", "description": "...", "image": pixmap}
+        return {"title": plant, "description": "No wikipedia page available", "image": pixmap}
     page = response["pages"][0]
     display_title = page["title"]
     description = page['description']
