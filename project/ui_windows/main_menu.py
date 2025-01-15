@@ -14,6 +14,7 @@ from project.ui_windows.error_message_window import ErrorMessageWindow
 from project.ui_windows.room_view_window import RoomViewWindow
 from project.ui_windows.all_plants_window import AllPlantsWindow
 from project.ui_windows.recommendations_window import RecommendationsWindow
+from project.ui_windows.help_window import HelpWindow
 from project.classes.save_and_load_userdata import save_user_data
 from project.ui_windows.notifier_window import NotifierWindow
 from project.classes.notifier import Notifier
@@ -52,7 +53,7 @@ class MainMenu(QMainWindow):
         self.ui.water_all.clicked.connect(self.water_all)
         self.ui.open_room.clicked.connect(self.open_room)
         self.ui.all_plants.clicked.connect(self.open_all_plants)
-        self.ui.save_button.clicked.connect(self.save)
+        self.ui.instructions_button.clicked.connect(self.open_instructions)
         self.ui.open_recommender.clicked.connect(self.open_recommender)
 
         self.refresh_rooms()
@@ -103,6 +104,19 @@ class MainMenu(QMainWindow):
         except Exception as e:
             error_msg = ErrorMessageWindow(e)
             error_msg.exec()
+
+    @Slot()
+    def open_instructions(self):
+        """
+        Opens help window
+        """
+        try:
+            self.help_window = HelpWindow()
+        except Exception as e:
+            error_msg = ErrorMessageWindow(e)
+            error_msg.exec()
+        else:
+            self.help_window.show()
 
     @Slot()
     def water_all(self):

@@ -410,22 +410,6 @@
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QPushButton" name="save_button">
-    <property name="geometry">
-     <rect>
-      <x>280</x>
-      <y>270</y>
-      <width>75</width>
-      <height>24</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Save</string>
-    </property>
-    <property name="default">
-     <bool>true</bool>
-    </property>
-   </widget>
    <widget class="QLabel" name="notification_list_frame">
     <property name="geometry">
      <rect>
@@ -464,6 +448,22 @@
      <bool>true</bool>
     </property>
    </widget>
+   <widget class="QPushButton" name="instructions_button">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>270</y>
+      <width>75</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Instructions</string>
+    </property>
+    <property name="default">
+     <bool>true</bool>
+    </property>
+   </widget>
    <zorder>room_list_frame</zorder>
    <zorder>notification_list_frame</zorder>
    <zorder>PlantFolio_Icon</zorder>
@@ -477,7 +477,7 @@
    <zorder>all_plants</zorder>
    <zorder>sort_notifications_by</zorder>
    <zorder>refresh_notifications</zorder>
-   <zorder>save_button</zorder>
+   <zorder>instructions_button</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
