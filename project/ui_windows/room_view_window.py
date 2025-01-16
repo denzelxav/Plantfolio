@@ -2,7 +2,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import QDialog
-from PySide6.QtCore import Slot
+from PySide6.QtCore import Slot, QSemaphore
 from PySide6.QtGui import QIcon, QPixmap
 
 import images_rc
@@ -14,6 +14,7 @@ from project.ui_windows.add_plant_window import AddPlantWindow
 from project.ui_windows.error_message_window import ErrorMessageWindow
 from project.ui_windows.plant_view_window import PlantViewWindow
 if TYPE_CHECKING:
+    from project.classes.userdata import UserData
     from project.ui_windows.main_menu import MainMenu
 
 
@@ -21,14 +22,18 @@ class RoomViewWindow(QDialog):
     """
     Window showing all spots in room
     """
-    def __init__(self, room_name: str, main_menu: MainMenu):
+    def __init__(self, room_name: str, parent: MainMenu) -> None:
         super().__init__()
         self.ui = Ui_Room_View()
         self.ui.setupUi(self)
-        self.main_menu = main_menu
-        self.setWindowTitle(room_name)
+
+        self.main_menu = parent
+        self.semaphore: QSemaphore = parent.semaphore
+        self.userdata: UserData = parent.userdata
+
         self.room_name = room_name
 
+        self.setWindowTitle(room_name)
         self.ui.room_view_frame.setPixmap(QPixmap(u":/list_art.png"))
         self.ui.house_image.setPixmap(QPixmap(u":/huisje.png"))
 
@@ -44,7 +49,7 @@ class RoomViewWindow(QDialog):
     def open_plant_view(self):
         spot_id = self.ui.spot_list.selectedItems()[0].text()
         selected_spot = self.get_spot(spot_id)
-        self.plant_view = PlantViewWindow(selected_spot, self.main_menu.userdata)
+        self.plant_view = PlantViewWindow(selected_spot, self)
         self.plant_view.show()
 
 
@@ -94,7 +99,7 @@ class RoomViewWindow(QDialog):
     def add_plant(self):
         spot = self.get_spot(self.ui.spot_list.selectedItems()[0].text())
         if spot.assigned_plant is None:
-            self.add_plant_window = AddPlantWindow(spot, self.main_menu.userdata)
+            self.add_plant_window = AddPlantWindow(spot, self)
             self.add_plant_window.show()
 
     @Slot()

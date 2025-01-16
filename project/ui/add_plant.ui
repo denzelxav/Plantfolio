@@ -12,7 +12,7 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>525</width>
+    <width>590</width>
     <height>300</height>
    </size>
   </property>
@@ -268,7 +268,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="search_plant_text">
    <property name="geometry">
     <rect>
      <x>130</x>
@@ -397,6 +397,35 @@
     <bool>true</bool>
    </property>
   </widget>
+  <widget class="QLabel" name="article_title">
+   <property name="geometry">
+    <rect>
+     <x>450</x>
+     <y>170</y>
+     <width>131</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="article_image">
+   <property name="geometry">
+    <rect>
+     <x>450</x>
+     <y>190</y>
+     <width>131</width>
+     <height>101</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
   <zorder>icon_frame</zorder>
   <zorder>search_frame</zorder>
   <zorder>icon_list</zorder>
@@ -404,10 +433,12 @@
   <zorder>confirm_plant</zorder>
   <zorder>select_icon</zorder>
   <zorder>search_bar</zorder>
-  <zorder>label</zorder>
+  <zorder>search_plant_text</zorder>
   <zorder>name_input</zorder>
   <zorder>choose_name</zorder>
   <zorder>small_logo</zorder>
+  <zorder>article_title</zorder>
+  <zorder>article_image</zorder>
  </widget>
  <resources/>
  <connections>

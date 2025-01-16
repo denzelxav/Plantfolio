@@ -1,7 +1,7 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
 import datetime
-from PySide6.QtCore import Slot, QSize
+from PySide6.QtCore import Slot, QSize, QSemaphore
 from PySide6.QtGui import QIcon, QPixmap
 from PySide6.QtWidgets import QMainWindow
 
@@ -14,6 +14,8 @@ from project.ui_windows.confirmation_window import ConfirmationWindow
 if TYPE_CHECKING:
     from project.classes.spot_notification import Spot
     from project.classes.userdata import UserData
+    from project.ui_windows.room_view_window import RoomViewWindow
+    from project.ui_windows.all_plants_window import AllPlantsWindow
 
 class PlantViewWindow(QMainWindow):
     """
@@ -22,7 +24,7 @@ class PlantViewWindow(QMainWindow):
     interacting with the buttons and the plants health can be seen by
     looking at the plant icon.
     """
-    def __init__(self, spot: Spot, userdata: UserData) -> None:
+    def __init__(self, spot: Spot, parent: RoomViewWindow | AllPlantsWindow) -> None:
         """
         First the spot data is added, then it checks if a plant is assigned
         before setting the appropriate plant details and enabling the buttons.
@@ -30,12 +32,17 @@ class PlantViewWindow(QMainWindow):
         super().__init__()
         self.ui = Ui_PlantViewWindow()
         self.ui.setupUi(self)
+
+        self.parent_window = parent
+        self.semaphore: QSemaphore = parent.semaphore
+        self.userdata: UserData = parent.userdata
+
         self.spot = spot
         self.plant = self.spot.assigned_plant
-        self.userdata = userdata
-        self.setWindowIcon(QIcon(":/Plantfolio_logo_small.png"))
+
 
         #setup icons
+        self.setWindowIcon(QIcon(":/Plantfolio_logo_small.png"))
         icon = QIcon()
         icon.addFile(":/water.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.ui.water_plant.setIcon(icon)
@@ -205,6 +212,6 @@ class PlantViewWindow(QMainWindow):
                 self.userdata.delete_plant(self.plant)
                 self.plant_or_no_plant()
         else:
-            self.add_plant_window = AddPlantWindow(self.spot, self.userdata, self)
+            self.add_plant_window = AddPlantWindow(self.spot, self)
             self.add_plant_window.show()
 

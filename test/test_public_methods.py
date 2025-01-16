@@ -55,15 +55,9 @@ def test_wiki_page():
     expected = {'description': 'Feral goat',
  'image': 'https://upload.wikimedia.org/wikipedia/commons/4/48/Male_and_female_Cretan_ibex.jpg',
  'title': '<a href="https://en.wikipedia.org/wiki/Kri-kri"><span style=" '
-          'text-decoration: underline; color:#00007f;">Kri-kri</span></a>'}
-    # try:
-    #     requests.get("https://www.google.com", timeout=2)
-    #     connected = True
-    #
-    #     # user has no internet
-    #     connected = False
-    # except Exception as e:
-    #     raise e
+          'text-decoration: underline; color:#00007f;">Kri-kri</span></a>',
+ 'result': 'success'
+                }
     try:
         res = wiki_page("kri-kri", test_mode = True)
         assert res == expected, "Wrong wiki result with internet connection"
@@ -71,5 +65,3 @@ def test_wiki_page():
         pass
     except Exception as e:
         raise e
-        # assert res == {"title": "kri-kri", "description": "No wikipedia page available", "image": "test_image"}, \
-        #     "Failed request doesn't return default dictionary"

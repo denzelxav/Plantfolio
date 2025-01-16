@@ -10,28 +10,31 @@ from project.ui.recommendations_ui import Ui_RecommendationsWindow
 from project.classes.plant import plant_from_database
 
 if TYPE_CHECKING:
-    from project.classes.spot_notification import Spot
     from project.classes.userdata import UserData
     from project.classes.recommender import Recommender
-    from project.classes.plant import Plant
+    from project.ui_windows.main_menu import MainMenu
 
 class RecommendationsWindow(QDialog):
     """
     Shows plant recommendations for the user and info on those plants.
     """
 
-    def __init__(self, recommender: Recommender, userdata: UserData) -> None:
+    def __init__(self, parent: MainMenu) -> None:
         super().__init__()
 
-        self.semaphore = QSemaphore(1)
-        self.threads: list[tuple[QThread, WikiRequest]] = []
         self.ui = Ui_RecommendationsWindow()
         self.ui.setupUi(self)
-        self.userdata = userdata
-        self.recommender = recommender
+
+        self.parent_window = parent
+        self.semaphore = parent.semaphore
+        self.userdata = self.parent_window.userdata
+
+        self.threads: list[tuple[QThread, WikiRequest]] = []
+        self.page = {"title": "No wiki page available", "description": "...", "image": QPixmap(":/plant_1_healthy.png")}
+        self.recommender = self.parent_window.recommender
+
         self.setWindowIcon(QIcon(":/Plantfolio_logo_small.png"))
         self.ui.frame.setPixmap(QPixmap(u":/list_art.png"))
-        self.page = {"title": "No wiki page available", "description": "...", "image": QPixmap(":/plant_1_healthy.png")}
 
         self.recommendations = self.recommender.get_recommendations()
         for recommendation in self.recommendations:

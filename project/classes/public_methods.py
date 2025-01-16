@@ -16,11 +16,12 @@ from project.classes.enums import Sunlight, Health
 def wiki_page(plant: str, test_mode=False) -> dict[str, str | QPixmap]:
     """
     Searches plants scientific name on wikipedia.
-    Returns dictionary with hyperlink, description and high-res thumbnail
+    Returns dictionary with hyperlink, description, high-res thumbnail and result report
+    result options are 'success', 'failed' and 'no image',
     """
     language_code = 'en'
     split_plant = plant.split(' ')
-    i = 2 if len(split_plant) > 1 else 1
+    i = min(2, len(split_plant))
     search_query = " ".join(split_plant[:i])
     number_of_results = 1
     key = ("eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIzYjA4Y"
@@ -63,7 +64,11 @@ def wiki_page(plant: str, test_mode=False) -> dict[str, str | QPixmap]:
             pixmap = QPixmap(":/plant_1_healthy.png")
         else:
             pixmap = "test_image" # type: ignore
-        return {"title": plant, "description": "No wikipedia page available", "image": pixmap}
+        return {
+            "title": plant,
+            "description": "No wikipedia page available",
+            "image": pixmap,
+            "result": "failed"}
     page = response["pages"][0]
     display_title = page["title"]
     description = page['description']
@@ -72,6 +77,7 @@ def wiki_page(plant: str, test_mode=False) -> dict[str, str | QPixmap]:
         thumbnail_url = thumbnail_url.replace("/thumb", "")
         i1 = thumbnail_url.rfind('/')
         thumbnail_url = thumbnail_url[:i1]
+        result = "success"
         if not test_mode:
             data =urllib.urlopen(thumbnail_url).read() # pylint: disable=R1732
             pixmap = QPixmap()
@@ -79,6 +85,7 @@ def wiki_page(plant: str, test_mode=False) -> dict[str, str | QPixmap]:
         else:
             pixmap = thumbnail_url
     except TypeError as e:
+        result = "no image"
         if not test_mode:
             pixmap = QPixmap(":/plant_1_healthy")
             print(e)
@@ -94,7 +101,8 @@ def wiki_page(plant: str, test_mode=False) -> dict[str, str | QPixmap]:
                  "</span>" +
                  '</a>',
         "description": description,
-        "image": pixmap
+        "image": pixmap,
+        "result": result
     }
 
 

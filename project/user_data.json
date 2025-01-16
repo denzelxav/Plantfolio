@@ -56,8 +56,8 @@
             "max_log_size": 4,
             "notes": null,
             "current_tasks": [
-                "water",
-                "nutrition"
+                "nutrition",
+                "water"
             ]
         }
     ],
