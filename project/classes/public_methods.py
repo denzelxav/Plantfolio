@@ -21,7 +21,12 @@ def wiki_page(plant: str, test_mode=False) -> dict[str, str | QPixmap]:
     """
     language_code = 'en'
     split_plant = plant.split(' ')
-    i = min(2, len(split_plant))
+    common_name = 999
+    for index, word in enumerate(split_plant):
+        if "'" in word or "." in word:
+            common_name = index
+            break
+    i = min(2, len(split_plant), common_name)
     search_query = " ".join(split_plant[:i])
     number_of_results = 1
     key = ("eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIzYjA4Y"
@@ -51,9 +56,7 @@ def wiki_page(plant: str, test_mode=False) -> dict[str, str | QPixmap]:
         'User-Agent': 'Plantfolio (denzeltraeger@hotmail.com)'
     }
 
-    base_url = 'https://api.wikimedia.org/core/v1/wikipedia/'
-    endpoint = '/search/page'
-    url = base_url + language_code + endpoint
+    url = 'https://api.wikimedia.org/core/v1/wikipedia/' + language_code + '/search/page'
     parameters = {'q': search_query, 'limit': number_of_results}
     response_code = requests.get(url, headers=headers, params=parameters, timeout=5) # type: ignore
     response = json.loads(response_code.text)
@@ -70,8 +73,6 @@ def wiki_page(plant: str, test_mode=False) -> dict[str, str | QPixmap]:
             "image": pixmap,
             "result": "failed"}
     page = response["pages"][0]
-    display_title = page["title"]
-    description = page['description']
     try:
         thumbnail_url = 'https:' + page['thumbnail']['url']
         thumbnail_url = thumbnail_url.replace("/thumb", "")
@@ -79,9 +80,8 @@ def wiki_page(plant: str, test_mode=False) -> dict[str, str | QPixmap]:
         thumbnail_url = thumbnail_url[:i1]
         result = "success"
         if not test_mode:
-            data =urllib.urlopen(thumbnail_url).read() # pylint: disable=R1732
             pixmap = QPixmap()
-            pixmap.loadFromData(data)
+            pixmap.loadFromData(urllib.urlopen(thumbnail_url).read()) # pylint: disable=R1732
         else:
             pixmap = thumbnail_url
     except TypeError as e:
@@ -97,10 +97,10 @@ def wiki_page(plant: str, test_mode=False) -> dict[str, str | QPixmap]:
     return {
         "title": '<a href="' + page_url + '">' +
                  '<span style=" text-decoration: underline; color:#00007f;">' +
-                 display_title +
+                 page["title"] +
                  "</span>" +
                  '</a>',
-        "description": description,
+        "description": page['description'],
         "image": pixmap,
         "result": result
     }
