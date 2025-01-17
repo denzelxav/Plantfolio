@@ -133,7 +133,7 @@ def test_sort_plants():
     assert sortedoncurrent_tasks == [sansevieria, maple, strelitzia]
 
     sortedonnothing = mydata.sort_plants('blabla', True)
-    assert sortedonnothing is None
+    assert ValueError
 
 
 def test_load_spot_data():
