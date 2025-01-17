@@ -5,8 +5,8 @@ This readme contains the following sections
 * Purpose of the application
 * Instructions on how to run the application
 * List of implemented features
-* How to use the application (optional)
-* Additional documentation for other developers (optional*2)
+* How to use the application
+* Additional documentation for other developers
 
 
 ## Purpose of application
