@@ -109,7 +109,7 @@ class UserData:
         elif len(self.rooms[room_name]) > 0:
             raise ContainerNotEmpty(f"room: '{room_name}' is not empty and can't be deleted.")
 
-    def sort_plants(self, attribute: str, reverse: bool) -> list[Plant] | None:
+    def sort_plants(self, attribute: str, reverse: bool) -> list[Plant]:
         """
         Sorts the plants based on the prompted attribute
         """
@@ -123,17 +123,14 @@ class UserData:
             return result
         if attribute == 'current_task':
             return sorted(list(self.plants), key=self.tasks_to_score, reverse= not reverse)
-        return None
+        raise ValueError
 
-    def tasks_to_score(self, plant: Plant) -> str:
+    def tasks_to_score(self, plant: Plant) -> int:
         """
         Converts the tasks of a plant to a a priority score to be used in sorting
         """
-        result = 0
         task_priority = {'repot': 1, 'nutrition': 10, 'water': 100}
-        for task in plant.current_tasks:
-            result += task_priority[task]
-        return result
+        return sum(task_priority[task] for task in plant.current_tasks)
 
     def load_spot_data(self, spot_data):
         """
