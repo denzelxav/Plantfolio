@@ -137,10 +137,12 @@ class PlantViewWindow(QMainWindow):
 
     def set_plant_icon(self):
         if self.plant:
+            self.ui.custom_image_health.setHidden(self.plant.custom_icon is None)
             if not self.plant.custom_icon:
                 self.ui.plant_icon.setPixmap(
                     QPixmap(f":/{self.plant.icon_type}_{self.plant.health.value}.png"))
             if self.plant.custom_icon:
+                self.ui.custom_image_health.setPixmap(QPixmap(f":/smiley_{self.plant.health.value}.png"))
                 if getattr(sys, 'frozen', False):
                     image_path = os.path.join(os.getenv('APPDATA'), "Plantfolio", "custom_pictures",
                                               self.plant.custom_icon)

@@ -18,6 +18,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QLabel,
     QListWidget, QListWidgetItem, QMainWindow, QPushButton,
     QSizePolicy, QTextEdit, QWidget)
+import images_rc
 
 class Ui_PlantViewWindow(object):
     def setupUi(self, PlantViewWindow):
@@ -168,6 +169,11 @@ class Ui_PlantViewWindow(object):
         font1 = QFont()
         font1.setPointSize(8)
         self.add_delete_image.setFont(font1)
+        self.custom_image_health = QLabel(self.centralwidget)
+        self.custom_image_health.setObjectName(u"custom_image_health")
+        self.custom_image_health.setGeometry(QRect(90, 120, 31, 31))
+        self.custom_image_health.setPixmap(QPixmap(u":/smiley_healthy.png"))
+        self.custom_image_health.setScaledContents(True)
         PlantViewWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(PlantViewWindow)
@@ -213,5 +219,6 @@ class Ui_PlantViewWindow(object):
         self.repot_plant.setText(QCoreApplication.translate("PlantViewWindow", u"Repot plant", None))
         self.add_delete_plant.setText(QCoreApplication.translate("PlantViewWindow", u"Add/Delete Plant", None))
         self.add_delete_image.setText(QCoreApplication.translate("PlantViewWindow", u"Add Image", None))
+        self.custom_image_health.setText("")
     # retranslateUi
 
