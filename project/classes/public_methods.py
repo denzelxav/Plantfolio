@@ -13,21 +13,23 @@ from project.classes.enums import Sunlight, Health
 
 
 
-def wiki_page(plant: str, test_mode=False) -> dict[str, str | QPixmap]:
+def wiki_page(search_term: str, test_mode=False) -> dict[str, str | QPixmap]:
     """
     Searches plants scientific name on wikipedia.
     Returns dictionary with hyperlink, description, high-res thumbnail and result report
     result options are 'success', 'failed' and 'no image',
+    This code was written with the help of this tutorial on wikimedia's API:
+    https://public-paws.wmcloud.org/User:APaskulin_(WMF)/API-Portal/wikimedia-api-portal-search-wikipedia.ipynb
     """
-    language_code = 'en'
-    split_plant = plant.split(' ')
+    language_code = "en"
+    split_search_term = search_term.split(' ')
     common_name = 999
-    for index, word in enumerate(split_plant):
+    for index, word in enumerate(split_search_term):
         if "'" in word or "." in word:
             common_name = index
             break
-    i = min(2, len(split_plant), common_name)
-    search_query = " ".join(split_plant[:i])
+    i = min(2, len(split_search_term), common_name)
+    search_query = " ".join(split_search_term[:i])
     number_of_results = 1
     key = ("eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIzYjA4Y"
            "mYwMThhMTMwYTM5YTBiNDVlMGU2MmIwYjRkYyIsImp0aSI6IjY4YTQ"
@@ -52,29 +54,29 @@ def wiki_page(plant: str, test_mode=False) -> dict[str, str | QPixmap]:
            "tdLmf3Fi0q2oQ56SIBvJVGD_hoJkVMGcXRPzHNn0VAvC1dSQ1CxdCZ"
            "BX8TeT9mtvDiSwC4_fbQwDQ")
     headers = {
-        'Authorization': key,
-        'User-Agent': 'Plantfolio (denzeltraeger@hotmail.com)'
+        "Authorization": key,
+        "User-Agent": "Plantfolio (denzeltraeger@hotmail.com)"
     }
 
-    url = 'https://api.wikimedia.org/core/v1/wikipedia/' + language_code + '/search/page'
-    parameters = {'q': search_query, 'limit': number_of_results}
+    url = "https://api.wikimedia.org/core/v1/wikipedia/" + language_code + "/search/page"
+    parameters = {"q": search_query, "limit": number_of_results}
     response_code = requests.get(url, headers=headers, params=parameters, timeout=5) # type: ignore
     response = json.loads(response_code.text)
     if (response_code.status_code != 200 or
             len(response["pages"]) == 0 or
-            plant.split(" ")[0].lower() not in response["pages"][0]["title"].lower()):
+            search_term.split(" ")[0].lower() not in response["pages"][0]["title"].lower()):
         if not test_mode:
             pixmap = QPixmap(":/plant_1_healthy.png")
         else:
             pixmap = "test_image" # type: ignore
         return {
-            "title": plant,
+            "title": search_term,
             "description": "No wikipedia page available",
             "image": pixmap,
             "result": "failed"}
     page = response["pages"][0]
     try:
-        thumbnail_url = 'https:' + page['thumbnail']['url']
+        thumbnail_url = "https:" + page["thumbnail"]["url"]
         thumbnail_url = thumbnail_url.replace("/thumb", "")
         i1 = thumbnail_url.rfind('/')
         thumbnail_url = thumbnail_url[:i1]
@@ -93,7 +95,7 @@ def wiki_page(plant: str, test_mode=False) -> dict[str, str | QPixmap]:
             pixmap = "test_image" # type: ignore
     except Exception as e:
         raise e
-    page_url = 'https://' + language_code + '.wikipedia.org/wiki/' + page['key']
+    page_url = "https://" + language_code + ".wikipedia.org/wiki/" + page["key"]
     return {
         "title": '<a href="' + page_url + '">' +
                  '<span style=" text-decoration: underline; color:#00007f;">' +

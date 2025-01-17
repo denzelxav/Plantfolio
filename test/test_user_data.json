@@ -8,12 +8,12 @@
             "spot_id": "Window",
             "health": "dead",
             "watered": [
-                "2025-01-16T14:08:42.023476"
+                "2025-01-17T15:56:28.588475"
             ],
             "nutrition": [
-                "2025-01-16T14:08:42.023476"
+                "2025-01-17T15:56:28.588475"
             ],
-            "repotted": "2025-01-16T14:08:42.023476",
+            "repotted": "2025-01-17T15:56:28.588475",
             "manual_health": false,
             "max_log_size": 4,
             "notes": null,
@@ -30,12 +30,12 @@
             "spot_id": "Cabinet",
             "health": "healthy",
             "watered": [
-                "2025-01-16T14:08:42.023476"
+                "2025-01-17T15:56:28.588475"
             ],
             "nutrition": [
-                "2025-01-16T14:08:42.023476"
+                "2025-01-17T15:56:28.588475"
             ],
-            "repotted": "2025-01-16T14:08:42.023476",
+            "repotted": "2025-01-17T15:56:28.588475",
             "manual_health": true,
             "max_log_size": 4,
             "notes": null,
@@ -49,12 +49,12 @@
             "spot_id": "Shelf living room",
             "health": "slightly_unhealthy",
             "watered": [
-                "2025-01-16T14:08:42.023476"
+                "2025-01-17T15:56:28.588475"
             ],
             "nutrition": [
-                "2025-01-16T14:08:42.023476"
+                "2025-01-17T15:56:28.588475"
             ],
-            "repotted": "2025-01-16T14:08:42.023476",
+            "repotted": "2025-01-17T15:56:28.588475",
             "manual_health": false,
             "max_log_size": 4,
             "notes": "This is a note",
@@ -68,12 +68,12 @@
             "spot_id": "Shelf garage",
             "health": "slightly_unhealthy",
             "watered": [
-                "2025-01-16T14:08:42.023476"
+                "2025-01-17T15:56:28.588475"
             ],
             "nutrition": [
-                "2025-01-16T14:08:42.023476"
+                "2025-01-17T15:56:28.588475"
             ],
-            "repotted": "2025-01-16T14:08:42.023476",
+            "repotted": "2025-01-17T15:56:28.588475",
             "manual_health": false,
             "max_log_size": 4,
             "notes": null,

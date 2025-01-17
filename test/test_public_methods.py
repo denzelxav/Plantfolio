@@ -60,7 +60,35 @@ def test_wiki_page():
                 }
     try:
         res = wiki_page("kri-kri", test_mode = True)
-        assert res == expected, "Wrong wiki result with internet connection"
+        assert res == expected, "Wrong wiki result with internet connection, Feral Goat"
+    except (requests.exceptions.ConnectionError, requests.exceptions.Timeout):
+        pass
+    except Exception as e:
+        raise e
+
+    expected =    {
+       'description': 'Genus of flowering plants in the daisy family Asteraceae',
+       'image': 'https://upload.wikimedia.org/wikipedia/commons/4/4f/DandelionFlower.jpg',
+       'result': 'success',
+       'title': '<a href="https://en.wikipedia.org/wiki/Taraxacum"><span style=" '
+       'text-decoration: underline; color:#00007f;">Taraxacum</span></a>'}
+    try:
+        res = wiki_page("Taraxacum", test_mode=True)
+        assert res == expected, "Wrong wiki result with internet connection, Dandelion"
+    except (requests.exceptions.ConnectionError, requests.exceptions.Timeout):
+        pass
+    except Exception as e:
+        raise e
+
+    expected = {'description': 'Species of tree',
+              'image': 'https://upload.wikimedia.org/wikipedia/commons/1/18/Ch%C3%A2teau_de_Chenonceau_-_jardin_Russell-Page_%2801%29.jpg',
+              'result': 'success',
+              'title': '<a href="https://en.wikipedia.org/wiki/Salix_babylonica"><span '
+                       'style=" text-decoration: underline; color:#00007f;">Salix '
+                       'babylonica</span></a>'}
+    try:
+        res = wiki_page("Salix babylonica", test_mode=True)
+        assert res == expected, "Wrong wiki result with internet connection, weeping willow"
     except (requests.exceptions.ConnectionError, requests.exceptions.Timeout):
         pass
     except Exception as e:
