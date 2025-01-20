@@ -1,12 +1,14 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
-from PySide6.QtGui import QIcon
+from PySide6.QtGui import QIcon, QPixmap
 from PySide6.QtWidgets import QDialog, QListWidgetItem
 from PySide6.QtCore import Slot
 
+from project.classes.exceptions import EmptyNameError
 from project.classes.spot_notification import Spot
 from project.ui.add_plant import Ui_AddPlantWindow
 from project.classes.plant import list_all_plants_in_database, plant_from_database
+from project.ui_windows.error_message_window import ErrorMessageWindow
 
 if TYPE_CHECKING:
     from project.classes.userdata import UserData
@@ -24,6 +26,10 @@ class AddPlantWindow(QDialog):
         self.userdata = userdata
         self.parent_window = parent
         self.setWindowIcon(QIcon(":/Plantfolio_logo_small.png"))
+
+        self.ui.icon_frame.setPixmap(QPixmap(u":/list_art.png"))
+        self.ui.search_frame.setPixmap(QPixmap(u":/list_art.png"))
+        self.ui.small_logo.setPixmap(QPixmap(u":/Plantfolio_logo_small.png"))
 
         for plant_data in list_all_plants_in_database():
             self.ui.all_plants_list.addItem(f"{plant_data[0]}: {plant_data[1]}, {plant_data[2]}")
@@ -61,6 +67,10 @@ class AddPlantWindow(QDialog):
         plant_name = self.ui.name_input.text()
         plant.personal_name = plant_name
         plant.icon_type = self.ui.icon_list.selectedItems()[0].text()
-        self.userdata.add_plant(plant, self.spot)
+        try:
+            self.userdata.add_plant(plant, self.spot)
+        except EmptyNameError:
+            error_msg = ErrorMessageWindow("Please fill in plant name.", "Plant name is empty")
+            error_msg.exec()
         if self.parent_window:
             self.parent_window.plant_or_no_plant()

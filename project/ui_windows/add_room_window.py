@@ -3,8 +3,10 @@ from typing import TYPE_CHECKING
 from PySide6 import QtWidgets
 from PySide6.QtGui import QPixmap, QIcon
 from PySide6.QtWidgets import QDialog, QMainWindow, QListWidgetItem
-import images_qr
+import images_rc
+from project.classes.exceptions import NameTakenError, EmptyNameError
 
+from project.ui_windows.error_message_window import ErrorMessageWindow
 from project.ui.add_room import Ui_AddRoomWindow
 if TYPE_CHECKING:
     from project.ui_windows.main_menu import MainMenu
@@ -30,9 +32,15 @@ class AddRoomWindow(QDialog):
 
     def add_room(self):
         room_name = self.ui.room_name_input.text()
-        if room_name in self.main_menu.userdata.rooms:
-            raise ValueError("Room already exists") # TODO
-        else:
+        try:
             self.main_menu.userdata.add_room(room_name)
+        except EmptyNameError:
+            error_msg = ErrorMessageWindow("Please fill in a name", "Room name empty")
+            error_msg.exec()
+        except NameTakenError:
+            error_msg = ErrorMessageWindow(
+                f"Room with name '{room_name}' already exists, please use a different name",
+                "Room name exists")
+            error_msg.exec()
+        finally:
             self.main_menu.refresh_rooms()
-

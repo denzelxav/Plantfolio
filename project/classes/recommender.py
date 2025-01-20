@@ -62,7 +62,6 @@ class Recommender:
             self.already_owned.add(plant.core_id)
             family_name = plant.scientific_name.split()[0]
             self.family_count[family_name] = self.family_count.get(family_name, 0) + 1
-            # all_families.add(family_name)
         self.max_familiy_count = 1 if not self.family_count.values() \
                 else max(self.family_count.values())
 
@@ -71,11 +70,13 @@ class Recommender:
         Returns a list of plant_ids that are sorted on
         how good they fit the users needs in descending order
         """
+        self.set_values()
         for plant_id in self.all_ids:
             self.plant_scores[plant_id] = self.calculate_score(plant_id)
-        recommendations = sorted([plant for plant in self.all_ids if self.plant_scores[plant] > 50],
+        recommendations = sorted(list(self.all_ids),
                                  key=lambda plant_id: self.plant_scores[plant_id], reverse=True)
-        return recommendations
+        i = min([25, len(recommendations)])
+        return recommendations[:i]
 
 
     def calculate_score(self, plant_id: int) -> float:

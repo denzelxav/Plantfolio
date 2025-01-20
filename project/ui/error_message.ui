@@ -6,14 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>344</width>
-    <height>122</height>
+    <width>376</width>
+    <height>218</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>376</width>
+    <height>218</height>
+   </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>16777212</width>
-    <height>16777215</height>
+    <width>376</width>
+    <height>218</height>
    </size>
   </property>
   <property name="palette">
@@ -216,26 +222,40 @@
    </palette>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Plantfolio Error</string>
   </property>
   <widget class="QLabel" name="error_message">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>20</y>
-     <width>251</width>
-     <height>71</height>
+     <y>90</y>
+     <width>351</width>
+     <height>91</height>
     </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>0</height>
+    </size>
+   </property>
+   <property name="font">
+    <font>
+     <bold>false</bold>
+    </font>
    </property>
    <property name="text">
     <string>Error message here</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
    </property>
   </widget>
   <widget class="QPushButton" name="close_message">
    <property name="geometry">
     <rect>
-     <x>260</x>
-     <y>90</y>
+     <x>290</x>
+     <y>190</y>
      <width>75</width>
      <height>24</height>
     </rect>
@@ -244,7 +264,44 @@
     <string>Close</string>
    </property>
   </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>170</x>
+     <y>0</y>
+     <width>31</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="../../images_rc.qrc">:/exclamation_mark.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="error_type">
+   <property name="geometry">
+    <rect>
+     <x>8</x>
+     <y>55</y>
+     <width>361</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Error type here</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignmentFlag::AlignCenter</set>
+   </property>
+  </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../images_rc.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -45,7 +45,7 @@ class Notification:
     the importance(weight), the type and the time
     of the notification for a certain plant.
     """
-    weight: float
+    weight: str
     original_due_date: datetime.datetime
     time_sent: datetime.datetime
     personal_id_plant: int #is nu de core_id van de plant.

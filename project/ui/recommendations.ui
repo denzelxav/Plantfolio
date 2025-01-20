@@ -6,9 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>403</width>
-    <height>324</height>
+    <width>330</width>
+    <height>385</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>330</width>
+    <height>385</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>330</width>
+    <height>385</height>
+   </size>
   </property>
   <property name="palette">
    <palette>
@@ -215,19 +227,19 @@
   <widget class="QListWidget" name="select_recommendation">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>40</y>
-     <width>256</width>
-     <height>271</height>
+     <x>60</x>
+     <y>60</y>
+     <width>211</width>
+     <height>241</height>
     </rect>
    </property>
   </widget>
   <widget class="QLabel" name="Recommendations_text">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>20</y>
-     <width>151</width>
+     <x>80</x>
+     <y>30</y>
+     <width>171</width>
      <height>16</height>
     </rect>
    </property>
@@ -237,14 +249,14 @@
     </font>
    </property>
    <property name="text">
-    <string>Recommended plants</string>
+    <string>Recommended plants for you</string>
    </property>
   </widget>
   <widget class="QPushButton" name="cancel_recommendations">
    <property name="geometry">
     <rect>
-     <x>320</x>
-     <y>10</y>
+     <x>130</x>
+     <y>350</y>
      <width>75</width>
      <height>24</height>
     </rect>
@@ -253,28 +265,43 @@
     <string>Cancel</string>
    </property>
   </widget>
-  <widget class="QLabel" name="image_recommender">
+  <widget class="QLabel" name="frame">
    <property name="geometry">
     <rect>
-     <x>270</x>
-     <y>120</y>
-     <width>131</width>
-     <height>161</height>
+     <x>0</x>
+     <y>20</y>
+     <width>311</width>
+     <height>321</height>
     </rect>
    </property>
    <property name="text">
     <string/>
    </property>
-   <property name="textFormat">
-    <enum>Qt::TextFormat::RichText</enum>
-   </property>
    <property name="pixmap">
-    <pixmap>../art/all plants/plant_1_healthy.png</pixmap>
+    <pixmap>../art/list_art.png</pixmap>
    </property>
    <property name="scaledContents">
     <bool>true</bool>
    </property>
   </widget>
+  <widget class="QCheckBox" name="pet_tox_check">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>320</y>
+     <width>161</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Only show pet-safe plants</string>
+   </property>
+  </widget>
+  <zorder>frame</zorder>
+  <zorder>select_recommendation</zorder>
+  <zorder>Recommendations_text</zorder>
+  <zorder>cancel_recommendations</zorder>
+  <zorder>pet_tox_check</zorder>
  </widget>
  <resources/>
  <connections>
