@@ -188,17 +188,16 @@ class AllPlantsWindow(QDialog):
 
         path = QPainterPath()
         r = QtCore.QRectF()
-        r.setSize(radius * QtCore.QSizeF(1,1))
+        r.setSize(radius * QtCore.QSizeF(1,1)) # type: ignore
         r.moveBottomRight(image.rect().bottomRight())
         path.addEllipse(r)
         painter = QtGui.QPainter(image)
         painter.setRenderHints(
-            QtGui.QPainter.Antialiasing | QtGui.QPainter.SmoothPixmapTransform
+            QtGui.QPainter.Antialiasing | QtGui.QPainter.SmoothPixmapTransform  # type: ignore
         )
-        painter.setClipPath(path, QtCore.Qt.IntersectClip)
+        painter.setClipPath(path, QtCore.Qt.IntersectClip)  # type: ignore
         point = image.rect().bottomRight() * 0.5
 
-        print(point)
         painter.drawPixmap(point , health_icon)
         painter.end()
         return image
