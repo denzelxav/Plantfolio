@@ -360,30 +360,46 @@ class Plant:
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, Plant):
             return False
-        return (self.core_id == other.core_id and
-                self.personal_id == other.personal_id and
-                self.personal_name == other.personal_name and
-                self.scientific_name == other.scientific_name and
-                self.core_name == other.core_name and
-                self.icon_type == other.icon_type and
-                self.spot == other.spot and
-                self.health == other.health and
-                self.watering_frequency == other.watering_frequency and
-                self.preff_sunlight == other.preff_sunlight and
-                all(-5 <= (self_watered - other_watered).total_seconds() <= 5 for self_watered, other_watered in zip(self.watered, other.watered)) and
-                all(-5 <= (self_nutrition - other_nutrition).total_seconds() <= 5 for self_nutrition, other_nutrition in zip(self.nutrition, other.nutrition)) and
-                (self.repotted - other.repotted).total_seconds() <= 5 and
-                # self.watered == other.watered and
-                # self.nutrition == other.nutrition and
-                # self.repotted == other.repotted and
-                self.notes == other.notes and
-                self.manual_health == other.manual_health and
-                self.max_log_size == other.max_log_size and
-                self.water_score == other.water_score and
-                self.sunlight_score == other.sunlight_score and
-                self.nutrition_score == other.nutrition_score and
-                self.current_tasks == other.current_tasks
-                )
+
+        def compare_timestamps(
+            time1: datetime.datetime | None,
+            time2: datetime.datetime | None
+        ) -> bool:
+            if time1 is None and time2 is None:
+                return True
+            if time1 is None or time2 is None:
+                return False
+            return abs((time1 - time2).total_seconds()) <= 5
+
+        return (
+            self.core_id == other.core_id
+            and self.personal_id == other.personal_id
+            and self.personal_name == other.personal_name
+            and self.scientific_name == other.scientific_name
+            and self.core_name == other.core_name
+            and self.icon_type == other.icon_type
+            and self.spot == other.spot
+            and self.health == other.health
+            and self.watering_frequency == other.watering_frequency
+            and self.preff_sunlight == other.preff_sunlight
+            and all(
+                compare_timestamps(self_watered, other_watered)
+                for self_watered, other_watered in zip(self.watered, other.watered)
+            )
+            and all(
+                compare_timestamps(self_nutrition, other_nutrition)
+                for self_nutrition, other_nutrition in zip(self.nutrition, other.nutrition)
+            )
+            and compare_timestamps(self.repotted, other.repotted)
+            and self.notes == other.notes
+            and self.manual_health == other.manual_health
+            and self.max_log_size == other.max_log_size
+            and self.water_score == other.water_score
+            and self.sunlight_score == other.sunlight_score
+            and self.nutrition_score == other.nutrition_score
+            and self.current_tasks == other.current_tasks
+        )
+
 
     def __hash__(self):
         return hash(self.personal_id)
