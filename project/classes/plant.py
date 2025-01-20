@@ -370,9 +370,12 @@ class Plant:
                 self.health == other.health and
                 self.watering_frequency == other.watering_frequency and
                 self.preff_sunlight == other.preff_sunlight and
-                self.watered == other.watered and
-                self.nutrition == other.nutrition and
-                self.repotted == other.repotted and
+                all(-5 <= (self_watered - other_watered).total_seconds() <= 5 for self_watered, other_watered in zip(self.watered, other.watered)) and
+                all(-5 <= (self_nutrition - other_nutrition).total_seconds() <= 5 for self_nutrition, other_nutrition in zip(self.nutrition, other.nutrition)) and
+                (self.repotted - other.repotted).total_seconds() <= 5 and
+                # self.watered == other.watered and
+                # self.nutrition == other.nutrition and
+                # self.repotted == other.repotted and
                 self.notes == other.notes and
                 self.manual_health == other.manual_health and
                 self.max_log_size == other.max_log_size and
