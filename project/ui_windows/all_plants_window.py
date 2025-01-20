@@ -1,12 +1,14 @@
 import os
 import sys
 
-from PySide6.QtCore import Slot, QSize
-from PySide6.QtGui import QPixmap, QIcon
+from PySide6 import QtCore, QtGui
+from PySide6.QtCore import Slot, QSize, QPoint
+from PySide6.QtGui import QPixmap, QIcon, QPainterPath
 from PySide6.QtWidgets import QDialog, QTableWidgetItem, QAbstractItemView
 from datetime import datetime
 
 import images_rc
+from project.classes.enums import Health
 from project.classes.userdata import UserData
 from project.ui.all_plants import Ui_AllPlantsWindow
 from project.ui_windows.plant_view_window import PlantViewWindow
@@ -141,7 +143,10 @@ class AllPlantsWindow(QDialog):
             name_item = QTableWidgetItem(plant.personal_name)
             name_item.setData(3, plant)
             icon_path = self.get_icon_path(plant)
-            icon = QIcon(icon_path)
+            if plant.custom_icon:
+                icon = QIcon(self.add_health_icon(QPixmap(icon_path), plant.health))
+            else:
+                icon = QIcon(icon_path)
             name_item.setIcon(icon)  # Set the icon for the name column
             self.ui.plant_table.setItem(row, 0, name_item)
 
@@ -173,3 +178,27 @@ class AllPlantsWindow(QDialog):
             return image_path
         plant.custom_icon = None
         return f":/{plant.icon_type}_{plant.health.value}.png"
+
+    def add_health_icon(self, image: QPixmap, health: Health) -> QPixmap:
+        """
+        pastes given health smiley on the given pixmap and returns the result as a pixmap
+        """
+        health_icon = QPixmap(f":/smiley_{health.value}.png").scaled(image.size() * 0.4)
+        radius = 600
+
+        path = QPainterPath()
+        r = QtCore.QRectF()
+        r.setSize(radius * QtCore.QSizeF(1,1))
+        r.moveBottomRight(image.rect().bottomRight())
+        path.addEllipse(r)
+        painter = QtGui.QPainter(image)
+        painter.setRenderHints(
+            QtGui.QPainter.Antialiasing | QtGui.QPainter.SmoothPixmapTransform
+        )
+        painter.setClipPath(path, QtCore.Qt.IntersectClip)
+        point = image.rect().bottomRight() * 0.5
+
+        print(point)
+        painter.drawPixmap(point , health_icon)
+        painter.end()
+        return image
