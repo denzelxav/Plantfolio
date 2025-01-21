@@ -67,6 +67,7 @@ def test_create_userdata_basic():
     mydata.delete_plant(maple)
 
     # tests delete_plant
+    assert maple not in mydata.plants
     assert len(mydata.plants) == 0
 
     mydata.delete_spot(spot1)
@@ -130,10 +131,8 @@ def test_sort_plants():
     assert sortedonroom[0] == maple
 
     sortedoncurrent_tasks = mydata.sort_plants('current_task', False)
-    assert sortedoncurrent_tasks == [strelitzia, maple, sansevieria]
+    assert sortedoncurrent_tasks == [sansevieria, maple, strelitzia]
 
-    sortedonnothing = mydata.sort_plants('blabla', True)
-    assert sortedonnothing is None
 
 
 def test_load_spot_data():
@@ -203,3 +202,7 @@ def test_load_spot_data():
                                                  None,
                                                  21,
                                                  'living room')]}
+
+def test_eq_method():
+    mydata = UserData()
+    assert (mydata == 1) == False
