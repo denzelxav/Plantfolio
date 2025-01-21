@@ -2,8 +2,8 @@ import datetime
 
 import pytest
 from project.classes.plant import time_average
-from project.classes.public_methods import string_to_sunlight, string_to_water_frequency
-from project.classes.enums import Sunlight
+from project.classes.public_methods import string_to_sunlight, string_to_water_frequency, sunlight_to_string, get_sun_icon_path, string_to_health
+from project.classes.enums import Sunlight, Health
 
 def test_string_to_sunlight():
     """
@@ -51,3 +51,40 @@ def test_time_average():
     test_list = [datetime.datetime.now() + datetime.timedelta(days = 1) * i for i in range(10)]
     test_average = time_average(test_list)
     assert test_average <= datetime.timedelta(days = 1, seconds=10)
+
+def test_sunlight_to_string():
+    """
+    Tests all outcomes of sunlight_to_string()
+    """
+    assert sunlight_to_string(Sunlight.FULL_SHADE) == "full shade"
+    assert sunlight_to_string(Sunlight.PART_SUN) == "part sun/part shade"
+    assert sunlight_to_string(Sunlight.PART_SHADE) == "part shade"
+    assert sunlight_to_string(Sunlight.FULL_SUN) == "full sun"
+    with pytest.raises(ValueError) as excinfo:
+        sunlight_to_string("This is not a Sunlight enum")
+    assert str(excinfo.value) == "Unexpected sunlight value This is not a Sunlight enum"
+
+def test_get_sun_icon_path():
+    """
+    Tests get_sun_icon_path()
+    """
+    assert get_sun_icon_path(Sunlight.FULL_SHADE) == ":/full_shade.png"
+    assert get_sun_icon_path(Sunlight.PART_SUN) == ":/half_sun.png"
+    assert get_sun_icon_path(Sunlight.PART_SHADE) == ":/half_shade.png"
+    assert get_sun_icon_path(Sunlight.FULL_SUN) == ":/full_sun.png"
+    with pytest.raises(ValueError) as excinfo:
+        get_sun_icon_path("This is not a Sunlight enum")
+    assert str(excinfo.value) == "Unexpected sunlight value This is not a Sunlight enum"
+
+def test_string_to_health():
+    """
+    Tests string_to_health()
+    """
+    assert string_to_health("healthy") == Health.HEALTHY
+    assert string_to_health("slightly_unhealthy") == Health.SLIGHTLY_UNHEALTHY
+    assert string_to_health("slightly unhealthy") == Health.SLIGHTLY_UNHEALTHY
+    assert string_to_health("unhealthy") == Health.UNHEALTHY
+    assert string_to_health("dead") == Health.DEAD
+    with pytest.raises(ValueError) as excinfo:
+        string_to_health("This is not a Health enum")
+    assert str(excinfo.value) == "Unexpected health value this is not a health enum"
