@@ -93,6 +93,7 @@ class Plant:
         self.nutrition_score: None | int = None # type: ignore
         self.current_tasks: set[str] = set() # choose from repot, water, nutrition
         self.list_notifications: list[Notification] = []
+        self.custom_icon: str | None = None
         self.water_plant()
         self.give_nutrition()
         self.repot_plant()
@@ -139,6 +140,7 @@ class Plant:
         for notification in self.list_notifications:
             if (notification.plant_notification == self
                     and notification.notification_type == Action.WATERING):
+                print(f"deleting {notification}")
                 self.list_notifications.remove(notification)
                 notification.notifier.all_notifications.remove(notification)
 
@@ -230,8 +232,23 @@ class Plant:
         """
         returns score based on how close the current sunlight is to that preferred by the plant
         """
+        sunlight_offsets = {1: 2,
+                            2: 2,
+                            3: 1,
+                            4: 0,
+                            5: 0,
+                            6: 0,
+                            7: 0,
+                            8: 0,
+                            9: 0,
+                            10: 1,
+                            11: 1,
+                            12: 2}
         if self.spot:
-            diff_to_preff = min(abs(self.spot.light_level.value - pref.value)
+            sunlight_offset = sunlight_offsets[datetime.datetime.now().month]
+            current_sunlight = max(self.spot.light_level.value - sunlight_offset, 0)
+
+            diff_to_preff = min(abs(current_sunlight - pref.value)
                                 for pref in self.preff_sunlight)
             return int(100 - diff_to_preff*25)
         return 0
@@ -354,47 +371,67 @@ class Plant:
             "manual_health": self.manual_health,
             "max_log_size": self.max_log_size,
             "notes": self.notes,
-            "current_tasks": list(self.current_tasks)
+            "current_tasks": list(self.current_tasks),
+            "custom_image": self.custom_icon if self.custom_icon else None
         }
 
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, Plant):
             return False
-        return (self.core_id == other.core_id and
-                self.personal_id == other.personal_id and
-                self.personal_name == other.personal_name and
-                self.scientific_name == other.scientific_name and
-                self.core_name == other.core_name and
-                self.icon_type == other.icon_type and
-                self.spot == other.spot and
-                self.health == other.health and
-                self.watering_frequency == other.watering_frequency and
-                self.preff_sunlight == other.preff_sunlight and
-                self.watered == other.watered and
-                self.nutrition == other.nutrition and
-                self.repotted == other.repotted and
-                self.notes == other.notes and
-                self.manual_health == other.manual_health and
-                self.max_log_size == other.max_log_size and
-                self.water_score == other.water_score and
-                self.sunlight_score == other.sunlight_score and
-                self.nutrition_score == other.nutrition_score and
-                self.current_tasks == other.current_tasks
-                )
+
+        def compare_timestamps(
+            time1: datetime.datetime | None,
+            time2: datetime.datetime | None
+        ) -> bool:
+            if time1 is None and time2 is None:
+                return True
+            if time1 is None or time2 is None:
+                return False
+            return abs((time1 - time2).total_seconds()) <= 5
+
+        return (
+            self.core_id == other.core_id
+            and self.personal_id == other.personal_id
+            and self.personal_name == other.personal_name
+            and self.scientific_name == other.scientific_name
+            and self.core_name == other.core_name
+            and self.icon_type == other.icon_type
+            and self.spot == other.spot
+            and self.health == other.health
+            and self.watering_frequency == other.watering_frequency
+            and self.preff_sunlight == other.preff_sunlight
+            and all(
+                compare_timestamps(self_watered, other_watered)
+                for self_watered, other_watered in zip(self.watered, other.watered)
+            )
+            and all(
+                compare_timestamps(self_nutrition, other_nutrition)
+                for self_nutrition, other_nutrition in zip(self.nutrition, other.nutrition)
+            )
+            and compare_timestamps(self.repotted, other.repotted)
+            and self.notes == other.notes
+            and self.manual_health == other.manual_health
+            and self.max_log_size == other.max_log_size
+            and self.water_score == other.water_score
+            and self.sunlight_score == other.sunlight_score
+            and self.nutrition_score == other.nutrition_score
+            and self.current_tasks == other.current_tasks
+        )
+
 
     def __hash__(self):
         return hash(self.personal_id)
 
     def __repr__(self) -> str:
+        sunlight_string = ", ".join(f"Sunlight.{sunlight.name}" for sunlight in self.preff_sunlight)
         return (f"Plant("
-                f"core_id={self.core_id}, "
-                f"personal_id={self.personal_id}, "
-                f"scientific_name={self.scientific_name}, "
-                f"core_name={self.core_name}, "
-                f"icon_type={self.icon_type}, "
-                f"watering_frequency={self.watering_frequency}, "
-                f"preff_sunlight={self.preff_sunlight}"
-                )
+                f"core_id={self.core_id},"
+                f"personal_id={self.personal_id},"
+                f"scientific_name=\"{self.scientific_name}\","
+                f"core_name=\"{self.core_name}\","
+                f"icon_type=\"{self.icon_type}\","
+                f"watering_frequency=datetime.timedelta(days={self.watering_frequency.days}),"
+                f"preff_sunlight=[{sunlight_string}])")
 
     def __str__(self) -> str:
         return f"{self.personal_id}: {self.core_name}"

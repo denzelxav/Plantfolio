@@ -224,3 +224,20 @@ def test_load_data():
     plant_list = sorted(loaded_data.plants, key=lambda x: x.personal_id)
     assert plant_list == [test_plant1, test_plant2, test_plant3, test_plant4]
     assert plant_list[0].health == Health.DEAD
+
+def test_load_and_save_empty_userdata() -> None:
+    """
+    Tests loading and saving an empty user data object
+    """
+    test_user = UserData()
+    save_user_data(test_user, test_mode=True)
+    test_path = os.path.join("test", "test_user_data.json")
+
+    assert os.path.exists(test_path)
+    with open(test_path, "r", encoding='utf-8') as file:
+        data = json.load(file)
+    assert data == {'plant_data': [], 'rooms': {}, 'pet_preference': False}
+
+    loaded_data = load_user_data(test_mode=True)
+
+    assert loaded_data == UserData()

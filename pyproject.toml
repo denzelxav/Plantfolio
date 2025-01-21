@@ -6,7 +6,7 @@ python_files="*.py"
 branch = true
 source = ["project"]
 command_line = "-m pytest"
-omit = ["test/*", "project/ui/*", "project/__main__.py", "project/application.py"]
+omit = ["test/*", "project/ui/*", "project/__main__.py", "project/application.py", "project/ui_windows/*"]
 
 [tool.coverage.report]
 show_missing = true

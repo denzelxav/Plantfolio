@@ -1,5 +1,5 @@
 import datetime
-from project.classes.plant import Plant
+from project.classes.plant import Plant, plant_from_database
 from project.classes.enums import Sunlight, Health
 from project.classes.spot_notification import Spot
 
@@ -18,13 +18,27 @@ def test_sunlight():
     """
     Tests the calculation sunlight score of a plant
     """
+    sunlight_offsets = {1: 2,
+                        2: 2,
+                        3: 1,
+                        4: 0,
+                        5: 0,
+                        6: 0,
+                        7: 0,
+                        8: 0,
+                        9: 0,
+                        10: 1,
+                        11: 1,
+                        12: 2}
+    sunlight_offset = sunlight_offsets[datetime.datetime.now().month]
+
     maple, dark_spot = create_plant()
     assert maple.sunlight_score == 0
     maple.change_spot(dark_spot)
     assert maple.sunlight_score == 25, "sunlight score was not calculated or calculated incorrectly"
     sunny_spot = Spot("spot", Sunlight.FULL_SUN, "humid", None, 20, "room1")
     maple.change_spot(sunny_spot)
-    assert maple.sunlight_score == 100, "sunlight score cache was not updated"
+    assert maple.sunlight_score == 100 - sunlight_offset*25, "sunlight score cache was not updated"
 
 def test_water():
     """
@@ -85,6 +99,20 @@ def test_health():
     """
     Tests the calculation of health score of a plant
     """
+    sunlight_offsets = {1: 2,
+                        2: 2,
+                        3: 1,
+                        4: 0,
+                        5: 0,
+                        6: 0,
+                        7: 0,
+                        8: 0,
+                        9: 0,
+                        10: 1,
+                        11: 1,
+                        12: 2}
+    sunlight_offset = sunlight_offsets[datetime.datetime.now().month]
+
     maple, _ = create_plant()
     spot = Spot("spot", Sunlight.FULL_SUN, "humid", None, 20, "room3")
     maple.change_spot(spot)
@@ -95,7 +123,7 @@ def test_health():
                  for i in range(maple.max_log_size, 0 , -1)]
     maple.watered = water_log
     maple.health = Health.UNHEALTHY
-    assert maple.get_health_score() == 100, "health score was not calculated incorrectly"
+    assert maple.get_health_score() == int(100-0.45*sunlight_offset*25), "health score was not calculated incorrectly"
     assert maple.health == Health.HEALTHY, "health was not set properly"
     maple.manual_health = True
     maple.health = Health.UNHEALTHY
@@ -104,6 +132,14 @@ def test_health():
     maple.health = Health.DEAD
     assert maple.health == Health.DEAD, "Dead status overwritten"
 
-
-
-
+def test_operator_overloading():
+    plant1 = Plant(425, 1, "Abutilon hybridum", "flowering-maple",
+                   "default", datetime.timedelta(days=4), [Sunlight.FULL_SUN, Sunlight.PART_SHADE])
+    plant2 = Plant(426, 2, "Abutilon hybridum 'Bella Red'", "flowering-maple",
+                   "default", datetime.timedelta(days=7), [Sunlight.FULL_SUN, Sunlight.PART_SHADE])
+    
+    assert eval(repr(plant1)) == plant1
+    assert eval(repr(plant2)) == plant2
+    
+    assert str(plant1) == "1: flowering-maple"
+    assert str(plant2) == "2: flowering-maple"
