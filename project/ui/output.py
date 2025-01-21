@@ -101,9 +101,6 @@ class Ui_MainMenu(object):
         self.refresh_notifications = QPushButton(self.centralwidget)
         self.refresh_notifications.setObjectName(u"refresh_notifications")
         self.refresh_notifications.setGeometry(QRect(500, 140, 121, 31))
-        self.save_button = QPushButton(self.centralwidget)
-        self.save_button.setObjectName(u"save_button")
-        self.save_button.setGeometry(QRect(280, 270, 75, 24))
         self.notification_list_frame = QLabel(self.centralwidget)
         self.notification_list_frame.setObjectName(u"notification_list_frame")
         self.notification_list_frame.setGeometry(QRect(380, 150, 261, 241))
@@ -114,6 +111,9 @@ class Ui_MainMenu(object):
         self.room_list_frame.setGeometry(QRect(0, 150, 261, 241))
         self.room_list_frame.setPixmap(QPixmap(u"../art/list_art.png"))
         self.room_list_frame.setScaledContents(True)
+        self.instructions_button = QPushButton(self.centralwidget)
+        self.instructions_button.setObjectName(u"instructions_button")
+        self.instructions_button.setGeometry(QRect(280, 270, 75, 24))
         MainMenu.setCentralWidget(self.centralwidget)
         self.room_list_frame.raise_()
         self.notification_list_frame.raise_()
@@ -128,7 +128,7 @@ class Ui_MainMenu(object):
         self.all_plants.raise_()
         self.sort_notifications_by.raise_()
         self.refresh_notifications.raise_()
-        self.save_button.raise_()
+        self.instructions_button.raise_()
         self.menubar = QMenuBar(MainMenu)
         self.menubar.setObjectName(u"menubar")
         self.menubar.setGeometry(QRect(0, 0, 650, 33))
@@ -146,7 +146,7 @@ class Ui_MainMenu(object):
         self.add_room.setDefault(True)
         self.all_plants.setDefault(True)
         self.refresh_notifications.setDefault(True)
-        self.save_button.setDefault(True)
+        self.instructions_button.setDefault(True)
 
 
         QMetaObject.connectSlotsByName(MainMenu)
@@ -166,8 +166,8 @@ class Ui_MainMenu(object):
         self.sort_notifications_by.setItemText(2, QCoreApplication.translate("MainMenu", u"weight", None))
 
         self.refresh_notifications.setText(QCoreApplication.translate("MainMenu", u"refresh notifications", None))
-        self.save_button.setText(QCoreApplication.translate("MainMenu", u"Save", None))
         self.notification_list_frame.setText("")
         self.room_list_frame.setText("")
+        self.instructions_button.setText(QCoreApplication.translate("MainMenu", u"Instructions", None))
     # retranslateUi
 
