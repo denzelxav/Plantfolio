@@ -4,7 +4,7 @@ from project.classes.spot_notification import Spot
 from project.classes.enums import Sunlight, Health
 from project.query_function import query_from_database
 from project.classes.public_methods import string_to_sunlight, string_to_water_frequency
-from project.classes.exceptions import ContainerNotEmpty, NameTakenError
+from project.classes.exceptions import ContainerNotEmpty, NameTakenError, EmptyNameError
 
 
 class UserData:
@@ -40,6 +40,8 @@ class UserData:
         """
         Adds a plant
         """
+        if len(new_plant.personal_name) == 0:
+            raise EmptyNameError("Plant name cannot be empty")
         if len(self.plants) > 0:
             max_id = max(plant.personal_id for plant in self.plants)
             new_plant.personal_id = max_id+1
@@ -59,7 +61,8 @@ class UserData:
         """
         Adds a spot to an existing room
         """
-
+        if len(new_spot.spot_id) == 0:
+            raise EmptyNameError("Spot name cannot be empty")
         if new_spot.room not in self.rooms:
             self.rooms[new_spot.room] = []
         for room in self.rooms.values():
@@ -73,6 +76,8 @@ class UserData:
         """
         Adds a new room
         """
+        if len(new_room) == 0:
+            raise EmptyNameError("Room name cannot be empty.")
         if new_room not in self.rooms:
             self.rooms[new_room] = []
         else:
@@ -104,7 +109,7 @@ class UserData:
         elif len(self.rooms[room_name]) > 0:
             raise ContainerNotEmpty(f"room: '{room_name}' is not empty and can't be deleted.")
 
-    def sort_plants(self, attribute: str, reverse: bool) -> list[Plant] | None:
+    def sort_plants(self, attribute: str, reverse: bool) -> list[Plant]:
         """
         Sorts the plants based on the prompted attribute
         """
@@ -117,18 +122,15 @@ class UserData:
                 result.extend([plant for plant in self.plants if plant.spot in self.rooms[room]])
             return result
         if attribute == 'current_task':
-            return sorted(list(self.plants), key=self.tasks_to_string, reverse=reverse)
-        return None
+            return sorted(list(self.plants), key=self.tasks_to_score, reverse= not reverse)
+        raise ValueError
 
-    def tasks_to_string(self, plant: Plant) -> str:
+    def tasks_to_score(self, plant: Plant) -> int:
         """
-        Converts the tasks of a plant to a sorted string of the priority of the tasks
+        Converts the tasks of a plant to a a priority score to be used in sorting
         """
-        task_priority = {'repot': 3, 'nutrition': 2, 'water': 1}
-        sorted_tasks = sorted(list(plant.current_tasks),
-                key=lambda task: task_priority.get(task, 100))
-        result = ''.join([task[0] for task in sorted_tasks])
-        return result
+        task_priority = {'repot': 1, 'nutrition': 10, 'water': 100}
+        return sum(task_priority[task] for task in plant.current_tasks)
 
     def load_spot_data(self, spot_data):
         """
@@ -150,7 +152,7 @@ class UserData:
         self.add_room(room)
         self.add_spot(spot)
 
-    def load_plant_data(self, plant):
+    def load_plant_data(self, plant: dict):
         """
         Loads a plant from a dictionary
         """
@@ -167,6 +169,7 @@ class UserData:
         max_log_size = plant['max_log_size']
         notes = plant['notes']
         current_tasks = {str(task) for task in plant['current_tasks']}
+        custom_image = plant['custom_image'] if "custom_image" in plant else None
 
         core_name = self.get_core_name(plant_id)
         scientific_name = self.get_scientific_name(plant_id)
@@ -194,11 +197,13 @@ class UserData:
         new_plant.max_log_size = max_log_size
         new_plant.notes = notes
         new_plant.current_tasks = current_tasks
+        new_plant.custom_icon = custom_image
 
         for room in self.rooms.values():
             for spot in room:
                 if spot.spot_id == spot_id:
                     self.add_plant(new_plant, spot)
+                    return
 
     def get_core_name(self, plant_id: int) -> str:
         """
