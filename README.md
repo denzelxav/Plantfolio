@@ -14,7 +14,7 @@ This application is made for people that struggle to take care of their indoor p
 
 
 ## Instructions on how to run the application
-The application works by simply running a .exe file. To do so, go to the main branch in GitLab and open the dist folder. In the dist folder, open Plantfolio.exe and press download. Save this file somewhere and double click to open the application.
+The application works by simply running a .exe file. To do so, go to the main branch in GitLab and open the dist folder. In the dist folder, open Plantfolio.exe and press download. Save this file somewhere and double click to open the application. On most computers, Window Defender will give a pop-up. In this case, click on 'More information' and click 'Run anyway'.
 Alternatively, you can run it straight from python by opening the repository in VScode or PyCharm and running "python -m project" in the terminal.
 
 
@@ -43,7 +43,7 @@ The application consists of multiple features, including:
 * Viewing recommended plants: press 'Recommendations'.
     * Excluding dangerous plants for pets: press 'Only show pet-safe plants'.
 
-* Saving your data manually: press 'Save'. The application saves automatically upon closure but a crash may prevent saving.
+* Saving your data manually: press 'Save'. The application saves automatically upon closure but a crash may prevent saving Running the .exe saves the application's data in %appdata%/Plantfolio instead of the project files' .json .
 
 * Viewing all notifications: press 'Notifications'. A less detailed overview is shown in the list on the main window.
     * Viewing a single notification along with its details: choose the right notification in the combobox.
