@@ -64,7 +64,7 @@ Scenario: Bob, a man with a passion for indoor plants, has difficulties to care 
 7. Saving data: he makes sure his data is safe by manually saving, although his data will most likely be saved automatically (as long as the application or computer does not crash).
 
 
-## Additional documentation for other developers (optional*2)
+## Additional documentation and structure for other developers
 This project contains multiple files, most of them ordered in several folders which are listed below.
 * database: this folder contains files with helper functions and classes to create the complete database of all the plants available in the application (plant_database.db). The initial database was retrieved with an API from https://perenual.com/docs/api .
 * dist: this folder contains the .exe file to run the application. To incorporate recent changes in the .exe file, it has to be updated.
