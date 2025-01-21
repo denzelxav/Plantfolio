@@ -29,6 +29,8 @@ class AddSpotWindow(QDialog):
         self.ui.add_spot_button.clicked.connect(self.add_spot)
         self.ui.cancel_button.clicked.connect(self.reject)
 
+        self.main_menu.close_all.connect(self.close)
+
     @Slot()
     def add_spot(self):
         spot_name = self.ui.Spot_Name_input.text()

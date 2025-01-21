@@ -1,6 +1,6 @@
 """The main application window"""
 
-from PySide6.QtCore import Slot, QSemaphore
+from PySide6.QtCore import Slot, QSemaphore, Signal
 from PySide6.QtGui import QPixmap, QIcon
 from PySide6.QtWidgets import QMainWindow, QListWidgetItem
 
@@ -27,6 +27,7 @@ class MainMenu(QMainWindow):
     The main application window from which all sub windows can be opened.
     Will save its userdata when closed
     """
+    close_all = Signal()
 
     def __init__(self, userdata: UserData) -> None:
         super().__init__()
@@ -56,6 +57,7 @@ class MainMenu(QMainWindow):
         self.ui.open_room.clicked.connect(self.open_room)
         self.ui.all_plants.clicked.connect(self.open_all_plants)
         self.ui.instructions_button.clicked.connect(self.open_instructions)
+        self.ui.save_button.clicked.connect(self.save)
         self.ui.open_recommender.clicked.connect(self.open_recommender)
         self.ui.room_list.itemDoubleClicked.connect(self.open_room)
 
@@ -110,7 +112,7 @@ class MainMenu(QMainWindow):
         Opens help window
         """
         try:
-            self.help_window = HelpWindow()
+            self.help_window = HelpWindow(self)
         except Exception as e:
             error_msg = ErrorMessageWindow(e)
             error_msg.exec()
@@ -169,7 +171,7 @@ class MainMenu(QMainWindow):
         Opens the notification window
         """
         try:
-            self.notifier_window = NotifierWindow(self.notifier)
+            self.notifier_window = NotifierWindow(self.notifier, self)
         except Exception as e:
             error_msg = ErrorMessageWindow(e)
             error_msg.exec()
@@ -236,10 +238,16 @@ class MainMenu(QMainWindow):
             self.recommendations_window.show()
 
     def closeEvent(self, event):
-       try:
-           self.save()
-       except Exception as e:
-           error_msg = ErrorMessageWindow(e)
-           error_msg.exec()
-       else:
-           event.accept()
+        confirm_close = ConfirmationWindow("Are you sure you want to close Plantfolio? \n"
+                                           "Everything will be saved.")
+        if confirm_close.exec():
+           try:
+               self.save()
+           except Exception as e:
+               error_msg = ErrorMessageWindow(e)
+               error_msg.exec()
+           else:
+               self.close_all.emit()
+               event.accept()
+        else:
+            event.ignore()
