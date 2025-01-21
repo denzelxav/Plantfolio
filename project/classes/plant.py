@@ -244,9 +244,10 @@ class Plant:
                             10: 1,
                             11: 1,
                             12: 2}
-        corrected_sunlight_value = self.spot.light_level.value - sunlight_offsets[datetime.datetime.now().month] 
+        offset = sunlight_offsets[datetime.datetime.now().month]
         if self.spot:
-            diff_to_preff = min(abs(corrected_sunlight_value - pref.value)
+            sunlight_correction = self.spot.light_level.value - offset
+            diff_to_preff = min(abs(sunlight_correction - pref.value)
                                 for pref in self.preff_sunlight)
             return int(100 - diff_to_preff*25)
         return 0
