@@ -155,7 +155,7 @@ class UserData:
         self.add_room(room)
         self.add_spot(spot)
 
-    def load_plant_data(self, plant):
+    def load_plant_data(self, plant: dict):
         """
         Loads a plant from a dictionary
         """
@@ -172,6 +172,7 @@ class UserData:
         max_log_size = plant['max_log_size']
         notes = plant['notes']
         current_tasks = {str(task) for task in plant['current_tasks']}
+        custom_image = plant['custom_image'] if "custom_image" in plant else None
 
         core_name = self.get_core_name(plant_id)
         scientific_name = self.get_scientific_name(plant_id)
@@ -199,11 +200,13 @@ class UserData:
         new_plant.max_log_size = max_log_size
         new_plant.notes = notes
         new_plant.current_tasks = current_tasks
+        new_plant.custom_icon = custom_image
 
         for room in self.rooms.values():
             for spot in room:
                 if spot.spot_id == spot_id:
                     self.add_plant(new_plant, spot)
+                    return
 
     def get_core_name(self, plant_id: int) -> str:
         """
