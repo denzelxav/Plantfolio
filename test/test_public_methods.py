@@ -1,7 +1,13 @@
 import datetime
 
 import pytest
+import requests
+from PySide6.QtGui import QPixmap
+
 from project.classes.plant import time_average
+from project.classes.public_methods import string_to_sunlight, string_to_water_frequency, wiki_page
+from project.classes.enums import Sunlight
+import images_rc
 from project.classes.public_methods import string_to_sunlight, string_to_water_frequency, sunlight_to_string, get_sun_icon_path, string_to_health
 from project.classes.enums import Sunlight, Health
 
@@ -51,6 +57,49 @@ def test_time_average():
     test_list = [datetime.datetime.now() + datetime.timedelta(days = 1) * i for i in range(10)]
     test_average = time_average(test_list)
     assert test_average <= datetime.timedelta(days = 1, seconds=10)
+
+def test_wiki_page():
+    expected = {'description': 'Feral goat',
+ 'image': 'https://upload.wikimedia.org/wikipedia/commons/4/48/Male_and_female_Cretan_ibex.jpg',
+ 'title': '<a href="https://en.wikipedia.org/wiki/Kri-kri"><span style=" '
+          'text-decoration: underline; color:#00007f;">Kri-kri</span></a>',
+ 'result': 'success'
+                }
+    try:
+        res = wiki_page("kri-kri", test_mode = True)
+        assert res == expected, "Wrong wiki result with internet connection, Feral Goat"
+    except (requests.exceptions.ConnectionError, requests.exceptions.Timeout):
+        pass
+    except Exception as e:
+        raise e
+
+    expected =    {
+       'description': 'Genus of flowering plants in the daisy family Asteraceae',
+       'image': 'https://upload.wikimedia.org/wikipedia/commons/4/4f/DandelionFlower.jpg',
+       'result': 'success',
+       'title': '<a href="https://en.wikipedia.org/wiki/Taraxacum"><span style=" '
+       'text-decoration: underline; color:#00007f;">Taraxacum</span></a>'}
+    try:
+        res = wiki_page("Taraxacum", test_mode=True)
+        assert res == expected, "Wrong wiki result with internet connection, Dandelion"
+    except (requests.exceptions.ConnectionError, requests.exceptions.Timeout):
+        pass
+    except Exception as e:
+        raise e
+
+    expected = {'description': 'Species of tree',
+              'image': 'https://upload.wikimedia.org/wikipedia/commons/1/18/Ch%C3%A2teau_de_Chenonceau_-_jardin_Russell-Page_%2801%29.jpg',
+              'result': 'success',
+              'title': '<a href="https://en.wikipedia.org/wiki/Salix_babylonica"><span '
+                       'style=" text-decoration: underline; color:#00007f;">Salix '
+                       'babylonica</span></a>'}
+    try:
+        res = wiki_page("Salix babylonica", test_mode=True)
+        assert res == expected, "Wrong wiki result with internet connection, weeping willow"
+    except (requests.exceptions.ConnectionError, requests.exceptions.Timeout):
+        pass
+    except Exception as e:
+        raise e
 
 def test_sunlight_to_string():
     """

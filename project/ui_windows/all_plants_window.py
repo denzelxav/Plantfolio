@@ -1,3 +1,7 @@
+from __future__ import annotations
+from typing import TYPE_CHECKING
+from PySide6.QtCore import Slot, QSize
+from PySide6.QtGui import QIcon
 import os
 import sys
 
@@ -5,7 +9,6 @@ from PySide6 import QtCore, QtGui
 from PySide6.QtCore import Slot, QSize, QPoint
 from PySide6.QtGui import QPixmap, QIcon, QPainterPath
 from PySide6.QtWidgets import QDialog, QTableWidgetItem, QAbstractItemView
-from datetime import datetime
 
 import images_rc
 from project.classes.enums import Health
@@ -13,6 +16,8 @@ from project.classes.userdata import UserData
 from project.ui.all_plants import Ui_AllPlantsWindow
 from project.ui_windows.plant_view_window import PlantViewWindow
 from project.classes.plant import Plant
+while TYPE_CHECKING:
+    from project.ui_windows.main_menu import MainMenu
 
 
 class AllPlantsWindow(QDialog):
@@ -22,9 +27,11 @@ class AllPlantsWindow(QDialog):
     These can be sorted on different attributes.
     """
 
-    def __init__(self, userdata: UserData):
+    def __init__(self, parent: MainMenu):
         super().__init__()
-        self.userdata = userdata
+        self.userdata = parent.userdata
+        self.parent_window = parent
+        self.semaphore = parent.semaphore
         self.ui = Ui_AllPlantsWindow()
         self.ui.setupUi(self)
         self.setWindowIcon(QIcon(":/Plantfolio_logo_small.png"))
@@ -62,7 +69,7 @@ class AllPlantsWindow(QDialog):
         selected_plant = selection[0].data(3)
         if selected_plant.spot:
             selected_spot = selected_plant.spot
-            self.plant_view = PlantViewWindow(selected_spot, self.userdata, self)
+            self.plant_view = PlantViewWindow(selected_spot, self)
             self.plant_view.show()
 
     @Slot()

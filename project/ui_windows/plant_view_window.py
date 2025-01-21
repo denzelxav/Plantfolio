@@ -5,7 +5,7 @@ import sys
 from shutil import copyfile
 from typing import TYPE_CHECKING
 import datetime
-from PySide6.QtCore import Slot, QSize
+from PySide6.QtCore import Slot, QSize, QSemaphore
 from PySide6.QtGui import QIcon, QPixmap
 from PySide6.QtWidgets import QMainWindow, QFileDialog, QDialog
 
@@ -18,6 +18,8 @@ from project.ui_windows.confirmation_window import ConfirmationWindow
 if TYPE_CHECKING:
     from project.classes.spot_notification import Spot
     from project.classes.userdata import UserData
+    from project.ui_windows.room_view_window import RoomViewWindow
+    from project.ui_windows.all_plants_window import AllPlantsWindow
 
 class PlantViewWindow(QMainWindow):
     """
@@ -26,7 +28,7 @@ class PlantViewWindow(QMainWindow):
     interacting with the buttons and the plants health can be seen by
     looking at the plant icon.
     """
-    def __init__(self, spot: Spot, userdata: UserData, parent: QDialog | None = None) -> None:
+    def __init__(self, spot: Spot, parent: RoomViewWindow | AllPlantsWindow) -> None:
         """
         First the spot data is added, then it checks if a plant is assigned
         before setting the appropriate plant details and enabling the buttons.
@@ -34,13 +36,17 @@ class PlantViewWindow(QMainWindow):
         super().__init__()
         self.ui = Ui_PlantViewWindow()
         self.ui.setupUi(self)
+
+        self.parent_window = parent
+        self.semaphore: QSemaphore = parent.semaphore
+        self.userdata: UserData = parent.userdata
+
         self.spot = spot
         self.plant = self.spot.assigned_plant
-        self.userdata = userdata
-        self.parent_window = parent
-        self.setWindowIcon(QIcon(":/Plantfolio_logo_small.png"))
+
 
         #setup icons
+        self.setWindowIcon(QIcon(":/Plantfolio_logo_small.png"))
         icon = QIcon()
         icon.addFile(":/water.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.ui.water_plant.setIcon(icon)
@@ -156,6 +162,7 @@ class PlantViewWindow(QMainWindow):
                         QPixmap(f":/{self.plant.icon_type}_{self.plant.health.value}.png"))
 
         else:
+            self.ui.custom_image_health.setHidden(True)
             self.ui.plant_icon.setPixmap(
                 QPixmap(f":/empty_pot.png"))
 
@@ -228,15 +235,17 @@ class PlantViewWindow(QMainWindow):
         if self.plant:
             confirmation = ConfirmationWindow(f"Are you sure you want to delete {self.plant.personal_name}?")
             if confirmation.exec():
+                if self.plant.custom_icon:
+                    if getattr(sys, 'frozen', False):
+                        image_path = os.path.join(os.getenv('APPDATA'), "Plantfolio", "custom_pictures", self.plant.custom_icon)
+                    else:
+                        image_path = os.path.join("project", "custom_pictures", self.plant.custom_icon)
+                    if os.path.exists(image_path):
+                        os.remove(image_path)
                 self.userdata.delete_plant(self.plant)
-                if getattr(sys, 'frozen', False):
-                    image_path = os.path.join(os.getenv('APPDATA'), "Plantfolio", "custom_pictures", self.plant.custom_icon)
-                else:
-                    image_path = os.path.join("project", "custom_pictures", self.plant.custom_icon)
-                os.remove(image_path)
                 self.plant_or_no_plant()
         else:
-            add_plant_window = AddPlantWindow(self.spot, self.userdata, self)
+            add_plant_window = AddPlantWindow(self.spot, self)
             add_plant_window.exec()
         if self.parent_window.__class__.__name__ == "RoomViewWindow":
             self.parent_window.handle_item_select()

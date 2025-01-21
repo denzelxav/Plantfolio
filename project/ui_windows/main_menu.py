@@ -1,6 +1,6 @@
 """The main application window"""
 
-from PySide6.QtCore import Slot
+from PySide6.QtCore import Slot, QSemaphore
 from PySide6.QtGui import QPixmap, QIcon
 from PySide6.QtWidgets import QMainWindow, QListWidgetItem
 
@@ -18,7 +18,6 @@ from project.ui_windows.help_window import HelpWindow
 from project.classes.save_and_load_userdata import save_user_data
 from project.ui_windows.notifier_window import NotifierWindow
 from project.classes.notifier import Notifier
-from time import sleep
 
 import images_rc
 
@@ -32,15 +31,18 @@ class MainMenu(QMainWindow):
     def __init__(self, userdata: UserData) -> None:
         super().__init__()
         # Create a file with pyside6-uic project/ui/app.ui -o project/ui/output.py
+        self.ui = Ui_MainMenu()
+        self.ui.setupUi(self)
+
+        self.semaphore = QSemaphore(1)
         self.userdata = userdata
         self.notifier = Notifier(userdata.plants)
         self.recommender = Recommender(userdata)
-        self.ui = Ui_MainMenu()
-        self.ui.setupUi(self)
+
+        self.setWindowIcon(QIcon(":/Plantfolio_logo_small.png"))
         self.ui.PlantFolio_Icon.setPixmap(QPixmap(u":/Plantfolio_logo.png"))
         self.ui.notification_list_frame.setPixmap(QPixmap(u":/list_art.png"))
         self.ui.room_list_frame.setPixmap(QPixmap(u":/list_art.png"))
-        self.setWindowIcon(QIcon(":/Plantfolio_logo_small.png"))
 
         #buttons
 
@@ -205,7 +207,7 @@ class MainMenu(QMainWindow):
         Opens all plants window
         """
         try:
-            self.all_plants_window = AllPlantsWindow(self.userdata)
+            self.all_plants_window = AllPlantsWindow(self)
         except Exception as e:
             error_msg = ErrorMessageWindow(e)
             error_msg.exec()
@@ -226,7 +228,7 @@ class MainMenu(QMainWindow):
         Opens RecommendationsWindow that lets the user see his recommendations
         """
         try:
-            self.recommendations_window = RecommendationsWindow(self.recommender, self.userdata)
+            self.recommendations_window = RecommendationsWindow(self)
         except Exception as e:
             error_msg = ErrorMessageWindow(e)
             error_msg.exec()
