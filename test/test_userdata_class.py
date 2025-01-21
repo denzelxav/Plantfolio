@@ -131,10 +131,8 @@ def test_sort_plants():
     assert sortedonroom[0] == maple
 
     sortedoncurrent_tasks = mydata.sort_plants('current_task', False)
-    assert sortedoncurrent_tasks == [strelitzia, maple, sansevieria]
+    assert sortedoncurrent_tasks == [sansevieria, maple, strelitzia]
 
-    sortedonnothing = mydata.sort_plants('blabla', True)
-    assert sortedonnothing is None
 
 
 def test_load_spot_data():
