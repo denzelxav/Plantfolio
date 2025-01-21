@@ -2,7 +2,7 @@
 
 from PySide6.QtCore import Slot, QSemaphore
 from PySide6.QtGui import QPixmap, QIcon
-from PySide6.QtWidgets import QMainWindow
+from PySide6.QtWidgets import QMainWindow, QListWidgetItem
 
 from project.classes.exceptions import ContainerNotEmpty, NothingSelected
 from project.classes.userdata import UserData
@@ -56,6 +56,7 @@ class MainMenu(QMainWindow):
         self.ui.all_plants.clicked.connect(self.open_all_plants)
         self.ui.save_button.clicked.connect(self.save)
         self.ui.open_recommender.clicked.connect(self.open_recommender)
+        self.ui.room_list.itemDoubleClicked.connect(self.open_room)
 
         self.refresh_rooms()
 
@@ -83,15 +84,11 @@ class MainMenu(QMainWindow):
             selection = self.ui.room_list.selectedItems()
             if selection:
                 room_name = selection[0].text()
-            else:
-                raise NothingSelected("Selection is empty")
-        except NothingSelected:
-
-            error_msg = ErrorMessageWindow("Please select a room.", "No room selected")
+                self.room_view_window = RoomViewWindow(room_name , self)
+                self.room_view_window.show()
+        except Exception as e:
+            error_msg = ErrorMessageWindow(e)
             error_msg.exec()
-        else:
-            self.room_view_window = RoomViewWindow(room_name , self)
-            self.room_view_window.show()
 
     @Slot()
     def save(self):

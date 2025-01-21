@@ -2,9 +2,16 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 from PySide6.QtCore import Slot, QSize
 from PySide6.QtGui import QIcon
+import os
+import sys
+
+from PySide6 import QtCore, QtGui
+from PySide6.QtCore import Slot, QSize, QPoint
+from PySide6.QtGui import QPixmap, QIcon, QPainterPath
 from PySide6.QtWidgets import QDialog, QTableWidgetItem, QAbstractItemView
 
 import images_rc
+from project.classes.enums import Health
 from project.classes.userdata import UserData
 from project.ui.all_plants import Ui_AllPlantsWindow
 from project.ui_windows.plant_view_window import PlantViewWindow
@@ -36,6 +43,7 @@ class AllPlantsWindow(QDialog):
         self.ui.cancel_button.clicked.connect(self.reject)
         self.ui.select_plant_button.clicked.connect(self.select_plant)
         self.ui.water_all_button.clicked.connect(self.water_all)
+        self.ui.plant_table.itemDoubleClicked.connect(self.select_plant)
 
         # Combobox
         self.ui.sort_by.addItem('ID')
@@ -55,11 +63,10 @@ class AllPlantsWindow(QDialog):
         """
         Opens the plant view window for a selected plant
         """
-        selected_row = self.ui.plant_table.currentRow()
-        if selected_row == -1:
+        selection = self.ui.plant_table.selectedItems()
+        if not selection:
             return
-        plant_id = int(self.ui.plant_table.item(selected_row, 1).text())
-        selected_plant = self.get_plant(plant_id)
+        selected_plant = selection[0].data(3)
         if selected_plant.spot:
             selected_spot = selected_plant.spot
             self.plant_view = PlantViewWindow(selected_spot, self)
@@ -141,7 +148,12 @@ class AllPlantsWindow(QDialog):
 
             # Add items to the table
             name_item = QTableWidgetItem(plant.personal_name)
-            icon = QIcon(f":/{plant.icon_type}_{plant.health.value}.png")
+            name_item.setData(3, plant)
+            icon_path = self.get_icon_path(plant)
+            if plant.custom_icon:
+                icon = QIcon(self.add_health_icon(QPixmap(icon_path), plant.health))
+            else:
+                icon = QIcon(icon_path)
             name_item.setIcon(icon)  # Set the icon for the name column
             self.ui.plant_table.setItem(row, 0, name_item)
 
@@ -150,3 +162,49 @@ class AllPlantsWindow(QDialog):
             self.ui.plant_table.setItem(row, 3, QTableWidgetItem(plant.scientific_name))
             self.ui.plant_table.setItem(row, 4, QTableWidgetItem(plant.watered[-1].date().isoformat()))
             self.ui.plant_table.setItem(row, 5, QTableWidgetItem(", ".join(plant.current_tasks)))
+
+
+    def get_icon_path(self, plant: Plant) -> str:
+        """
+        Returns relative path to the correct icon for the given plant.
+        """
+
+        if plant.custom_icon:
+            if getattr(sys, 'frozen', False):
+                appdata = os.getenv('APPDATA')
+                if appdata:
+                    image_path = os.path.join(appdata, "Plantfolio", "custom_pictures",
+                                              plant.custom_icon)
+                else:
+                    raise FileNotFoundError("Could not find %appdata%")
+            else:
+                image_path = os.path.join("project", "custom_pictures", plant.custom_icon)
+        else:
+            image_path = f":/{plant.icon_type}_{plant.health.value}.png"
+        if os.path.exists(image_path):
+            return image_path
+        plant.custom_icon = None
+        return f":/{plant.icon_type}_{plant.health.value}.png"
+
+    def add_health_icon(self, image: QPixmap, health: Health) -> QPixmap:
+        """
+        pastes given health smiley on the given pixmap and returns the result as a pixmap
+        """
+        health_icon = QPixmap(f":/smiley_{health.value}.png").scaled(image.size() * 0.4)
+        radius = 600
+
+        path = QPainterPath()
+        r = QtCore.QRectF()
+        r.setSize(radius * QtCore.QSizeF(1,1)) # type: ignore
+        r.moveBottomRight(image.rect().bottomRight())
+        path.addEllipse(r)
+        painter = QtGui.QPainter(image)
+        painter.setRenderHints(
+            QtGui.QPainter.Antialiasing | QtGui.QPainter.SmoothPixmapTransform  # type: ignore
+        )
+        painter.setClipPath(path, QtCore.Qt.IntersectClip)  # type: ignore
+        point = image.rect().bottomRight() * 0.5
+
+        painter.drawPixmap(point , health_icon)
+        painter.end()
+        return image
