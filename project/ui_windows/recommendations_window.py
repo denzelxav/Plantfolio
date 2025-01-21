@@ -43,6 +43,7 @@ class RecommendationsWindow(QDialog):
         self.ui.select_recommendation.itemSelectionChanged.connect(self.selection_changed)
 
         self.ui.pet_tox_check.stateChanged.connect(self.pet_safe_change)
+        self.parent_window.close_all.connect(self.close)
 
     @Slot()
     def selection_changed(self) -> None:

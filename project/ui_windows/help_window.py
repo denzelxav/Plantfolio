@@ -8,6 +8,8 @@ from project.classes.exceptions import NameTakenError, EmptyNameError
 
 from project.ui_windows.error_message_window import ErrorMessageWindow
 from project.ui.help_window import Ui_HelpWindow
+while TYPE_CHECKING:
+    from project.ui_windows.main_menu import MainMenu
 
 water_text = (
     'The watering needs of plants differ, and it is recommended to read up on the specific watering needs of your plant. ' 
@@ -41,12 +43,13 @@ nutrition_text = (
 class HelpWindow(QDialog):
     """
     Window for adding a new room.
-    It takes the main_menu as an argument so it can refer back to it when adding the room.
+    It takes the parent_window as an argument so it can refer back to it when adding the room.
     """
-    def __init__(self):
+    def __init__(self, parent: MainMenu):
         super().__init__()
         self.ui = Ui_HelpWindow()
         self.ui.setupUi(self)
+        self.parent_window = parent
 
         self.ui.frame.setPixmap(QPixmap(u":/list_art.png"))
         self.ui.water_image.setPixmap(QPixmap(u":/water.png"))
@@ -60,6 +63,7 @@ class HelpWindow(QDialog):
         self.ui.select_box.addItem('Nutrition')
 
         self.ui.select_box.currentIndexChanged.connect(self.display)
+        self.parent_window.close_all.connect(self.close)
 
     def display(self, index):
         if index == 0:

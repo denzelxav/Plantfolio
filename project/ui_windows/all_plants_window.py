@@ -58,6 +58,8 @@ class AllPlantsWindow(QDialog):
         self.ui.sort_by.currentIndexChanged.connect(self.sort_table)
         self.ui.reverse_button.stateChanged.connect(self.sort_table)
 
+        self.parent_window.close_all.connect(self.close)
+
     @Slot()
     def select_plant(self) -> None:
         """

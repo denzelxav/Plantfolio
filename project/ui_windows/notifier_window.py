@@ -7,7 +7,9 @@ import images_rc
 from project.classes.spot_notification import Notification
 
 from project.ui.notifier_window_ui import Ui_Notifier_window
+
 if TYPE_CHECKING:
+    from project.ui_windows.main_menu import MainMenu
     from project.classes.notifier import Notifier
 
 class NotifierWindow(QMainWindow):
@@ -15,11 +17,12 @@ class NotifierWindow(QMainWindow):
     Window in which you can individually inspect notification
     on all their properties like name, type, weight, orginal_due_date
     """
-    def __init__(self, notifier: Notifier):
+    def __init__(self, notifier: Notifier, parent: MainMenu):
         super().__init__()
         self.ui = Ui_Notifier_window()
         self.ui.setupUi(self)
         self.notifier = notifier
+        self.parent_window = parent
 
         # Initialize a placeholder to store notifications
         self.notifications_list: list[Notification] = []
@@ -33,6 +36,8 @@ class NotifierWindow(QMainWindow):
         # Initialize the combobox with notifications
         self.refresh_notifications_combobox()
         self.ui.Notifications.currentIndexChanged.connect(self.handle_sort_change)
+
+        self.parent_window.close_all.connect(self.close)
 
     def refresh_notifications_combobox(self):
         """

@@ -15,7 +15,7 @@ if TYPE_CHECKING:
 class AddRoomWindow(QDialog):
     """
     Window for adding a new room.
-    It takes the main_menu as an argument so it can refer back to it when adding the room.
+    It takes the parent_window as an argument so it can refer back to it when adding the room.
     """
     def __init__(self, main_menu: MainMenu):
         super().__init__()
@@ -28,6 +28,8 @@ class AddRoomWindow(QDialog):
         #buttons
         self.ui.confirm_room.accepted.connect(self.add_room)
         self.ui.confirm_room.rejected.connect(self.reject)
+
+        self.main_menu.close_all.connect(self.close)
 
 
     def add_room(self):
