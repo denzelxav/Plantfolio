@@ -8,7 +8,8 @@
             "spot_id": "A spot",
             "health": "slightly_unhealthy",
             "watered": [
-                "2025-01-10T16:22:36.413215"
+                "2025-01-10T16:22:36.413215",
+                "2025-01-21T09:27:41.722619"
             ],
             "nutrition": [
                 "2025-01-10T16:22:36.413215"
@@ -18,8 +19,8 @@
             "max_log_size": 4,
             "notes": "",
             "current_tasks": [
-                "water",
-                "nutrition"
+                "nutrition",
+                "water"
             ],
             "custom_image": null
         },
@@ -29,9 +30,10 @@
             "personal_name": "Sjon",
             "icon_type": "plant_1",
             "spot_id": "hoek",
-            "health": "slightly_unhealthy",
+            "health": "healthy",
             "watered": [
-                "2025-01-14T14:44:06.032931"
+                "2025-01-14T14:44:06.032931",
+                "2025-01-21T09:27:52.826591"
             ],
             "nutrition": [
                 "2025-01-14T14:44:06.032931"
