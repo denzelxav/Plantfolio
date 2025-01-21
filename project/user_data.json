@@ -20,10 +20,13 @@
             "notes": "",
             "current_tasks": [
 <<<<<<< HEAD
+<<<<<<< HEAD
                 "water",
                 "nutrition"
             ]
 =======
+=======
+>>>>>>> 6b450ce087c2bedc7d39dd7769b5341422d1ed1d
                 "nutrition",
                 "water"
             ],
@@ -49,7 +52,10 @@
             "notes": "",
             "current_tasks": [],
             "custom_image": "1.jpg"
+<<<<<<< HEAD
 >>>>>>> main
+=======
+>>>>>>> 6b450ce087c2bedc7d39dd7769b5341422d1ed1d
         }
     ],
     "rooms": {
