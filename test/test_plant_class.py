@@ -19,17 +19,17 @@ def test_sunlight():
     Tests the calculation sunlight score of a plant
     """
     sunlight_offsets = {1: 2,
-                    2: 2,
-                    3: 1,
-                    4: 1,
-                    5: 1,
-                    6: 0,
-                    7: 0,
-                    8: 0,
-                    9: 1,
-                    10: 1,
-                    11: 1,
-                    12: 2}
+                        2: 2,
+                        3: 1,
+                        4: 0,
+                        5: 0,
+                        6: 0,
+                        7: 0,
+                        8: 0,
+                        9: 0,
+                        10: 1,
+                        11: 1,
+                        12: 2}
     sunlight_offset = sunlight_offsets[datetime.datetime.now().month]
 
     maple, dark_spot = create_plant()
@@ -100,17 +100,17 @@ def test_health():
     Tests the calculation of health score of a plant
     """
     sunlight_offsets = {1: 2,
-                    2: 2,
-                    3: 1,
-                    4: 1,
-                    5: 1,
-                    6: 0,
-                    7: 0,
-                    8: 0,
-                    9: 1,
-                    10: 1,
-                    11: 1,
-                    12: 2}
+                        2: 2,
+                        3: 1,
+                        4: 0,
+                        5: 0,
+                        6: 0,
+                        7: 0,
+                        8: 0,
+                        9: 0,
+                        10: 1,
+                        11: 1,
+                        12: 2}
     sunlight_offset = sunlight_offsets[datetime.datetime.now().month]
 
     maple, _ = create_plant()
