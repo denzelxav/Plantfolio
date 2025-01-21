@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>330</width>
-    <height>385</height>
+    <width>595</width>
+    <height>519</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>330</width>
-    <height>385</height>
+    <width>595</width>
+    <height>519</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>330</width>
-    <height>385</height>
+    <width>595</width>
+    <height>519</height>
    </size>
   </property>
   <property name="palette">
@@ -227,18 +227,18 @@
   <widget class="QListWidget" name="select_recommendation">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>40</y>
+     <x>60</x>
+     <y>60</y>
      <width>211</width>
-     <height>181</height>
+     <height>241</height>
     </rect>
    </property>
   </widget>
   <widget class="QLabel" name="Recommendations_text">
    <property name="geometry">
     <rect>
-     <x>60</x>
-     <y>10</y>
+     <x>80</x>
+     <y>30</y>
      <width>171</width>
      <height>16</height>
     </rect>
@@ -255,8 +255,8 @@
   <widget class="QPushButton" name="cancel_recommendations">
    <property name="geometry">
     <rect>
-     <x>120</x>
-     <y>360</y>
+     <x>110</x>
+     <y>490</y>
      <width>75</width>
      <height>24</height>
     </rect>
@@ -268,10 +268,10 @@
   <widget class="QLabel" name="frame">
    <property name="geometry">
     <rect>
-     <x>-10</x>
-     <y>10</y>
+     <x>0</x>
+     <y>20</y>
      <width>311</width>
-     <height>241</height>
+     <height>321</height>
     </rect>
    </property>
    <property name="text">
@@ -287,8 +287,8 @@
   <widget class="QCheckBox" name="pet_tox_check">
    <property name="geometry">
     <rect>
-     <x>70</x>
-     <y>230</y>
+     <x>80</x>
+     <y>320</y>
      <width>161</width>
      <height>20</height>
     </rect>
@@ -297,36 +297,89 @@
     <string>Only show pet-safe plants</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="article_title">
    <property name="geometry">
     <rect>
-     <x>80</x>
-     <y>251</y>
+     <x>290</x>
+     <y>50</y>
      <width>181</width>
      <height>20</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Recommended spot changes&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;select a recommendation&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="article_image">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>110</y>
+     <width>201</width>
+     <height>151</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="article_description">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>70</y>
+     <width>171</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="wiki_source">
+   <property name="geometry">
+    <rect>
+     <x>420</x>
+     <y>0</y>
+     <width>101</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>source: wikipedia</string>
    </property>
   </widget>
   <widget class="QListWidget" name="spot_changes">
    <property name="geometry">
     <rect>
      <x>60</x>
-     <y>270</y>
+     <y>370</y>
      <width>211</width>
-     <height>71</height>
+     <height>81</height>
     </rect>
    </property>
   </widget>
-  <widget class="QLabel" name="frame2">
+  <widget class="QLabel" name="frame_2">
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>260</y>
-     <width>301</width>
-     <height>91</height>
+     <y>350</y>
+     <width>311</width>
+     <height>121</height>
     </rect>
    </property>
    <property name="text">
@@ -342,27 +395,51 @@
   <widget class="QPushButton" name="Move_button">
    <property name="geometry">
     <rect>
-     <x>120</x>
-     <y>340</y>
+     <x>110</x>
+     <y>460</y>
      <width>75</width>
-     <height>21</height>
+     <height>24</height>
     </rect>
    </property>
    <property name="text">
     <string>Move</string>
    </property>
   </widget>
-  <zorder>frame2</zorder>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>340</y>
+     <width>171</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Recommended spot changes</string>
+   </property>
+  </widget>
+  <zorder>frame_2</zorder>
   <zorder>frame</zorder>
   <zorder>select_recommendation</zorder>
   <zorder>Recommendations_text</zorder>
   <zorder>cancel_recommendations</zorder>
   <zorder>pet_tox_check</zorder>
+  <zorder>article_title</zorder>
+  <zorder>article_image</zorder>
+  <zorder>article_description</zorder>
+  <zorder>wiki_source</zorder>
+  <zorder>Move_button</zorder>
   <zorder>label</zorder>
   <zorder>spot_changes</zorder>
-  <zorder>Move_button</zorder>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../images.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>cancel_recommendations</sender>
