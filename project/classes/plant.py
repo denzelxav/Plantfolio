@@ -93,6 +93,7 @@ class Plant:
         self.nutrition_score: None | int = None # type: ignore
         self.current_tasks: set[str] = set() # choose from repot, water, nutrition
         self.list_notifications: list[Notification] = []
+        self.custom_icon: str | None = None
         self.water_plant()
         self.give_nutrition()
         self.repot_plant()
@@ -139,6 +140,7 @@ class Plant:
         for notification in self.list_notifications:
             if (notification.plant_notification == self
                     and notification.notification_type == Action.WATERING):
+                print(f"deleting {notification}")
                 self.list_notifications.remove(notification)
                 notification.notifier.all_notifications.remove(notification)
 
@@ -354,7 +356,8 @@ class Plant:
             "manual_health": self.manual_health,
             "max_log_size": self.max_log_size,
             "notes": self.notes,
-            "current_tasks": list(self.current_tasks)
+            "current_tasks": list(self.current_tasks),
+            "custom_image": self.custom_icon if self.custom_icon else None
         }
 
     def __eq__(self, other: object) -> bool:
