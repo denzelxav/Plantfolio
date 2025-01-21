@@ -1,1 +1,1 @@
-You are required to make notes of at least your weekly TA meetings, although keeping more notes could be very useful for yourself
+This folder contains the meeting notes that were made during each TA meeting.
