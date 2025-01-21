@@ -43,6 +43,7 @@ class RecommendationsWindow(QDialog):
         self.ui.select_recommendation.itemSelectionChanged.connect(self.selection_changed)
 
         self.ui.pet_tox_check.stateChanged.connect(self.pet_safe_change)
+        self.parent_window.close_all.connect(self.close)
         # self.ui.Move_button.clicked.connect(self.move_plant_spot())
         self.refresh_change_spot()
         self.ui.Move_button.clicked.connect(self.move_plant_spot)
@@ -139,4 +140,4 @@ class RecommendationsWindow(QDialog):
         #     list_input.setData(0, plant)
         #     list_input.setData(1, empty_spot)
         #     self.ui.spot_changes.addItem(list_input)
-        
+

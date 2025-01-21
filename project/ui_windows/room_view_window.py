@@ -49,6 +49,8 @@ class RoomViewWindow(QDialog):
         self.ui.spot_list.itemSelectionChanged.connect(self.handle_item_select)
         self.setWindowIcon(QIcon(":/huisje.png"))
 
+        self.parent_window.close_all.connect(self.close)
+
 
     @Slot()
     def open_plant_view(self):

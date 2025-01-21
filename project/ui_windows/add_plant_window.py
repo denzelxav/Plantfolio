@@ -20,7 +20,7 @@ class AddPlantWindow(QDialog):
     """
     Window from which you can add plants to a spot
     """
-    def __init__(self, spot: Spot, parent: PlantViewWindow | AllPlantsWindow) -> None:
+    def __init__(self, spot: Spot, parent: PlantViewWindow) -> None:
         super().__init__()
         self.ui = Ui_AddPlantWindow()
         self.ui.setupUi(self)
@@ -52,6 +52,8 @@ class AddPlantWindow(QDialog):
         self.ui.search_bar.textChanged.connect(self.filter_search)
         self.ui.confirm_plant.accepted.connect(self.add_plant)
         self.ui.confirm_plant.rejected.connect(self.reject)
+
+        self.parent_window.parent_window.close_all.connect(self.close) # type: ignore
 
     @Slot()
     def selection_changed(self) -> None:

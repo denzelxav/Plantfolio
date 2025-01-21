@@ -82,6 +82,8 @@ class PlantViewWindow(QMainWindow):
         self.ui.add_delete_plant.clicked.connect(self.add_delete_plant)
         self.ui.add_delete_image.clicked.connect(self.add_delete_image)
 
+        self.parent_window.parent_window.close_all.connect(self.close)
+
         self.parent_window.parent_window.refresh_all.connect(self.plant_or_no_plant)
 
 

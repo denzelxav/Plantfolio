@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_menu.ui'
+## Form generated from reading UI file 'parent_window.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.8.1
 ##
@@ -114,6 +114,9 @@ class Ui_MainMenu(object):
         self.instructions_button = QPushButton(self.centralwidget)
         self.instructions_button.setObjectName(u"instructions_button")
         self.instructions_button.setGeometry(QRect(280, 270, 75, 24))
+        self.save_button = QPushButton(self.centralwidget)
+        self.save_button.setObjectName(u"save_button")
+        self.save_button.setGeometry(QRect(290, 300, 51, 24))
         MainMenu.setCentralWidget(self.centralwidget)
         self.room_list_frame.raise_()
         self.notification_list_frame.raise_()
@@ -129,6 +132,7 @@ class Ui_MainMenu(object):
         self.sort_notifications_by.raise_()
         self.refresh_notifications.raise_()
         self.instructions_button.raise_()
+        self.save_button.raise_()
         self.menubar = QMenuBar(MainMenu)
         self.menubar.setObjectName(u"menubar")
         self.menubar.setGeometry(QRect(0, 0, 650, 33))
@@ -147,6 +151,7 @@ class Ui_MainMenu(object):
         self.all_plants.setDefault(True)
         self.refresh_notifications.setDefault(True)
         self.instructions_button.setDefault(True)
+        self.save_button.setDefault(True)
 
 
         QMetaObject.connectSlotsByName(MainMenu)
@@ -169,5 +174,6 @@ class Ui_MainMenu(object):
         self.notification_list_frame.setText("")
         self.room_list_frame.setText("")
         self.instructions_button.setText(QCoreApplication.translate("MainMenu", u"Instructions", None))
+        self.save_button.setText(QCoreApplication.translate("MainMenu", u"Save", None))
     # retranslateUi
 
