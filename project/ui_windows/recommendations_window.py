@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 from PySide6.QtCore import Slot, QThread, QSemaphore
 from PySide6.QtGui import QIcon, QPixmap
-from PySide6.QtWidgets import QDialog
+from PySide6.QtWidgets import QDialog, QListWidgetItem
 
 from project.classes.wiki_page import WikiRequest
 from project.ui.recommendations_ui import Ui_RecommendationsWindow
@@ -43,6 +43,41 @@ class RecommendationsWindow(QDialog):
         self.ui.select_recommendation.itemSelectionChanged.connect(self.selection_changed)
 
         self.ui.pet_tox_check.stateChanged.connect(self.pet_safe_change)
+        # self.ui.Move_button.clicked.connect(self.move_plant_spot())
+        self.refresh_change_spot()
+        self.ui.Move_button.clicked.connect(self.move_plant_spot)
+
+    def refresh_change_spot(self):
+        self.ui.spot_changes.clear()
+        dict_move_plant = self.recommender.move_plant()
+        print(dict_move_plant)
+        if dict_move_plant is None:
+            self.ui.spot_changes.addItem('Every plant is in the optimal spot')
+        else:
+            for plant, empty_spot in dict_move_plant.items():
+                input_text = (f"Move {plant.personal_name} from {plant.spot.spot_id} "
+                              f"to this empty spot: {empty_spot.spot_id}")
+                list_input = QListWidgetItem(input_text)
+                list_input.setData(3, plant)  # Store Plant in role 0
+                list_input.setData(4, empty_spot)  # Store Spot in role 1
+
+                # Add the QListWidgetItem to the QListWidget
+                self.ui.spot_changes.addItem(list_input)
+
+    def move_plant_spot(self):
+        selected_plant_to_move = self.ui.spot_changes.selectedItems()
+        selected_item = selected_plant_to_move[0]
+        if not selected_plant_to_move:
+            return
+        elif selected_item.text() == 'Every plant is in the optimal spot':
+            return
+
+        plant = selected_item.data(3)  # Retrieve Plant object
+        empty_spot = selected_item.data(4)  # Retrieve Spot object
+        self.recommender.change_plant_spot(plant, empty_spot)
+        self.refresh_change_spot()
+        self.parent_window.refresh_all_data()
+
 
     @Slot()
     def selection_changed(self) -> None:
@@ -95,4 +130,13 @@ class RecommendationsWindow(QDialog):
         for recommendation in self.recommendations:
             plant = plant_from_database(recommendation)
             self.ui.select_recommendation.addItem(plant.scientific_name)
+
+
+        # self.spot_changes = self.recommender.move_plant_dict
+        # for plant, empty_spot in self.recommender.move_plant_dict.items():
+        #     input_text = f"Move {plant.personal_name} from {plant.spot} to this empty spot: {empty_spot.spot_id}"
+        #     list_input = QListWidgetItem(input_text)
+        #     list_input.setData(0, plant)
+        #     list_input.setData(1, empty_spot)
+        #     self.ui.spot_changes.addItem(list_input)
         

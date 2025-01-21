@@ -2,7 +2,8 @@
 This module contains the Recommender class that handles
 the automatic recommendation of plants for the user.
 """
-
+from __future__ import annotations
+from typing import TYPE_CHECKING
 
 import datetime
 
@@ -11,7 +12,9 @@ from project.classes.userdata import UserData
 from project.classes.plant import time_average
 from project.query_function import query_from_database
 from project.classes.enums import Sunlight
-
+from project.classes.spot_notification import Spot
+if TYPE_CHECKING:
+    from project.classes.plant import Plant
 
 
 class Recommender:
@@ -28,6 +31,8 @@ class Recommender:
         self.favorites: set[str] = set()
         self.family_count: dict[str, int] = {}
         self.plant_scores: dict[int, float] = {}
+        self.move_plant_list: list[str] = []
+        self.move_plant_dict: dict[Plant, Spot] = {}
         self.userdata = userdata
         self.set_values()
 
@@ -158,3 +163,34 @@ class Recommender:
         if family in self.favorites:
             return 100
         return self.family_count.get(family, 0) / self.max_familiy_count * 100
+
+    def move_plant(self) -> dict[Plant, Spot]| None:
+        """
+        Suggest moving plant to a better spot if available
+        """
+        list_empty_spots: list[Spot] = [spot for room in self.userdata.rooms.values()
+                            for spot in room if spot.assigned_plant is None]
+        move_plant_dict = {plant: spot for plant in self.userdata.plants
+                           for spot in list_empty_spots for preffered_sunlight
+                           in plant.preff_sunlight if plant.spot.light_level != preffered_sunlight
+                           and preffered_sunlight == spot.light_level}
+        if len(move_plant_dict) == 0:
+            return None
+        return move_plant_dict
+
+    def change_plant_spot(self, plant: Plant, empty_spot: Spot) -> None:
+        """
+        Changes the plant spot for the clicked plant
+        """
+        plant.spot.assigned_plant = None
+        empty_spot.assigned_plant = plant
+        plant.spot = empty_spot
+
+
+
+
+
+
+
+
+

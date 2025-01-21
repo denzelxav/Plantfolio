@@ -1,6 +1,6 @@
 """The main application window"""
 
-from PySide6.QtCore import Slot, QSemaphore
+from PySide6.QtCore import Slot, QSemaphore, Signal
 from PySide6.QtGui import QPixmap, QIcon
 from PySide6.QtWidgets import QMainWindow, QListWidgetItem
 
@@ -27,7 +27,7 @@ class MainMenu(QMainWindow):
     The main application window from which all sub windows can be opened.
     Will save its userdata when closed
     """
-
+    refresh_all = Signal()
     def __init__(self, userdata: UserData) -> None:
         super().__init__()
         # Create a file with pyside6-uic project/ui/app.ui -o project/ui/output.py
@@ -227,13 +227,21 @@ class MainMenu(QMainWindow):
         """
         Opens RecommendationsWindow that lets the user see his recommendations
         """
-        try:
-            self.recommendations_window = RecommendationsWindow(self)
-        except Exception as e:
-            error_msg = ErrorMessageWindow(e)
-            error_msg.exec()
-        else:
-            self.recommendations_window.show()
+        self.recommendations_window = RecommendationsWindow(self)
+        self.recommendations_window.show()
+        # try:
+        #     pass
+        # except Exception as e:
+        #     error_msg = ErrorMessageWindow(e)
+        #     error_msg.exec()
+        # else:
+        #     pass
+
+    def refresh_all_data(self):
+        """"
+        Sends refresh signal
+            """
+        self.refresh_all.emit()
 
     def closeEvent(self, event):
        try:

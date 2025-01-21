@@ -29,7 +29,7 @@ class RoomViewWindow(QDialog):
         self.ui = Ui_Room_View()
         self.ui.setupUi(self)
 
-        self.main_menu = parent
+        self.parent_window = parent
         self.semaphore: QSemaphore = parent.semaphore
         self.userdata: UserData = parent.userdata
 
@@ -65,7 +65,7 @@ class RoomViewWindow(QDialog):
         Open add spot window
         """
         try:
-            self.add_spot_window = AddSpotWindow(self, self.main_menu)
+            self.add_spot_window = AddSpotWindow(self, self.parent_window)
         except Exception as e:
             error_msg = ErrorMessageWindow(e)
             error_msg.exec()
@@ -78,7 +78,7 @@ class RoomViewWindow(QDialog):
         """
         delete the room that this roomviewwindow corresponds to.
         """
-        self.main_menu.delete_room(self)
+        self.parent_window.delete_room(self)
 
 
     @Slot()
@@ -90,7 +90,7 @@ class RoomViewWindow(QDialog):
         if selection:
             selected_spot = selection[0].data(3)
             try:
-                self.main_menu.userdata.delete_spot(selected_spot)
+                self.parent_window.userdata.delete_spot(selected_spot)
             except ContainerNotEmpty:
                 error_msg = ErrorMessageWindow(
                     f"Spot {selected_spot.spot_id} is not not empty. "
@@ -125,7 +125,7 @@ class RoomViewWindow(QDialog):
         refreshes spot list
         """
         self.ui.spot_list.clear()
-        for spot in self.main_menu.userdata.rooms[self.room_name]:
+        for spot in self.parent_window.userdata.rooms[self.room_name]:
             item = QListWidgetItem(spot.spot_id)
             item.setData(3, spot)
             self.ui.spot_list.addItem(item)

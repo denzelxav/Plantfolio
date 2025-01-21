@@ -9,6 +9,7 @@ from PySide6.QtCore import Slot, QSize, QSemaphore
 from PySide6.QtGui import QIcon, QPixmap
 from PySide6.QtWidgets import QMainWindow, QFileDialog, QDialog
 
+from project.classes.plant import plant_from_database
 from project.classes.public_methods import sunlight_to_string, get_sun_icon_path, string_to_health
 from project.ui.plant_view import Ui_PlantViewWindow
 from project.ui_windows.add_plant_window import AddPlantWindow
@@ -81,6 +82,7 @@ class PlantViewWindow(QMainWindow):
         self.ui.add_delete_plant.clicked.connect(self.add_delete_plant)
         self.ui.add_delete_image.clicked.connect(self.add_delete_image)
 
+        self.parent_window.parent_window.refresh_all.connect(self.plant_or_no_plant)
 
 
     def plant_or_no_plant(self):
