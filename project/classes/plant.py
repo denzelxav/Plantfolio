@@ -232,8 +232,22 @@ class Plant:
         """
         returns score based on how close the current sunlight is to that preferred by the plant
         """
+        sunlight_offsets = {1: 2,
+                            2: 2,
+                            3: 1,
+                            4: 0,
+                            5: 0,
+                            6: 0,
+                            7: 0,
+                            8: 0,
+                            9: 0,
+                            10: 1,
+                            11: 1,
+                            12: 2}
+        offset = sunlight_offsets[datetime.datetime.now().month]
         if self.spot:
-            diff_to_preff = min(abs(self.spot.light_level.value - pref.value)
+            sunlight_correction = self.spot.light_level.value - offset
+            diff_to_preff = min(abs(sunlight_correction - pref.value)
                                 for pref in self.preff_sunlight)
             return int(100 - diff_to_preff*25)
         return 0
