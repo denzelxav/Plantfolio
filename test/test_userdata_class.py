@@ -67,6 +67,7 @@ def test_create_userdata_basic():
     mydata.delete_plant(maple)
 
     # tests delete_plant
+    assert maple not in mydata.plants
     assert len(mydata.plants) == 0
 
     mydata.delete_spot(spot1)
@@ -203,3 +204,7 @@ def test_load_spot_data():
                                                  None,
                                                  21,
                                                  'living room')]}
+
+def test_eq_method():
+    mydata = UserData()
+    assert (mydata == 1) == False

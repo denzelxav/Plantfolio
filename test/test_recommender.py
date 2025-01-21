@@ -136,3 +136,15 @@ def test_sunlight_score():
     assert sunlight_score == 75
     sunlight_score = recommender.sunlight_score(Sunlight.FULL_SUN)
     assert sunlight_score == 50
+
+def test_recommendation_with_pets():
+    ud = create_userdata()
+    ud.pet_toxicity = 1
+    recommender = Recommender(ud)
+    rec_res = recommender.get_recommendations()
+    recommended_plants = [710, 711, 712, 713, 714, 715, 716, 717, 718, 1999, 2272,
+                          2274, 2468, 2773, 2774, 3347, 3349, 3350, 3351, 3352, 3353,
+                          3354, 3355, 4557, 4947, 5203, 5868, 7245, 7345, 7463, 8485,
+                          8487, 8565, 8596, 8603, 8755, 8763]
+    for plant_id in recommended_plants:
+        assert plant_id not in rec_res

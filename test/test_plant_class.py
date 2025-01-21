@@ -1,5 +1,5 @@
 import datetime
-from project.classes.plant import Plant
+from project.classes.plant import Plant, plant_from_database
 from project.classes.enums import Sunlight, Health
 from project.classes.spot_notification import Spot
 
@@ -132,6 +132,14 @@ def test_health():
     maple.health = Health.DEAD
     assert maple.health == Health.DEAD, "Dead status overwritten"
 
-
-
-
+def test_operator_overloading():
+    plant1 = Plant(425, 1, "Abutilon hybridum", "flowering-maple",
+                   "default", datetime.timedelta(days=4), [Sunlight.FULL_SUN, Sunlight.PART_SHADE])
+    plant2 = Plant(426, 2, "Abutilon hybridum 'Bella Red'", "flowering-maple",
+                   "default", datetime.timedelta(days=7), [Sunlight.FULL_SUN, Sunlight.PART_SHADE])
+    
+    assert eval(repr(plant1)) == plant1
+    assert eval(repr(plant2)) == plant2
+    
+    assert str(plant1) == "1: flowering-maple"
+    assert str(plant2) == "2: flowering-maple"
