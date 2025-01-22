@@ -164,13 +164,14 @@ class Recommender:
             return 100
         return self.family_count.get(family, 0) / self.max_familiy_count * 100
 
-    def move_plant(self) -> dict[Plant, Spot]| None:
+    def move_plant(self) -> dict[Plant, Spot] | None:
         """
         Suggest moving plant to a better spot if available
         """
         list_empty_spots: list[Spot] = [spot for room in self.userdata.rooms.values()
                             for spot in room if spot.assigned_plant is None]
         move_plant_dict = {plant: spot for plant in self.userdata.plants
+                           if plant.spot is not None
                            for spot in list_empty_spots for preffered_sunlight
                            in plant.preff_sunlight if plant.spot.light_level != preffered_sunlight
                            and preffered_sunlight == spot.light_level}
@@ -182,15 +183,7 @@ class Recommender:
         """
         Changes the plant spot for the clicked plant
         """
-        plant.spot.assigned_plant = None
+        if plant.spot is not None:
+            plant.spot.assigned_plant = None
         empty_spot.assigned_plant = plant
         plant.spot = empty_spot
-
-
-
-
-
-
-
-
-

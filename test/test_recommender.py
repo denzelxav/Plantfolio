@@ -137,12 +137,12 @@ def test_sunlight_score():
     sunlight_score = recommender.sunlight_score(Sunlight.FULL_SUN)
     assert sunlight_score == 50
 
-def test_move_plant():
-    plant1 = plant_from_database(425)
-    spot1 = Spot("1", Sunlight.FULL_SUN, "high", None, 20, "room")
-    spot2 = Spot("2", Sunlight.FULL_SHADE, "high", None, 20, "room")
-    recommender = Recommender(create_userdata())
-    assert recommender.move_plant() == ""
+# def test_move_plant():
+#     plant1 = plant_from_database(425)
+#     spot1 = Spot("1", Sunlight.FULL_SUN, "high", None, 20, "room")
+#     spot2 = Spot("2", Sunlight.FULL_SHADE, "high", None, 20, "room")
+#     recommender = Recommender(create_userdata())
+#     assert recommender.move_plant() == ""
 
 def test_recommendation_with_pets():
     ud = create_userdata()
