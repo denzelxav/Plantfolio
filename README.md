@@ -29,10 +29,13 @@ The application consists of multiple features, including:
     * Adding a plant: select an empty spot and press 'Add plant' or open a spot and press 'Add plant'. Then search for a species and select it, select an icon, type in a name and press 'OK'.
     * Opening a spot: select a spot and press 'Open spot' or double-click the spot.
         * Deleting a plant: press 'Delete plant'.
+        * Adding an image: press 'Add image' and choose an image on your computer
         * Taking care of plant: press 'Water plant', 'Feed plant' or 'Repot plant'.
         * Manual health mode: when the calculated health does not match the actual health, you can control it manually.
         * Adding notes: type your own notes in the corresponding box.
         * Information: read the text in the plant view for the current information of the plant.
+
+* Instructions: press on 'Instructions' and choose an action in the combobox.
 
 * Watering all plants: in the main or 'All Plants' window, press 'Water all'.
 
