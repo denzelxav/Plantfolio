@@ -44,15 +44,13 @@ class RecommendationsWindow(QDialog):
 
         self.ui.pet_tox_check.stateChanged.connect(self.pet_safe_change)
         self.parent_window.close_all.connect(self.close)
-        # self.ui.Move_button.clicked.connect(self.move_plant_spot())
         self.refresh_change_spot()
         self.ui.Move_button.clicked.connect(self.move_plant_spot)
 
     def refresh_change_spot(self):
         self.ui.spot_changes.clear()
         dict_move_plant = self.recommender.move_plant()
-        print(dict_move_plant)
-        if dict_move_plant is None:
+        if len(dict_move_plant) == 0:
             self.ui.spot_changes.addItem('Every plant is in the optimal spot')
         else:
             for plant, empty_spot in dict_move_plant.items():
@@ -131,13 +129,3 @@ class RecommendationsWindow(QDialog):
         for recommendation in self.recommendations:
             plant = plant_from_database(recommendation)
             self.ui.select_recommendation.addItem(plant.scientific_name)
-
-
-        # self.spot_changes = self.recommender.move_plant_dict
-        # for plant, empty_spot in self.recommender.move_plant_dict.items():
-        #     input_text = f"Move {plant.personal_name} from {plant.spot} to this empty spot: {empty_spot.spot_id}"
-        #     list_input = QListWidgetItem(input_text)
-        #     list_input.setData(0, plant)
-        #     list_input.setData(1, empty_spot)
-        #     self.ui.spot_changes.addItem(list_input)
-

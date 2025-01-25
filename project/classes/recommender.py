@@ -170,13 +170,12 @@ class Recommender:
         """
         list_empty_spots: list[Spot] = [spot for room in self.userdata.rooms.values()
                             for spot in room if spot.assigned_plant is None]
-        move_plant_dict = {plant: spot for plant in self.userdata.plants
+
+        move_plant_dict: dict[Plant, Spot] = {plant: empty_spot for plant in self.userdata.plants
                            if plant.spot is not None
-                           for spot in list_empty_spots for preffered_sunlight
+                           for empty_spot in list_empty_spots for preffered_sunlight
                            in plant.preff_sunlight if plant.spot.light_level != preffered_sunlight
-                           and preffered_sunlight == spot.light_level}
-        if len(move_plant_dict) == 0:
-            return None
+                           and preffered_sunlight == empty_spot.light_level}
         return move_plant_dict
 
     def change_plant_spot(self, plant: Plant, empty_spot: Spot) -> None:
