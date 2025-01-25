@@ -24,9 +24,9 @@ class Ui_RecommendationsWindow(object):
     def setupUi(self, RecommendationsWindow):
         if not RecommendationsWindow.objectName():
             RecommendationsWindow.setObjectName(u"RecommendationsWindow")
-        RecommendationsWindow.resize(611, 515)
-        RecommendationsWindow.setMinimumSize(QSize(330, 385))
-        RecommendationsWindow.setMaximumSize(QSize(9999, 9999))
+        RecommendationsWindow.resize(595, 519)
+        RecommendationsWindow.setMinimumSize(QSize(595, 519))
+        RecommendationsWindow.setMaximumSize(QSize(595, 519))
         palette = QPalette()
         brush = QBrush(QColor(0, 0, 0, 255))
         brush.setStyle(Qt.SolidPattern)
@@ -95,7 +95,7 @@ class Ui_RecommendationsWindow(object):
         self.article_description.setWordWrap(True)
         self.wiki_source = QLabel(RecommendationsWindow)
         self.wiki_source.setObjectName(u"wiki_source")
-        self.wiki_source.setGeometry(QRect(400, 0, 101, 16))
+        self.wiki_source.setGeometry(QRect(420, 0, 101, 16))
         self.spot_changes = QListWidget(RecommendationsWindow)
         self.spot_changes.setObjectName(u"spot_changes")
         self.spot_changes.setGeometry(QRect(60, 370, 211, 81))

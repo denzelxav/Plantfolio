@@ -27,6 +27,7 @@ class MainMenu(QMainWindow):
     The main application window from which all sub windows can be opened.
     Will save its userdata when closed
     """
+    refresh_all = Signal()
     close_all = Signal()
 
     def __init__(self, userdata: UserData) -> None:
@@ -229,13 +230,21 @@ class MainMenu(QMainWindow):
         """
         Opens RecommendationsWindow that lets the user see his recommendations
         """
-        try:
-            self.recommendations_window = RecommendationsWindow(self)
-        except Exception as e:
-            error_msg = ErrorMessageWindow(e)
-            error_msg.exec()
-        else:
-            self.recommendations_window.show()
+        self.recommendations_window = RecommendationsWindow(self)
+        self.recommendations_window.show()
+        # try:
+        #     pass
+        # except Exception as e:
+        #     error_msg = ErrorMessageWindow(e)
+        #     error_msg.exec()
+        # else:
+        #     pass
+
+    def refresh_all_data(self):
+        """"
+        Sends refresh signal
+            """
+        self.refresh_all.emit()
 
     def closeEvent(self, event):
         confirm_close = ConfirmationWindow("Are you sure you want to close Plantfolio? \n"

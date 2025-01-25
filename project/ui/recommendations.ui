@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>611</width>
-    <height>515</height>
+    <width>595</width>
+    <height>519</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>330</width>
-    <height>385</height>
+    <width>595</width>
+    <height>519</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>9999</width>
-    <height>9999</height>
+    <width>595</width>
+    <height>519</height>
    </size>
   </property>
   <property name="palette">
@@ -353,7 +353,7 @@
   <widget class="QLabel" name="wiki_source">
    <property name="geometry">
     <rect>
-     <x>400</x>
+     <x>420</x>
      <y>0</y>
      <width>101</width>
      <height>16</height>
