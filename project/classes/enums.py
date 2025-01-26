@@ -28,6 +28,6 @@ class Action(Enum):
     """
     Enum for all possible Notifications
     """
-    WATERING = 0
-    NUTRITION = 1
-    REPOTTING = 2
+    WATERING = "Watering"
+    NUTRITION = "Nutrition"
+    REPOTTING = "Repotting"

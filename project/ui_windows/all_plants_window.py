@@ -163,7 +163,8 @@ class AllPlantsWindow(QDialog):
             self.ui.plant_table.setItem(row, 2, QTableWidgetItem(self.get_room(plant)))
             self.ui.plant_table.setItem(row, 3, QTableWidgetItem(plant.scientific_name))
             self.ui.plant_table.setItem(row, 4, QTableWidgetItem(plant.watered[-1].date().isoformat()))
-            self.ui.plant_table.setItem(row, 5, QTableWidgetItem(", ".join(plant.current_tasks)))
+            tasks = [notification.notification_type.value for notification in plant.list_notifications]
+            self.ui.plant_table.setItem(row, 5, QTableWidgetItem(", ".join(tasks)))
 
 
     def get_icon_path(self, plant: Plant) -> str:
