@@ -25,8 +25,8 @@ class Ui_PlantViewWindow(object):
         if not PlantViewWindow.objectName():
             PlantViewWindow.setObjectName(u"PlantViewWindow")
         PlantViewWindow.resize(557, 398)
-        PlantViewWindow.setMinimumSize(QSize(531, 0))
-        PlantViewWindow.setMaximumSize(QSize(5310, 4010))
+        PlantViewWindow.setMinimumSize(QSize(557, 398))
+        PlantViewWindow.setMaximumSize(QSize(557, 398))
         palette = QPalette()
         brush = QBrush(QColor(0, 0, 0, 255))
         brush.setStyle(Qt.SolidPattern)
@@ -162,7 +162,7 @@ class Ui_PlantViewWindow(object):
         self.repot_plant.setIcon(icon2)
         self.add_delete_plant = QPushButton(self.centralwidget)
         self.add_delete_plant.setObjectName(u"add_delete_plant")
-        self.add_delete_plant.setGeometry(QRect(14, 0, 101, 24))
+        self.add_delete_plant.setGeometry(QRect(10, 370, 101, 24))
         self.add_delete_image = QPushButton(self.centralwidget)
         self.add_delete_image.setObjectName(u"add_delete_image")
         self.add_delete_image.setGeometry(QRect(140, 60, 61, 21))
@@ -174,6 +174,9 @@ class Ui_PlantViewWindow(object):
         self.custom_image_health.setGeometry(QRect(90, 120, 31, 31))
         self.custom_image_health.setPixmap(QPixmap(u":/smiley_healthy.png"))
         self.custom_image_health.setScaledContents(True)
+        self.move_button = QPushButton(self.centralwidget)
+        self.move_button.setObjectName(u"move_button")
+        self.move_button.setGeometry(QRect(10, 340, 75, 24))
         PlantViewWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(PlantViewWindow)
@@ -220,5 +223,6 @@ class Ui_PlantViewWindow(object):
         self.add_delete_plant.setText(QCoreApplication.translate("PlantViewWindow", u"Add/Delete Plant", None))
         self.add_delete_image.setText(QCoreApplication.translate("PlantViewWindow", u"Add Image", None))
         self.custom_image_health.setText("")
+        self.move_button.setText(QCoreApplication.translate("PlantViewWindow", u"Move plant", None))
     # retranslateUi
 

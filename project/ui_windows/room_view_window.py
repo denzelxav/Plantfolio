@@ -28,8 +28,8 @@ class RoomViewWindow(QDialog):
         super().__init__()
         self.ui = Ui_Room_View()
         self.ui.setupUi(self)
-
         self.parent_window = parent
+        self.main_menu = parent
         self.semaphore: QSemaphore = parent.semaphore
         self.userdata: UserData = parent.userdata
 
