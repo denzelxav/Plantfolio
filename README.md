@@ -34,6 +34,7 @@ The application consists of multiple features, including:
         * Manual health mode: when the calculated health does not match the actual health, you can control it manually.
         * Adding notes: type your own notes in the corresponding box.
         * Information: read the text in the plant view for the current information of the plant.
+        * Moving a plant: press 'Move plant' and choose a different spot to move the plant to.
 
 * Instructions: press on 'Instructions' and choose an action in the combobox.
 
