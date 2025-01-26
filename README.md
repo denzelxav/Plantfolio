@@ -1,132 +1,83 @@
-# EWI3615TU Template Repository
+# Plantfolio documentation
 
 ## Table of contents
 This readme contains the following sections
-* A description on how to set up the repository
-* An overview of the template project
-* An overview on how to use the various tools
-* A description of what your readme should contain
-
-## Setting up your repository
-* Install Git Bash (Windows) or just Git (if not on Windows)
-* Install Python 3.12
-* (Windows) Add python 3.12 to your path as the installer does not do this
-  * You can find python in this location if you used the installer: C:\Users\<your user>\AppData\Local\Programs\Python\Python312
-  * Also add C:\Users\<your user>\AppData\Local\Programs\Python\Python312\Scripts
-  * Appdata is a hidden folder. You need to configure your file explorer to show those by going to view -> show hidden items
-* After updating your path you should reboot your editor and/or terminal
-* run `python --version` to double-check that the right version is installed
-  * (Windows) If you correctly updated your path, but you now get an error that talks about some microsoft settings, you should:
-    * Go to the mentioned settings
-    * Scroll down and disable the two items that reference python
-    * Everything should now work again
-* run `python -m pip install pipenv` to install pipenv. This is an improved version of virtualenv and allows us to easily manage the dependencies
-
-How to download your dependencies and execute your code will depend on your IDE.
-We recommend using PyCharm as it has excellent integration with the used tools.
-Visual studio code has worse integration with pipenv and other tools and as such we do not recommend using this.
-Everything should work in VS code, you will just have to use more manual terminal commands instead of clicking buttons.
-
-Below you will find instructions for both PyCharm and VS code.
-
-### PyCharm
-You can use either PyCharm community or PyCharm professional for this project. Using your student email you should be able to get an education license for the pro version.
-However, for this project the difference should not be significant.
-
-When you open your cloned repository, PyCharm will ask you if you want to create a pipenv environment from the Pipfile, allow it to do so.
-You can execute your code by pressing the button next to your main method and PyCharm will execute it.
-
-If PyCharm did not prompt you to do this, run the following command: `pipenv sync`. 
-Then configure the Python interpreter in PyCharm to use the Pipenv environment you just created.
+* Purpose of the application
+* Instructions on how to run the application
+* List of implemented features
+* How to use the application
+* Additional documentation for other developers
 
 
-### VS code
-* When using VS code you need to run the `pipenv sync` command yourself to install the dependencies.
-* Afterwards, you can select the generated virtual environment as the python interpreter, this will fix your editor
+## Purpose of application
+This application is made for people that struggle to take care of their indoor plants and do not have the knowledge necessary to do so. The purpose of the application is thus to help people take care of their plants and improve the general health of the plants. It will help them by tracking their plants and informing them of basic actions they need to take such as watering, repotting and nutritioning. It can then also help remind the user when to water the plants. The application also includes features that help with finding the best place for a plant in your house, based on the sunlight conditions in specific places indoors. 
 
-## Executing the project
 
-There are a couple of ways to execute your project. You need to execute the project as a module to make sure that relative imports work correctly. This will execute the __main__.py file and all imports should start with project. This ensures that tests can run your project correctly and all files can find each other. Running a specific python file will not work as then all imports need to be relative to that file.
+## Instructions on how to run the application
+The application works by simply running a .exe file. To do so, go to the main branch in GitLab and open the dist folder. In the dist folder, open Plantfolio.exe and press download. Save this file somewhere and double click to open the application. On most computers, Window Defender will give a pop-up. In this case, click on 'More information' and click 'Run anyway'.
+Alternatively, you can run it straight from python by opening the repository in VScode or PyCharm and running "python -m project" in the terminal.
 
-### Command line
 
-* Running `python -m project` in the integrated terminal with the pipenv environment active
-* Running `pipenv run python -m project` in a terminal without the pipenv environment active
+## List of implemented features and how to use them
+The application consists of multiple features, including:
+* Adding a room: press 'Add Room', type the name of your room in the box and press 'OK'.
 
-### VSCode
+* Opening a room: select a room name in the rooms list and press 'Open Room' or double-click the room name.
+    * Deleting a room: when there are no spots left in the room, press 'Delete room'.
+    * Adding a spot: press 'Add spot', type in a name and press 'OK'.
+    * Deleting a spot: select an empty spot and press 'Delete spot'.
+    * Adding a plant: select an empty spot and press 'Add plant' or open a spot and press 'Add plant'. Then search for a species and select it, select an icon, type in a name and press 'OK'.
+    * Opening a spot: select a spot and press 'Open spot' or double-click the spot.
+        * Deleting a plant: press 'Delete plant'.
+        * Adding an image: press 'Add image' and choose an image on your computer
+        * Taking care of plant: press 'Water plant', 'Feed plant' or 'Repot plant'.
+        * Manual health mode: when the calculated health does not match the actual health, you can control it manually.
+        * Adding notes: type your own notes in the corresponding box.
+        * Information: read the text in the plant view for the current information of the plant.
+        * Moving a plant: press 'Move plant' and choose a different spot to move the plant to.
 
-* Go to run and debug on the left
-* Click create a launch.json or add configuration
-* Click python debugger
-* Click module
-* Enter project as module name
+* Instructions: press on 'Instructions' and choose an action in the combobox.
 
-### PyCharm
+* Watering all plants: in the main or 'All Plants' window, press 'Water all'.
 
-* Go to edit configurations
-* Create a new python configuration
-* select module instead of script
-* Enter project as module name
+* Viewing all plants: press 'All plants'.
+    * Viewing a plant: select a plant and press 'View plant'.
+    * Sorting the plants: choose the criteria to sort by and tick the 'Reverse' box when needed.
 
-## Template project overview
+* Viewing recommended plants: press 'Recommendations'.
+    * Excluding dangerous plants for pets: press 'Only show pet-safe plants'.
 
-The template project already contains quite a few files and configurations. 
-These serve to give you an overview of how things can work. You are allowed to change almost everything. 
-Please keep your docs folder around for handing in the project plan and any other documentation you want to keep.
-Everything else you can change (or should change even in some cases).
+* Saving your data manually: press 'Save'. The application saves automatically upon closure but a crash may prevent saving Running the .exe saves the application's data in %appdata%/Plantfolio instead of the project files' .json .
 
-Below I will provide a quick overview of everything in the repo at the moment:
-* docs folder: Used to store the project plan and any other documentation
-* project folder: root folder for all your code. You are allowed to change the name to something more specific.
-Do note however, that you will then also need to update most config files as they are all created assuming the folder is called project.
-PyCharms refactor functionality cannot deal with all of these, some will need to be fixed manually.
-* test folder: This folder contains your tests. The tools have been configured with this as default value, renaming it therefore requires config updates.
-* .gitignore: gitignore file for Python, PyCharm and VS code.
-* .gitlab-ci.yml: The config file for gitlab pipelines. We have provided you with a minimum working template that integrates the various tools with GitLab features. You can and perhaps should chagne this file.
-* .pylintrc: The configuration for Pylint. This is the default configuration of pylint with two changes:
-  * Pylint requires explicit configuration for C libraries. PySide has been configured. You might need to add other libraries to this configuration if you decide to use other C libraries as well.
-  * The ui folder has been exempted from linting. If you use Qt designer for your GUI you can use this folder to store the auto-generated python code which will not be type-checked or linted.
-* Pipfile: This file contains the packages that your project needs, you can add them manually or use `pipenv install <package>` which will automatically add them to the pipfile.
-* Pipfile.lock: Contains the actual packages with versions that you use. Generated when ever you use `pipenv update` after adding new packages to Pipfile. 
-This file is stored in the repository to ensure that all members use the same version of each library. If someone else updated the Pipfile and generated a new Pipfile.lock
-you can update your own libraries by running `pipenv sync`.
-* pyproject.toml: Contains configuration for tests and coverage checking
-* README.md: This README. You are expected to replace this file with a README for your specific project once you get started with development.
+* Viewing all notifications: press 'Notifications'. A less detailed overview is shown in the list on the main window.
+    * Viewing a single notification along with its details: choose the right notification in the combobox.
 
-## Installed tools
+* Sorting notifications: choose 'day', 'type' or 'weight' in the combobox to sort on the corresponding criteria.
 
-### QT tools
-In this project you will use PyQT to design a GUI. You can do this purely by using code 
-or you can use the qt-designer. If you are within the pipenv environment you can start the designer by running `pyside6-designer` otherwise run `pipenv run pyside6-designer`.
+* Refreshing notifications: press 'refresh notifications'. This will also delete notifications that have been taken care of in the mean time.
 
-Once you have created the ui files you can convert them using `pyside6-uic project/ui/app.ui -o project/ui/output.py`
-to Python code. This ensures you can use auto-complete. See application.py for an example on how to load the ui code.
 
-### Testing
-For testing we have already installed pytest and coverage. If you do not want to use these libraries you can delete them.
-However, they do integrate quite nicely with gitlab. 
+## Use case example
+Scenario: Bob, a man with a passion for indoor plants, has difficulties to care for his plants due to his busy schedule. He uses the application to simplify and improve his plant care routine.
 
-If you run `pytest` you will execute your tests normally. You can also use the PyCharm buttons for it.
-If you want to see coverage you can do `coverage run` followed by `coverage report` to get a nice table overview.
-There are also commands to get for example HTML output.
+1.  Organizing rooms and spots: Bob sets up virtual rooms (e.g. living room and bedroom) and creates specific spots within them, such as window, corner and nightstand.
+2.  Adding plants: he assigns plants like his Sansevieria "Sjaak" to the right spots and customizes their names and icons/photos.
+3. Caring for the plants: Bob uses the notifications to remind him of tasks like watering, nutritioning and repotting. He marks the tasks as done in the plant view and adjusts plant health using Manual health mode when necessary.
+4. Optimizing plant placement: by analyzing sunlight recommendations, Bob moves "Sjaak" to a brighter spot, significantly improving its health.
+5. Keeping pets safe: concerned for his cat’s safety, Bob browses pet-friendly plant recommendations and discovers that the Hedera is not a suitable option due to its toxicity.
+6. Plant monitoring: Bob uses the All Plants view to track his collection, sorting by different criteria to identify plants needing attention.
+7. Saving data: he makes sure his data is safe by manually saving, although his data will most likely be saved automatically (as long as the application or computer does not crash).
 
-The coverage tool has been integrated with the gitlab-ci. This means you will see a coverage percentage in your merge requests and the diff overview will show you which lines are tested and which are not.
 
-### Mypy
-You can use mypy by using `mypy .` to type-check your code.
-
-### PyLint
-To run Pylint you need to specify which files need to be linted. You can find the syntax for this in the gitlab-ci.yml file where we have configured two linting steps.
-The test-suite is linted by also disabling the requirement for docstrings. You are allowed to change whatever you want here or even disable linting.
-Do note that we will grade your usage of tools and the readability of your code.
-
-## Your README
-This README is for the template project. Once you get started with your project you should replace it with a new README.
-While the content of this README is partly up to you there are a few things you must cover:
-* What is the purpose of your application? What can I do with it?
-* How to run your application? Does it require any external software installed? Or perhaps you need to configure a password.
-* What features have you implemented?
-
-This is information that is necessary for us to assess your program. However, a good README should contain more than just this.
-You could consider adding example use cases with a step-by-step guide on how your software can help with them. 
-If you believe adding more information makes your README to cluttered, you can also add links to other pieces of documentation to your README instead.
+## Additional documentation and structure for other developers
+This project contains multiple files, most of them ordered in several folders which are listed below.
+* database: this folder contains files with helper functions and classes to create the complete database of all the plants available in the application (plant_database.db). The initial database was retrieved with an API from https://perenual.com/docs/api .
+* dist: this folder contains the .exe file to run the application. To incorporate recent changes in the .exe file, it has to be updated.
+* docs: this folder contains the meeting notes which were made every week during a meeting with the TA of our project group. It also contains the slides that were used during the presentations of W2.6 and W2.10. Additionally, it contains the project plan made in the first two weeks of the project along with a changelog, documenting the changes made to it while working on the project. The project plan discusses the preparations that had to be made before starting to code and the requirements that were imposed beforehand.
+* test: this folder contains the testing files to test the functionality of the underlying classes of the application. Most classes from group-10/project/classes have their own corresponding test file.
+* Top-level files: there are a few top-level files that do not belong to a subfolder. Most of them were given in the template and are used to specify certain settings, install necessary modules or lint the Python files within the subfolders.
+* project: this is the most important folder, containing all the files the application is built upon. "plant_database.db" contains the actual complete database with all the possible plants to choose from. "__main__.py" is the file that is run when starting the application. "user_data.json" is used to save the userdata when the application is closed. In turn, the project folder also has four subfolders, listed below:
+    * art: contains the drawings, logo, icons, etc. used in the application.
+    * classes: the objects and functions which make the functionality of the application possible.
+    * ui: the .ui files made in Qt-designer along with its corresponding .py files.
+    * ui_windows: contains the files that connect the functionality of the classes with the ui files.
