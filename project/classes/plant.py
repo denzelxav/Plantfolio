@@ -116,11 +116,13 @@ class Plant:
                 self.list_notifications.remove(notification)
                 notification.notifier.all_notifications.remove(notification)
 
-    def change_spot(self, spot: Spot) -> None:
+    def change_spot(self, new_spot: Spot) -> None:
         """
         Changes spot of the plant and calculates new sunlight score
         """
-        self.spot = spot
+        if self.spot:
+            self.spot.assigned_plant = None
+        self.spot = new_spot
         self.spot.assigned_plant = self
         self.sunlight_score = self.get_sunlight_score()
 

@@ -25,8 +25,8 @@ class Ui_PlantViewWindow(object):
         if not PlantViewWindow.objectName():
             PlantViewWindow.setObjectName(u"PlantViewWindow")
         PlantViewWindow.resize(557, 398)
-        PlantViewWindow.setMinimumSize(QSize(531, 0))
-        PlantViewWindow.setMaximumSize(QSize(5310, 4010))
+        PlantViewWindow.setMinimumSize(QSize(557, 398))
+        PlantViewWindow.setMaximumSize(QSize(557, 398))
         palette = QPalette()
         brush = QBrush(QColor(0, 0, 0, 255))
         brush.setStyle(Qt.SolidPattern)
@@ -174,6 +174,9 @@ class Ui_PlantViewWindow(object):
         self.custom_image_health.setGeometry(QRect(90, 120, 31, 31))
         self.custom_image_health.setPixmap(QPixmap(u":/smiley_healthy.png"))
         self.custom_image_health.setScaledContents(True)
+        self.move_button = QPushButton(self.centralwidget)
+        self.move_button.setObjectName(u"move_button")
+        self.move_button.setGeometry(QRect(0, 370, 75, 24))
         PlantViewWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(PlantViewWindow)
@@ -220,5 +223,6 @@ class Ui_PlantViewWindow(object):
         self.add_delete_plant.setText(QCoreApplication.translate("PlantViewWindow", u"Add/Delete Plant", None))
         self.add_delete_image.setText(QCoreApplication.translate("PlantViewWindow", u"Add Image", None))
         self.custom_image_health.setText("")
+        self.move_button.setText(QCoreApplication.translate("PlantViewWindow", u"Move plant", None))
     # retranslateUi
 

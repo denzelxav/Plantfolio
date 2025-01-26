@@ -15,6 +15,7 @@ from project.ui.plant_view import Ui_PlantViewWindow
 from project.ui_windows.add_plant_window import AddPlantWindow
 import images_rc
 from project.ui_windows.confirmation_window import ConfirmationWindow
+from project.ui_windows.spot_list_window import SpotListWindow
 
 if TYPE_CHECKING:
     from project.classes.spot_notification import Spot
@@ -81,8 +82,10 @@ class PlantViewWindow(QMainWindow):
         self.ui.repot_plant.clicked.connect(self.repot_plant)
         self.ui.add_delete_plant.clicked.connect(self.add_delete_plant)
         self.ui.add_delete_image.clicked.connect(self.add_delete_image)
+        self.ui.move_button.clicked.connect(self.move_plant)
 
-        self.parent_window.parent_window.close_all.connect(self.close)
+        self.main_menu = self.parent_window.parent_window
+        self.main_menu.close_all.connect(self.close)
 
         self.parent_window.parent_window.refresh_all.connect(self.plant_or_no_plant)
 
@@ -120,6 +123,7 @@ class PlantViewWindow(QMainWindow):
         self.ui.preff_sunlight_text.setHidden(self.plant is None)
         self.ui.water_frequency_text.setHidden(self.plant is None)
         self.ui.last_nutrition.setHidden(self.plant is None)
+        self.ui.move_button.setHidden(self.plant is None)
         if self.plant and self.plant.nutrition:
             self.ui.last_nutrition.setText(f"Last received nutrition on {self.plant.nutrition[-1].strftime('%d/%m/%Y')}")
         else:
@@ -206,6 +210,12 @@ class PlantViewWindow(QMainWindow):
         self.plant.manual_health = self.ui.manual_health.isChecked()
         self.ui.health_setter.setEnabled(self.plant is not None and self.plant.manual_health)
         self.refresh_health()
+
+    @Slot()
+    def move_plant(self):
+        spot_list_window = SpotListWindow(self)
+        spot_list_window.exec()
+        self.plant_or_no_plant()
 
     @Slot()
     def handle_health_setter(self):
