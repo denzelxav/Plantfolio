@@ -23,7 +23,7 @@ class SpotListWindow(QDialog):
             for spot in room:
                 if not spot.assigned_plant:
                     spot_item = QListWidgetItem(spot.spot_id)
-                    spot_item.setData(1, spot)
+                    spot_item.setData(3, spot)
                     self.ui.spot_list.addItem(spot_item)
         self.ui.confirm_spot.accepted.connect(self.accept)
         self.ui.confirm_spot.rejected.connect(self.reject)
@@ -32,7 +32,7 @@ class SpotListWindow(QDialog):
     def accept(self):
         selection = self.ui.spot_list.selectedItems()
         if len(selection) > 0:
-            spot = selection[0].data(1)
+            spot = selection[0].data(3)
             self.plant_to_move.change_spot(spot)
             self.main_menu.refresh_all_data()
             super().accept()
