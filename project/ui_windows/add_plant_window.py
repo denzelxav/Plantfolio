@@ -15,12 +15,13 @@ if TYPE_CHECKING:
     from project.classes.userdata import UserData
     from project.ui_windows.plant_view_window import PlantViewWindow
     from project.ui_windows.all_plants_window import AllPlantsWindow
+    from project.ui_windows.room_view_window import RoomViewWindow
 
 class AddPlantWindow(QDialog):
     """
     Window from which you can add plants to a spot
     """
-    def __init__(self, spot: Spot, parent: PlantViewWindow) -> None:
+    def __init__(self, spot: Spot, parent: PlantViewWindow | RoomViewWindow) -> None:
         super().__init__()
         self.ui = Ui_AddPlantWindow()
         self.ui.setupUi(self)
