@@ -275,10 +275,10 @@
     <bool>true</bool>
    </property>
   </widget>
+  <zorder>label</zorder>
   <zorder>frame</zorder>
   <zorder>confirm_spot</zorder>
   <zorder>spot_list</zorder>
-  <zorder>label</zorder>
  </widget>
  <resources/>
  <connections>

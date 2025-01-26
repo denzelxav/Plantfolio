@@ -74,10 +74,10 @@ class Ui_SpotListWindow(object):
         self.frame.setGeometry(QRect(0, 10, 271, 261))
         self.frame.setPixmap(QPixmap(u"../art/list_art.png"))
         self.frame.setScaledContents(True)
+        self.label.raise_()
         self.frame.raise_()
         self.confirm_spot.raise_()
         self.spot_list.raise_()
-        self.label.raise_()
 
         self.retranslateUi(SpotListWindow)
         self.confirm_spot.accepted.connect(SpotListWindow.accept)
