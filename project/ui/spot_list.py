@@ -23,7 +23,7 @@ class Ui_SpotListWindow(object):
     def setupUi(self, SpotListWindow):
         if not SpotListWindow.objectName():
             SpotListWindow.setObjectName(u"SpotListWindow")
-        SpotListWindow.resize(400, 300)
+        SpotListWindow.resize(349, 277)
         palette = QPalette()
         brush = QBrush(QColor(0, 0, 0, 255))
         brush.setStyle(Qt.SolidPattern)
@@ -57,15 +57,27 @@ class Ui_SpotListWindow(object):
         SpotListWindow.setPalette(palette)
         self.confirm_spot = QDialogButtonBox(SpotListWindow)
         self.confirm_spot.setObjectName(u"confirm_spot")
-        self.confirm_spot.setGeometry(QRect(290, 20, 81, 241))
+        self.confirm_spot.setGeometry(QRect(260, 10, 81, 241))
         self.confirm_spot.setOrientation(Qt.Orientation.Vertical)
         self.confirm_spot.setStandardButtons(QDialogButtonBox.StandardButton.Cancel|QDialogButtonBox.StandardButton.Ok)
         self.spot_list = QListWidget(SpotListWindow)
         self.spot_list.setObjectName(u"spot_list")
-        self.spot_list.setGeometry(QRect(20, 40, 251, 231))
+        self.spot_list.setGeometry(QRect(50, 40, 191, 201))
         self.label = QLabel(SpotListWindow)
         self.label.setObjectName(u"label")
-        self.label.setGeometry(QRect(20, 10, 241, 16))
+        self.label.setGeometry(QRect(60, 10, 241, 16))
+        font = QFont()
+        font.setBold(True)
+        self.label.setFont(font)
+        self.frame = QLabel(SpotListWindow)
+        self.frame.setObjectName(u"frame")
+        self.frame.setGeometry(QRect(0, 10, 271, 261))
+        self.frame.setPixmap(QPixmap(u"../art/list_art.png"))
+        self.frame.setScaledContents(True)
+        self.frame.raise_()
+        self.confirm_spot.raise_()
+        self.spot_list.raise_()
+        self.label.raise_()
 
         self.retranslateUi(SpotListWindow)
         self.confirm_spot.accepted.connect(SpotListWindow.accept)
@@ -77,5 +89,6 @@ class Ui_SpotListWindow(object):
     def retranslateUi(self, SpotListWindow):
         SpotListWindow.setWindowTitle(QCoreApplication.translate("SpotListWindow", u"Move plant to spot", None))
         self.label.setText(QCoreApplication.translate("SpotListWindow", u"Select spot to move plant to:", None))
+        self.frame.setText("")
     # retranslateUi
 

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>349</width>
+    <height>277</height>
    </rect>
   </property>
   <property name="palette">
@@ -215,8 +215,8 @@
   <widget class="QDialogButtonBox" name="confirm_spot">
    <property name="geometry">
     <rect>
-     <x>290</x>
-     <y>20</y>
+     <x>260</x>
+     <y>10</y>
      <width>81</width>
      <height>241</height>
     </rect>
@@ -231,26 +231,54 @@
   <widget class="QListWidget" name="spot_list">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>50</x>
      <y>40</y>
-     <width>251</width>
-     <height>231</height>
+     <width>191</width>
+     <height>201</height>
     </rect>
    </property>
   </widget>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>60</x>
      <y>10</y>
      <width>241</width>
      <height>16</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <bold>true</bold>
+    </font>
+   </property>
    <property name="text">
     <string>Select spot to move plant to:</string>
    </property>
   </widget>
+  <widget class="QLabel" name="frame">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>10</y>
+     <width>271</width>
+     <height>261</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap>../art/list_art.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <zorder>frame</zorder>
+  <zorder>confirm_spot</zorder>
+  <zorder>spot_list</zorder>
+  <zorder>label</zorder>
  </widget>
  <resources/>
  <connections>

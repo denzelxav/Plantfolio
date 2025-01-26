@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from PySide6.QtWidgets import QListWidgetItem, QDialog
+from PySide6.QtGui import QPixmap, QIcon
 
 from project.ui.spot_list import Ui_SpotListWindow
 from typing import TYPE_CHECKING
@@ -18,6 +19,9 @@ class SpotListWindow(QDialog):
         self.parent_window: PlantViewWindow = parent
         self.userdata = parent.userdata
         self.main_menu = parent.main_menu # type: ignore
+
+        self.ui.frame.setPixmap(QPixmap(u":/list_art.png"))
+        self.setWindowIcon(QIcon(":/Plantfolio_logo_small.png"))
 
         for room in self.userdata.rooms.values():
             for spot in room:
