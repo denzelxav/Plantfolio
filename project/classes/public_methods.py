@@ -62,6 +62,7 @@ def wiki_page(search_term: str, test_mode=False) -> dict[str, str | QPixmap]:
     parameters = {"q": search_query, "limit": number_of_results}
     response_code = requests.get(url, headers=headers, params=parameters, timeout=5) # type: ignore
     response = json.loads(response_code.text)
+    print(f"Request response code: {response_code.status_code}")
     if (response_code.status_code != 200 or
             len(response["pages"]) == 0 or
             search_term.split(" ")[0].lower() not in response["pages"][0]["title"].lower()):
@@ -83,7 +84,10 @@ def wiki_page(search_term: str, test_mode=False) -> dict[str, str | QPixmap]:
         result = "success"
         if not test_mode:
             pixmap = QPixmap()
-            pixmap.loadFromData(urllib.urlopen(thumbnail_url).read()) # pylint: disable=R1732
+            req = urllib.Request(thumbnail_url, headers={'User-Agent': "Magic Browser"})
+            with urllib.urlopen(req) as con:
+                pixmap.loadFromData(con.read())
+            # pixmap.loadFromData(urllib.urlopen(thumbnail_url).read()) # pylint: disable=R1732
         else:
             pixmap = thumbnail_url
     except TypeError as e:
