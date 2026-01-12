@@ -1,4 +1,13 @@
 # Plantfolio documentation
+This is a school project made by TU Delft students for the minor computer science.
+
+Contibutors are:
+- Owen Moon
+- Wybe Mijnendonck
+- Yiri Zwart
+- Freya van Apeldoorn (did all the art)
+- Denzel Träger
+
 
 ## Table of contents
 This readme contains the following sections
