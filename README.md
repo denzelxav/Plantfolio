@@ -1,11 +1,11 @@
 # Plantfolio documentation
-This is a school project made by TU Delft students for the minor computer science.
+This is a school project made by TU Delft students for the minor computer science. After the projects completion it was migrated from the universities gitlab to this Github repository
 
 Contibutors are:
 - Owen Moon
 - Wybe Mijnendonck
 - Yiri Zwart
-- Freya van Apeldoorn (did all the art)
+- Freya van Apeldoorn (also did all the art)
 - Denzel Träger
 
 
